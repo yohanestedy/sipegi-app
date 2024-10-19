@@ -28,7 +28,7 @@
                             </div>
                             <div class="user-img d-flex align-items-center">
                                 <div class="avatar avatar-md">
-                                    <img src="./assets/compiled/jpg/1.jpg" />
+                                    <img src="{{ asset('/assets/compiled/jpg/1.jpg') }}" />
                                 </div>
                             </div>
                         </div>

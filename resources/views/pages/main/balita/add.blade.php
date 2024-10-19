@@ -14,14 +14,14 @@
 
                     <h3>Tambah Data Balita</h3>
                     <p class="text-subtitle text-muted">
-                        Isi form untuk membuat akun petugas.
+                        Isi form untuk menambah data balita.
                     </p>
                 </div>
                 <div class="col-12 col-md-6 order-md-2 order-first">
                     <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
-                                <a href="#">User Management</a>
+                                <a href="#">Balita</a>
                             </li>
                             <li class="breadcrumb-item active" aria-current="page">
                                 Tambah Data Balita
@@ -37,41 +37,43 @@
                     <div class="card-body">
                         <form class="form form-horizontal">
                             <div class="form-body">
-                                {{-- Form Posyandu --}}
+
+                                {{-- tanda wajib diisi --}}
+                                {{-- <span style="color: #dc3545;">*</span> --}}
+
+                                {{-- Form Nama Balita --}}
                                 <div class="row d-flex align-items-center">
                                     <div class="col-md-4 text-md-end justify-content-end">
-                                        <label for="first-name-horizontal">Posyandu <span
-                                                style="color: #dc3545;">*</span></label>
+                                        <label for="first-name-horizontal">Nama Balita</label>
                                     </div>
-                                    <div class="col-md-3 form-group mt-2">
-                                        <select class="form-select select2" data-placeholder="Pilih Posyandu">
-                                            <option></option>
-                                            <option>Melati</option>
-                                            <option>Nusa Indah</option>
-                                            <option>Kenanga</option>
-                                            <option>Mawar</option>
-                                            <option>Dahlia</option>
-                                            <option>Anggrek</option>
-                                        </select>
+                                    <div class="col-md-5 form-group mt-2">
+                                        <input type="text" id="first-name-horizontal" class="form-control" name="name"
+                                            placeholder="">
                                     </div>
                                 </div>
 
-                                {{-- Form Anak Ke Berapa --}}
-                                <div class="row d-flex align-items-center">
-                                    <div class="col-md-4 text-md-end justify-content-end">
-                                        <label for="first-name-horizontal">Anak ke berapa? <span
-                                                style="color: #dc3545;">*</span></label>
+                                {{-- Form NIK --}}
+                                <div class="row d-flex">
+                                    <div class="col-md-4 text-md-end justify-content-end mt-3">
+                                        <label for="first-name-horizontal">NIK Balita</label>
                                     </div>
-                                    <div class="col-md-3 form-group mt-2">
-                                        <input type="number" class="form-control" name="orderfam" placeholder="">
+                                    <div class="col-md-5 form-group mt-2">
+                                        <input type="number" id="nik-input" class="form-control" name="nik"
+                                            placeholder="">
+                                        <div class="form-check mt-2">
+                                            <input class="form-check-input" type="checkbox" id="flexCheckDefault">
+                                            <label class="form-check-label" for="flexCheckDefault"
+                                                style="font-weight: normal;">
+                                                Ceklist jika Balita belum mempunyai NIK
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
 
                                 {{-- Form Tanggal Lahir --}}
                                 <div class="row d-flex align-items-center">
                                     <div class="col-md-4 text-md-end justify-content-end">
-                                        <label for="first-name-horizontal">Tanggal Lahir <span
-                                                style="color: #dc3545;">*</span></label>
+                                        <label for="first-name-horizontal">Tanggal Lahir</label>
                                     </div>
                                     <div class="col-md-3 form-group mt-2">
                                         <input type="date" id="first-name-horizontal" class="form-control"
@@ -82,8 +84,7 @@
                                 {{-- Form Jenis Kelamin --}}
                                 <div class="row mt-2">
                                     <div class="col-md-4 text-md-end justify-content-end">
-                                        <label for="first-name-horizontal">Jenis Kelamin <span
-                                                style="color: #dc3545;">*</span></label>
+                                        <label for="first-name-horizontal">Jenis Kelamin</label>
                                     </div>
                                     <div class="col-md-7 form-group">
                                         <div class="form-check">
@@ -105,55 +106,52 @@
                                     </div>
                                 </div>
 
-                                {{-- Form Nomor KK  --}}
+                                {{-- Form Nama Orangtua --}}
                                 <div class="row d-flex align-items-center">
                                     <div class="col-md-4 text-md-end justify-content-end">
-                                        <label for="first-name-horizontal">Nomor KK <span
-                                                style="color: #dc3545;">*</span></label>
+                                        <label for="first-name-horizontal">Nama Orangtua</label>
                                     </div>
                                     <div class="col-md-5 form-group mt-2">
-                                        <input type="number" id="first-name-horizontal" class="form-control" name="kk"
-                                            placeholder="">
+                                        <select class="form-select select2" data-placeholder="Pilih Nama Orangtua">
+                                            <option></option>
+                                            <option>Sri</option>
+                                            <option>Ana</option>
+                                        </select>
                                     </div>
                                 </div>
 
-                                {{-- Form NIK --}}
-                                <div class="row d-flex">
-                                    <div class="col-md-4 text-md-end justify-content-end mt-3">
-                                        <label for="first-name-horizontal">NIK Balita <span
-                                                style="color: #dc3545;">*</span></label>
+                                {{-- Form Posyandu --}}
+                                <div class="row d-flex align-items-center">
+                                    <div class="col-md-4 text-md-end justify-content-end">
+                                        <label for="first-name-horizontal">Posyandu</label>
                                     </div>
-                                    <div class="col-md-5 form-group mt-2">
-                                        <input type="number" id="first-name-horizontal" class="form-control" name="nik"
-                                            placeholder="">
-                                        <div class="form-check mt-2">
-                                            <input class="form-check-input" type="checkbox" value=""
-                                                id="flexCheckDefault">
-                                            <label class="form-check-label" for="flexCheckDefault"
-                                                style="font-weight: normal;">
-                                                Ceklist jika Balita belum mempunyai NIK
-                                            </label>
-                                        </div>
+                                    <div class="col-md-4 form-group mt-2">
+                                        <select class="form-select select2" data-placeholder="Pilih Posyandu">
+                                            <option></option>
+                                            <option>Melati - Dusun 1</option>
+                                            <option>Nusa Indah - Dusun 2</option>
+                                            <option>Kenanga - Dusun 3</option>
+                                            <option>Mawar - Dusun 4</option>
+                                            <option>Dahlia - Dusun 5</option>
+                                            <option>Anggrek - Dusun 6</option>
+                                        </select>
                                     </div>
                                 </div>
 
-                                {{-- Form Nama Balita --}}
+                                {{-- Form Anak Ke Berapa --}}
                                 <div class="row d-flex align-items-center">
                                     <div class="col-md-4 text-md-end justify-content-end">
-                                        <label for="first-name-horizontal">Nama Balita <span
-                                                style="color: #dc3545;">*</span></label>
+                                        <label for="first-name-horizontal">Anak ke berapa?</label>
                                     </div>
-                                    <div class="col-md-5 form-group mt-2">
-                                        <input type="text" id="first-name-horizontal" class="form-control"
-                                            name="name" placeholder="">
+                                    <div class="col-md-2 form-group mt-2">
+                                        <input type="number" class="form-control" name="orderfam" placeholder="">
                                     </div>
                                 </div>
 
                                 {{-- Form BB saat Lahir --}}
                                 <div class="row d-flex align-items-center">
                                     <div class="col-md-4 text-md-end justify-content-end">
-                                        <label for="first-name-horizontal">Berat Badan saat lahir(kg) <span
-                                                style="color: #dc3545;">*</span></label>
+                                        <label for="first-name-horizontal">Berat Badan saat lahir(kg)</label>
                                     </div>
                                     <div class="col-md-2 form-group mt-2">
                                         <input type="number" id="first-name-horizontal" class="form-control"
@@ -164,175 +162,11 @@
                                 {{-- Form PB saat Lahir --}}
                                 <div class="row d-flex align-items-center">
                                     <div class="col-md-4 text-md-end justify-content-end">
-                                        <label for="first-name-horizontal">Panjang Badan saat lahir(cm) <span
-                                                style="color: #dc3545;">*</span></label>
+                                        <label for="first-name-horizontal">Panjang Badan saat lahir(cm)</label>
                                     </div>
                                     <div class="col-md-2 form-group mt-2">
                                         <input type="number" id="first-name-horizontal" class="form-control"
                                             name="name" placeholder="">
-                                    </div>
-                                </div>
-
-                                {{-- Form Nama Orangtua --}}
-                                <div class="row d-flex align-items-center">
-                                    <div class="col-md-4 text-md-end justify-content-end">
-                                        <label for="first-name-horizontal">Nama Orangtua <span
-                                                style="color: #dc3545;">*</span></label>
-                                    </div>
-                                    <div class="col-md-5 form-group mt-2">
-                                        <input type="text" id="first-name-horizontal" class="form-control"
-                                            name="name" placeholder="">
-                                    </div>
-                                </div>
-                                {{-- Form NIK Orangtua --}}
-                                <div class="row d-flex align-items-center">
-                                    <div class="col-md-4 text-md-end justify-content-end">
-                                        <label for="first-name-horizontal">NIK Orangtua <span
-                                                style="color: #dc3545;">*</span></label>
-                                    </div>
-                                    <div class="col-md-5 form-group mt-2">
-                                        <input type="number" id="first-name-horizontal" class="form-control"
-                                            name="name" placeholder="">
-                                    </div>
-                                </div>
-                                {{-- Form NIK Orangtua --}}
-                                <div class="row d-flex align-items-center">
-                                    <div class="col-md-4 text-md-end justify-content-end">
-                                        <label for="first-name-horizontal">Telp/HP Orangtua <span
-                                                style="color: #dc3545;">*</span></label>
-                                    </div>
-                                    <div class="col-md-5 form-group mt-2">
-                                        <input type="number" id="first-name-horizontal" class="form-control"
-                                            name="name" placeholder="">
-                                    </div>
-                                </div>
-                                {{-- Form Provinsi --}}
-                                <div class="row d-flex align-items-center">
-                                    <div class="col-md-4 text-md-end justify-content-end">
-                                        <label for="first-name-horizontal">Provinsi <span
-                                                style="color: #dc3545;">*</span></label>
-                                    </div>
-                                    <div class="col-md-7 form-group mt-2">
-                                        <select class="form-select select2" data-placeholder="Pilih Provinsi">
-                                            <option></option>
-                                            <option selected>Lampung</option>
-                                            <option>Jakarta</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                {{-- Form Kabupaten --}}
-                                <div class="row d-flex align-items-center">
-                                    <div class="col-md-4 text-md-end justify-content-end">
-                                        <label for="first-name-horizontal">Kabupaten <span
-                                                style="color: #dc3545;">*</span></label>
-                                    </div>
-                                    <div class="col-md-7 form-group mt-2">
-                                        <select class="form-select select2" data-placeholder="Pilih Kabupaten">
-                                            <option></option>
-                                            <option selected>Lampung Timur</option>
-                                            <option>Metro</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                {{-- Form Kecamatan --}}
-                                <div class="row d-flex align-items-center">
-                                    <div class="col-md-4 text-md-end justify-content-end">
-                                        <label for="first-name-horizontal">Kecamatan <span
-                                                style="color: #dc3545;">*</span></label>
-                                    </div>
-                                    <div class="col-md-7 form-group mt-2">
-                                        <select class="form-select select2" data-placeholder="Pilih Kecamatan">
-                                            <option></option>
-                                            <option selected>Batanghari</option>
-                                            <option>Jakarta</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                {{-- Form Desa --}}
-                                <div class="row d-flex align-items-center">
-                                    <div class="col-md-4 text-md-end justify-content-end">
-                                        <label for="first-name-horizontal">Desa <span
-                                                style="color: #dc3545;">*</span></label>
-                                    </div>
-                                    <div class="col-md-7 form-group mt-2">
-                                        <select class="form-select select2" data-placeholder="Pilih Desa">
-                                            <option></option>
-                                            <option selected>Selorejo</option>
-                                            <option>Jakarta</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                {{-- Form Dusun --}}
-                                <div class="row d-flex align-items-center">
-                                    <div class="col-md-4 text-md-end justify-content-end">
-                                        <label for="first-name-horizontal">Dusun <span
-                                                style="color: #dc3545;">*</span></label>
-                                    </div>
-                                    <div class="col-md-7 form-group mt-2">
-                                        <select class="form-select select2" data-placeholder="Pilih Dusun">
-                                            <option></option>
-                                            <option>Sumber Mulyo</option>
-                                            <option>Sidodadi</option>
-                                            <option>Sukorejo</option>
-                                            <option>Sumber Rahayu</option>
-                                            <option>Sidoreo</option>
-                                            <option>Suko Makmur</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                {{-- Form RT --}}
-                                <div class="row d-flex align-items-center">
-                                    <div class="col-md-4 text-md-end justify-content-end">
-                                        <label for="first-name-horizontal">RT <span
-                                                style="color: #dc3545;">*</span></label>
-                                    </div>
-                                    <div class="col-md-3 form-group mt-2">
-                                        <select class="form-select select2" data-placeholder="Pilih RT">
-                                            <option></option>
-                                            <option>001</option>
-                                            <option>002</option>
-                                            <option>003</option>
-                                            <option>004</option>
-                                            <option>005</option>
-                                            <option>006</option>
-                                            <option>007</option>
-                                            <option>008</option>
-                                            <option>009</option>
-                                            <option>010</option>
-                                            <option>011</option>
-                                            <option>012</option>
-                                            <option>013</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                {{-- Form RW --}}
-                                <div class="row d-flex align-items-center">
-                                    <div class="col-md-4 text-md-end justify-content-end">
-                                        <label for="first-name-horizontal">RW <span
-                                                style="color: #dc3545;">*</span></label>
-                                    </div>
-                                    <div class="col-md-3 form-group mt-2">
-                                        <select class="form-select select2" data-placeholder="Pilih RW">
-                                            <option></option>
-                                            <option>001</option>
-                                            <option>002</option>
-                                            <option>003</option>
-                                            <option>004</option>
-                                            <option>005</option>
-                                            <option>006</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                {{-- Form Alamat Lengkap --}}
-                                <div class="row d-flex mb-3 ">
-                                    <div class="col-md-4 mt-2 text-md-end justify-content-end">
-                                        <label for="first-name-horizontal">Alamat Lengkap <span
-                                                style="color: #dc3545;">*</span></label>
-                                    </div>
-                                    <div class="col-md-7 form-group mt-2">
-                                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                                     </div>
                                 </div>
 
@@ -360,5 +194,15 @@
             width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
             placeholder: $(this).data('placeholder'),
         });
+
+        document.getElementById('flexCheckDefault').onchange = function() {
+            var nikInput = document.getElementById('nik-input');
+            if (this.checked) {
+                nikInput.disabled = true;
+                nikInput.value = "";
+            } else {
+                nikInput.disabled = false;
+            }
+        };
     </script>
 @endsection

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +15,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('pages.main.balita.add');
+    return view('pages.main.user.add');
+});
+
+Route::prefix('user')->group(function () {
+    //  Index
+    Route::get('/', [UserController::class, 'index'])->name('user.index');
+
+    // ADD
+    Route::get('/add', [UserController::class, 'add'])->name('user.add');
+
+    // EDIT
+    Route::get('/edit', [UserController::class, 'edit'])->name('user.edit');
+
+    //
+
 });

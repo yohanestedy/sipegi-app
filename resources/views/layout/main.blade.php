@@ -17,14 +17,14 @@
     @yield('cssLibraries')
 
     {{-- Default CSS --}}
-    <link rel="stylesheet" crossorigin href="./assets/compiled/css/app.css" />
-    <link rel="stylesheet" crossorigin href="./assets/compiled/css/app-dark.css" />
+    <link rel="stylesheet" crossorigin href="{{ asset('/assets/compiled/css/app.css') }}" />
+    <link rel="stylesheet" crossorigin href="{{ asset('/assets/compiled/css/app-dark.css') }}" />
     {{-- <link rel="stylesheet" href="https://atugatran.github.io/FontAwesome6Pro/css/all.min.css"> --}}
-    <link rel="stylesheet" href="./assets/fontawesome/css/all.css">
+    <link rel="stylesheet" href="{{ asset('/assets/fontawesome/css/all.css') }}">
 </head>
 
 <body>
-    <script src="assets/static/js/initTheme.js"></script>
+    <script src="{{ asset('assets/static/js/initTheme.js') }}"></script>
     <div id="app">
 
         {{-- SIDEBAR --}}
@@ -49,10 +49,10 @@
     </div>
 
     {{-- Default Js --}}
-    <script src="assets/static/js/components/dark.js"></script>
-    <script src="assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="{{ asset('assets/static/js/components/dark.js') }}"></script>
+    <script src="{{ asset('assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
 
-    <script src="assets/compiled/js/app.js"></script>
+    <script src="{{ asset('assets/compiled/js/app.js') }}"></script>
 
     {{-- Js Tambahan jika di perlukan --}}
     @yield('jsLibraries')

@@ -31,9 +31,10 @@
 
         {{-- SIDEBAR MENU --}}
         <div class="sidebar-menu">
-            <ul class="menu">
+            <ul class="menu" style="margin-top: -1rem">
                 <li class="sidebar-title">Menu</li>
 
+                {{-- Dashboard --}}
                 <li class="sidebar-item">
                     <a href="index.html" class="sidebar-link">
                         <i class="fa-duotone fa-solid fa-grid-2 fa-lg"></i>
@@ -41,6 +42,7 @@
                     </a>
                 </li>
 
+                {{-- Master Data --}}
                 <li class="sidebar-item has-sub">
                     <a href="#" class="sidebar-link">
                         <i class="fa-duotone fa-solid fa-folders fa-lg"></i>
@@ -49,7 +51,7 @@
 
                     <ul class="submenu">
                         <li class="submenu-item">
-                            <a href="#" class="submenu-link">Posyandu</a>
+                            <a href="#" class="submenu-link">Daftar Posyandu</a>
                         </li>
 
                         <li class="submenu-item">
@@ -62,19 +64,39 @@
                     </ul>
                 </li>
 
+                {{-- Orangtua --}}
                 <li class="sidebar-item">
+                    <a href="index.html" class="sidebar-link">
+                        <i class="fa-duotone fa-solid fa-person-breastfeeding fa-lg"></i>
+                        <span>Orangtua</span>
+                    </a>
+                </li>
+
+                {{-- Balita --}}
+                <li class="sidebar-item ">
                     <a href="index.html" class="sidebar-link">
                         <i class="fa-solid fa-children fa-lg"></i>
                         <span>Balita</span>
                     </a>
                 </li>
-                <li class="sidebar-item">
-                    <a href="index.html" class="sidebar-link">
+                {{-- User Management --}}
+                <li class="sidebar-item {{ Route::is('user.*') ? 'active' : '' }}">
+                    <a href="" {{ route('user.index') }} class="sidebar-link">
                         {{-- <i class="fa-duotone fa-solid fa-users"></i> --}}
                         <i class="fa-duotone fa-solid fa-user-gear fa-lg" style="--fa-secondary-opacity: 0.5;"></i>
                         <span>User Management</span>
                     </a>
                 </li>
+                {{-- Laporan --}}
+                <li class="sidebar-item">
+                    <a href="index.html" class="sidebar-link">
+                        {{-- <i class="fa-duotone fa-solid fa-users"></i> --}}
+                        <i class="fa-duotone fa-solid fa-file-circle-check fa-lg"></i>
+                        <span>Laporan</span>
+                    </a>
+                </li>
+
+                {{-- Info --}}
                 <li class="sidebar-item">
                     <a href="index.html" class="sidebar-link">
                         <i class="fa-duotone fa-solid fa-circle-info fa-lg"></i>
