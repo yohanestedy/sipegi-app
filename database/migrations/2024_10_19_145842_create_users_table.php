@@ -17,7 +17,7 @@ return new class extends Migration
             $table->increments('id');
             $table->string('name', 50);
             $table->string('username', 20);
-            $table->string('password', 50);
+            $table->string('password', 100);
             $table->string('role', 15);
             $table->unsignedInteger('posyandu_id')->nullable();
             $table->foreign('posyandu_id')->references('id')->on('posyandu');

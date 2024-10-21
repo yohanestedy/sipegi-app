@@ -35,33 +35,40 @@
             <div class="card">
                 <div class="card-content">
                     <div class="card-body">
-                        <form action="" class="form form-horizontal">
+                        <form action="{{ route('user.store') }}" method="POST" class="form form-horizontal">
+                            @csrf
                             <div class="form-body">
                                 <div class="row">
 
                                     {{-- Form Nama --}}
                                     <div class="col-md-3">
-                                        <label for="first-name-horizontal">Nama</label>
+                                        <label>Nama</label>
                                     </div>
                                     <div class="col-md-9 form-group mb-3">
-                                        <input type="text" id="first-name-horizontal"
-                                            class="form-control form-control-lg" name="name" placeholder="Nama">
+                                        <input type="text"
+                                            class="form-control form-control-lg @error('name') is-invalid @enderror"
+                                            name="name">
+                                        <div class="invalid-feedback">
+                                            @error('name')
+                                                {{ $message }}
+                                            @enderror
+                                        </div>
                                     </div>
 
                                     {{-- Form Role --}}
                                     <div class="col-md-3">
-                                        <label for="first-name-horizontal">Role</label>
+                                        <label>Role</label>
                                     </div>
                                     <div class="col-md-9 form-group mb-3">
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="role" id="inlineRadio1"
-                                                value="kader_puskesdes">
+                                            <input class="form-check-input @error('role') is-invalid @enderror"
+                                                type="radio" name="role" id="inlineRadio1" value="super_admin">
                                             <label class="form-check-label" for="inlineRadio1"
                                                 style="font-weight: normal">Kader Puskesdes</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="role" id="inlineRadio2"
-                                                value="kader_posyandu">
+                                            <input class="form-check-input @error('role') is-invalid @enderror"
+                                                type="radio" name="role" id="inlineRadio2" value="admin">
                                             <label class="form-check-label" for="inlineRadio2"
                                                 style="font-weight: normal">Kader Posyandu</label>
                                         </div>
@@ -69,19 +76,26 @@
 
                                     {{-- Form Posyandu --}}
                                     <div class="col-md-3">
-                                        <label for="contact-info-horizontal">Posyandu</label>
+                                        <label>Posyandu</label>
                                     </div>
                                     <div class="col-md-9 form-group mb-3">
-                                        <select class="form-select select2" id="posyanduSelect"
-                                            data-placeholder="Pilih Posyandu">
+                                        <input id="posyanduHidden" type="hidden" name="posyandu" value="">
+                                        <select name="posyandu"
+                                            class="form-select select2 @error('posyandu') is-invalid @enderror"
+                                            id="posyanduSelect" data-placeholder="Pilih Posyandu">
                                             <option></option>
-                                            <option>Melati - Dusun 1</option>
-                                            <option>Nusa Indah - Dusun 2</option>
-                                            <option>Kenanga - Dusun 3</option>
-                                            <option>Mawar - Dusun 4</option>
-                                            <option>Dahlia - Dusun 5</option>
-                                            <option>Anggrek - Dusun 6</option>
+                                            <option value="1">Melati - Dusun 1</option>
+                                            <option value="2">Nusa Indah - Dusun 2</option>
+                                            <option value="3">Kenanga - Dusun 3</option>
+                                            <option value="4">Mawar - Dusun 4</option>
+                                            <option value="5">Dahlia - Dusun 5</option>
+                                            <option value="6">Anggrek - Dusun 6</option>
                                         </select>
+                                        <div class="invalid-feedback">
+                                            @error('posyandu')
+                                                {{ $message }}
+                                            @enderror
+                                        </div>
                                     </div>
 
                                     {{-- Form Username --}}
@@ -89,17 +103,29 @@
                                         <label for="email-horizontal">Username</label>
                                     </div>
                                     <div class="col-md-9 form-group mb-3">
-                                        <input type="text" id="username-input" class="form-control form-control-lg"
-                                            name="username" placeholder="Username">
+                                        <input type="text" id="username-input"
+                                            class="form-control form-control-lg @error('username') is-invalid @enderror"
+                                            name="username">
+                                        <div class="invalid-feedback">
+                                            @error('username')
+                                                {{ $message }}
+                                            @enderror
+                                        </div>
                                     </div>
 
                                     {{-- Form Password --}}
                                     <div class="col-md-3">
-                                        <label for="password-horizontal">Password</label>
+                                        <label>Password</label>
                                     </div>
                                     <div class="col-md-9 form-group mb-3">
-                                        <input type="password" id="password-horizontal" class="form-control form-control-lg"
-                                            name="password" placeholder="Password">
+                                        <input type="password"
+                                            class="form-control form-control-lg @error('password') is-invalid @enderror"
+                                            name="password">
+                                        <div class="invalid-feedback">
+                                            @error('password')
+                                                {{ $message }}
+                                            @enderror
+                                        </div>
                                     </div>
 
                                     <div class="col-sm-12 d-flex justify-content-end">
@@ -133,22 +159,28 @@
             const radioPuskesdes = document.getElementById('inlineRadio1');
             const radioPosyandu = document.getElementById('inlineRadio2');
             const posyanduSelect = document.getElementById('posyanduSelect');
-            const emptyOption = posyanduSelect.querySelector('option[value=""]');
+            const hiddenPosyandu = document.getElementById('posyanduHidden')
 
             // Fungsi untuk menonaktifkan atau mengaktifkan select Posyandu
             function handleRoleChange() {
                 if (radioPuskesdes.checked) {
-
                     posyanduSelect.disabled = true;
-                    posyanduSelect.value = '' // Menonaktifkan select
+                    posyanduSelect.value = ''; // Menonaktifkan select
+                    hiddenPosyandu.value = null; // Set hidden input ke null
                 } else if (radioPosyandu.checked) {
                     posyanduSelect.disabled = false; // Mengaktifkan select
+                    hiddenPosyandu.value = posyanduSelect.value; // Set hidden input ke nilai select
                 }
             }
 
             // Event listener ketika input radio berubah
             radioPuskesdes.addEventListener('change', handleRoleChange);
             radioPosyandu.addEventListener('change', handleRoleChange);
+
+            // Event listener ketika select posyandu berubah
+            posyanduSelect.addEventListener('change', function() {
+                hiddenPosyandu.value = posyanduSelect.value; // Update hidden input dengan nilai baru
+            });
 
             // Jalankan saat halaman pertama kali dimuat
             handleRoleChange();
