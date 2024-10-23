@@ -19,10 +19,16 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'username',
         'role',
+        'posyandu_id',
+        'username',
         'password',
     ];
+
+    function posyandu()
+    {
+        return $this->hasOne(Posyandu::class, 'id', 'posyandu_id');
+    }
 
     /**
      * The attributes that should be hidden for serialization.

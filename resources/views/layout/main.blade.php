@@ -32,16 +32,26 @@
 
 
         {{-- MAINCONTENT + NAVBAR --}}
-        <div id="main" class="layout-navbar navbar-fixed">
+        <div id="main">
+
+            <header class="mb-3">
+                <a href="#" class="burger-btn d-block d-xl-none">
+                    <i class="bi bi-justify fs-3"></i>
+                </a>
+            </header>
 
             {{-- HEADER ATAS --}}
-            @include('include.header')
+            {{-- @include('include.header') --}}
 
             {{-- MAIN CONTENT --}}
             {{-- <div id="main-content" style="min-height: 100vh"> --}}
-            <div id="main-content">
+
+            {{-- <div id="main-content">
                 @yield('mainContent')
-            </div>
+            </div> --}}
+
+            @yield('mainContent')
+
 
             {{-- FOOTER --}}
             @include('include.footer')

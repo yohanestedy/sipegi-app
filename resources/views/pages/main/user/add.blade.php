@@ -24,7 +24,7 @@
                                 <a href="#">User Management</a>
                             </li>
                             <li class="breadcrumb-item active" aria-current="page">
-                                Tambah Akun Petugas
+                                Tambah Akun
                             </li>
                         </ol>
                     </nav>
@@ -47,7 +47,7 @@
                                     <div class="col-md-9 form-group mb-3">
                                         <input type="text"
                                             class="form-control form-control-lg @error('name') is-invalid @enderror"
-                                            name="name">
+                                            name="name" value="{{ old('name') }}">
                                         <div class="invalid-feedback">
                                             @error('name')
                                                 {{ $message }}
@@ -62,13 +62,15 @@
                                     <div class="col-md-9 form-group mb-3">
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input @error('role') is-invalid @enderror"
-                                                type="radio" name="role" id="inlineRadio1" value="super_admin">
+                                                type="radio" name="role" id="inlineRadio1" value="super_admin"
+                                                {{ old('role') == 'super_admin' ? 'checked' : '' }}>
                                             <label class="form-check-label" for="inlineRadio1"
                                                 style="font-weight: normal">Kader Puskesdes</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input @error('role') is-invalid @enderror"
-                                                type="radio" name="role" id="inlineRadio2" value="admin">
+                                                type="radio" name="role" id="inlineRadio2" value="admin"
+                                                {{ old('role') == 'admin' ? 'checked' : '' }}>
                                             <label class="form-check-label" for="inlineRadio2"
                                                 style="font-weight: normal">Kader Posyandu</label>
                                         </div>
@@ -84,12 +86,11 @@
                                             class="form-select select2 @error('posyandu') is-invalid @enderror"
                                             id="posyanduSelect" data-placeholder="Pilih Posyandu">
                                             <option></option>
-                                            <option value="1">Melati - Dusun 1</option>
-                                            <option value="2">Nusa Indah - Dusun 2</option>
-                                            <option value="3">Kenanga - Dusun 3</option>
-                                            <option value="4">Mawar - Dusun 4</option>
-                                            <option value="5">Dahlia - Dusun 5</option>
-                                            <option value="6">Anggrek - Dusun 6</option>
+                                            @foreach ($listPosyandu as $lp)
+                                                <option value="{{ $lp->id }}"
+                                                    {{ old('posyandu') == $lp->id ? 'selected' : '' }}>{{ $lp->name }}
+                                                </option>
+                                            @endforeach
                                         </select>
                                         <div class="invalid-feedback">
                                             @error('posyandu')
@@ -105,7 +106,7 @@
                                     <div class="col-md-9 form-group mb-3">
                                         <input type="text" id="username-input"
                                             class="form-control form-control-lg @error('username') is-invalid @enderror"
-                                            name="username">
+                                            name="username" value="{{ old('username') }}">
                                         <div class="invalid-feedback">
                                             @error('username')
                                                 {{ $message }}
