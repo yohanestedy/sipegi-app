@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Posyandu;
 use App\Models\User;
+use App\Models\Posyandu;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 
@@ -33,23 +35,34 @@ class UserController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required|min:3',
+            'name' => ['required', 'min:3', 'regex:/^[a-zA-Z\s]+$/'], // Hanya huruf dan spasi diizinkan
             'role' => 'required',
             'posyandu' => [
                 'required_if:role,admin', // hanya diperlukan jika role adalah admin
             ],
-            'username' => 'required',
-            'password' => 'required',
+            'username' => [
+                'required',
+                'unique:users,username', // Username harus unik di tabel users
+                'regex:/^\S*$/u' // Tidak boleh ada spasi
+            ],
+            'password' => 'required', // Password wajib diisi
         ], [
-            'name.required' => 'Form nama harus di isi',
+            'name.required' => 'Form nama harus diisi',
+            'name.regex' => 'Nama tidak boleh mengandung angka atau karakter khusus',
             'role.required' => 'Pilih role akun petugas',
-            'posyandu.required_if' => 'Posyandu harus di pilih', // pesan kustom untuk posyandu
-            'username.required' => 'Form username harus di isi',
-            'password.required' => 'Form password harus di isi',
+            'posyandu.required_if' => 'Posyandu harus dipilih',
+            'username.required' => 'Form username harus diisi',
+            'username.unique' => 'Username sudah digunakan, pilih username lain',
+            'username.regex' => 'Username tidak boleh mengandung spasi',
+            'password.required' => 'Form password harus diisi',
         ]);
+
         if ($validator->fails()) {
             return Redirect::back()->withErrors($validator)->withInput();
         }
+
+
+
 
         User::create([
             "name" => $request->name,
@@ -57,6 +70,7 @@ class UserController extends Controller
             "posyandu_id" => $request->posyandu,
             "username" => $request->username,
             "password" => bcrypt($request->password),
+            "created_by" => Auth::id(), // Mengisi created_by dengan ID pengguna yang sedang login
         ]);
 
         return Redirect::route('user.index')->with('success', 'Berhasil mendaftarkan akun');
@@ -73,29 +87,43 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|min:3',
+            'name' => ['required', 'min:3', 'regex:/^[a-zA-Z\s]+$/'], // Hanya huruf dan spasi diizinkan
             'role' => 'required',
             'posyandu' => [
                 'required_if:role,admin', // hanya diperlukan jika role adalah admin
             ],
-            'username' => 'required',
+            'username' => [
+                'required',
+                Rule::unique('users', 'username')->ignore($id), // Abaikan username untuk user dengan $id
+                'regex:/^\S*$/u' // Tidak boleh ada spasi
+            ],
+            'password' => 'nullable', // Password boleh kosong jika tidak ingin mengubah
         ], [
-            'name.required' => 'Form nama harus di isi',
+            'name.required' => 'Form nama harus diisi',
+            'name.regex' => 'Nama tidak boleh mengandung angka atau karakter khusus',
             'role.required' => 'Pilih role akun petugas',
-            'posyandu.required_if' => 'Posyandu harus di pilih', // pesan kustom untuk posyandu
-            'username.required' => 'Form username harus di isi',
+            'posyandu.required_if' => 'Posyandu harus dipilih',
+            'username.required' => 'Form username harus diisi',
+            'username.unique' => 'Username sudah digunakan, pilih username lain',
+            'username.regex' => 'Username tidak boleh mengandung spasi',
+            'password.required' => 'Form password harus diisi',
         ]);
+
         if ($validator->fails()) {
             return Redirect::back()->withErrors($validator)->withInput();
         }
 
-        User::find($id)->update([
+        $user = User::find($id);
+        $user->update([
             "name" => $request->name,
             "role" => $request->role,
             "posyandu_id" => $request->posyandu,
             "username" => $request->username,
             "password" => bcrypt($request->password),
+            "password" => $request->password ? bcrypt($request->password) : $user->password, // Hanya update password jika diisi
+            "updated_by" => Auth::id(), // Mengisi updated_by dengan ID pengguna yang sedang login
         ]);
+
 
         return Redirect::route('user.index')->with('success', 'Data berhasil di update.');
     }

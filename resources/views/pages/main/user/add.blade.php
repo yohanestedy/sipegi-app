@@ -21,7 +21,7 @@
                     <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
-                                <a href="#">User Management</a>
+                                <a href="{{ route('user.index') }}">User Management</a>
                             </li>
                             <li class="breadcrumb-item active" aria-current="page">
                                 Tambah Akun
@@ -131,7 +131,8 @@
 
                                     <div class="col-sm-12 d-flex justify-content-end">
                                         <button type="submit" class="btn btn-primary me-3 mb-1">Simpan</button>
-                                        <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
+                                        <button id="resetButton" type="reset"
+                                            class="btn btn-light-secondary me-1 mb-1 buttonReset">Reset</button>
                                     </div>
                                 </div>
                             </div>
@@ -155,6 +156,9 @@
     </script>
 
     <script>
+        $('#resetButton').on('click', function() {
+            $('#posyanduSelect').val(null).trigger('change');
+        });
         // Menangani perubahan pada input radio
         document.addEventListener('DOMContentLoaded', function() {
             const radioPuskesdes = document.getElementById('inlineRadio1');
@@ -165,8 +169,11 @@
             // Fungsi untuk menonaktifkan atau mengaktifkan select Posyandu
             function handleRoleChange() {
                 if (radioPuskesdes.checked) {
+                    // Reset dropdown menggunakan jQuery dan trigger 'change' event
+                    $('#posyanduSelect').val(null).trigger('change');
+
+                    // Setelah reset, disable select
                     posyanduSelect.disabled = true;
-                    posyanduSelect.value = ''; // Menonaktifkan select
                     hiddenPosyandu.value = null; // Set hidden input ke null
                 } else if (radioPosyandu.checked) {
                     posyanduSelect.disabled = false; // Mengaktifkan select

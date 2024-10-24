@@ -21,7 +21,7 @@
                     <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
-                                <a href="#">Orangtua</a>
+                                <a href="{{ route('orangtua.index') }}">Orangtua</a>
                             </li>
                             <li class="breadcrumb-item active" aria-current="page">
                                 Tambah Data Orangtua

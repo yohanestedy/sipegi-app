@@ -170,8 +170,11 @@
             // Fungsi untuk menonaktifkan atau mengaktifkan select Posyandu
             function handleRoleChange() {
                 if (radioPuskesdes.checked) {
+                    // Reset dropdown menggunakan jQuery dan trigger 'change' event
+                    $('#posyanduSelect').val(null).trigger('change');
+
+                    // Setelah reset, disable select
                     posyanduSelect.disabled = true;
-                    posyanduSelect.value = ''; // Menonaktifkan select
                     hiddenPosyandu.value = null; // Set hidden input ke null
                 } else if (radioPosyandu.checked) {
                     posyanduSelect.disabled = false; // Mengaktifkan select

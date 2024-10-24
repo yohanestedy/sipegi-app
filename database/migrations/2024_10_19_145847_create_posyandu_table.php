@@ -16,10 +16,13 @@ return new class extends Migration
         Schema::create('posyandu', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 20);
-            $table->timestamp('created_at');
-            $table->timestamp('updated_at');
+
+            // Menambahkan timestamps untuk created_at dan updated_at secara otomatis
+            $table->timestamps();
+
+            // Kolom audit
             $table->integer('created_by');
-            $table->integer('updated_by');
+            $table->integer('updated_by')->nullable(); // Updated_by sebaiknya nullable
         });
 
         Schema::enableForeignKeyConstraints();

@@ -35,7 +35,7 @@
                 <li class="sidebar-title">Menu</li>
 
                 {{-- Dashboard --}}
-                <li class="sidebar-item">
+                <li class="sidebar-item {{ Route::is('dashboard') ? 'active' : '' }}">
                     <a href="index.html" class="sidebar-link">
                         <i class="fa-duotone fa-solid fa-grid-2 fa-lg"></i>
                         <span>Dashboard</span>
@@ -65,8 +65,8 @@
                 </li>
 
                 {{-- Orangtua --}}
-                <li class="sidebar-item">
-                    <a href="index.html" class="sidebar-link">
+                <li class="sidebar-item {{ Route::is('orangtua.*') ? 'active' : '' }}">
+                    <a href="{{ route('orangtua.index') }}" class="sidebar-link">
                         <i class="fa-duotone fa-solid fa-person-breastfeeding fa-lg"></i>
                         <span>Orangtua</span>
                     </a>
@@ -81,7 +81,7 @@
                 </li>
                 {{-- User Management --}}
                 <li class="sidebar-item {{ Route::is('user.*') ? 'active' : '' }}">
-                    <a href="" {{ route('user.index') }} class="sidebar-link">
+                    <a href="{{ route('user.index') }}" class="sidebar-link">
                         {{-- <i class="fa-duotone fa-solid fa-users"></i> --}}
                         <i class="fa-duotone fa-solid fa-user-gear fa-lg" style="--fa-secondary-opacity: 0.5;"></i>
                         <span>User Management</span>
