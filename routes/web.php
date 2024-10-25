@@ -23,7 +23,7 @@ Route::post('/login/store', [AuthController::class, 'storeLogin'])->name('login.
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', function () {
         return view('pages.main.balita.add');
-    })->name('dashboard');
+    })->name('home');
 
     Route::prefix('user')->group(function () {
         //  Index
