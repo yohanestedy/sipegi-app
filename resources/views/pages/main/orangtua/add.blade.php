@@ -35,7 +35,9 @@
             <div class="card">
                 <div class="card-content">
                     <div class="card-body">
-                        <form class="form form-horizontal">
+                        <form id="form" action="{{ route('orangtua.store') }}" method="POST"
+                            class="form form-horizontal">
+                            @csrf
                             <div class="form-body">
 
                                 {{-- Form Nomor KK  --}}
@@ -45,7 +47,7 @@
                                                 style="color: #dc3545;">*</span></label>
                                     </div>
                                     <div class="col-md-5 form-group mt-2">
-                                        <input type="number" id="first-name-horizontal" class="form-control" name="kk"
+                                        <input name="no_kk" type="number" id="first-name-horizontal" class="form-control"
                                             placeholder="">
                                     </div>
                                 </div>
@@ -57,7 +59,7 @@
                                                 style="color: #dc3545;">*</span></label>
                                     </div>
                                     <div class="col-md-5 form-group mt-2">
-                                        <input type="number" id="first-name-horizontal" class="form-control" name="name"
+                                        <input name="nik" type="number" id="first-name-horizontal" class="form-control"
                                             placeholder="">
                                     </div>
                                 </div>
@@ -69,7 +71,7 @@
                                                 style="color: #dc3545;">*</span></label>
                                     </div>
                                     <div class="col-md-5 form-group mt-2">
-                                        <input type="text" id="first-name-horizontal" class="form-control" name="name"
+                                        <input name="name" type="text" id="first-name-horizontal" class="form-control"
                                             placeholder="">
                                     </div>
                                 </div>
@@ -81,7 +83,7 @@
                                                 style="color: #dc3545;">*</span></label>
                                     </div>
                                     <div class="col-md-5 form-group mt-2">
-                                        <input type="number" id="first-name-horizontal" class="form-control" name="name"
+                                        <input name="telp" type="number" id="first-name-horizontal" class="form-control"
                                             placeholder="">
                                     </div>
                                 </div>
@@ -92,10 +94,10 @@
                                                 style="color: #dc3545;">*</span></label>
                                     </div>
                                     <div class="col-md-7 form-group mt-2">
-                                        <select class="form-select select2" data-placeholder="Pilih Provinsi">
+                                        <select name="provinsi" class="form-select select2"
+                                            data-placeholder="Pilih Provinsi">
                                             <option></option>
-                                            <option selected>Lampung</option>
-                                            <option>Jakarta</option>
+                                            <option value="Lampung" selected>Lampung</option>
                                         </select>
                                     </div>
                                 </div>
@@ -106,10 +108,10 @@
                                                 style="color: #dc3545;">*</span></label>
                                     </div>
                                     <div class="col-md-7 form-group mt-2">
-                                        <select class="form-select select2" data-placeholder="Pilih Kabupaten">
+                                        <select name="kabupaten" class="form-select select2"
+                                            data-placeholder="Pilih Kabupaten">
                                             <option></option>
-                                            <option selected>Lampung Timur</option>
-                                            <option>Metro</option>
+                                            <option value="Lampung Timur" selected>Lampung Timur</option>
                                         </select>
                                     </div>
                                 </div>
@@ -120,10 +122,10 @@
                                                 style="color: #dc3545;">*</span></label>
                                     </div>
                                     <div class="col-md-7 form-group mt-2">
-                                        <select class="form-select select2" data-placeholder="Pilih Kecamatan">
+                                        <select name="kecamatan" class="form-select select2"
+                                            data-placeholder="Pilih Kecamatan">
                                             <option></option>
-                                            <option selected>Batanghari</option>
-                                            <option>Jakarta</option>
+                                            <option value="Batanghari" selected>Batanghari</option>
                                         </select>
                                     </div>
                                 </div>
@@ -134,28 +136,24 @@
                                                 style="color: #dc3545;">*</span></label>
                                     </div>
                                     <div class="col-md-7 form-group mt-2">
-                                        <select class="form-select select2" data-placeholder="Pilih Desa">
+                                        <select name="desa" class="form-select select2" data-placeholder="Pilih Desa">
                                             <option></option>
-                                            <option selected>Selorejo</option>
-                                            <option>Jakarta</option>
+                                            <option value="Selorejo" selected>Selorejo</option>
                                         </select>
                                     </div>
                                 </div>
                                 {{-- Form Dusun --}}
                                 <div class="row d-flex align-items-center">
                                     <div class="col-md-4 text-md-end justify-content-end">
-                                        <label for="first-name-horizontal">Dusun <span
-                                                style="color: #dc3545;">*</span></label>
+                                        <label for="dusun">Dusun <span style="color: #dc3545;">*</span></label>
                                     </div>
                                     <div class="col-md-7 form-group mt-2">
-                                        <select class="form-select select2" data-placeholder="Pilih Dusun">
+                                        <select id="dusun" name="dusun" class="form-select select2"
+                                            data-placeholder="Pilih Dusun">
                                             <option></option>
-                                            <option>SUMBER MULYO</option>
-                                            <option>SIDODADI</option>
-                                            <option>SUKOREJO</option>
-                                            <option>SUMBER RAHAYU</option>
-                                            <option>SIDOREJO</option>
-                                            <option>SUKO MAKMUR</option>
+                                            @foreach ($dusuns as $dusun)
+                                                <option value="{{ $dusun->id }}">{{ $dusun->name }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -163,46 +161,29 @@
                                 {{-- Form RT --}}
                                 <div class="row d-flex align-items-center">
                                     <div class="col-md-4 text-md-end justify-content-end">
-                                        <label for="first-name-horizontal">RT <span
-                                                style="color: #dc3545;">*</span></label>
+                                        <label for="rt">RT <span style="color: #dc3545;">*</span></label>
                                     </div>
                                     <div class="col-md-3 form-group mt-2">
-                                        <select class="form-select select2" data-placeholder="Pilih RT">
+                                        <select id="rt" name="rt" class="form-select select2"
+                                            data-placeholder="Pilih RT" disabled>
                                             <option></option>
-                                            <option>001</option>
-                                            <option>002</option>
-                                            <option>003</option>
-                                            <option>004</option>
-                                            <option>005</option>
-                                            <option>006</option>
-                                            <option>007</option>
-                                            <option>008</option>
-                                            <option>009</option>
-                                            <option>010</option>
-                                            <option>011</option>
-                                            <option>012</option>
-                                            <option>013</option>
                                         </select>
                                     </div>
                                 </div>
+
                                 {{-- Form RW --}}
                                 <div class="row d-flex align-items-center">
                                     <div class="col-md-4 text-md-end justify-content-end">
-                                        <label for="first-name-horizontal">RW <span
-                                                style="color: #dc3545;">*</span></label>
+                                        <label for="rw">RW <span style="color: #dc3545;">*</span></label>
                                     </div>
                                     <div class="col-md-3 form-group mt-2">
-                                        <select class="form-select select2" data-placeholder="Pilih RW">
+                                        <select id="rw" name="rw" class="form-select select2"
+                                            data-placeholder="Pilih RW" disabled>
                                             <option></option>
-                                            <option>001</option>
-                                            <option>002</option>
-                                            <option>003</option>
-                                            <option>004</option>
-                                            <option>005</option>
-                                            <option>006</option>
                                         </select>
                                     </div>
                                 </div>
+
 
                                 {{-- Form Alamat Lengkap --}}
                                 <div class="row d-flex mb-3 ">
@@ -211,14 +192,16 @@
                                                 style="color: #dc3545;">*</span></label>
                                     </div>
                                     <div class="col-md-7 form-group mt-2">
-                                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                        <textarea name="alamat" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                                     </div>
                                 </div>
 
                                 {{-- Tombol Simpan --}}
                                 <div class="col-sm-12 d-flex justify-content-center">
-                                    <button type="submit" class="btn btn-primary me-3 mb-1">Simpan</button>
-                                    <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
+                                    <button id="submitBtn" type="submit"
+                                        class="btn btn-primary me-3 mb-1">Simpan</button>
+                                    <button id="resetButton" type="reset"
+                                        class="btn btn-light-secondary me-1 mb-1">Reset</button>
                                 </div>
 
                             </div>
@@ -230,7 +213,7 @@
     </div>
 @endsection
 @section('jsLibraries')
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.0/dist/jquery.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.full.min.js"></script>
 
     <script>
@@ -238,6 +221,77 @@
             theme: "bootstrap-5",
             width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
             placeholder: $(this).data('placeholder'),
+        });
+
+        // Reset select2
+        $('#resetButton').on('click', function() {
+            $('.select2').val(null).trigger('change');
+        });
+    </script>
+
+    {{-- Loading Tombol Submit --}}
+    <script>
+        document.getElementById('submitBtn').addEventListener('click', function(e) {
+            e.preventDefault(); // Mencegah submit default agar kita bisa menambahkan efek loading
+
+            // Nonaktifkan tombol saat loading
+            this.disabled = true;
+
+            // Tambahkan spinner ke dalam tombol
+            this.innerHTML =
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Menyimpan...';
+
+
+            // Setelah efek loading, lanjutkan dengan submit form
+            setTimeout(() => {
+                // Kirim form secara manual setelah animasi loading selesai
+                document.getElementById('form').submit();
+                this.innerHTML = 'Masuk';
+                this.disabled = false;
+
+            }, 700);
+
+
+            // Sesuaikan durasi loading (misalnya 500 ms)
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#dusun').change(function() {
+                const dusunId = $(this).val();
+
+                // Reset RT dan RW dropdown
+                $('#rt').empty().append('<option></option>').prop('disabled', true);
+                $('#rw').empty().append('<option></option>').prop('disabled', true);
+
+                if (dusunId) {
+                    // Ambil RT berdasarkan dusun yang dipilih
+                    $.ajax({
+                        url: `/api/rt/${dusunId}`,
+                        method: 'GET',
+                        success: function(data) {
+                            $.each(data, function(index, rt) {
+                                $('#rt').append(new Option(rt.rt, rt.id));
+                            });
+                            $('#rt').prop('disabled', false);
+                        }
+                    });
+
+                    // Ambil RW berdasarkan dusun yang dipilih
+                    $.ajax({
+                        url: `/api/rw/${dusunId}`,
+                        method: 'GET',
+                        success: function(data) {
+                            $.each(data, function(index, rw) {
+                                $('#rw').append(new Option(rw,
+                                    rw)); // Ambil RW dari response
+                            });
+                            $('#rw').prop('disabled', false);
+                        }
+                    });
+                }
+            });
         });
     </script>
 @endsection

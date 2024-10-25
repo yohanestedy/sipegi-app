@@ -35,7 +35,7 @@
             <div class="card">
                 <div class="card-content">
                     <div class="card-body">
-                        <form action="{{ route('user.store') }}" method="POST" class="form form-horizontal">
+                        <form id="form" action="{{ route('user.store') }}" method="POST" class="form form-horizontal">
                             @csrf
                             <div class="form-body">
                                 <div class="row">
@@ -130,7 +130,8 @@
                                     </div>
 
                                     <div class="col-sm-12 d-flex justify-content-end">
-                                        <button type="submit" class="btn btn-primary me-3 mb-1">Simpan</button>
+                                        <button id="submitBtn" type="submit"
+                                            class="btn btn-primary me-3 mb-1">Simpan</button>
                                         <button id="resetButton" type="reset"
                                             class="btn btn-light-secondary me-1 mb-1 buttonReset">Reset</button>
                                     </div>
@@ -156,9 +157,11 @@
     </script>
 
     <script>
+        // Reset select2
         $('#resetButton').on('click', function() {
             $('#posyanduSelect').val(null).trigger('change');
         });
+
         // Menangani perubahan pada input radio
         document.addEventListener('DOMContentLoaded', function() {
             const radioPuskesdes = document.getElementById('inlineRadio1');
@@ -192,6 +195,33 @@
 
             // Jalankan saat halaman pertama kali dimuat
             handleRoleChange();
+        });
+    </script>
+
+    {{-- Loading Tombol Submit --}}
+    <script>
+        document.getElementById('submitBtn').addEventListener('click', function(e) {
+            e.preventDefault(); // Mencegah submit default agar kita bisa menambahkan efek loading
+
+            // Nonaktifkan tombol saat loading
+            this.disabled = true;
+
+            // Tambahkan spinner ke dalam tombol
+            this.innerHTML =
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Menyimpan...';
+
+
+            // Setelah efek loading, lanjutkan dengan submit form
+            setTimeout(() => {
+                // Kirim form secara manual setelah animasi loading selesai
+                document.getElementById('form').submit();
+                this.innerHTML = 'Masuk';
+                this.disabled = false;
+
+            }, 700);
+
+
+            // Sesuaikan durasi loading (misalnya 500 ms)
         });
     </script>
 @endsection
