@@ -36,8 +36,8 @@ class OrtuController extends Controller
         return response()->json(Dusun::where('id', $dusunId)->pluck('rw'));
     }
 
+    // STORE DATA ORANGTUA
     public function store(Request $request)
-
     {
         // return $request;
         $validator = Validator::make($request->all(), [
@@ -94,6 +94,14 @@ class OrtuController extends Controller
             "created_by" => Auth::id(),
         ]);
 
-        return Redirect::route('orangtua.add')->with('success', 'Berhasil menambahkan data orangtua.');
+        return Redirect::route('orangtua.index')->with('success', 'Berhasil menambahkan data orangtua.');
+    }
+
+    // DELETE ORANGTUA
+    public function delete($id)
+    {
+
+        Orangtua::find($id)->delete();
+        return Redirect::route('orangtua.index')->with('success', 'Orangtua berhasil dihapus.');
     }
 }

@@ -41,139 +41,202 @@
                             <div class="form-body">
 
                                 {{-- Form Nomor KK  --}}
-                                <div class="row d-flex align-items-center">
-                                    <div class="col-md-4 text-md-end justify-content-end">
+                                <div class="row d-flex">
+                                    <div class="col-md-4 mt-3 text-md-end justify-content-end">
                                         <label for="no_kk">Nomor KK <span style="color: #dc3545;">*</span></label>
                                     </div>
                                     <div class="col-md-5 form-group mt-2">
-                                        <input name="no_kk" type="number" id="no_kk" class="form-control"
-                                            placeholder="">
+                                        <input name="no_kk" type="number" id="no_kk"
+                                            class="form-control @error('no_kk') is-invalid @enderror">
+                                        <div class="invalid-feedback">
+                                            @error('no_kk')
+                                                {{ $message }}
+                                            @enderror
+                                        </div>
                                     </div>
                                 </div>
 
                                 {{-- Form NIK Orangtua --}}
-                                <div class="row d-flex align-items-center">
-                                    <div class="col-md-4 text-md-end justify-content-end">
+                                <div class="row d-flex">
+                                    <div class="mt-3 col-md-4 text-md-end justify-content-end">
                                         <label for="nik">NIK Orangtua <span style="color: #dc3545;">*</span></label>
                                     </div>
                                     <div class="col-md-5 form-group mt-2">
-                                        <input name="nik" type="number" id="nik" class="form-control"
-                                            placeholder="">
+                                        <input name="nik" type="number" id="nik"
+                                            class="form-control  @error('nik') is-invalid @enderror">
+                                        <div class="invalid-feedback">
+                                            @error('nik')
+                                                {{ $message }}
+                                            @enderror
+                                        </div>
                                     </div>
                                 </div>
 
                                 {{-- Form Nama Orangtua --}}
-                                <div class="row d-flex align-items-center">
-                                    <div class="col-md-4 text-md-end justify-content-end">
+                                <div class="row d-flex">
+                                    <div class="mt-3 col-md-4 text-md-end justify-content-end">
                                         <label for="nameOrtu">Nama Orangtua <span style="color: #dc3545;">*</span></label>
                                     </div>
                                     <div class="col-md-5 form-group mt-2">
-                                        <input name="name" type="text" id="nameOrtu" class="form-control"
-                                            placeholder="">
+                                        <input name="name" type="text" id="nameOrtu"
+                                            class="form-control @error('name') is-invalid @enderror">
+                                        <div class="invalid-feedback">
+                                            @error('name')
+                                                {{ $message }}
+                                            @enderror
+                                        </div>
                                     </div>
                                 </div>
 
                                 {{-- Form Telp/HP Orangtua --}}
-                                <div class="row d-flex align-items-center">
-                                    <div class="col-md-4 text-md-end justify-content-end">
+                                <div class="row d-flex">
+                                    <div class="mt-3 col-md-4 text-md-end justify-content-end">
                                         <label for="telp">Telp/HP Orangtua <span
                                                 style="color: #dc3545;">*</span></label>
                                     </div>
                                     <div class="col-md-5 form-group mt-2">
-                                        <input name="telp" type="number" id="telp" class="form-control"
-                                            placeholder="">
+                                        <input name="telp" type="number" id="telp"
+                                            class="form-control @error('telp') is-invalid @enderror">
+                                        <div class="invalid-feedback">
+                                            @error('telp')
+                                                {{ $message }}
+                                            @enderror
+                                        </div>
                                     </div>
                                 </div>
                                 {{-- Form Provinsi --}}
-                                <div class="row d-flex align-items-center">
-                                    <div class="col-md-4 text-md-end justify-content-end">
+                                <div class="row d-flex">
+                                    <div class="mt-3 col-md-4 text-md-end justify-content-end">
                                         <label>Provinsi <span style="color: #dc3545;">*</span></label>
                                     </div>
                                     <div class="col-md-7 form-group mt-2">
-                                        <select name="provinsi" class="form-select select2"
+                                        <select name="provinsi"
+                                            class="form-select @error('provinsi') is-invalid @enderror select2"
                                             data-placeholder="Pilih Provinsi">
                                             <option></option>
                                             <option value="Lampung">Lampung</option>
                                         </select>
+                                        <div class="invalid-feedback">
+                                            @error('provinsi')
+                                                {{ $message }}
+                                            @enderror
+                                        </div>
                                     </div>
                                 </div>
                                 {{-- Form Kabupaten --}}
-                                <div class="row d-flex align-items-center">
-                                    <div class="col-md-4 text-md-end justify-content-end">
+                                <div class="row d-flex">
+                                    <div class="mt-3 col-md-4 text-md-end justify-content-end">
                                         <label>Kabupaten <span style="color: #dc3545;">*</span></label>
                                     </div>
                                     <div class="col-md-7 form-group mt-2">
-                                        <select name="kabupaten" class="form-select select2"
+                                        <select name="kabupaten"
+                                            class="form-select @error('kabupaten') is-invalid @enderror select2"
                                             data-placeholder="Pilih Kabupaten">
                                             <option></option>
                                             <option value="Lampung Timur">Lampung Timur</option>
                                         </select>
+                                        <div class="invalid-feedback">
+                                            @error('kabupaten')
+                                                {{ $message }}
+                                            @enderror
+                                        </div>
                                     </div>
                                 </div>
                                 {{-- Form Kecamatan --}}
-                                <div class="row d-flex align-items-center">
-                                    <div class="col-md-4 text-md-end justify-content-end">
+                                <div class="row d-flex">
+                                    <div class="mt-3 col-md-4 text-md-end justify-content-end">
                                         <label>Kecamatan <span style="color: #dc3545;">*</span></label>
                                     </div>
                                     <div class="col-md-7 form-group mt-2">
-                                        <select name="kecamatan" class="form-select select2"
+                                        <select name="kecamatan"
+                                            class="form-select @error('kecamatan') is-invalid @enderror select2"
                                             data-placeholder="Pilih Kecamatan">
                                             <option></option>
                                             <option value="Batanghari">Batanghari</option>
                                         </select>
+                                        <div class="invalid-feedback">
+                                            @error('kecamatan')
+                                                {{ $message }}
+                                            @enderror
+                                        </div>
                                     </div>
                                 </div>
                                 {{-- Form Desa --}}
-                                <div class="row d-flex align-items-center">
-                                    <div class="col-md-4 text-md-end justify-content-end">
+                                <div class="row d-flex">
+                                    <div class="mt-3 col-md-4 text-md-end justify-content-end">
                                         <label>Desa <span style="color: #dc3545;">*</span></label>
                                     </div>
                                     <div class="col-md-7 form-group mt-2">
-                                        <select name="desa" class="form-select select2" data-placeholder="Pilih Desa">
+                                        <select name="desa"
+                                            class="form-select @error('desa') is-invalid @enderror select2"
+                                            data-placeholder="Pilih Desa">
                                             <option></option>
                                             <option value="Selorejo">Selorejo</option>
                                         </select>
+                                        <div class="invalid-feedback">
+                                            @error('desa')
+                                                {{ $message }}
+                                            @enderror
+                                        </div>
                                     </div>
                                 </div>
                                 {{-- Form Dusun --}}
-                                <div class="row d-flex align-items-center">
-                                    <div class="col-md-4 text-md-end justify-content-end">
+                                <div class="row d-flex">
+                                    <div class="mt-3 col-md-4 text-md-end justify-content-end">
                                         <label for="dusun">Dusun <span style="color: #dc3545;">*</span></label>
                                     </div>
                                     <div class="col-md-7 form-group mt-2">
-                                        <select id="dusun" name="dusun" class="form-select select2"
+                                        <select id="dusun" name="dusun"
+                                            class="form-select @error('dusun') is-invalid @enderror select2"
                                             data-placeholder="Pilih Dusun">
                                             <option></option>
                                             @foreach ($dusuns as $dusun)
                                                 <option value="{{ $dusun->id }}">{{ $dusun->name }}</option>
                                             @endforeach
                                         </select>
+                                        <div class="invalid-feedback">
+                                            @error('dusun')
+                                                {{ $message }}
+                                            @enderror
+                                        </div>
                                     </div>
                                 </div>
 
                                 {{-- Form RT --}}
-                                <div class="row d-flex align-items-center">
-                                    <div class="col-md-4 text-md-end justify-content-end">
+                                <div class="row d-flex">
+                                    <div class="mt-3 col-md-4 text-md-end justify-content-end">
                                         <label for="rt">RT <span style="color: #dc3545;">*</span></label>
                                     </div>
                                     <div class="col-md-3 form-group mt-2">
-                                        <select id="rt" name="rt" class="form-select select2"
+                                        <select id="rt" name="rt"
+                                            class="form-select @error('rt') is-invalid @enderror select2"
                                             data-placeholder="Pilih RT" disabled>
                                             <option></option>
                                         </select>
+                                        <div class="invalid-feedback">
+                                            @error('rt')
+                                                {{ $message }}
+                                            @enderror
+                                        </div>
                                     </div>
                                 </div>
 
                                 {{-- Form RW --}}
-                                <div class="row d-flex align-items-center">
-                                    <div class="col-md-4 text-md-end justify-content-end">
+                                <div class="row d-flex">
+                                    <div class="mt-3 col-md-4 text-md-end justify-content-end">
                                         <label for="rw">RW <span style="color: #dc3545;">*</span></label>
                                     </div>
                                     <div class="col-md-3 form-group mt-2">
-                                        <select id="rw" name="rw" class="form-select select2"
+                                        <select id="rw" name="rw"
+                                            class="form-select @error('rw') is-invalid @enderror select2"
                                             data-placeholder="Pilih RW" disabled>
                                             <option></option>
                                         </select>
+                                        <div class="invalid-feedback">
+                                            @error('rw')
+                                                {{ $message }}
+                                            @enderror
+                                        </div>
                                     </div>
                                 </div>
 
@@ -184,7 +247,13 @@
                                         <label>Alamat Lengkap <span style="color: #dc3545;">*</span></label>
                                     </div>
                                     <div class="col-md-7 form-group mt-2">
-                                        <textarea name="alamat" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                        <textarea name="alamat" class="form-control @error('alamat') is-invalid @enderror" id="exampleFormControlTextarea1"
+                                            rows="3"></textarea>
+                                        <div class="invalid-feedback">
+                                            @error('alamat')
+                                                {{ $message }}
+                                            @enderror
+                                        </div>
                                     </div>
                                 </div>
 
@@ -195,12 +264,6 @@
                                     <button id="resetButton" type="reset"
                                         class="btn btn-light-secondary me-1 mb-1">Reset</button>
                                 </div>
-
-                                @if (session('success'))
-                                    <script>
-                                        console.log("{{ session('success') }}");
-                                    </script>
-                                @endif
 
                             </div>
                         </form>

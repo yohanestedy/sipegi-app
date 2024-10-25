@@ -8,6 +8,7 @@
         /* Mengatur padding untuk semua <td> dalam tabel dengan ID 'tableUser' */
         table.dataTable td {
             padding: 8px 8px !important;
+            white-space: nowrap !important;
             /* Ubah nilai sesuai kebutuhan */
         }
     </style>
@@ -48,6 +49,13 @@
                     </a>
                 </div>
                 <div class="card-body">
+
+                    <div class="mb-2">
+                        <p class="d-block d-xl-none"
+                            style="font-size: 0.85rem; color: #9d9e9f; font-weight: 500; margin-top: 8px; font-style: italic; text-align: left;">
+                            *Geser ke samping untuk melihat data
+                        </p>
+                    </div>
                     <div class="table-responsive datatable-minimal">
 
                         <table class="table table-hover table-bordered" id="tableUser">
@@ -73,7 +81,8 @@
                                                 data-bs-toggle="tooltip" data-bs-placement="top"
                                                 data-bs-original-title="Edit" style="border-radius: 8px;">
                                                 <i class="fa-regular fa-pen-to-square"></i></a>
-                                            <form action="#" method="POST" style="display: inline">
+                                            <form action="{{ route('orangtua.delete', ['id' => $orangtua->id]) }}"
+                                                method="POST" style="display: inline">
                                                 @csrf
                                                 @method('DELETE')
 
@@ -93,9 +102,16 @@
                             </tbody>
                         </table>
                     </div>
+
                 </div>
+
             </div>
+
+
+
         </section>
+
+
     </div>
 @endsection
 
@@ -128,7 +144,7 @@
                 let form = $(this).closest("form");
 
                 Swal.fire({
-                    title: "Hapus akun user?",
+                    title: "Hapus data orangtua?",
                     text: "Setelah dihapus, Anda tidak dapat memulihkan data ini!",
                     icon: "warning",
                     showCancelButton: true,

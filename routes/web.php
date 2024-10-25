@@ -48,6 +48,11 @@ Route::group(['middleware' => 'auth'], function () {
         // ADD
         Route::get('/add', [OrtuController::class, 'add'])->name('orangtua.add');
         Route::post('/store', [OrtuController::class, 'store'])->name('orangtua.store');
+
+
+
+        // DELETE
+        Route::delete('/delete/{id}', [OrtuController::class, 'delete'])->name('orangtua.delete');
     });
 
 
