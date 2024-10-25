@@ -43,11 +43,10 @@
                                 {{-- Form Nomor KK  --}}
                                 <div class="row d-flex align-items-center">
                                     <div class="col-md-4 text-md-end justify-content-end">
-                                        <label for="first-name-horizontal">Nomor KK <span
-                                                style="color: #dc3545;">*</span></label>
+                                        <label for="no_kk">Nomor KK <span style="color: #dc3545;">*</span></label>
                                     </div>
                                     <div class="col-md-5 form-group mt-2">
-                                        <input name="no_kk" type="number" id="first-name-horizontal" class="form-control"
+                                        <input name="no_kk" type="number" id="no_kk" class="form-control"
                                             placeholder="">
                                     </div>
                                 </div>
@@ -55,11 +54,10 @@
                                 {{-- Form NIK Orangtua --}}
                                 <div class="row d-flex align-items-center">
                                     <div class="col-md-4 text-md-end justify-content-end">
-                                        <label for="first-name-horizontal">NIK Orangtua <span
-                                                style="color: #dc3545;">*</span></label>
+                                        <label for="nik">NIK Orangtua <span style="color: #dc3545;">*</span></label>
                                     </div>
                                     <div class="col-md-5 form-group mt-2">
-                                        <input name="nik" type="number" id="first-name-horizontal" class="form-control"
+                                        <input name="nik" type="number" id="nik" class="form-control"
                                             placeholder="">
                                     </div>
                                 </div>
@@ -67,11 +65,10 @@
                                 {{-- Form Nama Orangtua --}}
                                 <div class="row d-flex align-items-center">
                                     <div class="col-md-4 text-md-end justify-content-end">
-                                        <label for="first-name-horizontal">Nama Orangtua <span
-                                                style="color: #dc3545;">*</span></label>
+                                        <label for="nameOrtu">Nama Orangtua <span style="color: #dc3545;">*</span></label>
                                     </div>
                                     <div class="col-md-5 form-group mt-2">
-                                        <input name="name" type="text" id="first-name-horizontal" class="form-control"
+                                        <input name="name" type="text" id="nameOrtu" class="form-control"
                                             placeholder="">
                                     </div>
                                 </div>
@@ -79,66 +76,62 @@
                                 {{-- Form Telp/HP Orangtua --}}
                                 <div class="row d-flex align-items-center">
                                     <div class="col-md-4 text-md-end justify-content-end">
-                                        <label for="first-name-horizontal">Telp/HP Orangtua <span
+                                        <label for="telp">Telp/HP Orangtua <span
                                                 style="color: #dc3545;">*</span></label>
                                     </div>
                                     <div class="col-md-5 form-group mt-2">
-                                        <input name="telp" type="number" id="first-name-horizontal" class="form-control"
+                                        <input name="telp" type="number" id="telp" class="form-control"
                                             placeholder="">
                                     </div>
                                 </div>
                                 {{-- Form Provinsi --}}
                                 <div class="row d-flex align-items-center">
                                     <div class="col-md-4 text-md-end justify-content-end">
-                                        <label for="first-name-horizontal">Provinsi <span
-                                                style="color: #dc3545;">*</span></label>
+                                        <label>Provinsi <span style="color: #dc3545;">*</span></label>
                                     </div>
                                     <div class="col-md-7 form-group mt-2">
                                         <select name="provinsi" class="form-select select2"
                                             data-placeholder="Pilih Provinsi">
                                             <option></option>
-                                            <option value="Lampung" selected>Lampung</option>
+                                            <option value="Lampung">Lampung</option>
                                         </select>
                                     </div>
                                 </div>
                                 {{-- Form Kabupaten --}}
                                 <div class="row d-flex align-items-center">
                                     <div class="col-md-4 text-md-end justify-content-end">
-                                        <label for="first-name-horizontal">Kabupaten <span
-                                                style="color: #dc3545;">*</span></label>
+                                        <label>Kabupaten <span style="color: #dc3545;">*</span></label>
                                     </div>
                                     <div class="col-md-7 form-group mt-2">
                                         <select name="kabupaten" class="form-select select2"
                                             data-placeholder="Pilih Kabupaten">
                                             <option></option>
-                                            <option value="Lampung Timur" selected>Lampung Timur</option>
+                                            <option value="Lampung Timur">Lampung Timur</option>
                                         </select>
                                     </div>
                                 </div>
                                 {{-- Form Kecamatan --}}
                                 <div class="row d-flex align-items-center">
                                     <div class="col-md-4 text-md-end justify-content-end">
-                                        <label for="first-name-horizontal">Kecamatan <span
-                                                style="color: #dc3545;">*</span></label>
+                                        <label>Kecamatan <span style="color: #dc3545;">*</span></label>
                                     </div>
                                     <div class="col-md-7 form-group mt-2">
                                         <select name="kecamatan" class="form-select select2"
                                             data-placeholder="Pilih Kecamatan">
                                             <option></option>
-                                            <option value="Batanghari" selected>Batanghari</option>
+                                            <option value="Batanghari">Batanghari</option>
                                         </select>
                                     </div>
                                 </div>
                                 {{-- Form Desa --}}
                                 <div class="row d-flex align-items-center">
                                     <div class="col-md-4 text-md-end justify-content-end">
-                                        <label for="first-name-horizontal">Desa <span
-                                                style="color: #dc3545;">*</span></label>
+                                        <label>Desa <span style="color: #dc3545;">*</span></label>
                                     </div>
                                     <div class="col-md-7 form-group mt-2">
                                         <select name="desa" class="form-select select2" data-placeholder="Pilih Desa">
                                             <option></option>
-                                            <option value="Selorejo" selected>Selorejo</option>
+                                            <option value="Selorejo">Selorejo</option>
                                         </select>
                                     </div>
                                 </div>
@@ -188,8 +181,7 @@
                                 {{-- Form Alamat Lengkap --}}
                                 <div class="row d-flex mb-3 ">
                                     <div class="col-md-4 mt-2 text-md-end justify-content-end">
-                                        <label for="first-name-horizontal">Alamat Lengkap <span
-                                                style="color: #dc3545;">*</span></label>
+                                        <label>Alamat Lengkap <span style="color: #dc3545;">*</span></label>
                                     </div>
                                     <div class="col-md-7 form-group mt-2">
                                         <textarea name="alamat" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
@@ -203,6 +195,12 @@
                                     <button id="resetButton" type="reset"
                                         class="btn btn-light-secondary me-1 mb-1">Reset</button>
                                 </div>
+
+                                @if (session('success'))
+                                    <script>
+                                        console.log("{{ session('success') }}");
+                                    </script>
+                                @endif
 
                             </div>
                         </form>
