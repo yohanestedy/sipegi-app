@@ -25,7 +25,7 @@ class User extends Authenticatable
 
     function posyandu()
     {
-        return $this->hasOne(Posyandu::class, 'id', 'posyandu_id');
+        return $this->belongsTo(Posyandu::class);
     }
 
     /**

@@ -10,4 +10,9 @@ class Posyandu extends Model
     use HasFactory;
     protected $table = 'posyandu';
     protected $guarded = [];
+
+    public function user()
+    {
+        return $this->hasMany(User::class);
+    }
 }
