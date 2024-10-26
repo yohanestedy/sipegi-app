@@ -16,7 +16,7 @@ class OrtuController extends Controller
     //
     public function index()
     {
-        $orangtua = Orangtua::with('dusun')->get();
+        $orangtua = Orangtua::with(['dusun', 'rt'])->get();
         return view('pages.main.orangtua.index', compact('orangtua'));
     }
     //VIEW ADD BALITA
@@ -32,10 +32,10 @@ class OrtuController extends Controller
     }
 
     // Ambil JSON RW by Dusun
-    public function getRwByDusun($dusunId)
-    {
-        return response()->json(Dusun::where('id', $dusunId)->pluck('rw'));
-    }
+    // public function getRwByDusun($dusunId)
+    // {
+    //     return response()->json(Dusun::where('id', $dusunId)->pluck('rw'));
+    // }
 
     // STORE DATA ORANGTUA
     public function store(Request $request)

@@ -58,14 +58,15 @@
                     </div>
                     <div class="table-responsive datatable-minimal">
 
-                        <table class="table table-hover table-bordered" id="tableUser">
+                        <table class="table table-hover table-bordered" id="tableOrtu">
                             <thead>
                                 <tr>
-                                    <th>NIK</th>
-                                    <th>Nama</th>
-                                    <th>Dusun</th>
-                                    <th>Telp</th>
-                                    <th>Aksi</th>
+                                    <th style="text-align: center;">NIK</th>
+                                    <th style="text-align: center;">Nama</th>
+                                    <th style="text-align: center;">Dusun</th>
+                                    <th style="text-align: center;">RT</th>
+                                    <th style="text-align: center;">Telp</th>
+                                    <th style="text-align: center;">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -75,6 +76,7 @@
                                         <td>{{ $orangtua->nik }}</td>
                                         <td>{{ $orangtua->name }}</td>
                                         <td>{{ $orangtua->dusun->name }}</td>
+                                        <td>{{ $orangtua->rt->rt }}</td>
                                         <td>{{ $orangtua->telp }}</td>
                                         <td style="text-align: center">
                                             <a href="{{ route('orangtua.edit', ['id' => $orangtua->id]) }}"
@@ -145,13 +147,13 @@
                 let form = $(this).closest("form");
 
                 Swal.fire({
-                    title: "Hapus data orangtua?",
+                    title: "Hapus Data Orangtua?",
                     text: "Setelah dihapus, Anda tidak dapat memulihkan data ini!",
                     icon: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#d33",
                     cancelButtonColor: "#9c9c9c",
-                    confirmButtonText: "Ya, hapus!",
+                    confirmButtonText: "Ya, Hapus!",
                     cancelButtonText: "Batal",
                 }).then((willDelete) => {
                     if (willDelete.isConfirmed) {

@@ -40,10 +40,12 @@
                             @csrf
                             <div class="form-body">
 
+
+                                {{-- <span style="color: #dc3545;">*</span> --}}
                                 {{-- Form Nomor KK  --}}
                                 <div class="row d-flex">
                                     <div class="col-md-4 mt-3 text-md-end justify-content-end">
-                                        <label for="no_kk">Nomor KK <span style="color: #dc3545;">*</span></label>
+                                        <label for="no_kk">Nomor KK</label>
                                     </div>
                                     <div class="col-md-5 form-group mt-2">
                                         <input name="no_kk" type="number" id="no_kk"
@@ -60,7 +62,7 @@
                                 {{-- Form NIK Orangtua --}}
                                 <div class="row d-flex">
                                     <div class="mt-3 col-md-4 text-md-end justify-content-end">
-                                        <label for="nik">NIK Orangtua <span style="color: #dc3545;">*</span></label>
+                                        <label for="nik">NIK Orangtua</label>
                                     </div>
                                     <div class="col-md-5 form-group mt-2">
                                         <input name="nik" type="number" id="nik"
@@ -77,7 +79,7 @@
                                 {{-- Form Nama Orangtua --}}
                                 <div class="row d-flex">
                                     <div class="mt-3 col-md-4 text-md-end justify-content-end">
-                                        <label for="nameOrtu">Nama Orangtua <span style="color: #dc3545;">*</span></label>
+                                        <label for="nameOrtu">Nama Orangtua</label>
                                     </div>
                                     <div class="col-md-5 form-group mt-2">
                                         <input name="name" type="text" id="nameOrtu"
@@ -94,8 +96,7 @@
                                 {{-- Form Telp/HP Orangtua --}}
                                 <div class="row d-flex">
                                     <div class="mt-3 col-md-4 text-md-end justify-content-end">
-                                        <label for="telp">Telp/HP Orangtua <span
-                                                style="color: #dc3545;">*</span></label>
+                                        <label for="telp">Telp/HP Orangtua</label>
                                     </div>
                                     <div class="col-md-5 form-group mt-2">
                                         <input name="telp" type="number" id="telp"
@@ -111,9 +112,9 @@
                                 {{-- Form Provinsi --}}
                                 <div class="row d-flex">
                                     <div class="mt-3 col-md-4 text-md-end justify-content-end">
-                                        <label>Provinsi <span style="color: #dc3545;">*</span></label>
+                                        <label>Provinsi</label>
                                     </div>
-                                    <div class="col-md-7 form-group mt-2">
+                                    <div class="col-md-5 form-group mt-2">
                                         <select name="provinsi"
                                             class="form-select @error('provinsi') is-invalid @enderror select2"
                                             data-placeholder="Pilih Provinsi">
@@ -131,9 +132,9 @@
                                 {{-- Form Kabupaten --}}
                                 <div class="row d-flex">
                                     <div class="mt-3 col-md-4 text-md-end justify-content-end">
-                                        <label>Kabupaten <span style="color: #dc3545;">*</span></label>
+                                        <label>Kabupaten</label>
                                     </div>
-                                    <div class="col-md-7 form-group mt-2">
+                                    <div class="col-md-5 form-group mt-2">
                                         <select name="kabupaten"
                                             class="form-select @error('kabupaten') is-invalid @enderror select2"
                                             data-placeholder="Pilih Kabupaten">
@@ -152,9 +153,9 @@
                                 {{-- Form Kecamatan --}}
                                 <div class="row d-flex">
                                     <div class="mt-3 col-md-4 text-md-end justify-content-end">
-                                        <label>Kecamatan <span style="color: #dc3545;">*</span></label>
+                                        <label>Kecamatan</label>
                                     </div>
-                                    <div class="col-md-7 form-group mt-2">
+                                    <div class="col-md-5 form-group mt-2">
                                         <select name="kecamatan"
                                             class="form-select @error('kecamatan') is-invalid @enderror select2"
                                             data-placeholder="Pilih Kecamatan">
@@ -173,9 +174,9 @@
                                 {{-- Form Desa --}}
                                 <div class="row d-flex">
                                     <div class="mt-3 col-md-4 text-md-end justify-content-end">
-                                        <label>Desa <span style="color: #dc3545;">*</span></label>
+                                        <label>Desa</label>
                                     </div>
-                                    <div class="col-md-7 form-group mt-2">
+                                    <div class="col-md-5 form-group mt-2">
                                         <select name="desa"
                                             class="form-select @error('desa') is-invalid @enderror select2"
                                             data-placeholder="Pilih Desa">
@@ -193,9 +194,9 @@
                                 {{-- Form Dusun --}}
                                 <div class="row d-flex">
                                     <div class="mt-3 col-md-4 text-md-end justify-content-end">
-                                        <label for="dusun">Dusun <span style="color: #dc3545;">*</span></label>
+                                        <label for="dusun">Dusun</label>
                                     </div>
-                                    <div class="col-md-7 form-group mt-2">
+                                    <div class="col-md-5 form-group mt-2">
                                         <select id="dusun" name="dusun"
                                             class="form-select @error('dusun') is-invalid @enderror select2"
                                             data-placeholder="Pilih Dusun">
@@ -217,7 +218,7 @@
                                 {{-- Form RT --}}
                                 <div class="row d-flex">
                                     <div class="mt-3 col-md-4 text-md-end justify-content-end">
-                                        <label for="rt">RT <span style="color: #dc3545;">*</span></label>
+                                        <label for="rt">RT</label>
                                     </div>
                                     <div class="col-md-3 form-group mt-2">
                                         <select id="rt" name="rt"
@@ -236,7 +237,7 @@
                                 {{-- Form RW --}}
                                 {{-- <div class="row d-flex">
                                     <div class="mt-3 col-md-4 text-md-end justify-content-end">
-                                        <label for="rw">RW <span style="color: #dc3545;">*</span></label>
+                                        <label for="rw">RW</label>
                                     </div>
                                     <div class="col-md-3 form-group mt-2">
                                         <select id="rw" name="rw"
@@ -256,9 +257,9 @@
                                 {{-- Form Alamat Lengkap --}}
                                 <div class="row d-flex mb-3 ">
                                     <div class="col-md-4 mt-2 text-md-end justify-content-end">
-                                        <label>Alamat Lengkap <span style="color: #dc3545;">*</span></label>
+                                        <label>Alamat Lengkap</label>
                                     </div>
-                                    <div class="col-md-7 form-group mt-2">
+                                    <div class="col-md-5 form-group mt-2">
                                         <textarea name="alamat" class="form-control @error('alamat') is-invalid @enderror" id="exampleFormControlTextarea1"
                                             rows="3">{{ old('alamat') }}</textarea>
                                         <div class="invalid-feedback">
