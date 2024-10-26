@@ -73,7 +73,7 @@ class UserController extends Controller
             "created_by" => Auth::id(), // Mengisi created_by dengan ID pengguna yang sedang login
         ]);
 
-        return Redirect::route('user.index')->with('success', 'Berhasil mendaftarkan akun');
+        return Redirect::route('user.index')->with('successToast', 'Berhasil mendaftarkan akun');
     }
 
     // view edit
@@ -125,7 +125,7 @@ class UserController extends Controller
         ]);
 
 
-        return Redirect::route('user.index')->with('success', 'Data berhasil di update.');
+        return Redirect::route('user.index')->with('successToast', 'Data berhasil di update.');
     }
 
     // Delete User

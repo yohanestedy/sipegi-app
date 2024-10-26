@@ -1,4 +1,4 @@
-@extends('layout.main', ['title' => 'Tambah Data Balita'])
+@extends('layout.main', ['title' => 'Edit Data Balita'])
 
 @section('cssLibraries')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" />
@@ -12,9 +12,9 @@
             <div class="row">
                 <div class="col-12 col-md-6 order-md-1 order-last">
 
-                    <h3>Tambah Data Orangtua</h3>
+                    <h3>Edit Data Orangtua</h3>
                     <p class="text-subtitle text-muted">
-                        Isi form untuk menambah data orangtua.
+                        Edit form untuk merubah data orangtua.
                     </p>
                 </div>
                 <div class="col-12 col-md-6 order-md-2 order-first">
@@ -24,7 +24,7 @@
                                 <a href="{{ route('orangtua.index') }}">Orangtua</a>
                             </li>
                             <li class="breadcrumb-item active" aria-current="page">
-                                Tambah Data Orangtua
+                                Edit Data Orangtua
                             </li>
                         </ol>
                     </nav>
@@ -35,9 +35,10 @@
             <div class="card">
                 <div class="card-content">
                     <div class="card-body">
-                        <form id="form" action="{{ route('orangtua.store') }}" method="POST"
+                        <form id="form" action="{{ route('orangtua.update', ['id' => $orangtua->id]) }}" method="POST"
                             class="form form-horizontal">
                             @csrf
+                            @method('PUT')
                             <div class="form-body">
 
                                 {{-- Form Nomor KK  --}}
@@ -48,7 +49,7 @@
                                     <div class="col-md-5 form-group mt-2">
                                         <input name="no_kk" type="number" id="no_kk"
                                             class="form-control @error('no_kk') is-invalid @enderror"
-                                            value="{{ old('no_kk') }}">
+                                            value="{{ old('no_kk') ?? $orangtua->no_kk }}">
                                         <div class="invalid-feedback">
                                             @error('no_kk')
                                                 {{ $message }}
@@ -65,7 +66,7 @@
                                     <div class="col-md-5 form-group mt-2">
                                         <input name="nik" type="number" id="nik"
                                             class="form-control  @error('nik') is-invalid @enderror"
-                                            value="{{ old('nik') }}">
+                                            value="{{ old('nik') ?? $orangtua->nik }}">
                                         <div class="invalid-feedback">
                                             @error('nik')
                                                 {{ $message }}
@@ -82,7 +83,7 @@
                                     <div class="col-md-5 form-group mt-2">
                                         <input name="name" type="text" id="nameOrtu"
                                             class="form-control @error('name') is-invalid @enderror"
-                                            value="{{ old('name') }}">
+                                            value="{{ old('name') ?? $orangtua->name }}">
                                         <div class="invalid-feedback">
                                             @error('name')
                                                 {{ $message }}
@@ -100,7 +101,7 @@
                                     <div class="col-md-5 form-group mt-2">
                                         <input name="telp" type="number" id="telp"
                                             class="form-control @error('telp') is-invalid @enderror"
-                                            value="{{ old('telp') }}">
+                                            value="{{ old('telp') ?? $orangtua->telp }}">
                                         <div class="invalid-feedback">
                                             @error('telp')
                                                 {{ $message }}
@@ -118,7 +119,8 @@
                                             class="form-select @error('provinsi') is-invalid @enderror select2"
                                             data-placeholder="Pilih Provinsi">
                                             <option></option>
-                                            <option value="Lampung" {{ old('provinsi') == 'Lampung' ? 'selected' : '' }}>
+                                            <option value="Lampung"
+                                                {{ old('provinsi') == 'Lampung' ? 'selected' : ($orangtua->provinsi == 'Lampung' ? 'selected' : '') }}>
                                                 Lampung</option>
                                         </select>
                                         <div class="invalid-feedback">
@@ -139,7 +141,8 @@
                                             data-placeholder="Pilih Kabupaten">
                                             <option></option>
                                             <option value="Lampung Timur"
-                                                {{ old('kabupaten') == 'Lampung Timur' ? 'selected' : '' }}>Lampung Timur
+                                                {{ old('kabupaten') == 'Lampung Timur' ? 'selected' : ($orangtua->kabupaten == 'Lampung Timur' ? 'selected' : '') }}>
+                                                Lampung Timur
                                             </option>
                                         </select>
                                         <div class="invalid-feedback">
@@ -160,7 +163,8 @@
                                             data-placeholder="Pilih Kecamatan">
                                             <option></option>
                                             <option value="Batanghari"
-                                                {{ old('kecamatan') == 'Batanghari' ? 'selected' : '' }}>Batanghari
+                                                {{ old('kecamatan') == 'Batanghari' ? 'selected' : ($orangtua->kecamatan == 'Batanghari' ? 'selected' : '') }}>
+                                                Batanghari
                                             </option>
                                         </select>
                                         <div class="invalid-feedback">
@@ -180,7 +184,8 @@
                                             class="form-select @error('desa') is-invalid @enderror select2"
                                             data-placeholder="Pilih Desa">
                                             <option></option>
-                                            <option value="Selorejo" {{ old('desa') == 'Selorejo' ? 'selected' : '' }}>
+                                            <option value="Selorejo"
+                                                {{ old('desa') == 'Selorejo' ? 'selected' : ($orangtua->desa == 'Selorejo' ? 'selected' : '') }}>
                                                 Selorejo</option>
                                         </select>
                                         <div class="invalid-feedback">
@@ -202,7 +207,8 @@
                                             <option></option>
                                             @foreach ($dusuns as $dusun)
                                                 <option value="{{ $dusun->id }}"
-                                                    {{ old('dusun') == $dusun->id ? 'selected' : '' }}>{{ $dusun->name }}
+                                                    {{ old('dusun') == $dusun->id ? 'selected' : ($orangtua->dusun_id == $dusun->id ? 'selected' : '') }}>
+                                                    {{ $dusun->name }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -222,7 +228,8 @@
                                     <div class="col-md-3 form-group mt-2">
                                         <select id="rt" name="rt"
                                             class="form-select @error('rt') is-invalid @enderror select2"
-                                            data-placeholder="Pilih RT" data-old-value="{{ old('rt') }}">
+                                            data-placeholder="Pilih RT"
+                                            data-old-value="{{ old('rt') ?? $orangtua->rt_id }}">
                                             <option></option>
                                         </select>
                                         <div class="invalid-feedback">
@@ -241,7 +248,8 @@
                                     <div class="col-md-3 form-group mt-2">
                                         <select id="rw" name="rw"
                                             class="form-select @error('rw') is-invalid @enderror select2"
-                                            data-placeholder="Pilih RW" data-old-value="{{ old('rw') }}">
+                                            data-placeholder="Pilih RW"
+                                            data-old-value="{{ old('rw') ?? $orangtua->rw }}">
                                             <option></option>
                                         </select>
                                         <div class="invalid-feedback">
@@ -260,7 +268,7 @@
                                     </div>
                                     <div class="col-md-7 form-group mt-2">
                                         <textarea name="alamat" class="form-control @error('alamat') is-invalid @enderror" id="exampleFormControlTextarea1"
-                                            rows="3">{{ old('alamat') }}</textarea>
+                                            rows="3">{{ old('alamat') ?? $orangtua->alamat }}</textarea>
                                         <div class="invalid-feedback">
                                             @error('alamat')
                                                 {{ $message }}
@@ -395,7 +403,7 @@
                         }
                     });
 
-                    // // Ambil RW berdasarkan dusun yang dipilih
+                    // Ambil RW berdasarkan dusun yang dipilih
                     // $.ajax({
                     //     url: `/api/rw/${dusunId}`,
                     //     method: 'GET',

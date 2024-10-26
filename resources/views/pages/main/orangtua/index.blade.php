@@ -77,9 +77,10 @@
                                         <td>{{ $orangtua->dusun->name }}</td>
                                         <td>{{ $orangtua->telp }}</td>
                                         <td style="text-align: center">
-                                            <a href="#" class="btn icon btn-sm btn-primary mt-1 mb-1 me-1"
-                                                data-bs-toggle="tooltip" data-bs-placement="top"
-                                                data-bs-original-title="Edit" style="border-radius: 8px;">
+                                            <a href="{{ route('orangtua.edit', ['id' => $orangtua->id]) }}"
+                                                class="btn icon btn-sm btn-primary mt-1 mb-1 me-1" data-bs-toggle="tooltip"
+                                                data-bs-placement="top" data-bs-original-title="Edit"
+                                                style="border-radius: 8px;">
                                                 <i class="fa-regular fa-pen-to-square"></i></a>
                                             <form action="{{ route('orangtua.delete', ['id' => $orangtua->id]) }}"
                                                 method="POST" style="display: inline">
@@ -169,4 +170,43 @@
 
         });
     </script>
+
+    {{-- Toast Sweatalert2 --}}
+    @if (session('successToast'))
+        <script>
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                icon: "success",
+                title: "{{ session('successToast') }}"
+            });
+        </script>
+    @elseif (session('errorToast'))
+        <script>
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                icon: "error",
+                title: "{{ session('errorToast') }}"
+            });
+        </script>
+    @endif
 @endsection

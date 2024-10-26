@@ -2,11 +2,11 @@
 
 @section('mainContent')
     <div class="page-heading">
-        <h3>Profile Statistics</h3>
+        <h3>Dashboard</h3>
     </div>
     <div class="page-content">
         <section class="row">
-            <div class="col-12 col-lg-9">
+            <div class="col-12">
                 <div class="row">
                     <div class="col-6 col-lg-3 col-md-6">
                         <div class="card">
@@ -77,7 +77,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                {{-- <div class="row">
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
@@ -243,9 +243,9 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
-            <div class="col-12 col-lg-3">
+            {{-- <div class="col-12 col-lg-3">
                 <div class="card">
                     <div class="card-body py-4 px-4">
                         <div class="d-flex align-items-center">
@@ -305,7 +305,7 @@
                         <div id="chart-visitors-profile"></div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </section>
     </div>
 @endsection
@@ -313,4 +313,54 @@
 @section('jsLibraries')
     <script src="assets/extensions/apexcharts/apexcharts.min.js"></script>
     <script src="assets/static/js/pages/dashboard.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+    {{-- Basic Sweatalert2 --}}
+    <script>
+        @if (session()->has('success'))
+            Swal.fire('Success', '{{ session('success') }}', 'success');
+        @elseif (session()->has('error'))
+            Swal.fire('Error', '{{ session('error') }}', 'error');
+        @endif
+    </script>
+
+    {{-- Toast Sweatalert2 --}}
+    @if (session('successToast'))
+        <script>
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                icon: "success",
+                title: "{{ session('successToast') }}"
+            });
+        </script>
+    @elseif (session('errorToast'))
+        <script>
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                icon: "error",
+                title: "{{ session('errorToast') }}"
+            });
+        </script>
+    @endif
 @endsection

@@ -22,7 +22,7 @@ Route::post('/login/store', [AuthController::class, 'storeLogin'])->name('login.
 // Semua route di bawah ini akan dilindungi oleh middleware 'auth'
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', function () {
-        return view('pages.main.balita.add');
+        return view('pages.main.index');
     })->name('home');
 
     Route::prefix('user')->group(function () {
@@ -49,7 +49,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/add', [OrtuController::class, 'add'])->name('orangtua.add');
         Route::post('/store', [OrtuController::class, 'store'])->name('orangtua.store');
 
-
+        // EDIT
+        Route::get('/edit/{id}', [OrtuController::class, 'edit'])->name('orangtua.edit');
+        Route::put('/update/{id}', [OrtuController::class, 'update'])->name('orangtua.update');
 
         // DELETE
         Route::delete('/delete/{id}', [OrtuController::class, 'delete'])->name('orangtua.delete');

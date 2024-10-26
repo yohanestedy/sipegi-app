@@ -39,7 +39,7 @@ class AuthController extends Controller
         if (Auth::attempt($credential, $request->filled('remember'))) {
             $request->session()->regenerate();
             return Redirect::intended('/')->with([
-                'login' => 'Login Berhasil',
+                'successToast' => 'Login Berhasil',
                 'user_name' => $user->name // menyimpan nama di session
             ]);
         }
