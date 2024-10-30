@@ -320,7 +320,7 @@
             setTimeout(() => {
                 // Kirim form secara manual setelah animasi loading selesai
                 document.getElementById('form').submit();
-                this.innerHTML = 'Masuk';
+                this.innerHTML = 'Simpan';
                 this.disabled = false;
 
             }, 700);

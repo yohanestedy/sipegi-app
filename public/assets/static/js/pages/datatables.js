@@ -56,6 +56,28 @@ let customized_datatable2 = $("#tableOrtu").DataTable({
         "searchPlaceholder": "Search.."
     }
 })
+let customized_datatable3 = $("#tableBalita").DataTable({
+    responsive: true,
+    info: false,
+    pagingType: 'simple',
+    order: [
+        [2, 'desc'],  // Kolom Dusun, urut descending
+        [1, 'asc'],  // Kolom Nama, urut ascending
+    ],
+    columnDefs: [
+
+        { orderable: false, targets: [0, 4, 5] } // Nonaktifkan sorting di kolom lainnya
+    ],
+    dom:
+		"<'row'<'col-3'l><'col-9'f>>" +
+		"<'row dt-row'<'col-sm-12'tr>>" +
+		"<'row'<'col-4'i><'col-8'p>>",
+    "language": {
+        "lengthMenu": "_MENU_ ",
+        "search": "",
+        "searchPlaceholder": "Search.."
+    }
+})
 
 const setTableColor = () => {
     document.querySelectorAll('.dataTables_paginate .pagination').forEach(dt => {

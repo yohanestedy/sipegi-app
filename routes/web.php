@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BalitaController;
 use App\Http\Controllers\OrtuController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +27,7 @@ Route::group(['middleware' => 'auth'], function () {
     })->name('home');
 
     Route::prefix('user')->group(function () {
+
         //  Index
         Route::get('/', [UserController::class, 'index'])->name('user.index');
 
@@ -42,6 +44,7 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     Route::prefix('orangtua')->group(function () {
+
         //  Index
         Route::get('/', [OrtuController::class, 'index'])->name('orangtua.index');
 
@@ -57,10 +60,23 @@ Route::group(['middleware' => 'auth'], function () {
         Route::delete('/delete/{id}', [OrtuController::class, 'delete'])->name('orangtua.delete');
     });
 
+    Route::prefix('balita')->group(function () {
+
+        // INDEX
+        Route::get('/', [BalitaController::class, 'index'])->name('balita.index');
+
+        // ADD
+        Route::get('/add', [BalitaController::class, 'add'])->name('balita.add');
+        Route::post('/add/store', [BalitaController::class, 'store'])->name('balita.store');
+    });
+
 
     // Route untuk mengambil RT dan RW berdasarkan dusun_id
     Route::get('/api/rt/{dusunId}', [OrtuController::class, 'getRtByDusun']);
     Route::get('/api/rw/{dusunId}', [OrtuController::class, 'getRwByDusun']);
+
+    // Route untuk mengambil Posyandu berdasarkan dusun_id orangtua
+    Route::get('/api/posyandu/{dusunId}', [BalitaController::class, 'getPosyanduByDusunId']);
 
 
     // Log Out

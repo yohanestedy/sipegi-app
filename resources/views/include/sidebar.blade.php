@@ -72,8 +72,8 @@
                 </li>
 
                 {{-- Balita --}}
-                <li class="sidebar-item ">
-                    <a href="index.html" class="sidebar-link">
+                <li class="sidebar-item {{ Route::is('balita.*') ? 'active' : '' }} ">
+                    <a href="{{ route('balita.index') }}" class="sidebar-link">
                         <i class="fa-solid fa-children fa-lg"></i>
                         <span>Balita</span>
                     </a>
