@@ -5,18 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Posyandu extends Model
+class BalitaUkur extends Model
 {
     use HasFactory;
-    protected $table = 'posyandu';
+    protected $table = 'balita_ukur';
     protected $guarded = [];
 
-    public function user()
-    {
-        return $this->hasMany(User::class);
-    }
     public function balita()
     {
-        return $this->hasMany(Balita::class);
+        return $this->belongsTo(Balita::class);
     }
 }

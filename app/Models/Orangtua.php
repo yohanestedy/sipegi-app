@@ -20,4 +20,9 @@ class Orangtua extends Model
     {
         return $this->belongsTo(Dusun::class);
     }
+
+    public function balita()
+    {
+        return $this->hasMany(Balita::class);
+    }
 }
