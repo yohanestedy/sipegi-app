@@ -61,12 +61,11 @@ let customized_datatable3 = $("#tableBalita").DataTable({
     info: false,
     pagingType: 'simple',
     order: [
-        [2, 'desc'],  // Kolom Dusun, urut descending
-        [1, 'asc'],  // Kolom Nama, urut ascending
+        [1, 'asc'],  // Kolom Dusun, urut descending
     ],
     columnDefs: [
 
-        { orderable: false, targets: [0, 4, 5] } // Nonaktifkan sorting di kolom lainnya
+        { orderable: false, targets: [0,2, 3, 4] } // Nonaktifkan sorting di kolom lainnya
     ],
     dom:
 		"<'row'<'col-3'l><'col-9'f>>" +
@@ -75,7 +74,7 @@ let customized_datatable3 = $("#tableBalita").DataTable({
     "language": {
         "lengthMenu": "_MENU_ ",
         "search": "",
-        "searchPlaceholder": "Search.."
+        "searchPlaceholder": "Ketik nama.."
     }
 })
 

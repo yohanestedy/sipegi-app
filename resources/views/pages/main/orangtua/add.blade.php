@@ -109,6 +109,18 @@
                                         </div>
                                     </div>
                                 </div>
+                                {{-- Alamat Domisili Label --}}
+                                <div class="row d-flex">
+                                    <div class="mt-3 col-md-4 text-md-end justify-content-end">
+
+                                    </div>
+                                    <div class="col-md-5 form-group mb-0 mt-3">
+                                        <label
+                                            style="font-weight: normal; color: #8997A4; font-style: italic; font-size: 0.9em;">*Alamat
+                                            Tinggal/Domisili</label>
+
+                                    </div>
+                                </div>
                                 {{-- Form Provinsi --}}
                                 <div class="row d-flex">
                                     <div class="mt-3 col-md-4 text-md-end justify-content-end">

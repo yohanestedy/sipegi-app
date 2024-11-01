@@ -68,6 +68,10 @@ Route::group(['middleware' => 'auth'], function () {
         // ADD
         Route::get('/add', [BalitaController::class, 'add'])->name('balita.add');
         Route::post('/add/store', [BalitaController::class, 'store'])->name('balita.store');
+
+        // EDIT
+        Route::get('/edit/{id}', [BalitaController::class, 'edit'])->name('balita.edit');
+        Route::put('/update/{id}', [BalitaController::class, 'update'])->name('balita.update');
     });
 
 

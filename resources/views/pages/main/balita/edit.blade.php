@@ -1,4 +1,4 @@
-@extends('layout.main', ['title' => 'Tambah Data Balita'])
+@extends('layout.main', ['title' => 'Edit Data Balita'])
 
 @section('cssLibraries')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" />
@@ -12,9 +12,9 @@
             <div class="row">
                 <div class="col-12 col-md-6 order-md-1 order-last">
 
-                    <h3>Tambah Data Balita</h3>
+                    <h3>Edit Data Balita</h3>
                     <p class="text-subtitle text-muted">
-                        Isi form untuk menambah data balita.
+                        Edit form untuk merubah data balita.
                     </p>
                 </div>
                 <div class="col-12 col-md-6 order-md-2 order-first">
@@ -24,7 +24,7 @@
                                 <a href="#">Balita</a>
                             </li>
                             <li class="breadcrumb-item active" aria-current="page">
-                                Tambah Data Balita
+                                Edit Data Balita
                             </li>
                         </ol>
                     </nav>

@@ -7,7 +7,7 @@
     <style>
         /* Mengatur padding untuk semua <td> dalam tabel dengan ID 'tableUser' */
         table.dataTable td {
-            padding: 8px 8px !important;
+            padding: 7px 7px !important;
             white-space: nowrap !important;
             /* Ubah nilai sesuai kebutuhan */
         }
@@ -61,30 +61,26 @@
                         <table class="table table-hover table-bordered" id="tableBalita">
                             <thead>
                                 <tr>
+                                    <th style="text-align: center;">Aksi</th>
                                     <th style="text-align: center;">Nama</th>
                                     <th style="text-align: center;">NIK</th>
-                                    <th style="text-align: center;">Dusun</th>
-                                    <th style="text-align: center;">RT</th>
-                                    <th style="text-align: center;">Telp</th>
-                                    <th style="text-align: center;">Aksi</th>
+                                    <th style="text-align: center;">L/P</th>
+                                    <th style="text-align: center;">Nama Ortu</th>
+                                    <th style="text-align: center;">Posyandu</th>
+
                                 </tr>
                             </thead>
                             <tbody>
 
-                                {{-- @foreach ($orangtua as $orangtua)
+                                @foreach ($balita as $balita)
                                     <tr>
-                                        <td>{{ $orangtua->nik }}</td>
-                                        <td>{{ $orangtua->name }}</td>
-                                        <td>{{ $orangtua->dusun->name }}</td>
-                                        <td>{{ $orangtua->rt->rt }}</td>
-                                        <td>{{ $orangtua->telp }}</td>
                                         <td style="text-align: center">
-                                            <a href="{{ route('orangtua.edit', ['id' => $orangtua->id]) }}"
-                                                class="btn icon btn-sm btn-primary mt-1 mb-1 me-1" data-bs-toggle="tooltip"
+                                            <a href="{{ route('balita.edit', ['id' => $balita->id]) }}"
+                                                class="btn icon btn-sm btn-primary " data-bs-toggle="tooltip"
                                                 data-bs-placement="top" data-bs-original-title="Edit"
                                                 style="border-radius: 8px;">
                                                 <i class="fa-regular fa-pen-to-square"></i></a>
-                                            <form action="{{ route('orangtua.delete', ['id' => $orangtua->id]) }}"
+                                            {{-- <form action="{{ route('orangtua.delete', ['id' => $orangtua->id]) }}"
                                                 method="POST" style="display: inline">
                                                 @csrf
                                                 @method('DELETE')
@@ -95,12 +91,18 @@
                                                     data-bs-original-title="Hapus" style="border-radius: 8px;">
                                                     <i class="fa-solid fa-trash"></i>
                                                 </button>
-                                            </form>
+                                            </form> --}}
 
                                         </td>
+                                        <td>{{ $balita->name }}</td>
+                                        <td style="text-align: center">{{ $balita->nik == null ? '-' : $balita->nik }}</td>
+                                        <td style="text-align: center">{{ $balita->gender }}</td>
+                                        <td>{{ $balita->orangtua->name }}</td>
+                                        <td style="text-align: center">{{ $balita->posyandu->name }}</td>
+
 
                                     </tr>
-                                @endforeach --}}
+                                @endforeach
 
                             </tbody>
                         </table>

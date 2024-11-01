@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('balita', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 50);
-            $table->string('nik', 16)->nullable();
+            $table->string('nik', 16)->nullable()->unique(); // Membuat nik unik
             $table->date('tgl_lahir');
             $table->string('gender', 1);
             $table->unsignedInteger('orangtua_id');
@@ -24,8 +24,8 @@ return new class extends Migration
             $table->unsignedInteger('posyandu_id');
             $table->foreign('posyandu_id')->references('id')->on('posyandu')->onDelete('cascade');
             $table->integer('family_order');
-            $table->integer('bb_lahir');
-            $table->integer('tb_lahir');
+            $table->float('bb_lahir');
+            $table->float('tb_lahir');
             $table->unsignedInteger('created_by');
             $table->unsignedInteger('updated_by')->nullable();
             $table->timestamps();

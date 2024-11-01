@@ -22,7 +22,14 @@ class OrtuController extends Controller
     //VIEW ADD BALITA
     public function add()
     {
-        $dusuns = Dusun::all();
+        $user = auth()->user();
+
+        if ($user->posyandu_id !== null) {
+            $dusuns = Dusun::where('id', $user->posyandu_id)->get();
+        } else {
+            $dusuns = Dusun::all();
+        }
+
         return view('pages.main.orangtua.add', compact('dusuns'));
     }
     // Ambil JSON RT by Dusun
@@ -40,6 +47,11 @@ class OrtuController extends Controller
     // STORE DATA ORANGTUA
     public function store(Request $request)
     {
+
+        // Mengubah input nama menjadi huruf kapital
+        $request->merge([
+            'name' => strtoupper($request->name),
+        ]);
         // return $request;
         $validator = Validator::make($request->all(), [
             'no_kk' => ['required', 'numeric', 'digits:16'], // Memastikan hanya angka dengan panjang tepat 16
