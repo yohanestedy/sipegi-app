@@ -25,4 +25,21 @@ class Balita extends Model
     {
         return $this->belongsTo(Posyandu::class);
     }
+
+    protected $appends = ['umur_display'];
+
+    public function getUmurDisplayAttribute()
+    {
+        $tglLahir = \Carbon\Carbon::parse($this->tgl_lahir);
+        $umurHari = $tglLahir->diffInDays(now());
+        $umurBulan = floor($umurHari / 30);
+
+        if ($umurBulan < 24) {
+            return "{$umurBulan} bulan";
+        } else {
+            $tahun = floor($umurBulan / 12);
+            $bulan = $umurBulan % 12;
+            return "{$tahun} tahun {$bulan} bulan";
+        }
+    }
 }

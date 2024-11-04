@@ -34,8 +34,8 @@
                 <li class="sidebar-title">Menu</li>
 
                 {{-- Dashboard --}}
-                <li class="sidebar-item {{ Route::is('dashboard') ? 'active' : '' }}">
-                    <a href="index.html" class="sidebar-link">
+                <li class="sidebar-item {{ Route::is('home') ? 'active' : '' }}">
+                    <a href="{{ route('home') }}" class="sidebar-link">
                         <i class="fa-duotone fa-solid fa-grid-2 fa-lg"></i>
                         <span>Dashboard</span>
                     </a>
@@ -50,7 +50,7 @@
 
                     <ul class="submenu">
                         <li class="submenu-item">
-                            <a href="#" class="submenu-link">Daftar Posyandu</a>
+                            <a href="{{ route('masterdata.listposyandu') }}" class="submenu-link">Daftar Posyandu</a>
                         </li>
 
                         <li class="submenu-item">

@@ -19,4 +19,8 @@ class Posyandu extends Model
     {
         return $this->hasMany(Balita::class);
     }
+    public function dusun()
+    {
+        return $this->hasOne(Dusun::class, 'id', 'id');
+    }
 }

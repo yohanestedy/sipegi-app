@@ -15,7 +15,7 @@ class BalitaSeeder extends Seeder
         Balita::create([
             'name' => 'Felicia Janice Sihotang',
             'nik' => '3173064301240005',
-            'tgl_lahir' => '2024-10-23',
+            'tgl_lahir' => '2024-01-03',
             'gender' => 'P',
             'orangtua_id' => 1,
             'posyandu_id' => 6,

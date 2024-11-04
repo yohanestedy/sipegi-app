@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BalitaController;
+use App\Http\Controllers\MasterDataController;
 use App\Http\Controllers\OrtuController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +27,7 @@ Route::group(['middleware' => 'auth'], function () {
         return view('pages.main.index');
     })->name('home');
 
+    // USER
     Route::prefix('user')->group(function () {
 
         //  Index
@@ -43,6 +45,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::delete('/delete/{id}', [UserController::class, 'delete'])->name('user.delete');
     });
 
+    // ORANGTUA
     Route::prefix('orangtua')->group(function () {
 
         //  Index
@@ -60,6 +63,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::delete('/delete/{id}', [OrtuController::class, 'delete'])->name('orangtua.delete');
     });
 
+    // BALITA
     Route::prefix('balita')->group(function () {
 
         // INDEX
@@ -72,6 +76,13 @@ Route::group(['middleware' => 'auth'], function () {
         // EDIT
         Route::get('/edit/{id}', [BalitaController::class, 'edit'])->name('balita.edit');
         Route::put('/update/{id}', [BalitaController::class, 'update'])->name('balita.update');
+
+        // DELETE
+        Route::delete('/delete/{id}', [BalitaController::class, 'delete'])->name('balita.delete');
+    });
+    Route::prefix('master-data')->group(function () {
+        // POSYANDU
+        Route::get('/list-posyandu', [MasterDataController::class, 'listPosyandu'])->name('masterdata.listposyandu');
     });
 
 

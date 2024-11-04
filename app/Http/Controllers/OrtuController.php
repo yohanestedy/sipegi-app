@@ -6,6 +6,7 @@ use App\Models\Rt;
 use App\Models\Dusun;
 use App\Models\Orangtua;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -16,7 +17,13 @@ class OrtuController extends Controller
     //
     public function index()
     {
-        $orangtua = Orangtua::with(['dusun', 'rt'])->get();
+        $user = auth()->user();
+        if ($user->posyandu_id !== null) {
+            $orangtua = Orangtua::where('dusun_id', $user->posyandu_id)->with(['dusun', 'rt'])->get();
+        } else {
+
+            $orangtua = Orangtua::with(['dusun', 'rt'])->get();
+        }
         return view('pages.main.orangtua.index', compact('orangtua'));
     }
     //VIEW ADD BALITA
@@ -55,7 +62,7 @@ class OrtuController extends Controller
         // return $request;
         $validator = Validator::make($request->all(), [
             'no_kk' => ['required', 'numeric', 'digits:16'], // Memastikan hanya angka dengan panjang tepat 16
-            'nik' => ['required', 'numeric', 'digits:16'],   // Memastikan hanya angka dengan panjang tepat 16
+            'nik' => ['required', 'numeric', 'digits:16', Rule::unique('orangtua', 'nik')],   // Memastikan hanya angka dengan panjang tepat 16
             'name' => ['required', 'regex:/^[a-zA-Z\s]+$/'],
             'telp' => 'required',
             'provinsi' => 'required',
@@ -72,6 +79,7 @@ class OrtuController extends Controller
             'nik.required' => 'NIK harus diisi',
             'nik.numeric' => 'NIK harus berisi angka saja',
             'nik.digits' => 'NIK harus berisi tepat 16 digit angka',
+            'nik.unique' => 'NIK sudah terdaftar. Silahkan cek di daftar orangtua.',
             'name.required' => 'Nama harus diisi',
             'name.regex' => 'Nama tidak boleh mengandung angka atau karakter khusus',
             'telp.required' => 'Telepon harus diisi',
@@ -120,7 +128,7 @@ class OrtuController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'no_kk' => ['required', 'numeric', 'digits:16'], // Memastikan hanya angka dengan panjang tepat 16
-            'nik' => ['required', 'numeric', 'digits:16'],   // Memastikan hanya angka dengan panjang tepat 16
+            'nik' => ['required', 'numeric', 'digits:16', Rule::unique('orangtua', 'nik')->ignore($id)],   // Memastikan hanya angka dengan panjang tepat 16
             'name' => ['required', 'regex:/^[a-zA-Z\s]+$/'],
             'telp' => 'required',
             'provinsi' => 'required',
@@ -137,6 +145,7 @@ class OrtuController extends Controller
             'nik.required' => 'NIK harus diisi',
             'nik.numeric' => 'NIK harus berisi angka saja',
             'nik.digits' => 'NIK harus berisi tepat 16 digit angka',
+            'nik.unique' => 'NIK sudah terdaftar. Silahkan cek di daftar orangtua.',
             'name.required' => 'Nama harus diisi',
             'name.regex' => 'Nama tidak boleh mengandung angka atau karakter khusus',
             'telp.required' => 'Telepon harus diisi',

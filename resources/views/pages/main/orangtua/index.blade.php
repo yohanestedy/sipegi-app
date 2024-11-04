@@ -84,7 +84,7 @@
                                                 data-bs-placement="top" data-bs-original-title="Edit"
                                                 style="border-radius: 8px;">
                                                 <i class="fa-regular fa-pen-to-square"></i></a>
-                                            <form action="{{ route('orangtua.delete', ['id' => $orangtua->id]) }}"
+                                            {{-- <form action="{{ route('orangtua.delete', ['id' => $orangtua->id]) }}"
                                                 method="POST" style="display: inline">
                                                 @csrf
                                                 @method('DELETE')
@@ -95,7 +95,7 @@
                                                     data-bs-original-title="Hapus" style="border-radius: 8px;">
                                                     <i class="fa-solid fa-trash"></i>
                                                 </button>
-                                            </form>
+                                            </form> --}}
 
                                         </td>
 

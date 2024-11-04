@@ -304,6 +304,32 @@
                     </div>
                 </div>
             </div>
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Hapus Orangtua</h5>
+                </div>
+                <div class="card-body">
+                    <p>Perhatian! Mengapus orangtua otomatis akan menghapus data balita.</p>
+                    <div class="form-check">
+                        <div class="checkbox">
+                            <input type="checkbox" id="iaggree" class="form-check-input">
+                            <label for="iaggree">Sentuh saya! Jika Anda setuju untuk menghapus
+                                secara permanen</label>
+                        </div>
+                    </div>
+                    <div class="form-group my-2 d-flex justify-content-end">
+                        <form action="{{ route('orangtua.delete', ['id' => $orangtua->id]) }}" method="POST"
+                            style="display: inline">
+                            @csrf
+                            @method('DELETE')
+                            <button id="btn-delete-account" type="submit"
+                                class="btn icon btn-sm btn-danger mt-1 mb-1 me-1 swal-delete" disabled>
+                                <i class="fa-regular fa-circle-x"></i> Hapus
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </section>
     </div>
 @endsection
@@ -440,6 +466,51 @@
             if ($('#dusun').val()) {
                 $('#dusun').trigger('change');
             }
+        });
+    </script>
+
+    {{-- Ceklis Delete --}}
+    <script>
+        const checkbox = document.getElementById("iaggree")
+        const buttonDeleteAccount = document.getElementById("btn-delete-account")
+        checkbox.addEventListener("change", function() {
+            const checked = checkbox.checked
+            if (checked) {
+                buttonDeleteAccount.removeAttribute("disabled")
+            } else {
+                buttonDeleteAccount.setAttribute("disabled", true)
+            }
+        })
+    </script>
+
+    {{-- SWAL DELETE --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(document).ready(function() {
+            // SweetAlert untuk konfirmasi penghapusan
+            $(".swal-delete").click(function(event) {
+                event.preventDefault();
+
+                let form = $(this).closest("form");
+
+                Swal.fire({
+                    title: "Hapus Orangtua?",
+                    text: "Data Orangtua akan dihapus secara permanen dan tidak dapat dikembalikan!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#d33",
+                    cancelButtonColor: "#9c9c9c",
+                    confirmButtonText: "Ya, Hapus!",
+                    cancelButtonText: "Batal",
+                }).then((willDelete) => {
+                    if (willDelete.isConfirmed) {
+                        form.submit(); // Submit form setelah konfirmasi
+                    }
+                });
+            });
+
+
+
         });
     </script>
 @endsection

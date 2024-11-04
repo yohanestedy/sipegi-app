@@ -16,11 +16,13 @@
     <link rel="stylesheet" crossorigin href="{{ asset('/assets/compiled/css/app-dark.css') }}" />
     {{-- <link rel="stylesheet" href="https://atugatran.github.io/FontAwesome6Pro/css/all.min.css"> --}}
     <link rel="stylesheet" href="{{ asset('/assets/fontawesome/css/all.css') }}">
+
 </head>
 
 <body>
     <script src="{{ asset('assets/static/js/initTheme.js') }}"></script>
     <div id="app">
+
 
         {{-- SIDEBAR --}}
         @include('include.sidebar')

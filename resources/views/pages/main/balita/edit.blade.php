@@ -35,9 +35,10 @@
             <div class="card">
                 <div class="card-content">
                     <div class="card-body">
-                        <form id="form" action="{{ route('balita.store') }}" method="POST"
+                        <form id="form" action="{{ route('balita.update', ['id' => $balita->id]) }}" method="POST"
                             class="form form-horizontal">
                             @csrf
+                            @method('PUT')
                             <div class="form-body">
 
                                 {{-- tanda wajib diisi --}}
@@ -51,7 +52,7 @@
                                     <div class="col-md-5 form-group mt-2">
                                         <input name="name" type="text"
                                             class="form-control @error('name') is-invalid @enderror"
-                                            value="{{ old('name') }}">
+                                            value="{{ old('name') ?? $balita->name }}">
                                         <div class="invalid-feedback">
                                             @error('name')
                                                 {{ $message }}
@@ -69,7 +70,7 @@
                                         <input name="nik" id="nikHidden" type="hidden" value="">
                                         <input name="nik" type="number" id="nik-input"
                                             class="form-control @error('nik') is-invalid @enderror"
-                                            value="{{ old('nik') }}">
+                                            value="{{ old('nik') ?? $balita->nik }}">
                                         <div class="invalid-feedback">
                                             @error('nik')
                                                 {{ $message }}
@@ -77,7 +78,8 @@
                                         </div>
                                         <div class="form-check mt-2">
                                             <input class="form-check-input" type="checkbox" id="disableNIK"
-                                                name="disableNIK" {{ old('disableNIK') ? 'checked' : '' }}>
+                                                name="disableNIK"
+                                                {{ old('disableNIK') ? 'checked' : ($balita->nik == null ? 'checked' : '') }}>
                                             <label class="form-check-label" for="disableNIK" style="font-weight: normal;">
                                                 Ceklist jika Balita belum mempunyai NIK
                                             </label>
@@ -93,7 +95,7 @@
                                     <div class="col-md-3 form-group mt-2">
                                         <input name="tgl_lahir" type="date"
                                             class="form-control @error('tgl_lahir') is-invalid @enderror"
-                                            value="{{ old('tgl_lahir') }}">
+                                            value="{{ old('tgl_lahir') ?? $balita->tgl_lahir }}">
                                         <div class="invalid-feedback">
                                             @error('tgl_lahir')
                                                 {{ $message }}
@@ -112,7 +114,7 @@
                                             <input name="gender" value="L"
                                                 class="form-check-input @error('gender') is-invalid @enderror"
                                                 type="radio" id="radioLakilaki"
-                                                {{ old('gender') == 'L' ? 'checked' : '' }}>
+                                                {{ old('gender') == 'L' ? 'checked' : ($balita->gender == 'L' ? 'checked' : '') }}>
                                             <label class="form-check-label" for="radioLakilaki"
                                                 style="font-weight: normal;">
                                                 Laki-laki
@@ -122,7 +124,7 @@
                                             <input name="gender" value="P"
                                                 class="form-check-input @error('gender') is-invalid @enderror"
                                                 type="radio" id="radioPerempuan"
-                                                {{ old('gender') == 'P' ? 'checked' : '' }}>
+                                                {{ old('gender') == 'P' ? 'checked' : ($balita->gender == 'P' ? 'checked' : '') }}>
                                             <label class="form-check-label" for="radioPerempuan"
                                                 style="font-weight: normal;">
                                                 Perempuan
@@ -150,7 +152,7 @@
                                             @foreach ($orangtua as $orangtua)
                                                 <option value="{{ $orangtua->id }}"
                                                     data-dusun-id="{{ $orangtua->dusun_id }}"
-                                                    {{ old('orangtua') == $orangtua->id ? 'selected' : '' }}>
+                                                    {{ old('orangtua') == $orangtua->id ? 'selected' : ($balita->orangtua_id == $orangtua->id ? 'selected' : '') }}>
                                                     {{ $orangtua->name }} -
                                                     {{ $orangtua->nik }}</option>
                                             @endforeach
@@ -171,7 +173,8 @@
                                     <div class="col-md-4 form-group mt-2">
                                         <select id="posyanduSelect" name="posyandu"
                                             class="form-select select2  @error('posyandu') is-invalid @enderror"
-                                            data-placeholder="Pilih Posyandu" data-old-value="{{ old('posyandu') }}">
+                                            data-placeholder="Pilih Posyandu"
+                                            data-old-value="{{ old('posyandu') ?? $balita->posyandu_id }}">
                                             <option></option>
                                         </select>
                                         <div class="invalid-feedback">
@@ -190,7 +193,7 @@
                                     <div class="col-md-2 form-group mt-2">
                                         <input name="family_order" type="number"
                                             class="form-control @error('family_order') is-invalid @enderror"
-                                            value="{{ old('family_order') }}">
+                                            value="{{ old('family_order') ?? $balita->family_order }}">
                                         <div class="invalid-feedback">
                                             @error('family_order')
                                                 {{ $message }}
@@ -207,7 +210,7 @@
                                     <div class="col-md-2 form-group mt-2">
                                         <input name="bb_lahir" type="number"
                                             class="form-control  @error('bb_lahir') is-invalid @enderror"
-                                            value="{{ old('bb_lahir') }}">
+                                            value="{{ old('bb_lahir') ?? $balita->bb_lahir }}">
                                         <div class="invalid-feedback">
                                             @error('bb_lahir')
                                                 {{ $message }}
@@ -224,7 +227,7 @@
                                     <div class="col-md-2 form-group mt-2">
                                         <input name="tb_lahir" type="number"
                                             class="form-control @error('tb_lahir') is-invalid @enderror"
-                                            value="{{ old('tb_lahir') }}">
+                                            value="{{ old('tb_lahir') ?? $balita->tb_lahir }}">
                                         <div class="invalid-feedback">
                                             @error('tb_lahir')
                                                 {{ $message }}
@@ -235,12 +238,38 @@
 
                                 {{-- Tombol Simpan --}}
                                 <div class="col-sm-12 d-flex justify-content-center">
-                                    <button id="submitBtn" type="submit"
-                                        class="btn btn-primary me-3 mb-1">Simpan</button>
+                                    <button id="submitBtn" type="submit" class="btn btn-primary me-3 mb-1">Simpan
+                                        Perubahan</button>
                                     <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
                                 </div>
 
                             </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Hapus Balita</h5>
+                </div>
+                <div class="card-body">
+
+                    <div class="form-check">
+                        <div class="checkbox">
+                            <input type="checkbox" id="iaggree" class="form-check-input">
+                            <label for="iaggree">Sentuh saya! Jika Anda setuju untuk menghapus secara permanen</label>
+                        </div>
+                    </div>
+                    <div class="form-group my-2 d-flex justify-content-end">
+                        <form action="{{ route('balita.delete', ['id' => $balita->id]) }}" method="POST"
+                            style="display: inline">
+                            @csrf
+                            @method('DELETE')
+                            <button id="btn-delete-account" type="submit"
+                                class="btn icon btn-sm btn-danger mt-1 mb-1 me-1 swal-delete" disabled>
+                                <i class="fa-regular fa-circle-x"></i> Hapus
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -348,6 +377,51 @@
 
 
             // Sesuaikan durasi loading (misalnya 500 ms)
+        });
+    </script>
+
+    {{-- Ceklis Delete --}}
+    <script>
+        const checkbox = document.getElementById("iaggree")
+        const buttonDeleteAccount = document.getElementById("btn-delete-account")
+        checkbox.addEventListener("change", function() {
+            const checked = checkbox.checked
+            if (checked) {
+                buttonDeleteAccount.removeAttribute("disabled")
+            } else {
+                buttonDeleteAccount.setAttribute("disabled", true)
+            }
+        })
+    </script>
+
+    {{-- SWAL DELETE --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(document).ready(function() {
+            // SweetAlert untuk konfirmasi penghapusan
+            $(".swal-delete").click(function(event) {
+                event.preventDefault();
+
+                let form = $(this).closest("form");
+
+                Swal.fire({
+                    title: "Hapus Balita?",
+                    text: "Data Balita akan dihapus secara permanen dan tidak dapat dikembalikan!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#d33",
+                    cancelButtonColor: "#9c9c9c",
+                    confirmButtonText: "Ya, Hapus!",
+                    cancelButtonText: "Batal",
+                }).then((willDelete) => {
+                    if (willDelete.isConfirmed) {
+                        form.submit(); // Submit form setelah konfirmasi
+                    }
+                });
+            });
+
+
+
         });
     </script>
 @endsection
