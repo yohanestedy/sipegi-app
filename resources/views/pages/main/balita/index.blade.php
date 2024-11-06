@@ -64,7 +64,7 @@
                                     <th style="text-align: center;">Tindakan</th>
                                     <th style="text-align: center;">Nama</th>
                                     <th style="text-align: center;">NIK</th>
-                                    <th style="text-align: center;">L/P</th>
+                                    <th style="text-align: center;">Jenis Kelamin</th>
                                     <th style="text-align: center;">Tanggal Lahir</th>
                                     <th style="text-align: center;">Umur</th>
                                     <th style="text-align: center;">Nama Orangtua</th>
@@ -76,12 +76,19 @@
 
                                 @foreach ($balita as $balita)
                                     <tr>
+
                                         <td style="text-align: center">
+                                            <a href="{{ route('balitaukur.add', ['id' => $balita->id]) }}"
+                                                class="btn icon btn-primary " data-bs-toggle="tooltip"
+                                                data-bs-placement="top" data-bs-original-title="Pengukuran"
+                                                style="border-radius: 8px; padding: .2rem .4rem;">
+                                                <i class="fa-solid fa-calculator"></i></a>
                                             <a href="{{ route('balita.edit', ['id' => $balita->id]) }}"
-                                                class="btn icon btn-sm btn-primary " data-bs-toggle="tooltip"
+                                                class="btn icon btn-success " data-bs-toggle="tooltip"
                                                 data-bs-placement="top" data-bs-original-title="Edit"
-                                                style="border-radius: 8px;">
+                                                style="border-radius: 8px; padding: .2rem .4rem;">
                                                 <i class="fa-regular fa-pen-to-square"></i></a>
+
                                             {{-- <form action="{{ route('balita.delete', ['id' => $balita->id]) }}"
                                                 method="POST" style="display: inline">
                                                 @csrf
@@ -100,9 +107,9 @@
                                         <td>{{ $balita->name }}</td>
                                         <td style="text-align: center">{{ $balita->nik == null ? '-' : $balita->nik }}</td>
                                         <td style="text-align: center">
-                                            <div style="font-weight: 600; {{ $balita->gender == 'P' ? 'background-color: #fcd8ff; color:#855f82' : 'background-color: #d2eeff; color: #526483' }} "
+                                            <div style="font-weight: 600; {{ $balita->gender_display == 'Perempuan' ? 'background-color: #fcd8ff; color:#855f82' : 'background-color: #d2eeff; color: #526483' }} "
                                                 class="badge">
-                                                {{ $balita->gender }}</div>
+                                                {{ $balita->gender_display }}</div>
                                         </td>
                                         <td>{{ \Carbon\Carbon::parse($balita->tgl_lahir)->translatedFormat('d F Y') }}</td>
                                         <td>{{ $balita->umur_display }}</td>

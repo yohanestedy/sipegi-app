@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Balita extends Model
 {
@@ -26,11 +27,11 @@ class Balita extends Model
         return $this->belongsTo(Posyandu::class);
     }
 
-    protected $appends = ['umur_display'];
+    protected $appends = ['umur_display', 'tgl_lahir_display', 'gender_display'];
 
     public function getUmurDisplayAttribute()
     {
-        $tglLahir = \Carbon\Carbon::parse($this->tgl_lahir);
+        $tglLahir = Carbon::parse($this->tgl_lahir);
         $umurHari = $tglLahir->diffInDays(now());
         $umurBulan = floor($umurHari / 30);
 
@@ -41,5 +42,17 @@ class Balita extends Model
             $bulan = $umurBulan % 12;
             return "{$tahun} tahun {$bulan} bulan";
         }
+    }
+
+    // Mengembalikan tanggal lahir dalam format yang diinginkan
+    public function getTglLahirDisplayAttribute()
+    {
+        return Carbon::parse($this->tgl_lahir)->translatedFormat('d F Y');
+    }
+
+    // Mengembalikan gender dalam format yang diinginkan
+    public function getGenderDisplayAttribute()
+    {
+        return $this->gender === 'L' ? 'Laki-laki' : 'Perempuan';
     }
 }

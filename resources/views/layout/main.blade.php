@@ -61,6 +61,38 @@
 
     <script src="{{ asset('assets/compiled/js/app.js') }}"></script>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(document).ready(function() {
+            // SweetAlert untuk konfirmasi penghapusan
+            $(".swal-logout").click(function(event) {
+                event.preventDefault();
+
+                let form = $(this).closest("#logout-form");
+
+                Swal.fire({
+                    title: "Keluar Aplikasi?",
+                    text: "Anda harus login kembali untuk mengakses akun Anda.",
+                    icon: "warning", // Ikon ini menandakan peringatan sebelum logout
+                    showCancelButton: true,
+                    confirmButtonColor: "#d33", // Warna merah untuk konfirmasi logout
+                    cancelButtonColor: "#9c9c9c", // Warna abu-abu untuk tombol batal
+                    confirmButtonText: "Ya, Keluar",
+                    cancelButtonText: "Batal",
+                }).then((willLogout) => {
+                    if (willLogout.isConfirmed) {
+                        form.submit(); // Submit form untuk logout
+                    }
+                });
+
+            });
+
+
+
+        });
+    </script>
+
     {{-- Js Tambahan jika di perlukan --}}
     @yield('jsLibraries')
 

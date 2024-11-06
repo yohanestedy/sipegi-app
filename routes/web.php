@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BalitaController;
+use App\Http\Controllers\BalitaUkurController;
 use App\Http\Controllers\MasterDataController;
 use App\Http\Controllers\OrtuController;
 use App\Http\Controllers\UserController;
@@ -86,6 +87,11 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
 
+    Route::prefix('balita-ukur')->group(function () {
+        // POSYANDU
+        Route::get('/add/{id?}', [BalitaUkurController::class, 'add'])->name('balitaukur.add');
+    });
+
     // Route untuk mengambil RT dan RW berdasarkan dusun_id
     Route::get('/api/rt/{dusunId}', [OrtuController::class, 'getRtByDusun']);
     Route::get('/api/rw/{dusunId}', [OrtuController::class, 'getRwByDusun']);
@@ -95,5 +101,5 @@ Route::group(['middleware' => 'auth'], function () {
 
 
     // Log Out
-    Route::get('logout', [AuthController::class, 'logout'])->name('logout');
+    Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 });

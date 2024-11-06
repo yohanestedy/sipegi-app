@@ -24,6 +24,7 @@ class BalitaController extends Controller
         } else {
             $balita = Balita::with(['posyandu', 'orangtua'])->get();
         }
+        // return $balita;
 
 
         return view('pages.main.balita.index', compact('balita'));

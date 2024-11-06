@@ -29,8 +29,8 @@
         </div>
 
         {{-- SIDEBAR MENU --}}
-        <div class="sidebar-menu">
-            <ul class="menu" style="margin-top: -1rem">
+        <div class="sidebar-menu" style="margin-bottom: auto;">
+            <ul class="menu" style="margin-top: -1rem;">
                 <li class="sidebar-title">Menu</li>
 
                 {{-- Dashboard --}}
@@ -105,6 +105,17 @@
 
 
             </ul>
+        </div>
+
+        <!-- Logout Button -->
+        <div class="logout-container"
+            style="position: sticky; bottom: 0; width: 100%; background-color: #f8f9fa; padding: 1rem;">
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: inline;">
+                @csrf
+                <a type="submit" class="btn btn-danger w-100 swal-logout">
+                    <i class="fa-solid fa-right-from-bracket"></i> Keluar
+                </a>
+            </form>
         </div>
     </div>
 </div>
