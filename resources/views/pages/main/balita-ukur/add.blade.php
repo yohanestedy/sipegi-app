@@ -6,7 +6,7 @@
         href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
     <style>
         .medium-text {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             /* Ukuran medium */
         }
     </style>
@@ -54,7 +54,7 @@
                                     <div class="col-md-4 mt-3 text-md-end justify-content-end">
                                         <label>Nama Balita</label>
                                     </div>
-                                    <div class="col-md-5 form-group mt-2">
+                                    <div class="col-md-6 form-group mt-2">
                                         <select id="balitaSelect" name="name"
                                             class="form-select select2 @error('name') is-invalid @enderror"
                                             data-placeholder="Pilih Nama Balita">
@@ -78,28 +78,29 @@
                                     <div class="col-md-4 text-md-end mt-3">
                                         {{-- <label class="form-label">Informasi Balita</label> --}}
                                     </div>
-                                    <div class="col-md-5">
-                                        <div class="row medium-text">
+                                    <div class="col-md-6">
+                                        <div class="row">
                                             <div class="col-6 col-md-4">
-                                                <label for="tgl_lahir">Tanggal Lahir
-                                                    :</label>
-                                                <p class="form-control-static " id="tgl_lahir">-</p>
+                                                <label class="medium-text" for="tgl_lahir">Tanggal Lahir
+                                                    :</label><br>
+                                                <p class="badge bg-light-secondary form-control-static " id="tgl_lahir">-
+                                                </p>
                                             </div>
                                             <div class="col-6 col-md-4">
-                                                <label for="umur">Umur :</label>
-                                                <p class="form-control-static " id="umur">-</p>
+                                                <label class="medium-text" for="umur">Umur :</label><br>
+                                                <p class="badge bg-light-secondary form-control-static " id="umur">-
+                                                </p>
                                             </div>
                                             <div class="col-6 col-md-4">
-                                                <label for="jenis_kelamin">Jenis Kelamin :</label>
-                                                <p class="form-control-static " id="jenis_kelamin">-</p>
+                                                <label class="medium-text" for="jenis_kelamin">Jenis Kelamin
+                                                    :</label><br>
+                                                <p class="badge bg-light-secondary form-control-static " id="jenis_kelamin">
+                                                    -
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
-
-
-
 
                                 {{-- Form Tanggal Ukur --}}
                                 <div class="row d-flex mb-2">
@@ -121,22 +122,55 @@
                                 {{-- Form BB --}}
                                 <div class="row d-flex">
                                     <div class="col-md-4 mt-3 text-md-end justify-content-end">
-                                        <label>Berat Badan(kg)</label>
+                                        <label>Berat Badan</label>
                                     </div>
-                                    <div class="col-md-2 form-group mt-2">
-                                        <input name="bb_lahir" type="number"
-                                            class="form-control  @error('bb_lahir') is-invalid @enderror"
-                                            value="{{ old('bb_lahir') }}">
-                                        <div class="invalid-feedback">
-                                            @error('bb_lahir')
-                                                {{ $message }}
-                                            @enderror
+                                    <div class="col-12 col-md-5 form-group mt-2">
+                                        <div class="row d-flex">
+                                            <div class="col-10 col-md-5">
+                                                <input name="bb" type="number"
+                                                    class="form-control  @error('bb') is-invalid @enderror"
+                                                    value="{{ old('bb') }}">
+                                                <div class="invalid-feedback">
+                                                    @error('bb')
+                                                        {{ $message }}
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="col-2 p-0 justify-content-start mt-auto">
+                                                <label style="font-weight: 350; font-size: 1.2em">kg</label>
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
 
                                 {{-- Form TB --}}
-                                <div class="row d-flex">
+                                <div class="row mb-2 d-flex">
+                                    <div class="col-md-4 mt-3 text-md-end justify-content-end">
+                                        <label>Tinggi Badan</label>
+                                    </div>
+                                    <div class="col-12 col-md-5 form-group mt-2">
+                                        <div class="row d-flex">
+                                            <div class="col-10 col-md-5">
+                                                <input name="tb" type="number"
+                                                    class="form-control  @error('tb') is-invalid @enderror"
+                                                    value="{{ old('tb') }}">
+                                                <div class="invalid-feedback">
+                                                    @error('tb')
+                                                        {{ $message }}
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="col-2 p-0 justify-content-start mt-auto">
+                                                <label style="font-weight: 350; font-size: 1.2em">cm</label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {{-- Form TB --}}
+                                {{-- <div class="row d-flex">
                                     <div class="col-md-4 mt-3 text-md-end justify-content-end">
                                         <label>Tinggi Badan(cm)</label>
                                     </div>
@@ -150,7 +184,7 @@
                                             @enderror
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 <!-- Cara Ukur -->
                                 <div class="row mb-4">
@@ -182,8 +216,10 @@
 
                                 {{-- Tombol Simpan --}}
                                 <div class="col-sm-12 d-flex justify-content-center">
-                                    <button id="submitBtn" type="submit" class="btn btn-primary me-3 mb-1">Simpan</button>
-                                    <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
+                                    <button id="submitBtn" type="submit"
+                                        class="btn btn-primary me-3 mb-1">Simpan</button>
+                                    <button id="resetButton" type="reset"
+                                        class="btn btn-light-secondary me-1 mb-1">Reset</button>
                                 </div>
 
                             </div>
@@ -206,6 +242,11 @@
             theme: "bootstrap-5",
             width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
             placeholder: $(this).data('placeholder'),
+        });
+
+        // Reset select2
+        $('#resetButton').on('click', function() {
+            $('.select2').val(null).trigger('change');
         });
     </script>
 

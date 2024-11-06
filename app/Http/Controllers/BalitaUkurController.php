@@ -25,7 +25,7 @@ class BalitaUkurController extends Controller
                 $balitas = Balita::with('posyandu')->get();
             }
         }
-        return $balitas;
+
 
 
 

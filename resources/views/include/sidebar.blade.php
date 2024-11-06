@@ -112,9 +112,18 @@
             style="position: sticky; bottom: 0; width: 100%; background-color: #f8f9fa; padding: 1rem;">
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: inline;">
                 @csrf
-                <a type="submit" class="btn btn-danger w-100 swal-logout">
-                    <i class="fa-solid fa-right-from-bracket"></i> Keluar
-                </a>
+                <div class="row">
+                    <div class="col-7">
+                        <label> <small>Login sebagai :</small></label>
+                        <label>{{ auth()->user()->name }}</label>
+
+                    </div>
+                    <div class="col-5"><a type="submit" class="btn btn-danger w-65 swal-logout">
+                            <i class="fa-solid fa-right-from-bracket"></i> Keluar</a>
+                    </div>
+
+                </div>
+
             </form>
         </div>
     </div>
