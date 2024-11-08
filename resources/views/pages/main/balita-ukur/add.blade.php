@@ -4,6 +4,11 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" />
     <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+
+
     <style>
         .medium-text {
             font-size: 0.8rem;
@@ -42,7 +47,8 @@
             <div class="card">
                 <div class="card-content">
                     <div class="card-body">
-                        <form id="form" action="#" method="POST" class="form form-horizontal">
+                        <form id="form" action="{{ route('balitaukur.store') }}" method="POST"
+                            class="form form-horizontal">
                             @csrf
                             <div class="form-body">
 
@@ -55,18 +61,18 @@
                                         <label>Nama Balita</label>
                                     </div>
                                     <div class="col-md-6 form-group mt-2">
-                                        <select id="balitaSelect" name="name"
-                                            class="form-select select2 @error('name') is-invalid @enderror"
+                                        <select id="balitaSelect" name="balita_id"
+                                            class="form-select select2 @error('balita_id') is-invalid @enderror"
                                             data-placeholder="Pilih Nama Balita">
                                             <option></option>
                                             @foreach ($balitas as $balita)
                                                 <option value="{{ $balita->id }}"
-                                                    {{ old('name') == $balita->id ? 'selected' : '' }}>
+                                                    {{ old('balita_id') == $balita->id ? 'selected' : '' }}>
                                                     {{ $balita->name }} - {{ $balita->posyandu->name }}</option>
                                             @endforeach
                                         </select>
                                         <div class="invalid-feedback">
-                                            @error('name')
+                                            @error('balita_id')
                                                 {{ $message }}
                                             @enderror
                                         </div>
@@ -83,18 +89,21 @@
                                             <div class="col-6 col-md-4">
                                                 <label class="medium-text" for="tgl_lahir">Tanggal Lahir
                                                     :</label><br>
-                                                <p class="badge bg-light-secondary form-control-static " id="tgl_lahir">-
+                                                <p class="badge bg-light-secondary form-control-static fw-normal"
+                                                    id="tgl_lahir">-
                                                 </p>
                                             </div>
                                             <div class="col-6 col-md-4">
                                                 <label class="medium-text" for="umur">Umur :</label><br>
-                                                <p class="badge bg-light-secondary form-control-static " id="umur">-
+                                                <p class="badge bg-light-secondary form-control-static fw-normal "
+                                                    id="umur">-
                                                 </p>
                                             </div>
                                             <div class="col-6 col-md-4">
                                                 <label class="medium-text" for="jenis_kelamin">Jenis Kelamin
                                                     :</label><br>
-                                                <p class="badge bg-light-secondary form-control-static " id="jenis_kelamin">
+                                                <p class="badge bg-light-secondary form-control-static fw-normal "
+                                                    id="jenis_kelamin">
                                                     -
                                                 </p>
                                             </div>
@@ -107,10 +116,13 @@
                                     <div class="col-md-4 mt-3 text-md-end justify-content-end">
                                         <label>Tanggal Ukur</label>
                                     </div>
-                                    <div class="col-md-3 form-group mt-2">
-                                        <input name="tgl_ukur" type="date"
+                                    <div class="col-md-3 form-group mt-2  position-relative has-icon-left">
+                                        <input name="tgl_ukur" id="tgl_ukur" type="text"
                                             class="form-control @error('tgl_ukur') is-invalid @enderror"
-                                            value="{{ old('tgl_ukur') }}">
+                                            value="{{ old('tgl_ukur') }}" placeholder="Pilih tanggal..">
+                                        <div class="form-control-icon ms-3 ">
+                                            <i class="fa-regular fa-calendar"></i>
+                                        </div>
                                         <div class="invalid-feedback">
                                             @error('tgl_lahir')
                                                 {{ $message }}
@@ -234,8 +246,9 @@
     </div>
 @endsection
 @section('jsLibraries')
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/id.js"></script>
 
     <script>
         $('.select2').select2({
@@ -247,6 +260,18 @@
         // Reset select2
         $('#resetButton').on('click', function() {
             $('.select2').val(null).trigger('change');
+        });
+
+
+        // CONFIG FLATPICKR
+        flatpickr("#tgl_ukur", {
+
+            "locale": "id",
+            altInput: true,
+            altFormat: "j F Y",
+            maxDate: "today",
+
+
         });
     </script>
 

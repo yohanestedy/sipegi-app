@@ -4,6 +4,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" />
     <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 @endsection
 
 @section('mainContent')
@@ -90,10 +92,13 @@
                                     <div class="col-md-4 mt-3 text-md-end justify-content-end">
                                         <label>Tanggal Lahir</label>
                                     </div>
-                                    <div class="col-md-3 form-group mt-2">
-                                        <input name="tgl_lahir" type="date"
+                                    <div class="col-md-3 form-group mt-2 position-relative has-icon-left">
+                                        <input id="tgl_lahir2" name="tgl_lahir" type="text"
                                             class="form-control @error('tgl_lahir') is-invalid @enderror"
-                                            value="{{ old('tgl_lahir') }}">
+                                            value="{{ old('tgl_lahir') }}" placeholder="Pilih tanggal..">
+                                        <div class="form-control-icon ms-3 ">
+                                            <i class="fa-regular fa-calendar"></i>
+                                        </div>
                                         <div class="invalid-feedback">
                                             @error('tgl_lahir')
                                                 {{ $message }}
@@ -182,56 +187,77 @@
                                     </div>
                                 </div>
 
+
                                 {{-- Form Anak Ke Berapa --}}
                                 <div class="row d-flex">
                                     <div class="col-md-4 mt-3 text-md-end justify-content-end">
-                                        <label>Anak ke berapa?</label>
+                                        <label>Anak ke berapa</label>
                                     </div>
-                                    <div class="col-md-2 form-group mt-2">
-                                        <input name="family_order" type="number"
-                                            class="form-control @error('family_order') is-invalid @enderror"
-                                            value="{{ old('family_order') }}">
-                                        <div class="invalid-feedback">
-                                            @error('family_order')
-                                                {{ $message }}
-                                            @enderror
+                                    <div class="col-12 col-md-5 form-group mt-2">
+                                        <div class="row d-flex">
+                                            <div class="col-10 col-md-5">
+                                                <input name="family_order" type="number"
+                                                    class="form-control @error('family_order') is-invalid @enderror"
+                                                    value="{{ old('family_order') }}">
+                                                <div class="invalid-feedback">
+                                                    @error('family_order')
+                                                        {{ $message }}
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="col-2 p-0 justify-content-start mt-auto"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- Form Berat Badan saat Lahir --}}
+                                <div class="row d-flex">
+                                    <div class="col-md-4 mt-3 text-md-end justify-content-end">
+                                        <label>Berat Badan saat Lahir</label>
+                                    </div>
+                                    <div class="col-12 col-md-5 form-group mt-2">
+                                        <div class="row d-flex">
+                                            <div class="col-10 col-md-5">
+                                                <input name="bb_lahir" type="number"
+                                                    class="form-control  @error('bb_lahir') is-invalid @enderror"
+                                                    value="{{ old('bb_lahir') }}">
+                                                <div class="invalid-feedback">
+                                                    @error('bb_lahir')
+                                                        {{ $message }}
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="col-2 p-0 justify-content-start mt-auto">
+                                                <label style="font-weight: 350; font-size: 1.2em">kg</label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- Form Panjang Badan saat Lahir --}}
+                                <div class="row d-flex mb-4">
+                                    <div class="col-md-4 mt-3 text-md-end justify-content-end">
+                                        <label>Panjang Badan saat Lahir</label>
+                                    </div>
+                                    <div class="col-12 col-md-5 form-group mt-2">
+                                        <div class="row d-flex">
+                                            <div class="col-10 col-md-5">
+                                                <input name="tb_lahir" type="number"
+                                                    class="form-control @error('tb_lahir') is-invalid @enderror"
+                                                    value="{{ old('tb_lahir') }}">
+                                                <div class="invalid-feedback">
+                                                    @error('tb_lahir')
+                                                        {{ $message }}
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="col-2 p-0 justify-content-start mt-auto">
+                                                <label style="font-weight: 350; font-size: 1.2em">cm</label>
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
 
-                                {{-- Form BB saat Lahir --}}
-                                <div class="row d-flex">
-                                    <div class="col-md-4 mt-3 text-md-end justify-content-end">
-                                        <label>Berat Badan saat lahir(kg)</label>
-                                    </div>
-                                    <div class="col-md-2 form-group mt-2">
-                                        <input name="bb_lahir" type="number"
-                                            class="form-control  @error('bb_lahir') is-invalid @enderror"
-                                            value="{{ old('bb_lahir') }}">
-                                        <div class="invalid-feedback">
-                                            @error('bb_lahir')
-                                                {{ $message }}
-                                            @enderror
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {{-- Form PB saat Lahir --}}
-                                <div class="row d-flex">
-                                    <div class="col-md-4 mt-3 text-md-end justify-content-end">
-                                        <label>Panjang Badan saat lahir(cm)</label>
-                                    </div>
-                                    <div class="col-md-2 form-group mt-2">
-                                        <input name="tb_lahir" type="number"
-                                            class="form-control @error('tb_lahir') is-invalid @enderror"
-                                            value="{{ old('tb_lahir') }}">
-                                        <div class="invalid-feedback">
-                                            @error('tb_lahir')
-                                                {{ $message }}
-                                            @enderror
-                                        </div>
-                                    </div>
-                                </div>
 
                                 {{-- Tombol Simpan --}}
                                 <div class="col-sm-12 d-flex justify-content-center">
@@ -249,8 +275,21 @@
     </div>
 @endsection
 @section('jsLibraries')
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/id.js"></script>
+
+    <script>
+        // CONFIG FLATPICKR
+        flatpickr("#tgl_lahir2", {
+
+            "locale": "id",
+            altInput: true,
+            altFormat: "j F Y",
+            maxDate: "today",
+
+        });
+    </script>
 
     <script>
         $('.select2').select2({
@@ -258,6 +297,8 @@
             width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
             placeholder: $(this).data('placeholder'),
         });
+
+
 
 
         // JS Value NIK

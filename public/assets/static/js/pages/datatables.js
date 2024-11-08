@@ -60,14 +60,13 @@ let customized_datatable3 = $("#tableBalita").DataTable({
     responsive: true,
     info: false,
     pagingType: 'simple',
-    ordering: false,
-    // order: [
-    //     [1, 'asc'],  // Kolom Dusun, urut descending
-    // ],
-    // columnDefs: [
+    order: [
+        [1, 'asc'],  // Kolom Dusun, urut descending
+    ],
+    columnDefs: [
 
-    //     { orderable: false, targets: [0,2,] } // Nonaktifkan sorting di kolom lainnya
-    // ],
+        { orderable: false, targets: [0,2,3,4,5,6,7] } // Nonaktifkan sorting di kolom lainnya
+    ],
     dom:
 		"<'row'<'col-3'l><'col-9'f>>" +
 		"<'row dt-row'<'col-sm-12'tr>>" +

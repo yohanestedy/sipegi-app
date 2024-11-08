@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Balita;
 use Illuminate\Http\Request;
+use Monolog\Handler\NullHandler;
 
 class BalitaUkurController extends Controller
 {
@@ -26,10 +27,11 @@ class BalitaUkurController extends Controller
             }
         }
 
-
-
-
-
         return view('pages.main.balita-ukur.add', compact('balitas'));
+    }
+
+    public function store(Request $request)
+    {
+        return $request;
     }
 }

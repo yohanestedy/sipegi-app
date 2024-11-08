@@ -99,10 +99,6 @@ class BalitaController extends Controller
             return Redirect::back()->withErrors($validator)->withInput();
         }
 
-
-
-
-
         Balita::create([
             "name" => $request->name,
             "nik" => $request->nik,
