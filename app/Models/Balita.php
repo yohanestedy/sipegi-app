@@ -46,18 +46,23 @@ class Balita extends Model
         return $umurBulan;
     }
 
+
+
     public function getUmurDisplayAttribute()
     {
         $tglLahir = Carbon::parse($this->tgl_lahir);
         $umurHari = $tglLahir->diffInDays(now());
         $umurBulan = floor($umurHari / 30);
+        $tahun = floor($umurBulan / 12);
+        $bulan = $umurBulan % 12;
+        $hari = $umurHari % 30;
 
-        if ($umurBulan < 24) {
-            return "{$umurBulan} bulan";
+        if ($umurHari <= 730) {
+            // Jika umur kurang dari atau sama dengan 730 hari (2 tahun)
+            return "{$umurBulan} Bulan -  {$hari} Hari";
         } else {
-            $tahun = floor($umurBulan / 12);
-            $bulan = $umurBulan % 12;
-            return "{$tahun} tahun {$bulan} bulan";
+            // Jika umur lebih dari 730 hari
+            return "{$tahun} Tahun -  {$bulan} Bulan -  {$hari} Hari";
         }
     }
 

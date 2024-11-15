@@ -91,7 +91,7 @@ class BalitaUkurController extends Controller
         // Ambil nilai IMT balita
         $IMT = $this->hitungIMT($beratBadan, $tinggiBadan);
 
-        // AMBIL NILAI LMS
+        // // AMBIL NILAI LMS BASIC
         // $bbUmurLMS = $this->ambilLms('BB_U', $umurBulan, $gender);
         // if ($umurHari <= 730) {
         //     $tbUmurLMS = $this->ambilLms('PB_U', $umurBulan, $gender);
@@ -119,12 +119,19 @@ class BalitaUkurController extends Controller
         $zScoreBB_TB = $this->hitungZScore($beratBadan, $bbtbLMS->L, $bbtbLMS->M, $bbtbLMS->S);
         $zScoreIMT_U = $this->hitungZScore($IMT, $imtLMS->L, $imtLMS->M, $imtLMS->S);
 
-        return response()->json([
-            'zscore_bb_u' => $zScoreBB_U,
-            'zscore_tb_u' => $zScoreTB_U,
-            'zscore_bb_tb' => $zScoreBB_TB,
-            'zscore_imt_u' => $zScoreIMT_U,
+        // return response()->json([
+        //     'zscore_bb_u' => $zScoreBB_U,
+        //     'zscore_tb_u' => $zScoreTB_U,
+        //     'zscore_bb_tb' => $zScoreBB_TB,
+        //     'zscore_imt_u' => $zScoreIMT_U,
 
+        // ]);
+
+        return response()->json([
+            'zscore_bb_u' => round($zScoreBB_U, 2),
+            'zscore_tb_u' => round($zScoreTB_U, 2),
+            'zscore_bb_tb' => round($zScoreBB_TB, 2),
+            'zscore_imt_u' => round($zScoreIMT_U, 2),
         ]);
     }
 

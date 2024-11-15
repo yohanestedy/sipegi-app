@@ -79,13 +79,16 @@
                     </a>
                 </li>
                 {{-- User Management --}}
-                <li class="sidebar-item {{ Route::is('user.*') ? 'active' : '' }}">
-                    <a href="{{ route('user.index') }}" class="sidebar-link">
-                        {{-- <i class="fa-duotone fa-solid fa-users"></i> --}}
-                        <i class="fa-duotone fa-solid fa-user-gear fa-lg" style="--fa-secondary-opacity: 0.5;"></i>
-                        <span>User Management</span>
-                    </a>
-                </li>
+                @if (Auth::user()->role == 'super_admin')
+                    <li class="sidebar-item {{ Route::is('user.*') ? 'active' : '' }}">
+                        <a href="{{ route('user.index') }}" class="sidebar-link">
+                            {{-- <i class="fa-duotone fa-solid fa-users"></i> --}}
+                            <i class="fa-duotone fa-solid fa-user-gear fa-lg" style="--fa-secondary-opacity: 0.5;"></i>
+                            <span>User Management</span>
+                        </a>
+                    </li>
+                @endif
+
                 {{-- Laporan --}}
                 <li class="sidebar-item">
                     <a href="index.html" class="sidebar-link">

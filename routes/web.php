@@ -28,23 +28,27 @@ Route::group(['middleware' => 'auth'], function () {
         return view('pages.main.index');
     })->name('home');
 
-    // USER
-    Route::prefix('user')->group(function () {
+    Route::group(['middleware' => 'super_admin'], function () {
+        // USER
+        Route::prefix('user')->group(function () {
 
-        //  Index
-        Route::get('/', [UserController::class, 'index'])->name('user.index');
+            //  Index
+            Route::get('/', [UserController::class, 'index'])->name('user.index');
 
-        // ADD
-        Route::get('/add', [UserController::class, 'add'])->name('user.add');
-        Route::post('/store', [UserController::class, 'store'])->name('user.store');
+            // ADD
+            Route::get('/add', [UserController::class, 'add'])->name('user.add');
+            Route::post('/store', [UserController::class, 'store'])->name('user.store');
 
-        // EDIT
-        Route::get('/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
-        Route::put('/update/{id}', [UserController::class, 'update'])->name('user.update');
+            // EDIT
+            Route::get('/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
+            Route::put('/update/{id}', [UserController::class, 'update'])->name('user.update');
 
-        // DELETE
-        Route::delete('/delete/{id}', [UserController::class, 'delete'])->name('user.delete');
+            // DELETE
+            Route::delete('/delete/{id}', [UserController::class, 'delete'])->name('user.delete');
+        });
     });
+
+
 
     // ORANGTUA
     Route::prefix('orangtua')->group(function () {

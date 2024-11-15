@@ -60,7 +60,7 @@
                                     <div class="col-md-4 mt-3 text-md-end justify-content-end">
                                         <label>Nama Balita</label>
                                     </div>
-                                    <div class="col-md-6 form-group mt-2">
+                                    <div class="col-md-5 form-group mt-2">
                                         <select id="balitaSelect" name="balita_id"
                                             class="form-select select2 @error('balita_id') is-invalid @enderror"
                                             data-placeholder="Pilih Nama Balita">
@@ -95,12 +95,6 @@
                                                 </p>
                                             </div>
                                             <div class="col-6 col-md-4">
-                                                <label class="medium-text" for="umur">Umur Saat Ini :</label><br>
-                                                <p class="badge bg-light-secondary form-control-static fw-normal "
-                                                    id="umur">-
-                                                </p>
-                                            </div>
-                                            <div class="col-6 col-md-4">
                                                 <label class="medium-text" for="jenis_kelamin">Jenis Kelamin
                                                     :</label><br>
                                                 <p class="badge bg-light-secondary form-control-static fw-normal "
@@ -108,6 +102,13 @@
                                                     -
                                                 </p>
                                             </div>
+                                            <div class="col-6 col-md-5">
+                                                <label class="medium-text" for="umur">Umur Saat Ini :</label><br>
+                                                <p class="badge bg-light-secondary form-control-static fw-normal "
+                                                    id="umur">-
+                                                </p>
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
