@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\Balita;
 use App\Models\StandarPertumbuhanAnak;
+use App\Models\StandarPertumbuhanAnakExpanded;
 use Illuminate\Http\Request;
 use Monolog\Handler\NullHandler;
 
@@ -90,16 +91,26 @@ class BalitaUkurController extends Controller
         // Ambil nilai IMT balita
         $IMT = $this->hitungIMT($beratBadan, $tinggiBadan);
 
-        // AMBIL NILAI LMS BALITA DARI TABEL
-        $bbUmurLMS = $this->ambilLms('BB_U', $umurBulan, $gender);
+        // AMBIL NILAI LMS
+        // $bbUmurLMS = $this->ambilLms('BB_U', $umurBulan, $gender);
+        // if ($umurHari <= 730) {
+        //     $tbUmurLMS = $this->ambilLms('PB_U', $umurBulan, $gender);
+        //     $bbtbLMS = $this->ambilLms('BB_PB', $tinggiBadan, $gender);
+        //     $imtLMS = $this->ambilLms('IMT_U_P', $umurBulan, $gender);
+        // } elseif ($umurHari >= 731 && $umurHari <= 1856) {
+        //     $tbUmurLMS = $this->ambilLms('TB_U', $umurBulan, $gender);
+        //     $bbtbLMS = $this->ambilLms('BB_TB', $tinggiBadan, $gender);
+        //     $imtLMS = $this->ambilLms('IMT_U_T', $umurBulan, $gender);
+        // }
+
+        // AMBIL NILAI LMS EXPANDED
+        $bbUmurLMS = $this->ambilLmsExpanded('BB_U', $umurHari, $gender);
+        $tbUmurLMS = $this->ambilLmsExpanded('TB_U', $umurHari, $gender);
+        $imtLMS = $this->ambilLmsExpanded('IMT_U', $umurHari, $gender);
         if ($umurHari <= 730) {
-            $tbUmurLMS = $this->ambilLms('PB_U', $umurBulan, $gender);
-            $bbtbLMS = $this->ambilLms('BB_PB', $tinggiBadan, $gender);
-            $imtLMS = $this->ambilLms('IMT_U_P', $umurBulan, $gender);
+            $bbtbLMS = $this->ambilLmsExpanded('BB_PB', $tinggiBadan, $gender);
         } elseif ($umurHari >= 731 && $umurHari <= 1856) {
-            $tbUmurLMS = $this->ambilLms('TB_U', $umurBulan, $gender);
-            $bbtbLMS = $this->ambilLms('BB_TB', $tinggiBadan, $gender);
-            $imtLMS = $this->ambilLms('IMT_U_T', $umurBulan, $gender);
+            $bbtbLMS = $this->ambilLmsExpanded('BB_TB', $tinggiBadan, $gender);
         }
 
         // HITUNG ZSCORE SETIAP KATEGORI
@@ -131,9 +142,20 @@ class BalitaUkurController extends Controller
     }
 
     // Fungsi untuk mengambil nilai L, M, S dari tabel referensi WHO berdasarkan gender dan umur/tinggi
+    // BASIC
     private function ambilLms($kategori, $umurAtautinggi, $gender)
     {
         return StandarPertumbuhanAnak::where('kategori', $kategori)
+            ->where('umur_atau_tinggi', $umurAtautinggi)
+            ->where('gender', $gender)
+            ->first(['L', 'M', 'S']);
+    }
+
+    // Fungsi untuk mengambil nilai L, M, S dari tabel referensi WHO berdasarkan gender dan umur/tinggi
+    // EXPANDED
+    private function ambilLmsExpanded($kategori, $umurAtautinggi, $gender)
+    {
+        return StandarPertumbuhanAnakExpanded::where('kategori', $kategori)
             ->where('umur_atau_tinggi', $umurAtautinggi)
             ->where('gender', $gender)
             ->first(['L', 'M', 'S']);
