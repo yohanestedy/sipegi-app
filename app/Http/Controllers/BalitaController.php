@@ -116,23 +116,42 @@ class BalitaController extends Controller
     }
 
     // EDIT VIEW
+    // public function edit($id)
+    // {
+
+
+    //     $balita = Balita::find($id);
+    //     // Mendapatkan user yang login
+    //     $user = auth()->user();
+
+    //     // Dapatkan data posyandu
+    //     $posyandus = Posyandu::all();
+
+    //     // Ambil data orangtua berdasarkan posyandu user dan dusun orangtua
+    //     if ($user->posyandu_id !== null) {
+    //         $orangtua = Orangtua::where('dusun_id', $user->posyandu_id)->get();
+    //     } else {
+    //         $orangtua = Orangtua::all();
+    //     }
+
+    //     return view('pages.main.balita.edit', compact('balita', 'posyandus', 'orangtua'));
+    // }
+
     public function edit($id)
     {
-
-        $balita = Balita::find($id);
-        // Mendapatkan user yang login
         $user = auth()->user();
-
-        // Dapatkan data posyandu
         $posyandus = Posyandu::all();
-
-        // Ambil data orangtua berdasarkan posyandu user dan dusun orangtua
+        $queryBalita = Balita::query();
+        $queryOrtu = Orangtua::query();
         if ($user->posyandu_id !== null) {
-            $orangtua = Orangtua::where('dusun_id', $user->posyandu_id)->get();
-        } else {
-            $orangtua = Orangtua::all();
+            $queryBalita->where('posyandu_id', $user->posyandu_id);
+            $queryOrtu->where('dusun_id', $user->posyandu_id);
         }
-
+        if ($id) {
+            $queryBalita->where('id', $id);
+        }
+        $balita = $queryBalita->first();
+        $orangtua = $queryOrtu->get();
         return view('pages.main.balita.edit', compact('balita', 'posyandus', 'orangtua'));
     }
 

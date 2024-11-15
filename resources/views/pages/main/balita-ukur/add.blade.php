@@ -67,8 +67,9 @@
                                             <option></option>
                                             @foreach ($balitas as $balita)
                                                 <option value="{{ $balita->id }}"
-                                                    {{ old('balita_id') == $balita->id ? 'selected' : '' }}>
-                                                    {{ $balita->name }} - {{ $balita->posyandu->name }}</option>
+                                                    {{ count($balitas) === 1 || old('balita_id') == $balita->id ? 'selected' : '' }}>
+                                                    {{ $balita->name }} - {{ $balita->posyandu->name }}
+                                                </option>
                                             @endforeach
                                         </select>
                                         <div class="invalid-feedback">
@@ -94,7 +95,7 @@
                                                 </p>
                                             </div>
                                             <div class="col-6 col-md-4">
-                                                <label class="medium-text" for="umur">Umur :</label><br>
+                                                <label class="medium-text" for="umur">Umur Saat Ini :</label><br>
                                                 <p class="badge bg-light-secondary form-control-static fw-normal "
                                                     id="umur">-
                                                 </p>
@@ -212,11 +213,11 @@
                                             <label class="form-check-label" for="radioBerdiri">Berdiri</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input name="cara_ukur" value="Terlentang"
+                                            <input name="cara_ukur" value="Berbaring"
                                                 class="form-check-input @error('cara_ukur') is-invalid @enderror"
-                                                type="radio" id="radioTerlentang"
-                                                {{ old('cara_ukur') == 'Terlentang' ? 'checked' : '' }}>
-                                            <label class="form-check-label" for="radioTerlentang">Terlentang</label>
+                                                type="radio" id="radioBerbaring"
+                                                {{ old('cara_ukur') == 'Berbaring' ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="radioBerbaring">Berbaring</label>
                                         </div>
                                         <div class="invalid-feedback">
                                             @error('cara_ukur')
@@ -275,30 +276,37 @@
         });
     </script>
 
+
+    {{-- Script info tgl lahir, umur, gender balita --}}
     <script>
         $(document).ready(function() {
             // Mengirim data balita dari Laravel ke JavaScript
             const balitaData = @json($balitas);
 
-            $('#balitaSelect').change(function() {
-                const selectedId = this.value; // Mendapatkan ID yang dipilih
-                const selectedBalita = balitaData.find(balita => balita.id ==
-                    selectedId); // Mencari balita berdasarkan ID
+            // Fungsi untuk menampilkan data balita
+            function displayBalitaInfo(selectedId) {
+                const selectedBalita = balitaData.find(balita => balita.id == selectedId);
 
-                // Menampilkan informasi balita jika ditemukan, jika tidak, reset ke default
                 if (selectedBalita) {
-                    document.getElementById("tgl_lahir").innerText = selectedBalita
-                        .tgl_lahir_display; // Menggunakan atribut baru
-                    document.getElementById("umur").innerText = selectedBalita
-                        .umur_display; // Menggunakan umur_display
-                    document.getElementById("jenis_kelamin").innerText = selectedBalita
-                        .gender_display; // Menggunakan gender_display
+                    document.getElementById("tgl_lahir").innerText = selectedBalita.tgl_lahir_display;
+                    document.getElementById("umur").innerText = selectedBalita.umur_display;
+                    document.getElementById("jenis_kelamin").innerText = selectedBalita.gender_display;
                 } else {
                     // Reset ke nilai default jika tidak ada balita yang dipilih
                     document.getElementById("tgl_lahir").innerText = "-";
                     document.getElementById("umur").innerText = "-";
                     document.getElementById("jenis_kelamin").innerText = "-";
                 }
+            }
+
+            // Panggil fungsi saat halaman dimuat untuk menampilkan info jika ada balita yang sudah dipilih
+            const initialSelectedId = $('#balitaSelect').val();
+            displayBalitaInfo(initialSelectedId);
+
+            // Event handler untuk saat pilihan diubah
+            $('#balitaSelect').change(function() {
+                const selectedId = this.value; // Mendapatkan ID yang dipilih
+                displayBalitaInfo(selectedId);
             });
         });
     </script>

@@ -27,7 +27,24 @@ class Balita extends Model
         return $this->belongsTo(Posyandu::class);
     }
 
-    protected $appends = ['umur_display', 'tgl_lahir_display', 'gender_display'];
+    protected $appends = ['umur_bulan', 'umur_display', 'tgl_lahir_display', 'gender_display'];
+
+    public function getUmurBulanAttribute()
+    {
+        // Memastikan tanggal lahir tersedia
+        if (!$this->tgl_lahir) {
+            return null;
+        }
+
+        // Menghitung selisih antara tanggal lahir dan tanggal saat ini dalam hari
+        $tanggalLahir = Carbon::parse($this->tgl_lahir);
+        $hariSelisih = $tanggalLahir->diffInDays(Carbon::now());
+
+        // Menghitung umur dalam bulan penuh (1 bulan dihitung genap 30 hari)
+        $umurBulan = intdiv($hariSelisih, 30);
+
+        return $umurBulan;
+    }
 
     public function getUmurDisplayAttribute()
     {
