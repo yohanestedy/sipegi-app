@@ -29,7 +29,7 @@
         </div>
 
         {{-- SIDEBAR MENU --}}
-        <div class="sidebar-menu" style="margin-bottom: auto;">
+        <div class="sidebar-menu" style="margin-bottom: auto; min-height: 100vh">
             <ul class="menu" style="margin-top: -1rem;">
                 <li class="sidebar-title">Menu</li>
 

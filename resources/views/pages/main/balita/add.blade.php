@@ -226,7 +226,7 @@
                                                     @enderror
                                                 </div>
                                             </div>
-                                            <div class="col-2 p-0 justify-content-start mt-auto">
+                                            <div class="col-2 p-0 justify-content-start mt-2">
                                                 <label style="font-weight: 350; font-size: 1.2em">kg</label>
                                             </div>
 
@@ -250,7 +250,7 @@
                                                     @enderror
                                                 </div>
                                             </div>
-                                            <div class="col-2 p-0 justify-content-start mt-auto">
+                                            <div class="col-2 p-0 justify-content-start mt-2">
                                                 <label style="font-weight: 350; font-size: 1.2em">cm</label>
                                             </div>
 

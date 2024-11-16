@@ -79,19 +79,19 @@ class BalitaController extends Controller
             'bb_lahir' => 'required',
             'tb_lahir' => 'required',
         ], [
-            'name.required' => 'Nama balita harus di isi',
+            'name.required' => 'Isi Nama balita',
             'name.regex' => 'Nama tidak boleh mengandung angka atau karakter khusus',
-            'nik.required' => 'NIK harus di isi',
+            'nik.required' => 'NIK balita harus di isi',
             'nik.numeric' => 'NIK harus berisi angka saja',
             'nik.digits' => 'NIK harus berisi tepat 16 digit angka',
             'nik.unique' => 'NIK sudah terdaftar. Silahkan cek di daftar balita.',
-            'tgl_lahir.required' => 'Tanggal Lahir harus di isi',
-            'gender.required' => 'Jenis Kelamin harus di isi',
-            'orangtua.required' => 'Orangtua harus di pilih',
-            'posyandu.required' => 'Posyandu harus di pilih',
-            'family_order.required' => 'Kolom anak ke berapa harus di isi',
-            'bb_lahir.required' => 'Berat Badan saat lahir harus di isi',
-            'tb_lahir.required' => 'Panjang Badan saat Lahir harus di isi',
+            'tgl_lahir.required' => 'Isi tanggal lahir balita',
+            'gender.required' => 'Pilih jenis kelamin balita',
+            'orangtua.required' => 'Pilih orangtua balita',
+            'posyandu.required' => 'Pilih posyandu balita',
+            'family_order.required' => 'Isi kolom anak ke berapa',
+            'bb_lahir.required' => 'Isi berat badan saat lahir',
+            'tb_lahir.required' => 'Isi panjang badan saat Lahir',
         ]);
 
         if ($validator->fails()) {

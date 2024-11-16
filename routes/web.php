@@ -94,7 +94,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::prefix('balita-ukur')->group(function () {
         // POSYANDU
         Route::get('/add/{id?}', [BalitaUkurController::class, 'add'])->name('balitaukur.add');
-        Route::post('/store', [BalitaUkurController::class, 'store'])->name('balitaukur.store');
+        Route::post('/hitung', [BalitaUkurController::class, 'hitung'])->name('balitaukur.hitung');
+        Route::post('/simpan-zscore', [BalitaUkurController::class, 'simpanZScore'])->name('balitaukur.simpanZScore');
     });
 
     // Route untuk mengambil RT dan RW berdasarkan dusun_id
