@@ -18,9 +18,23 @@ use App\Models\StandarPertumbuhanAnakExpanded;
 class BalitaUkurController extends Controller
 {
     //
-    public function index()
+    public function index($id)
     {
-        return view('');
+
+        $user = auth()->user();
+        $query = Balita::with(['posyandu', 'balitaUkur']);
+
+        if ($user->posyandu_id !== null) {
+            $query->where('posyandu_id', $user->posyandu_id);
+        }
+
+        $query->where('id', $id);
+
+
+        $balita = $query->first();
+
+
+        return view('pages.main.balita-ukur.index', compact('balita'));
     }
 
     // HALAMAN INPUT PENGHITUNGAN
@@ -349,7 +363,7 @@ class BalitaUkurController extends Controller
             return "{$umurBulan} Bulan -  {$hari} Hari";
         } else {
             // Jika umur lebih dari 730 hari
-            return "{$tahun} Tahun -  {$bulan} Bulan -  {$hari} Hari";
+            return "{$tahun} Tahun -  {$bulan} Bulan - {$hari} Hari";
         }
     }
 

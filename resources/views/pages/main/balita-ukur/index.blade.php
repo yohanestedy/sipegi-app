@@ -1,4 +1,4 @@
-@extends('layout.main', ['title' => 'Daftar Pengukuran Balita'])
+@extends('layout.main', ['title' => 'Data Pengukuran Balita'])
 
 @section('cssLibraries')
     <link rel="stylesheet" href="{{ asset('assets/extensions/datatables.net-bs5/css/dataTables.bootstrap5.min.css') }}">
@@ -19,8 +19,8 @@
         <div class="page-title">
             <div class="row">
                 <div class="col-12 col-md-6 order-md-1 order-last">
-                    <h3>Balita</h3>
-                    <p class="text-subtitle text-muted">Halaman daftar balita.</p>
+                    <h3>Data Pengukuran Balita</h3>
+                    <p class="text-subtitle text-muted">Halaman data pengukuran balita.</p>
                 </div>
                 <div class="col-12 col-md-6 order-md-2 order-first">
                     <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
@@ -42,10 +42,10 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h5 class="card-title mb-0">
-                        Daftar Balita
+                        Daftar Pengukuran
                     </h5>
-                    <a href="{{ route('balita.add') }}" class="btn btn-primary">
-                        <i class="fa-solid fa-plus"></i> Tambah
+                    <a href="{{ route('balitaukur.add', ['id' => $balita->id]) }}" class="btn btn-primary">
+                        <i class="fa-solid fa-plus"></i> Tambah Pengukuran
                     </a>
                 </div>
                 <div class="card-body">
@@ -58,32 +58,33 @@
                     </div>
                     <div class="table-responsive datatable-minimal">
 
-                        <table class="table table-hover table-bordered" id="tableBalita">
+                        <table class="table table-hover table-bordered" id="tableBalitaUkur">
                             <thead>
                                 <tr>
                                     <th style="text-align: center;">Tindakan</th>
-                                    <th style="text-align: center;">Nama</th>
-                                    <th style="text-align: center;">NIK</th>
-                                    <th style="text-align: center;">Jenis Kelamin</th>
-                                    <th style="text-align: center;">Tanggal Lahir</th>
-                                    <th style="text-align: center;">Umur</th>
-                                    <th style="text-align: center;">Nama Orangtua</th>
-                                    <th style="text-align: center;">Posyandu</th>
+                                    <th style="text-align: center;">Tgl Ukur</th>
+                                    <th style="text-align: center;">BB (kg)</th>
+                                    <th style="text-align: center;">TB (cm)</th>
+                                    <th style="text-align: center;">Cara Ukur</th>
+                                    <th style="text-align: center;">BB/U</th>
+                                    <th style="text-align: center;">TB/U</th>
+                                    <th style="text-align: center;">BB/TB</th>
+                                    <th style="text-align: center;">IMT/U</th>
 
                                 </tr>
                             </thead>
                             <tbody>
 
-                                @foreach ($balita as $balita)
+                                @foreach ($balita->balitaUkur as $balitaUkur)
                                     <tr>
 
                                         <td style="text-align: center">
-                                            <a href="{{ route('balitaukur.add', ['id' => $balita->id]) }}"
+                                            {{-- <a href="{{ route('balitaukur.add', ['id' => $balita->id]) }}"
                                                 class="btn icon btn-primary " data-bs-toggle="tooltip"
                                                 data-bs-placement="top" data-bs-original-title="Pengukuran"
                                                 style="border-radius: 8px; padding: .2rem .4rem;">
-                                                <i class="fa-solid fa-calculator"></i></a>
-                                            <a href="{{ route('balita.edit', ['id' => $balita->id]) }}"
+                                                <i class="fa-solid fa-calculator"></i></a> --}}
+                                            <a href="{{ route('balita.edit', ['id' => $balitaUkur->id]) }}"
                                                 class="btn icon btn-success " data-bs-toggle="tooltip"
                                                 data-bs-placement="top" data-bs-original-title="Edit"
                                                 style="border-radius: 8px; padding: .2rem .4rem;">
@@ -104,17 +105,15 @@
 
 
                                         </td>
-                                        <td>{{ $balita->name }}</td>
-                                        <td style="text-align: center">{{ $balita->nik == null ? '-' : $balita->nik }}</td>
-                                        <td style="text-align: center">
-                                            <div style="font-weight: 600; {{ $balita->gender_display == 'Perempuan' ? 'background-color: #fcd8ff; color:#855f82' : 'background-color: #d2eeff; color: #526483' }} "
-                                                class="badge">
-                                                {{ $balita->gender_display }}</div>
-                                        </td>
-                                        <td>{{ \Carbon\Carbon::parse($balita->tgl_lahir)->translatedFormat('d F Y') }}</td>
-                                        <td>{{ $balita->umur_display }}</td>
-                                        <td>{{ $balita->orangtua->name }}</td>
-                                        <td style="text-align: center">{{ $balita->posyandu->name }}</td>
+                                        <td style="text-align: center">{{ $balitaUkur->tgl_ukur_display }}</td>
+                                        <td style="text-align: center">{{ $balitaUkur->bb }}</td>
+                                        <td style="text-align: center">{{ $balitaUkur->tb }}</td>
+                                        <td style="text-align: center">{{ $balitaUkur->cara_ukur }}</td>
+                                        <td style="text-align: center">{{ $balitaUkur->status_bb_u }}</td>
+                                        <td style="text-align: center">{{ $balitaUkur->status_tb_u }}</td>
+                                        <td style="text-align: center">{{ $balitaUkur->status_bb_tb }}</td>
+                                        <td style="text-align: center">{{ $balitaUkur->status_imt_u }}</td>
+
 
 
                                     </tr>

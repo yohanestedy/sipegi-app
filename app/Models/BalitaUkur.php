@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class BalitaUkur extends Model
 {
@@ -14,5 +15,11 @@ class BalitaUkur extends Model
     public function balita()
     {
         return $this->belongsTo(Balita::class);
+    }
+
+    protected $appends = ['tgl_ukur_display'];
+    public function getTglUkurDisplayAttribute()
+    {
+        return Carbon::parse($this->tgl_ukur)->translatedFormat('d F Y');
     }
 }

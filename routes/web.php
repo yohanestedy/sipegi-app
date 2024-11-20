@@ -93,7 +93,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::prefix('balita-ukur')->group(function () {
         // POSYANDU
-        Route::get('/', [BalitaUkurController::class, 'index'])->name('balitaukur.index');
+        Route::get('/data/{id}', [BalitaUkurController::class, 'index'])->name('balitaukur.index');
+
         Route::get('/add/{id?}', [BalitaUkurController::class, 'add'])->name('balitaukur.add');
         Route::post('/hitung', [BalitaUkurController::class, 'hitung'])->name('balitaukur.hitung');
         Route::post('/simpan-zscore', [BalitaUkurController::class, 'simpanZScore'])->name('balitaukur.simpanZScore');

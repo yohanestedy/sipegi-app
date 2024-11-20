@@ -125,7 +125,7 @@
                                         <input name="tgl_ukur" id="tgl_ukur" type="text"
                                             class="form-control flatpickr @error('tgl_ukur') is-invalid @enderror"
                                             value="{{ old('tgl_ukur') }}" placeholder="Pilih tanggal..">
-                                        <div class="form-control-icon ms-3 ">
+                                        <div class="form-control-icon mt-1 ms-3 ">
                                             <i class="fa-regular fa-calendar"></i>
                                         </div>
                                         <div class="invalid-feedback">
