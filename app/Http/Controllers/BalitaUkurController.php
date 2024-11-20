@@ -6,7 +6,10 @@ use Carbon\Carbon;
 use App\Models\Balita;
 use App\Models\BalitaUkur;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Monolog\Handler\NullHandler;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 use App\Models\StandarPertumbuhanAnak;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
@@ -67,22 +70,35 @@ class BalitaUkurController extends Controller
         $validator = Validator::make($request->all(), [
 
             'balita_id' => 'required',
-            'tgl_ukur' => 'required',
+            'tgl_ukur' => [
+                'required',
+                Rule::unique('balita_ukur', 'tgl_ukur')->where(function ($query) use ($request) {
+                    return $query->where('balita_id', $request->balita_id);
+                }),
+            ],
             'bb' => 'required',
             'tb' => 'required',
             'cara_ukur' => 'required',
         ], [
             'balita_id.required' => 'Pilih balita untuk di ukur',
             'tgl_ukur.required' => 'Pilih tanggal pengukuran',
+            'tgl_ukur.unique' => 'Balita sudah di ukur di tanggal ini',
             'bb.required' => 'Isi berat badan balita',
             'tb.required' => 'Isi tinggi badan balita',
             'cara_ukur.required' => 'Pilih metode pengukuran balita',
 
         ]);
 
+        // if ($validator->fails()) {
+        //     return Redirect::back()->withErrors($validator)->withInput();
+        // }
+
         if ($validator->fails()) {
-            return Redirect::back()->withErrors($validator)->withInput();
+            return response()->json([
+                'errors' => $validator->errors()
+            ], 422); // Mengirimkan response error dengan kode status 422
         }
+
 
         // Ambil Data Balita
         $balita = Balita::find($request->balita_id);
@@ -145,13 +161,6 @@ class BalitaUkurController extends Controller
         $zScoreBB_TB = $this->hitungZScore($beratBadan, $bbtbLMS->L, $bbtbLMS->M, $bbtbLMS->S);
         $zScoreIMT_U = $this->hitungZScore($IMT, $imtLMS->L, $imtLMS->M, $imtLMS->S);
 
-        // return response()->json([
-        //     'zscore_bb_u' => $zScoreBB_U,
-        //     'zscore_tb_u' => $zScoreTB_U,
-        //     'zscore_bb_tb' => $zScoreBB_TB,
-        //     'zscore_imt_u' => $zScoreIMT_U,
-
-        // ]);
 
         // STATUS GIZI BB/U
         if ($zScoreBB_U < -3) {
@@ -231,11 +240,28 @@ class BalitaUkurController extends Controller
     public function simpanZScore(Request $request)
     {
 
-        $zscore = BalitaUkur::create([]);
+        $zscore = BalitaUkur::create([
+            "balita_id" => $request->balita_id,
+            "tgl_ukur" => $request->tgl_ukur,
+            "umur_ukur" => $request->umur_ukur,
+            "bb" => $request->bb,
+            "tb" => $request->tb,
+            "cara_ukur" => $request->cara_ukur,
+            "status_bb_u" => $request->status_bb_u,
+            "zscore_bb_u" => $request->zscore_bb_u,
+            "status_tb_u" => $request->status_tb_u,
+            "zscore_tb_u" => $request->zscore_tb_u,
+            "status_bb_tb" => $request->status_bb_tb,
+            "zscore_bb_tb" => $request->zscore_bb_tb,
+            "status_imt_u" => $request->status_imt_u,
+            "zscore_imt_u" => $request->zscore_imt_u,
+            "created_by" => Auth::id(),
+
+        ]);
 
         // Simpan ke dalam database
         if ($zscore->save()) {
-            return response()->json(['success' => 'Data z-score berhasil disimpan!']);
+            return response()->json(['success' => 'Berhasil menyimpan penilaian.']);
         } else {
             return response()->json(['error' => 'Terjadi kesalahan saat menyimpan data.'], 500);
         }

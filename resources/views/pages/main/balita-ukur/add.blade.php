@@ -19,6 +19,7 @@
 
 @section('mainContent')
     <div class="page-heading">
+        {{-- HEADING --}}
         <div class="page-title">
             <div class="row">
                 <div class="col-12 col-md-6 order-md-1 order-last">
@@ -44,6 +45,8 @@
         </div>
 
         <section class="section col-md-12">
+
+            {{-- FORM PENGUKURAN --}}
             <div class="card">
                 <div class="card-content">
                     <div class="card-body">
@@ -120,7 +123,7 @@
                                     </div>
                                     <div class="col-md-3 form-group mt-2  position-relative has-icon-left">
                                         <input name="tgl_ukur" id="tgl_ukur" type="text"
-                                            class="form-control @error('tgl_ukur') is-invalid @enderror"
+                                            class="form-control flatpickr @error('tgl_ukur') is-invalid @enderror"
                                             value="{{ old('tgl_ukur') }}" placeholder="Pilih tanggal..">
                                         <div class="form-control-icon ms-3 ">
                                             <i class="fa-regular fa-calendar"></i>
@@ -143,7 +146,7 @@
                                             <div class="col-10 col-md-5">
                                                 <input name="bb" type="number"
                                                     class="form-control  @error('bb') is-invalid @enderror"
-                                                    value="{{ old('bb') }}">
+                                                    value="{{ old('bb') }}" min="1">
                                                 <div class="invalid-feedback">
                                                     @error('bb')
                                                         {{ $message }}
@@ -168,7 +171,7 @@
                                             <div class="col-10 col-md-5">
                                                 <input name="tb" type="number"
                                                     class="form-control  @error('tb') is-invalid @enderror"
-                                                    value="{{ old('tb') }}">
+                                                    value="{{ old('tb') }}" min="1">
                                                 <div class="invalid-feedback">
                                                     @error('tb')
                                                         {{ $message }}
@@ -242,8 +245,10 @@
                     </div>
                 </div>
             </div>
+
+            {{-- MODAL HASIL PENGUKURAN --}}
             <div class="modal fade" id="zscoreModal" tabindex="-1" aria-labelledby="zscoreModalLabel"
-                aria-hidden="true" data-bs-backdrop="false">
+                aria-hidden="true" data-bs-backdrop="static">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header bg-primary">
@@ -356,18 +361,13 @@
 
         </section>
 
-
-
-
-
-
-
     </div>
 @endsection
 @section('jsLibraries')
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://npmcdn.com/flatpickr/dist/l10n/id.js"></script>
+
 
     <script>
         $('.select2').select2({
@@ -376,37 +376,24 @@
             placeholder: $(this).data('placeholder'),
         });
 
-        // Reset select2
+        // Reset select2 nama balita
         $('#resetButton').on('click', function() {
             $('.select2').val(null).trigger('change');
         });
 
-
-        // CONFIG FLATPICKR
-        flatpickr("#tgl_ukur", {
-
-            "locale": "id",
-            altInput: true,
-            altFormat: "j F Y",
-            maxDate: "today",
-
-
-        });
         // CONFIG FLATPICKR
         flatpickr(".flatpickr", {
 
             "locale": "id",
             altInput: true,
+            altInputClass: 'form-control',
             altFormat: "j F Y",
             maxDate: "today",
 
 
         });
-    </script>
 
-
-    {{-- Script info tgl lahir, umur, gender balita --}}
-    <script>
+        // Script info tgl lahir, umur, gender balita
         $(document).ready(function() {
             // Mengirim data balita dari Laravel ke JavaScript
             const balitaData = @json($balitas);
@@ -439,6 +426,7 @@
         });
     </script>
 
+
     {{-- Loading Tombol Submit --}}
     {{-- <script>
         document.getElementById('submitBtn').addEventListener('click', function(e) {
@@ -466,8 +454,11 @@
         });
     </script> --}}
 
+    {{-- FETCH Hitung dan Save Script --}}
     <script>
-        // Fungsi untuk menampilkan data di modal
+        // Variabel global untuk menyimpan data hasil penghitungan
+        let hasilPengukuran = null;
+
         document.getElementById('submitBtn').addEventListener('click', function(e) {
             e.preventDefault(); // Mencegah form submit default
 
@@ -487,11 +478,52 @@
                 })
                 .then(response => response.json())
                 .then(data => {
+
                     // Aktifkan kembali tombol dan kembalikan teks aslinya
                     document.getElementById('submitBtn').disabled = false;
                     document.getElementById('submitBtn').innerHTML = 'Hitung';
 
-                    if (data) {
+                    // VALIDASI INSERT "IS-INVALID" KE ELEMENT
+                    if (data.errors) {
+                        Object.keys(data.errors).forEach(field => {
+                            let errorMessage = data.errors[field][0]; // Ambil pesan error pertama
+                            let inputElements = document.querySelectorAll(`[name="${field}"]`);
+
+                            if (inputElements.length > 0 && inputElements[0].type === 'radio') {
+                                // Tangani grup input radio
+                                let errorElement = inputElements[0].closest('.col-md-7').querySelector(
+                                    '.invalid-feedback');
+                                errorElement.innerText = errorMessage;
+                                inputElements.forEach(input => input.classList.add(
+                                    'is-invalid')); // Tambahkan kelas is-invalid ke semua opsi radio
+                            } else {
+                                // Tangani input biasa
+                                let inputElement = document.querySelector(`[name="${field}"]`);
+                                if (inputElement) {
+                                    let errorElement = inputElement.parentElement.querySelector(
+                                        '.invalid-feedback');
+                                    if (errorElement) {
+                                        errorElement.innerText = errorMessage;
+                                    }
+
+                                    // Tangani Flatpickr dengan altInputClass
+                                    if (inputElement.classList.contains('flatpickr')) {
+                                        let flatpickrInstance = inputElement._flatpickr;
+                                        if (flatpickrInstance) {
+                                            flatpickrInstance.altInput.classList.add(
+                                                'is-invalid'); // Tambahkan ke altInput
+                                        }
+                                    } else {
+                                        inputElement.classList.add(
+                                            'is-invalid'); // Tambahkan kelas is-invalid
+                                    }
+                                }
+                            }
+                        });
+                    } else if (data) {
+                        // Simpan data hasil penghitungan ke variabel global
+                        hasilPengukuran = data;
+
                         // Tampilkan data di modal
                         document.getElementById('balita_name').innerText = data.balita_name;
                         document.getElementById('tgl_ukur1').innerText = data.tgl_ukur;
@@ -520,7 +552,22 @@
                         var myModal = new bootstrap.Modal(document.getElementById('zscoreModal'));
                         myModal.show();
                     } else {
-                        alert('Terjadi kesalahan saat mengambil data.');
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 2500,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.onmouseenter = Swal.stopTimer;
+                                toast.onmouseleave = Swal.resumeTimer;
+                            }
+                        });
+                        Toast.fire({
+                            icon: "error",
+                            title: "Terjadi kesalahan saat mengambil data.",
+                        });
+
                     }
                 })
                 .catch(error => {
@@ -529,7 +576,26 @@
                     document.getElementById('submitBtn').innerHTML = 'Hitung';
 
                     console.error('Error:', error);
-                    alert('Terjadi kesalahan, silakan coba lagi.');
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: "top-end",
+                        showConfirmButton: false,
+                        timer: 2500,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.onmouseenter = Swal.stopTimer;
+                            toast.onmouseleave = Swal.resumeTimer;
+                        }
+                    });
+                    Toast.fire({
+                        icon: "error",
+                        title: "Terjadi kesalahan, silahkan coba lagi",
+                    });
+                    setTimeout(() => {
+                        location.reload();
+                    }, 2300);
+
+
                 });
         });
 
@@ -560,23 +626,37 @@
 
         // Fungsi untuk mengirim data simpan ke controller
         document.getElementById('saveBtn').addEventListener('click', function() {
+
+
             // Nonaktifkan tombol selama proses penyimpanan
             this.disabled = true;
             this.innerHTML =
                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Menyimpan...';
 
+            if (!hasilPengukuran) {
+                alert('Tidak ada data untuk disimpan. Silakan lakukan perhitungan terlebih dahulu.');
+                return;
+            }
+
             // Data yang dikirim ke controller untuk disimpan
             var formData = {
-                balita_id: document.getElementById('balita_name').innerText,
-                zscore_bb_u: document.getElementById('zscore_bb_u').innerText,
-                zscore_tb_u: document.getElementById('zscore_tb_u').innerText,
-                zscore_bb_tb: document.getElementById('zscore_bb_tb').innerText,
-                zscore_imt_u: document.getElementById('zscore_imt_u').innerText,
-                status_bb_u: document.getElementById('status_bb_u').innerText,
-                status_tb_u: document.getElementById('status_tb_u').innerText,
-                status_bb_tb: document.getElementById('status_bb_tb').innerText,
-                status_imt_u: document.getElementById('status_imt_u').innerText
+                balita_id: hasilPengukuran.balita_id,
+                tgl_ukur: hasilPengukuran.tgl_ukur,
+                umur_ukur: hasilPengukuran.umur_ukur,
+                bb: hasilPengukuran.bb,
+                tb: hasilPengukuran.tb,
+                cara_ukur: hasilPengukuran.cara_ukur,
+                zscore_bb_u: hasilPengukuran.zscore_bb_u,
+                zscore_tb_u: hasilPengukuran.zscore_tb_u,
+                zscore_bb_tb: hasilPengukuran.zscore_bb_tb,
+                zscore_imt_u: hasilPengukuran.zscore_imt_u,
+                status_bb_u: hasilPengukuran.status_bb_u,
+                status_tb_u: hasilPengukuran.status_tb_u,
+                status_bb_tb: hasilPengukuran.status_bb_tb,
+                status_imt_u: hasilPengukuran.status_imt_u
             };
+
+
 
             fetch("{{ route('balitaukur.simpanZScore') }}", {
                     method: 'POST',
@@ -588,16 +668,51 @@
                 })
                 .then(response => response.json())
                 .then(data => {
+
                     // Aktifkan kembali tombol dan kembalikan teks aslinya
                     document.getElementById('saveBtn').disabled = false;
                     document.getElementById('saveBtn').innerHTML = 'Simpan';
 
                     if (data.success) {
-                        alert('Data berhasil disimpan!');
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 2500,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.onmouseenter = Swal.stopTimer;
+                                toast.onmouseleave = Swal.resumeTimer;
+                            }
+                        });
+                        Toast.fire({
+                            icon: "success",
+                            title: data.success,
+                        });
                         var myModal = bootstrap.Modal.getInstance(document.getElementById('zscoreModal'));
                         myModal.hide();
+
+                        // Setelah efek toast, lanjutkan dengan redirect
+                        setTimeout(() => {
+                            window.location.href = "{{ route('balita.index') }}";
+                        }, 2300);
+
                     } else {
-                        alert('Terjadi kesalahan saat menyimpan data.');
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.onmouseenter = Swal.stopTimer;
+                                toast.onmouseleave = Swal.resumeTimer;
+                            }
+                        });
+                        Toast.fire({
+                            icon: "error",
+                            title: data.error,
+                        });
                     }
                 })
                 .catch(error => {
@@ -607,7 +722,85 @@
 
                     console.error('Error:', error);
                     alert('Terjadi kesalahan, silakan coba lagi.');
+
                 });
+        });
+    </script>
+
+    {{-- Hilangkan Validasi Jika Disii --}}
+    <script>
+        // Tambahkan event listener ke semua elemen input
+        let formInputs = document.querySelectorAll('#form input, #form textarea');
+
+        formInputs.forEach(input => {
+            input.addEventListener('input', function() {
+                if (this.classList.contains('is-invalid')) {
+                    this.classList.remove('is-invalid'); // Hapus kelas is-invalid jika ada
+                    let errorElement = this.parentElement.querySelector('.invalid-feedback');
+                    if (errorElement) {
+                        errorElement.innerText = ''; // Kosongkan pesan error jika ada
+                    }
+                }
+            });
+
+            // Event khusus untuk input radio
+            if (input.type === 'radio') {
+                input.addEventListener('change', function() {
+                    let radioGroup = document.querySelectorAll(`[name="${this.name}"]`);
+                    radioGroup.forEach(radio => radio.classList.remove('is-invalid'));
+
+                    let errorElement = this.closest('.col-md-7').querySelector('.invalid-feedback');
+                    if (errorElement) {
+                        errorElement.innerText = ''; // Kosongkan pesan error
+                    }
+                });
+            }
+
+        });
+        // Ambil semua elemen input dengan class flatpickr
+        document.querySelectorAll('.flatpickr').forEach(inputElement => {
+            // Periksa apakah elemen memiliki instance Flatpickr
+            if (inputElement._flatpickr) {
+                let flatpickrInstance = inputElement._flatpickr;
+
+                // Tambahkan event listener pada altInput (elemen alternatif yang digunakan Flatpickr)
+                flatpickrInstance.altInput.addEventListener('input', function() {
+                    if (this.classList.contains('is-invalid')) {
+                        this.classList.remove('is-invalid'); // Hapus class is-invalid
+                        let errorElement = this.parentElement.querySelector('.invalid-feedback');
+                        if (errorElement) {
+                            errorElement.innerText = ''; // Hapus pesan error
+                        }
+                    }
+                });
+            }
+        });
+
+        document.getElementById('tgl_ukur').addEventListener('change', function() {
+            // Hapus kelas is-invalid dari elemen Flatpickr (altInput)
+            let flatpickrInstance = this._flatpickr;
+            if (flatpickrInstance && flatpickrInstance.altInput) {
+                flatpickrInstance.altInput.classList.remove('is-invalid');
+            }
+
+            // Kosongkan pesan error di .invalid-feedback
+            let errorElement = this.parentElement.querySelector('.invalid-feedback');
+            if (errorElement) {
+                errorElement.innerText = '';
+            }
+        });
+
+
+        // Event listener untuk Select2
+        $('#balitaSelect').on('change', function() {
+            let selectElement = this; // Elemen <select> asli
+            if (selectElement.classList.contains('is-invalid')) {
+                selectElement.classList.remove('is-invalid'); // Hapus kelas is-invalid
+                let errorElement = selectElement.parentElement.querySelector('.invalid-feedback');
+                if (errorElement) {
+                    errorElement.innerText = ''; // Kosongkan pesan error
+                }
+            }
         });
     </script>
 @endsection

@@ -1,4 +1,4 @@
-@extends('layout.main', ['title' => 'Daftar Posyandu'])
+@extends('layout.main', ['title' => 'Daftar Pengukuran Balita'])
 
 @section('cssLibraries')
     <link rel="stylesheet" href="{{ asset('assets/extensions/datatables.net-bs5/css/dataTables.bootstrap5.min.css') }}">
@@ -19,18 +19,18 @@
         <div class="page-title">
             <div class="row">
                 <div class="col-12 col-md-6 order-md-1 order-last">
-                    <h3>Daftar Posyandu</h3>
-                    <p class="text-subtitle text-muted">Halaman daftar posyandu.</p>
+                    <h3>Balita</h3>
+                    <p class="text-subtitle text-muted">Halaman daftar balita.</p>
                 </div>
                 <div class="col-12 col-md-6 order-md-2 order-first">
                     <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
-                                <a href="#">Master Data</a>
+                                <a href="#">Balita</a>
                             </li>
-                            <li class="breadcrumb-item active" aria-current="page">
-                                Daftar Posyandu
-                            </li>
+                            {{-- <li class="breadcrumb-item active" aria-current="page">
+                                Layout Default
+                            </li> --}}
                         </ol>
                     </nav>
                 </div>
@@ -42,11 +42,11 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h5 class="card-title mb-0">
-                        Daftar Posyandu Desa Selorejo
+                        Daftar Balita
                     </h5>
-                    {{-- <a href="{{ route('balita.add') }}" class="btn btn-primary">
+                    <a href="{{ route('balita.add') }}" class="btn btn-primary">
                         <i class="fa-solid fa-plus"></i> Tambah
-                    </a> --}}
+                    </a>
                 </div>
                 <div class="card-body">
 
@@ -58,27 +58,38 @@
                     </div>
                     <div class="table-responsive datatable-minimal">
 
-                        <table class="table table-hover table-bordered">
+                        <table class="table table-hover table-bordered" id="tableBalita">
                             <thead>
                                 <tr>
-                                    <th style="text-align: center;">No</th>
+                                    <th style="text-align: center;">Tindakan</th>
+                                    <th style="text-align: center;">Nama</th>
+                                    <th style="text-align: center;">NIK</th>
+                                    <th style="text-align: center;">Jenis Kelamin</th>
+                                    <th style="text-align: center;">Tanggal Lahir</th>
+                                    <th style="text-align: center;">Umur</th>
+                                    <th style="text-align: center;">Nama Orangtua</th>
                                     <th style="text-align: center;">Posyandu</th>
-                                    <th style="text-align: center;">Dusun</th>
-                                    <th style="text-align: center;">Petugas SiPeGi</th>
 
                                 </tr>
                             </thead>
                             <tbody>
 
-                                @foreach ($posyandus as $posyandu)
-                                    <tr style="text-align: center;">
-                                        {{-- <td style="text-align: center">
+                                @foreach ($balita as $balita)
+                                    <tr>
+
+                                        <td style="text-align: center">
+                                            <a href="{{ route('balitaukur.add', ['id' => $balita->id]) }}"
+                                                class="btn icon btn-primary " data-bs-toggle="tooltip"
+                                                data-bs-placement="top" data-bs-original-title="Pengukuran"
+                                                style="border-radius: 8px; padding: .2rem .4rem;">
+                                                <i class="fa-solid fa-calculator"></i></a>
                                             <a href="{{ route('balita.edit', ['id' => $balita->id]) }}"
-                                                class="btn icon btn-sm btn-primary " data-bs-toggle="tooltip"
+                                                class="btn icon btn-success " data-bs-toggle="tooltip"
                                                 data-bs-placement="top" data-bs-original-title="Edit"
-                                                style="border-radius: 8px;">
+                                                style="border-radius: 8px; padding: .2rem .4rem;">
                                                 <i class="fa-regular fa-pen-to-square"></i></a>
-                                            <form action="{{ route('balita.delete', ['id' => $balita->id]) }}"
+
+                                            {{-- <form action="{{ route('balita.delete', ['id' => $balita->id]) }}"
                                                 method="POST" style="display: inline">
                                                 @csrf
                                                 @method('DELETE')
@@ -89,19 +100,21 @@
                                                     data-bs-original-title="Hapus" style="border-radius: 8px;">
                                                     <i class="fa-solid fa-trash"></i>
                                                 </button>
-                                            </form>
+                                            </form> --}}
 
 
-                                        </td> --}}
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $posyandu->name }}</td>
-                                        <td>{{ $posyandu->dusun->name }}</td>
-                                        <td>
-                                            @foreach ($posyandu->user as $user)
-                                                {{ $user->name }}
-                                            @endforeach
                                         </td>
-
+                                        <td>{{ $balita->name }}</td>
+                                        <td style="text-align: center">{{ $balita->nik == null ? '-' : $balita->nik }}</td>
+                                        <td style="text-align: center">
+                                            <div style="font-weight: 600; {{ $balita->gender_display == 'Perempuan' ? 'background-color: #fcd8ff; color:#855f82' : 'background-color: #d2eeff; color: #526483' }} "
+                                                class="badge">
+                                                {{ $balita->gender_display }}</div>
+                                        </td>
+                                        <td>{{ \Carbon\Carbon::parse($balita->tgl_lahir)->translatedFormat('d F Y') }}</td>
+                                        <td>{{ $balita->umur_display }}</td>
+                                        <td>{{ $balita->orangtua->name }}</td>
+                                        <td style="text-align: center">{{ $balita->posyandu->name }}</td>
 
 
                                     </tr>

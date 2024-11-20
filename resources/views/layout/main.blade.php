@@ -77,6 +77,7 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
         $(document).ready(function() {
             // SweetAlert untuk konfirmasi penghapusan
@@ -101,11 +102,55 @@
                 });
 
             });
-
-
-
         });
     </script>
+    {{-- Basic Sweatalert2 --}}
+    <script>
+        @if (session()->has('success'))
+            Swal.fire('Success', '{{ session('success') }}', 'success');
+        @elseif (session()->has('error'))
+            Swal.fire('Error', '{{ session('error') }}', 'error');
+        @endif
+    </script>
+
+    {{-- Toast Sweatalert2 --}}
+    @if (session('successToast'))
+        <script>
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                icon: "success",
+                title: "{{ session('successToast') }}"
+            });
+        </script>
+    @elseif (session('errorToast'))
+        <script>
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                icon: "error",
+                title: "{{ session('errorToast') }}"
+            });
+        </script>
+    @endif
 
     {{-- Js Tambahan jika di perlukan --}}
     @yield('jsLibraries')

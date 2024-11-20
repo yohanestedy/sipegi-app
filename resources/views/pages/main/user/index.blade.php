@@ -118,7 +118,7 @@
     <script src="{{ asset('assets/extensions/datatables.net-bs5/js/dataTables.bootstrap5.min.js') }}"></script>
     <script src="{{ asset('assets/static/js/pages/datatables.js') }}"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
     {{-- JS Tooltip --}}
     <script>
@@ -131,7 +131,7 @@
     </script>
 
     {{-- Swal Alert --}}
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
         $(document).ready(function() {
             // SweetAlert untuk konfirmasi penghapusan
