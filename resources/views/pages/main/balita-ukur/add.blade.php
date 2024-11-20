@@ -15,7 +15,7 @@
             /* Ukuran medium */
         }
     </style>
-@endsection
+@endsection`
 
 @section('mainContent')
     <div class="page-heading">
