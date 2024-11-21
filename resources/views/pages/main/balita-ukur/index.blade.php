@@ -11,6 +11,11 @@
             white-space: nowrap !important;
             /* Ubah nilai sesuai kebutuhan */
         }
+
+        .bg-light-warning1 {
+            background-color: hsl(33, 100%, 92%) !important;
+            color: #3f1f00 !important;
+        }
     </style>
 @endsection
 
@@ -70,6 +75,7 @@
                                     <th style="text-align: center;">TB/U</th>
                                     <th style="text-align: center;">BB/TB</th>
                                     <th style="text-align: center;">IMT/U</th>
+                                    <th style="text-align: center;">LK/U</th>
 
                                 </tr>
                             </thead>
@@ -86,7 +92,7 @@
                                                 <i class="fa-solid fa-calculator"></i></a> --}}
                                             <a href="{{ route('balitaukur.edit', ['id' => $balitaUkur->id]) }}"
                                                 class="btn icon btn-success " data-bs-toggle="tooltip"
-                                                data-bs-placement="top" data-bs-original-title="Edit"
+                                                data-bs-placement="top" data-bs-original-title="Ubah Pengukuran"
                                                 style="border-radius: 8px; padding: .2rem .4rem;">
                                                 <i class="fa-regular fa-pen-to-square"></i></a>
 
@@ -105,14 +111,37 @@
 
 
                                         </td>
-                                        <td style="text-align: center">{{ $balitaUkur->tgl_ukur_display }}</td>
+                                        <td data-order="{{ $balitaUkur->tgl_ukur }}" style="text-align: center">
+                                            {{ $balitaUkur->tgl_ukur_display }}</td>
                                         <td style="text-align: center">{{ $balitaUkur->bb }}</td>
                                         <td style="text-align: center">{{ $balitaUkur->tb }}</td>
                                         <td style="text-align: center">{{ $balitaUkur->cara_ukur }}</td>
-                                        <td style="text-align: center">{{ $balitaUkur->status_bb_u }}</td>
-                                        <td style="text-align: center">{{ $balitaUkur->status_tb_u }}</td>
-                                        <td style="text-align: center">{{ $balitaUkur->status_bb_tb }}</td>
-                                        <td style="text-align: center">{{ $balitaUkur->status_imt_u }}</td>
+                                        <td style="text-align: center">
+                                            <span class="badge {{ getStatusClass($balitaUkur->status_bb_u) }}">
+                                                {{ $balitaUkur->status_bb_u }}
+                                            </span>
+                                        </td>
+                                        <td style="text-align: center">
+                                            <span class="badge {{ getStatusClass($balitaUkur->status_tb_u) }}">
+                                                {{ $balitaUkur->status_tb_u }}
+                                            </span>
+                                        </td>
+                                        <td style="text-align: center">
+                                            <span class="badge {{ getStatusClass($balitaUkur->status_bb_tb) }}">
+                                                {{ $balitaUkur->status_bb_tb }}
+                                            </span>
+                                        </td>
+                                        <td style="text-align: center">
+                                            <span class="badge {{ getStatusClass($balitaUkur->status_imt_u) }}">
+                                                {{ $balitaUkur->status_imt_u }}
+                                            </span>
+                                        </td>
+                                        <td style="text-align: center">
+                                            <span class="badge {{ getStatusClass($balitaUkur->status_lk_u) }}">
+                                                {{ $balitaUkur->status_lk_u }}
+                                            </span>
+                                        </td>
+
 
 
 
@@ -133,6 +162,39 @@
 
 
     </div>
+
+    @php
+        function getStatusClass($status)
+        {
+            switch ($status) {
+                case 'Berat badan normal':
+                case 'Normal':
+                case 'Gizi baik':
+                    return 'bg-light-success';
+
+                case 'Resiko berat badan lebih':
+                case 'Beresiko gizi lebih':
+                    return 'bg-light-warning';
+
+                case 'Berat badan kurang':
+                case 'Pendek':
+                case 'Gizi kurang':
+                case 'Gizi lebih':
+                    return 'bg-light-warning1';
+
+                case 'Berat badan sangat kurang':
+                case 'Sangat pendek':
+                case 'Tinggi':
+                case 'Gizi buruk':
+                case 'Obesitas':
+                case 'Mikrosefali':
+                case 'Makrosefali':
+                    return 'bg-light-danger';
+                default:
+                    return 'bg-secondary';
+            }
+        }
+    @endphp
 @endsection
 
 @section('jsLibraries')

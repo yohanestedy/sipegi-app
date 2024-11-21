@@ -132,6 +132,9 @@ class UserController extends Controller
     public function delete($id)
     {
 
+        if ($id == Auth::id()) {
+            return Redirect::route('user.index')->with('errorToast', 'Tidak boleh menghapus akun');
+        }
         User::find($id)->delete();
         return Redirect::route('user.index')->with('success', 'User berhasil dihapus.');
     }

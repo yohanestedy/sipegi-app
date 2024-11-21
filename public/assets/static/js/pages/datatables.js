@@ -84,7 +84,7 @@ let customized_datatable5 = $("#tableBalitaUkur").DataTable({
     searching: false,
     pagingType: 'simple',
     order: [
-        [1, 'asc'],  // Kolom Dusun, urut descending
+        [1, 'desc'],  // Kolom Dusun, urut descending
     ],
     columnDefs: [
 

@@ -159,6 +159,9 @@ class BalitaUkurController extends Controller
         // Tinggi Badan
         $tinggiBadan = $request->tb;
 
+        // Lingkar Kepala
+        $lingkarKepala = $request->lk;
+
         // Pengkondisian koreksi tinggi badan
         if ($umurHari <= 730 && $request->cara_ukur === "Berdiri") {
             $tinggiBadan += 0.7;
@@ -185,6 +188,7 @@ class BalitaUkurController extends Controller
         $bbUmurLMS = $this->ambilLmsExpanded('BB_U', $umurHari, $gender);
         $tbUmurLMS = $this->ambilLmsExpanded('TB_U', $umurHari, $gender);
         $imtLMS = $this->ambilLmsExpanded('IMT_U', $umurHari, $gender);
+        $lkLMS = $this->ambilLmsExpanded('LK_U', $umurHari, $gender);
         if ($umurHari <= 730) {
             $bbtbLMS = $this->ambilLmsExpanded('BB_PB', $tinggiBadan, $gender);
         } elseif ($umurHari >= 731 && $umurHari <= 1856) {
@@ -196,6 +200,7 @@ class BalitaUkurController extends Controller
         $zScoreTB_U = $this->hitungZScore($tinggiBadan, $tbUmurLMS->L, $tbUmurLMS->M, $tbUmurLMS->S);
         $zScoreBB_TB = $this->hitungZScore($beratBadan, $bbtbLMS->L, $bbtbLMS->M, $bbtbLMS->S);
         $zScoreIMT_U = $this->hitungZScore($IMT, $imtLMS->L, $imtLMS->M, $imtLMS->S);
+        $zScoreLK_U = $this->hitungZScore($lingkarKepala, $lkLMS->L, $lkLMS->M, $lkLMS->S);
 
 
         // STATUS GIZI BB/U
@@ -250,6 +255,15 @@ class BalitaUkurController extends Controller
             $statusGiziIMT_U = "Obesitas";
         }
 
+        // STATUS GIZI LK/U
+        if ($zScoreLK_U < -2) {
+            $statusGiziLK_U = "Mikrosefali";
+        } elseif ($zScoreLK_U > -2 && $zScoreLK_U < 2) {
+            $statusGiziLK_U = "Normal";
+        } elseif ($zScoreLK_U > 2) {
+            $statusGiziLK_U = "Makrosefali";
+        }
+
 
         return response()->json([
 
@@ -268,11 +282,13 @@ class BalitaUkurController extends Controller
             'status_bb_tb' => $statusGiziBB_TB,
             'zscore_imt_u' => round($zScoreIMT_U, 2),
             'status_imt_u' => $statusGiziIMT_U,
+            'zscore_lk_u' => round($zScoreLK_U, 2),
+            'status_lk_u' => $statusGiziLK_U,
         ]);
     }
 
 
-
+    // STORE
     public function simpanZScore(Request $request)
     {
 
@@ -291,6 +307,8 @@ class BalitaUkurController extends Controller
             "zscore_bb_tb" => $request->zscore_bb_tb,
             "status_imt_u" => $request->status_imt_u,
             "zscore_imt_u" => $request->zscore_imt_u,
+            "status_lk_u" => $request->status_lk_u,
+            "zscore_lk_u" => $request->zscore_lk_u,
             "created_by" => Auth::id(),
 
         ]);
@@ -302,6 +320,8 @@ class BalitaUkurController extends Controller
             return response()->json(['error' => 'Terjadi kesalahan saat menyimpan data.'], 500);
         }
     }
+
+    // UPDATE
     public function updateZScore(Request $request, $id)
     {
         $zscore = BalitaUkur::find($id);
@@ -325,6 +345,8 @@ class BalitaUkurController extends Controller
             "zscore_bb_tb" => $request->zscore_bb_tb,
             "status_imt_u" => $request->status_imt_u,
             "zscore_imt_u" => $request->zscore_imt_u,
+            "status_lk_u" => $request->status_lk_u,
+            "zscore_lk_u" => $request->zscore_lk_u,
             "updated_by" => Auth::id(),
         ]);
 

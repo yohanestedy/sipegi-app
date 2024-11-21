@@ -14,6 +14,11 @@
             font-size: 0.8rem;
             /* Ukuran medium */
         }
+
+        .bg-light-warning1 {
+            background-color: hsl(33, 100%, 92%) !important;
+            color: #3f1f00 !important;
+        }
     </style>
 @endsection`
 
@@ -187,6 +192,31 @@
                                     </div>
                                 </div>
 
+                                {{-- Form Lingkar Kepala --}}
+                                <div class="row mb-2 d-flex">
+                                    <div class="col-md-4 mt-3 text-md-end justify-content-end">
+                                        <label>Lingkar Kepala</label>
+                                    </div>
+                                    <div class="col-12 col-md-5 form-group mt-2">
+                                        <div class="row d-flex">
+                                            <div class="col-10 col-md-5">
+                                                <input name="lk" type="number"
+                                                    class="form-control  @error('lk') is-invalid @enderror"
+                                                    value="{{ old('lk') }}" min="1">
+                                                <div class="invalid-feedback">
+                                                    @error('lk')
+                                                        {{ $message }}
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="col-2 p-0 justify-content-start mt-2">
+                                                <label style="font-weight: 350; font-size: 1.2em">cm</label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
                                 {{-- Form TB --}}
                                 {{-- <div class="row d-flex">
                                     <div class="col-md-4 mt-3 text-md-end justify-content-end">
@@ -346,6 +376,18 @@
                                         </div>
                                         <div class="col-2 col-md-3">
                                             <span id="zscore_imt_u"></span>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row mb-2">
+                                        <div class="col-2 col-md-3">
+                                            <label>LK/U</label>
+                                        </div>
+                                        <div class="col-7 col-md-6">
+                                            <span id="status_lk_u" class="badge"></span>
+                                        </div>
+                                        <div class="col-2 col-md-3">
+                                            <span id="zscore_lk_u"></span>
                                         </div>
                                     </div>
 
@@ -548,6 +590,10 @@
                         document.getElementById('status_imt_u').innerText = data.status_imt_u;
                         document.getElementById('status_imt_u').className = 'badge ' + getStatusClass(data
                             .status_imt_u);
+                        document.getElementById('zscore_lk_u').innerText = data.zscore_lk_u;
+                        document.getElementById('status_lk_u').innerText = data.status_lk_u;
+                        document.getElementById('status_lk_u').className = 'badge ' + getStatusClass(data
+                            .status_lk_u);
 
                         // Tampilkan modal
                         var myModal = new bootstrap.Modal(document.getElementById('zscoreModal'));
@@ -606,19 +652,25 @@
                 case 'Berat badan normal':
                 case 'Normal':
                 case 'Gizi baik':
-                case 'Beresiko gizi lebih':
                     return 'bg-light-success';
-                case 'Berat badan kurang':
+
                 case 'Resiko berat badan lebih':
+                case 'Beresiko gizi lebih':
+                    return 'bg-light-warning';
+
+                case 'Berat badan kurang':
                 case 'Pendek':
                 case 'Gizi kurang':
                 case 'Gizi lebih':
-                    return 'bg-light-warning';
+                    return 'bg-light-warning1';
+
                 case 'Berat badan sangat kurang':
                 case 'Sangat pendek':
                 case 'Tinggi':
                 case 'Gizi buruk':
                 case 'Obesitas':
+                case 'Mikrosefali':
+                case 'Makrosefali':
                     return 'bg-light-danger';
                 default:
                     return 'bg-secondary';
