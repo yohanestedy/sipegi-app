@@ -16,6 +16,11 @@
             background-color: hsl(33, 100%, 92%) !important;
             color: #3f1f00 !important;
         }
+
+        .medium-text {
+            font-size: 0.8rem;
+            /* Ukuran medium */
+        }
     </style>
 @endsection
 
@@ -45,6 +50,76 @@
 
 
             <div class="card">
+
+                {{-- BIODATA --}}
+                <div class="card-body pb-0 medium-text">
+
+                    <div class="row">
+                        <div class="pe-0 col-3 col-md-2 d-flex justify-content-between">
+                            <span>NIK</span>
+                            <span>:</span>
+                        </div>
+                        <div class="col-8 col-md-8">
+                            <p class="mb-1">{{ $balita->nik }}</p>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="pe-0 col-3 col-md-2 d-flex justify-content-between">
+                            <span>Nama</span>
+                            <span>:</span>
+                        </div>
+                        <div class="col-8 col-md-8">
+                            <p class="mb-1">{{ $balita->name }}</p>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="pe-0 col-3 col-md-2 d-flex justify-content-between">
+                            <span>Tgl Lahir</span>
+                            <span>:</span>
+                        </div>
+                        <div class="col-8 col-md-8">
+                            <p class="mb-1">{{ $balita->tgl_lahir_display }}</p>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="pe-0 col-3 col-md-2 d-flex justify-content-between">
+                            <span>P/L</span>
+                            <span>:</span>
+                        </div>
+                        <div class="col-8 col-md-8">
+                            <p class="mb-1">{{ $balita->gender_display }}</p>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="pe-0 col-3 col-md-2 d-flex justify-content-between">
+                            <span>Umur</span>
+                            <span>:</span>
+                        </div>
+                        <div class="col-8 col-md-8">
+                            <p class="mb-1">{{ $balita->umur_display }}</p>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="pe-0 col-3 col-md-2 d-flex justify-content-between">
+                            <span>Posyandu</span>
+                            <span>:</span>
+                        </div>
+                        <div class="col-8 col-md-8">
+                            <p class="mb-1">{{ $balita->posyandu->name }}</p>
+                        </div>
+
+                    </div>
+
+
+
+
+
+                </div>
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h5 class="card-title mb-0">
                         Daftar Pengukuran
@@ -52,8 +127,13 @@
                     <a href="{{ route('balitaukur.add', ['id' => $balita->id]) }}" class="btn btn-primary">
                         <i class="fa-solid fa-plus"></i> Tambah Pengukuran
                     </a>
+
+
                 </div>
+
+
                 <div class="card-body">
+
 
                     <div class="mb-2">
                         <p class="d-block d-xl-none"
