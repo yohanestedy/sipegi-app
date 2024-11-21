@@ -84,7 +84,7 @@
                                                 data-bs-placement="top" data-bs-original-title="Pengukuran"
                                                 style="border-radius: 8px; padding: .2rem .4rem;">
                                                 <i class="fa-solid fa-calculator"></i></a> --}}
-                                            <a href="{{ route('balita.edit', ['id' => $balitaUkur->id]) }}"
+                                            <a href="{{ route('balitaukur.edit', ['id' => $balitaUkur->id]) }}"
                                                 class="btn icon btn-success " data-bs-toggle="tooltip"
                                                 data-bs-placement="top" data-bs-original-title="Edit"
                                                 style="border-radius: 8px; padding: .2rem .4rem;">

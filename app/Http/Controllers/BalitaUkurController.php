@@ -76,10 +76,32 @@ class BalitaUkurController extends Controller
         return view('pages.main.balita-ukur.add', compact('balitas'));
     }
 
+    public function edit($id)
+    {
+        $user = auth()->user();
+        $queryBalita = Balita::with('posyandu');
+        $queryUkur = BalitaUkur::query();
+
+        if ($user->posyandu_id !== null) {
+
+            $queryBalita->where('posyandu_id', $user->posyandu_id);
+        }
+        $queryUkur->where('id', $id);
+
+        $balitaUkur = $queryUkur->first();
+
+        $queryBalita->where('id', $balitaUkur->balita_id);
+
+        $balitas = $queryBalita->get();
+
+
+        return view('pages.main.balita-ukur.edit', compact(['balitas', 'balitaUkur']));
+    }
+
 
 
     // PENGHITUNGAN ZSCORE / STANDARD DEVIATION SCORE
-    public function hitung(Request $request)
+    public function hitung(Request $request, $id = null)
     {
         $validator = Validator::make($request->all(), [
 
@@ -88,7 +110,7 @@ class BalitaUkurController extends Controller
                 'required',
                 Rule::unique('balita_ukur', 'tgl_ukur')->where(function ($query) use ($request) {
                     return $query->where('balita_id', $request->balita_id);
-                }),
+                })->ignore($id),
             ],
             'bb' => 'required',
             'tb' => 'required',
@@ -280,6 +302,40 @@ class BalitaUkurController extends Controller
             return response()->json(['error' => 'Terjadi kesalahan saat menyimpan data.'], 500);
         }
     }
+    public function updateZScore(Request $request, $id)
+    {
+        $zscore = BalitaUkur::find($id);
+
+        if (!$zscore) {
+            return response()->json(['error' => 'Data tidak ditemukan.'], 404);
+        }
+
+        $updateResult = $zscore->update([
+            "balita_id" => $request->balita_id,
+            "tgl_ukur" => $request->tgl_ukur,
+            "umur_ukur" => $request->umur_ukur,
+            "bb" => $request->bb,
+            "tb" => $request->tb,
+            "cara_ukur" => $request->cara_ukur,
+            "status_bb_u" => $request->status_bb_u,
+            "zscore_bb_u" => $request->zscore_bb_u,
+            "status_tb_u" => $request->status_tb_u,
+            "zscore_tb_u" => $request->zscore_tb_u,
+            "status_bb_tb" => $request->status_bb_tb,
+            "zscore_bb_tb" => $request->zscore_bb_tb,
+            "status_imt_u" => $request->status_imt_u,
+            "zscore_imt_u" => $request->zscore_imt_u,
+            "updated_by" => Auth::id(),
+        ]);
+
+        if ($updateResult) {
+            return response()->json(['success' => 'Berhasil menyimpan penilaian.']);
+        } else {
+            return response()->json(['error' => 'Terjadi kesalahan saat menyimpan data.'], 500);
+        }
+    }
+
+
 
 
 

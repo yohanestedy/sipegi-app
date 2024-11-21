@@ -1,4 +1,4 @@
-@extends('layout.main', ['title' => 'Tambah Pengukuran Balita'])
+@extends('layout.main', ['title' => 'Edit Pengukuran Balita'])
 
 @section('cssLibraries')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" />
@@ -24,9 +24,9 @@
             <div class="row">
                 <div class="col-12 col-md-6 order-md-1 order-last">
 
-                    <h3>Tambah Pengukuran Balita</h3>
+                    <h3>Ubah Pengukuran Balita</h3>
                     <p class="text-subtitle text-muted">
-                        Isi form untuk menambah Pengukuran balita.
+                        Isi form untuk mengubah Pengukuran balita.
                     </p>
                 </div>
                 <div class="col-12 col-md-6 order-md-2 order-first">
@@ -124,7 +124,8 @@
                                     <div class="col-md-3 form-group mt-2  position-relative has-icon-left">
                                         <input name="tgl_ukur" id="tgl_ukur" type="text"
                                             class="form-control flatpickr @error('tgl_ukur') is-invalid @enderror"
-                                            value="{{ old('tgl_ukur') }}" placeholder="Pilih tanggal..">
+                                            value="{{ old('tgl_ukur') ?? $balitaUkur->tgl_ukur }} "
+                                            placeholder="Pilih tanggal..">
                                         <div class="form-control-icon mt-1 ms-3 ">
                                             <i class="fa-regular fa-calendar"></i>
                                         </div>
@@ -146,7 +147,7 @@
                                             <div class="col-10 col-md-5">
                                                 <input name="bb" type="number"
                                                     class="form-control  @error('bb') is-invalid @enderror"
-                                                    value="{{ old('bb') }}" min="1">
+                                                    value="{{ old('bb') ?? $balitaUkur->bb }}" min="1">
                                                 <div class="invalid-feedback">
                                                     @error('bb')
                                                         {{ $message }}
@@ -171,7 +172,7 @@
                                             <div class="col-10 col-md-5">
                                                 <input name="tb" type="number"
                                                     class="form-control  @error('tb') is-invalid @enderror"
-                                                    value="{{ old('tb') }}" min="1">
+                                                    value="{{ old('tb') ?? $balitaUkur->tb }}" min="1">
                                                 <div class="invalid-feedback">
                                                     @error('tb')
                                                         {{ $message }}
@@ -213,14 +214,14 @@
                                             <input name="cara_ukur" value="Berdiri"
                                                 class="form-check-input @error('cara_ukur') is-invalid @enderror"
                                                 type="radio" id="radioBerdiri"
-                                                {{ old('cara_ukur') == 'Berdiri' ? 'checked' : '' }}>
+                                                {{ old('cara_ukur') == 'Berdiri' ? 'checked' : ($balitaUkur->cara_ukur == 'Berdiri' ? 'checked' : '') }}>
                                             <label class="form-check-label" for="radioBerdiri">Berdiri</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input name="cara_ukur" value="Berbaring"
                                                 class="form-check-input @error('cara_ukur') is-invalid @enderror"
                                                 type="radio" id="radioBerbaring"
-                                                {{ old('cara_ukur') == 'Berbaring' ? 'checked' : '' }}>
+                                                {{ old('cara_ukur') == 'Berbaring' ? 'checked' : ($balitaUkur->cara_ukur == 'Berbaring' ? 'checked' : '') }}>
                                             <label class="form-check-label" for="radioBerbaring">Berbaring</label>
                                         </div>
                                         <div class="invalid-feedback">
@@ -469,7 +470,7 @@
 
             var formData = new FormData(document.getElementById('form')); // Ambil data form
 
-            fetch("{{ route('balitaukur.hitung') }}", {
+            fetch("{{ route('balitaukur.hitung', ['id' => $balitaUkur->id]) }}", {
                     method: 'POST',
                     body: formData,
                     headers: {
@@ -658,8 +659,8 @@
 
 
 
-            fetch("{{ route('balitaukur.simpanZScore') }}", {
-                    method: 'POST',
+            fetch("{{ route('balitaukur.updateZScore', ['id' => $balitaUkur->id]) }}", {
+                    method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
                         'X-CSRF-TOKEN': '{{ csrf_token() }}'
