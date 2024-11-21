@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('umur_ukur', 30);
             $table->double('bb');
             $table->double('tb');
+            $table->double('lk');
             $table->string('cara_ukur', 10);
             $table->string('status_bb_u', 30);
             $table->double('zscore_bb_u');

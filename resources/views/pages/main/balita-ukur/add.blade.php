@@ -299,18 +299,21 @@
                                             <label class="medium-text">Umur Pengukuran :</label><br>
                                             <p class="badge bg-light-secondary form-control-static fw-normal"
                                                 id="umur_ukur"></p>
+                                            <label class="medium-text">Cara Pengukuran :</label><br>
+                                            <p class="badge bg-light-secondary form-control-static fw-normal"
+                                                id="cara_ukur"></p><br>
 
                                         </div>
                                         <div class="col-5 col-md-6">
                                             <label class="medium-text">Berat Badan :</label><br>
                                             <p class="badge bg-light-secondary form-control-static fw-normal"
-                                                id="bb"> kg</p><br>
+                                                id="bb"></p><br>
                                             <label class="medium-text">Tinggi Badan :</label><br>
                                             <p class="badge bg-light-secondary form-control-static fw-normal"
-                                                id="tb"> cm</p><br>
-                                            <label class="medium-text">Cara Pengukuran :</label><br>
+                                                id="tb"></p><br>
+                                            <label class="medium-text">Lingkar Kepala :</label><br>
                                             <p class="badge bg-light-secondary form-control-static fw-normal"
-                                                id="cara_ukur"></p><br>
+                                                id="lk"></p><br>
 
                                         </div>
                                     </div>
@@ -336,7 +339,7 @@
                                         <div class="col-7 col-md-6">
                                             <span id="status_bb_u" class="badge"></span>
                                         </div>
-                                        <div class="col-2 col-md-3">
+                                        <div class="col-2 col-md-2 text-end">
                                             <span id="zscore_bb_u"></span>
                                         </div>
                                     </div>
@@ -348,7 +351,7 @@
                                         <div class="col-7 col-md-6">
                                             <span id="status_tb_u" class="badge"></span>
                                         </div>
-                                        <div class="col-2 col-md-3">
+                                        <div class="col-2 col-md-2 text-end">
                                             <span id="zscore_tb_u"></span>
                                         </div>
                                     </div>
@@ -360,7 +363,7 @@
                                         <div class="col-7 col-md-6">
                                             <span id="status_bb_tb" class="badge"></span>
                                         </div>
-                                        <div class="col-2 col-md-3">
+                                        <div class="col-2 col-md-2 text-end">
                                             <span id="zscore_bb_tb"></span>
                                         </div>
                                     </div>
@@ -372,7 +375,7 @@
                                         <div class="col-7 col-md-6">
                                             <span id="status_imt_u" class="badge"></span>
                                         </div>
-                                        <div class="col-2 col-md-3">
+                                        <div class="col-2 col-md-2 text-end">
                                             <span id="zscore_imt_u"></span>
                                         </div>
                                     </div>
@@ -384,7 +387,7 @@
                                         <div class="col-7 col-md-6">
                                             <span id="status_lk_u" class="badge"></span>
                                         </div>
-                                        <div class="col-2 col-md-3">
+                                        <div class="col-2 col-md-2 text-end">
                                             <span id="zscore_lk_u"></span>
                                         </div>
                                     </div>
@@ -571,6 +574,7 @@
                         document.getElementById('umur_ukur').innerText = data.umur_ukur;
                         document.getElementById('bb').innerText = data.bb + " kg";
                         document.getElementById('tb').innerText = data.tb + " cm";
+                        document.getElementById('lk').innerText = data.lk + " cm";
                         document.getElementById('cara_ukur').innerText = data.cara_ukur;
                         document.getElementById('zscore_bb_u').innerText = data.zscore_bb_u;
                         document.getElementById('status_bb_u').innerText = data.status_bb_u;
@@ -696,6 +700,7 @@
                 umur_ukur: hasilPengukuran.umur_ukur,
                 bb: hasilPengukuran.bb,
                 tb: hasilPengukuran.tb,
+                lk: hasilPengukuran.lk,
                 cara_ukur: hasilPengukuran.cara_ukur,
                 zscore_bb_u: hasilPengukuran.zscore_bb_u,
                 zscore_tb_u: hasilPengukuran.zscore_tb_u,

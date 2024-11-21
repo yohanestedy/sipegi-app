@@ -114,6 +114,7 @@ class BalitaUkurController extends Controller
             ],
             'bb' => 'required',
             'tb' => 'required',
+            'lk' => 'required',
             'cara_ukur' => 'required',
         ], [
             'balita_id.required' => 'Pilih balita untuk di ukur',
@@ -121,6 +122,7 @@ class BalitaUkurController extends Controller
             'tgl_ukur.unique' => 'Balita sudah di ukur di tanggal ini',
             'bb.required' => 'Isi berat badan balita',
             'tb.required' => 'Isi tinggi badan balita',
+            'lk.required' => 'Isi lingkar kepala balita',
             'cara_ukur.required' => 'Pilih metode pengukuran balita',
 
         ]);
@@ -273,6 +275,7 @@ class BalitaUkurController extends Controller
             'umur_ukur' => $umurUkurDisplay,
             'bb' => $request->bb,
             'tb' => $request->tb,
+            'lk' => $request->lk,
             'cara_ukur' => $request->cara_ukur,
             'zscore_bb_u' => round($zScoreBB_U, 2),
             'status_bb_u' => $statusGiziBB_U,
@@ -298,6 +301,7 @@ class BalitaUkurController extends Controller
             "umur_ukur" => $request->umur_ukur,
             "bb" => $request->bb,
             "tb" => $request->tb,
+            "lk" => $request->lk,
             "cara_ukur" => $request->cara_ukur,
             "status_bb_u" => $request->status_bb_u,
             "zscore_bb_u" => $request->zscore_bb_u,
@@ -336,6 +340,7 @@ class BalitaUkurController extends Controller
             "umur_ukur" => $request->umur_ukur,
             "bb" => $request->bb,
             "tb" => $request->tb,
+            "lk" => $request->lk,
             "cara_ukur" => $request->cara_ukur,
             "status_bb_u" => $request->status_bb_u,
             "zscore_bb_u" => $request->zscore_bb_u,
