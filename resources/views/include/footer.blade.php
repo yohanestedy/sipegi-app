@@ -1,4 +1,4 @@
-<footer class="mt-auto">
+<footer class="medium-text">
     <div class="footer clearfix mb-0 text-muted">
         <div class="float-start">
             <p class="mb-0">2024 &copy; SiPeGi Selorejo | Created by <a href="https://github.com/yohanestedy"

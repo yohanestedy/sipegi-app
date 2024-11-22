@@ -1,5 +1,6 @@
 @extends('layout.main', ['title' => 'Data Pengukuran Balita'])
 
+
 @section('cssLibraries')
     <link rel="stylesheet" href="{{ asset('assets/extensions/datatables.net-bs5/css/dataTables.bootstrap5.min.css') }}">
 
@@ -16,34 +17,30 @@
             background-color: hsl(33, 100%, 92%) !important;
             color: #3f1f00 !important;
         }
-
-        .medium-text {
-            font-size: 0.8rem;
-            /* Ukuran medium */
-        }
     </style>
 @endsection
 
+@section('breadcrumb')
+    <nav aria-label="breadcrumb" class="breadcrumb-header">
+        <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item">
+                <a href="#">Balita</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+                Data Pengukuran Balita
+            </li>
+        </ol>
+    </nav>
+@endsection
 @section('mainContent')
-    <div class="page-heading">
+    <div class="page-heading medium-text">
         <div class="page-title">
             <div class="row">
                 <div class="col-12 col-md-6 order-md-1 order-last">
                     <h3>Data Pengukuran Balita</h3>
                     <p class="text-subtitle text-muted">Halaman data pengukuran balita.</p>
                 </div>
-                <div class="col-12 col-md-6 order-md-2 order-first">
-                    <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item">
-                                <a href="#">Balita</a>
-                            </li>
-                            {{-- <li class="breadcrumb-item active" aria-current="page">
-                                Layout Default
-                            </li> --}}
-                        </ol>
-                    </nav>
-                </div>
+
             </div>
         </div>
         <section class="section">

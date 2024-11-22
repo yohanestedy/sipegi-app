@@ -29,6 +29,18 @@
             font-family: "Nunito", sans-serif !important;
 
         }
+
+        .medium-text {
+            font-size: 0.8rem;
+            /* Ukuran medium */
+        }
+
+        @media (min-width: 768px) {
+            .medium-text {
+                font-size: 1rem;
+                /* Ukuran normal untuk md ke atas */
+            }
+        }
     </style>
 
 </head>
@@ -46,9 +58,19 @@
         <div id="main">
 
             <header class="mb-3">
-                <a href="#" class="burger-btn d-block d-xl-none">
-                    <i class="bi bi-justify fs-3"></i>
-                </a>
+                <div class="row">
+                    <div class="col-2 col-md-6">
+                        <a href="#" class="burger-btn d-block d-xl-none">
+                            <i class="bi bi-justify fs-3"></i>
+                        </a>
+                    </div>
+                    <div class="col-10 col-md-6 medium-text d-flex align-items-center justify-content-end">
+                        @yield('breadcrumb')
+                    </div>
+
+
+                </div>
+
             </header>
 
             {{-- HEADER ATAS --}}
