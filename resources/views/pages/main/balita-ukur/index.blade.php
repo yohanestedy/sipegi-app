@@ -57,7 +57,7 @@
                             <span>:</span>
                         </div>
                         <div class="col-8 col-md-8">
-                            <p class="mb-1">{{ $balita->nik }}</p>
+                            <p class="mb-1">{{ $balita->nik == null ? '-' : $balita->nik }}</p>
                         </div>
 
                     </div>
@@ -117,6 +117,7 @@
 
 
                 </div>
+
                 <div class="pb-1 card-header d-flex justify-content-between align-items-center">
                     <h5 class="card-title mb-0">
                         Daftar Hasil Pengukuran
@@ -145,6 +146,7 @@
                                 <tr>
                                     <th rowspan="2" style="text-align: center;">Tindakan</th>
                                     <th rowspan="2" style="text-align: center;">Tgl Ukur</th>
+                                    <th rowspan="2" style="text-align: center;">Umur Ukur</th>
                                     <th rowspan="2" style="text-align: center;">BB (kg)</th>
                                     <th rowspan="2" style="text-align: center;">TB (cm)</th>
                                     <th rowspan="2" style="text-align: center;">Cara Ukur</th>
@@ -210,6 +212,8 @@
                                         </td>
                                         <td data-order="{{ $balitaUkur->tgl_ukur }}" style="text-align: center">
                                             {{ $balitaUkur->tgl_ukur_display }}</td>
+                                        <td style="text-align: center">
+                                            {{ $balitaUkur->umur_ukur }}</td>
                                         <td style="text-align: center">{{ $balitaUkur->bb }}</td>
                                         <td style="text-align: center">{{ $balitaUkur->tb }}</td>
                                         <td style="text-align: center">{{ $balitaUkur->cara_ukur }}</td>
