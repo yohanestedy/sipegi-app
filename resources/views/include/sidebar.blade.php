@@ -42,14 +42,14 @@
                 </li>
 
                 {{-- Master Data --}}
-                <li class="sidebar-item has-sub">
+                <li class="sidebar-item {{ Route::is('masterdata.*') ? 'active' : '' }}  has-sub">
                     <a href="#" class="sidebar-link">
                         <i class="fa-duotone fa-solid fa-folders fa-lg"></i>
                         <span>Master Data</span>
                     </a>
 
                     <ul class="submenu">
-                        <li class="submenu-item">
+                        <li class="submenu-item {{ Route::is('masterdata.listposyandu') ? 'active' : '' }} ">
                             <a href="{{ route('masterdata.listposyandu') }}" class="submenu-link">Daftar Posyandu</a>
                         </li>
 
@@ -72,7 +72,7 @@
                 </li>
 
                 {{-- Balita --}}
-                <li class="sidebar-item {{ Route::is('balita.*') ? 'active' : '' }} ">
+                <li class="sidebar-item {{ Route::is('balita.*') || Route::is('balitaukur.*') ? 'active' : '' }} ">
                     <a href="{{ route('balita.index') }}" class="sidebar-link">
                         <i class="fa-solid fa-children fa-lg"></i>
                         <span>Balita</span>
