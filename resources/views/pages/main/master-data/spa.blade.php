@@ -1184,7 +1184,7 @@
                                             <div class="tab-pane active " id="LK/U/L" role="tabpanel"
                                                 aria-labelledby="LK/U/L-tab">
                                                 <p class="my-2 text-center">Standar Lingkar Kepala menurut Umur (LK/U)
-                                                    Umur 0-24 Bulan</p>
+                                                    Umur 0-60 Bulan</p>
 
                                                 {{-- TABEL --}}
                                                 <div class="table-responsive datatable-minimal">
@@ -1252,7 +1252,7 @@
                                             <div class="tab-pane " id="LK/U/P" role="tabpanel"
                                                 aria-labelledby="LK/U/P-tab">
                                                 <p class="my-2 text-center">Standar Lingkar Kepala menurut Umur (LK/U)
-                                                    Umur 0-24 Bulan</p>
+                                                    Umur 0-60 Bulan</p>
 
                                                 {{-- TABEL --}}
                                                 <div class="table-responsive datatable-minimal">
