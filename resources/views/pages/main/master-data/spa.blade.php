@@ -49,7 +49,7 @@
                         <div class="row">
 
                             {{-- TAB UTAMA --}}
-                            <div class="col-12 col-md-3 mb-4">
+                            <div class="col-12 col-md-3 mb-4 medium-text">
                                 <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist"
                                     aria-orientation="vertical">
                                     <a class="nav-link active" id="v-pills-BB/U-tab" data-bs-toggle="pill"
