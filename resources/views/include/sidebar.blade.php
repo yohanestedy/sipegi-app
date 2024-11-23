@@ -53,8 +53,8 @@
                             <a href="{{ route('masterdata.listposyandu') }}" class="submenu-link">Daftar Posyandu</a>
                         </li>
 
-                        <li class="submenu-item">
-                            <a href="#" class="submenu-link">Standar Pertumbuhan Anak</a>
+                        <li class="submenu-item {{ Route::is('masterdata.spa') ? 'active' : '' }}">
+                            <a href="{{ route('masterdata.spa') }}" class="submenu-link">Standar Pertumbuhan Anak</a>
                         </li>
 
                         <li class="submenu-item">

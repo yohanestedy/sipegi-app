@@ -88,6 +88,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::prefix('master-data')->group(function () {
         // POSYANDU
         Route::get('/list-posyandu', [MasterDataController::class, 'listPosyandu'])->name('masterdata.listposyandu');
+        Route::get('/standar-pertumbuhan-anak', [MasterDatacontroller::class, 'standarPertumbuhanAnak'])->name('masterdata.spa');
     });
 
 
