@@ -117,11 +117,11 @@
 
 
                 </div>
-                <div class="card-header d-flex justify-content-between align-items-center">
+                <div class="pb-1 card-header d-flex justify-content-between align-items-center">
                     <h5 class="card-title mb-0">
-                        Daftar Pengukuran
+                        Daftar Hasil Pengukuran
                     </h5>
-                    <a href="{{ route('balitaukur.add', ['id' => $balita->id]) }}" class="btn btn-primary">
+                    <a href="{{ route('balitaukur.add', ['id' => $balita->id]) }}" class="btn btn-primary rounded-pill">
                         <i class="fa-solid fa-plus"></i> Tambah Pengukuran
                     </a>
 
