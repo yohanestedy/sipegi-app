@@ -140,21 +140,41 @@
                     </div>
                     <div class="table-responsive datatable-minimal">
 
-                        <table class="table table-hover table-bordered" id="tableBalitaUkur">
+                        <table class="table table-hover table-bordered medium-text text-center" id="tableBalitaUkur">
                             <thead>
                                 <tr>
-                                    <th style="text-align: center;">Tindakan</th>
-                                    <th style="text-align: center;">Tgl Ukur</th>
-                                    <th style="text-align: center;">BB (kg)</th>
-                                    <th style="text-align: center;">TB (cm)</th>
-                                    <th style="text-align: center;">Cara Ukur</th>
-                                    <th style="text-align: center;">BB/U</th>
-                                    <th style="text-align: center;">TB/U</th>
-                                    <th style="text-align: center;">BB/TB</th>
-                                    <th style="text-align: center;">IMT/U</th>
-                                    <th style="text-align: center;">LK/U</th>
+                                    <th rowspan="2" style="text-align: center;">Tindakan</th>
+                                    <th rowspan="2" style="text-align: center;">Tgl Ukur</th>
+                                    <th rowspan="2" style="text-align: center;">BB (kg)</th>
+                                    <th rowspan="2" style="text-align: center;">TB (cm)</th>
+                                    <th rowspan="2" style="text-align: center;">Cara Ukur</th>
+                                    <th colspan="2" style="text-align: center;">BB / Umur</th>
+                                    <th colspan="2" style="text-align: center;">TB / Umur</th>
+                                    <th colspan="2" style="text-align: center;">BB / TB</th>
+                                    <th colspan="2" style="text-align: center;">IMT / Umur</th>
+                                    <th colspan="2" style="text-align: center;">LK / Umur</th>
 
                                 </tr>
+
+
+                                <tr>
+                                    <th class="text-center">Status</th>
+                                    <th class="text-center">ZScore</th>
+
+                                    <th class="text-center">Status</th>
+                                    <th class="text-center">ZScore</th>
+
+                                    <th class="text-center">Status</th>
+                                    <th class="text-center">ZScore</th>
+
+                                    <th class="text-center">Status</th>
+                                    <th class="text-center">ZScore</th>
+
+                                    <th class="text-center">Status</th>
+                                    <th class="text-center">ZScore</th>
+                                </tr>
+
+
                             </thead>
                             <tbody>
 
@@ -193,31 +213,38 @@
                                         <td style="text-align: center">{{ $balitaUkur->bb }}</td>
                                         <td style="text-align: center">{{ $balitaUkur->tb }}</td>
                                         <td style="text-align: center">{{ $balitaUkur->cara_ukur }}</td>
+
                                         <td style="text-align: center">
                                             <span class="badge {{ getStatusClass($balitaUkur->status_bb_u) }}">
                                                 {{ $balitaUkur->status_bb_u }}
                                             </span>
                                         </td>
+                                        <td style="text-align: center">{{ $balitaUkur->zscore_bb_u }}</td>
+
                                         <td style="text-align: center">
                                             <span class="badge {{ getStatusClass($balitaUkur->status_tb_u) }}">
                                                 {{ $balitaUkur->status_tb_u }}
                                             </span>
                                         </td>
+                                        <td style="text-align: center">{{ $balitaUkur->zscore_tb_u }}</td>
                                         <td style="text-align: center">
                                             <span class="badge {{ getStatusClass($balitaUkur->status_bb_tb) }}">
                                                 {{ $balitaUkur->status_bb_tb }}
                                             </span>
                                         </td>
+                                        <td style="text-align: center">{{ $balitaUkur->zscore_bb_tb }}</td>
                                         <td style="text-align: center">
                                             <span class="badge {{ getStatusClass($balitaUkur->status_imt_u) }}">
                                                 {{ $balitaUkur->status_imt_u }}
                                             </span>
                                         </td>
+                                        <td style="text-align: center">{{ $balitaUkur->zscore_imt_u }}</td>
                                         <td style="text-align: center">
                                             <span class="badge {{ getStatusClass($balitaUkur->status_lk_u) }}">
                                                 {{ $balitaUkur->status_lk_u }}
                                             </span>
                                         </td>
+                                        <td style="text-align: center">{{ $balitaUkur->zscore_lk_u }}</td>
 
 
 

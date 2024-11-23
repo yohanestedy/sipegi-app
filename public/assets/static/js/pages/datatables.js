@@ -88,7 +88,7 @@ let customized_datatable5 = $("#tableBalitaUkur").DataTable({
     ],
     columnDefs: [
 
-        { orderable: false, targets: [0,2,3,4,5,6,7,8,9] } // Nonaktifkan sorting di kolom lainnya
+        { orderable: false, targets: [0,2,3,4,5,6,7,8,9,10,11,12,13,14] } // Nonaktifkan sorting di kolom lainnya
     ],
     dom:
 		"<'row'<'col-3'l><'col-9'f>>" +
