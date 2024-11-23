@@ -59,7 +59,7 @@
                     </div>
                     <div class="table-responsive datatable-minimal">
 
-                        <table class="table table-hover table-bordered" id="tableBalita">
+                        <table class="table table-hover table-bordered medium-text" id="tableBalita">
                             <thead>
                                 <tr>
                                     <th style="text-align: center;">Tindakan</th>

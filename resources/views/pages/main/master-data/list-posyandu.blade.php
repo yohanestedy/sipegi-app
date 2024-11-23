@@ -59,7 +59,7 @@
                     </div>
                     <div class="table-responsive datatable-minimal">
 
-                        <table class="table table-hover table-bordered">
+                        <table class="table table-hover table-bordered medium-text">
                             <thead>
                                 <tr>
                                     <th style="text-align: center;">No</th>

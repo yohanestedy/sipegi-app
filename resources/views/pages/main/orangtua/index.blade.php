@@ -58,7 +58,7 @@
                     </div>
                     <div class="table-responsive datatable-minimal">
 
-                        <table class="table table-hover table-bordered" id="tableOrtu">
+                        <table class="table table-hover table-bordered medium-text" id="tableOrtu">
                             <thead>
                                 <tr>
                                     <th style="text-align: center;">NIK</th>
