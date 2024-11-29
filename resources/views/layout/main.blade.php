@@ -43,6 +43,12 @@
         }
     </style>
 
+
+    <!-- PWA  -->
+
+    <link rel="apple-touch-icon" href="{{ asset('sipegi_512.png') }}">
+    <link rel="manifest" href="{{ asset('/manifest.json') }}">
+
 </head>
 
 <body>
@@ -177,6 +183,25 @@
     {{-- Js Tambahan jika di perlukan --}}
     @yield('jsLibraries')
 
+
+    {{-- PWA --}}
+    <script src="{{ asset('/sw.js') }}"></script>
+    <script>
+        if ("serviceWorker" in navigator) {
+            // Register a service worker hosted at the root of the
+            // site using the default scope.
+            navigator.serviceWorker.register("/sw.js").then(
+                (registration) => {
+                    console.log("Service worker registration succeeded:", registration);
+                },
+                (error) => {
+                    console.error(`Service worker registration failed: ${error}`);
+                },
+            );
+        } else {
+            console.error("Service workers are not supported.");
+        }
+    </script>
 
 </body>
 
