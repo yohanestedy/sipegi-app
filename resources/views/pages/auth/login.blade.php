@@ -7,13 +7,13 @@
     <title>Login - SiPeGi Selorejo</title>
     <link rel="icon" type="image/svg+xml" href="{{ asset('assets/static/images/logo/sipegi-favicon.svg') }}">
     <link rel="stylesheet" crossorigin href="{{ asset('/assets/compiled/css/app.css') }}">
-    <link rel="stylesheet" crossorigin href="{{ asset('/assets/compiled/css/app-dark.css') }}">
+    {{-- <link rel="stylesheet" crossorigin href="{{ asset('/assets/compiled/css/app-dark.css') }}"> --}}
     <link rel="stylesheet" crossorigin href="{{ asset('/assets/compiled/css/auth.css') }}">
     <link rel="stylesheet" href="{{ asset('/assets/fontawesome/css/all.css') }}">
 </head>
 
 <body>
-    <script src="{{ asset('assets/static/js/initTheme.js') }}"></script>
+    {{-- <script src="{{ asset('assets/static/js/initTheme.js') }}"></script> --}}
     <div id="auth">
 
         <div class="row h-100">

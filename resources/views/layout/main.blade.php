@@ -20,7 +20,7 @@
 
 
     <link rel="stylesheet" crossorigin href="{{ asset('/assets/compiled/css/app.css') }}" />
-    <link rel="stylesheet" crossorigin href="{{ asset('/assets/compiled/css/app-dark.css') }}" />
+    {{-- <link rel="stylesheet" crossorigin href="{{ asset('/assets/compiled/css/app-dark.css') }}" /> --}}
     {{-- <link rel="stylesheet" href="https://atugatran.github.io/FontAwesome6Pro/css/all.min.css"> --}}
     <link rel="stylesheet" href="{{ asset('/assets/fontawesome/css/all.css') }}">
     <style>
@@ -46,7 +46,7 @@
 </head>
 
 <body>
-    <script src="{{ asset('assets/static/js/initTheme.js') }}"></script>
+    {{-- <script src="{{ asset('assets/static/js/initTheme.js') }}"></script> --}}
     <div id="app">
 
 
@@ -92,7 +92,7 @@
     </div>
 
     {{-- Default Js --}}
-    <script src="{{ asset('assets/static/js/components/dark.js') }}"></script>
+    {{-- <script src="{{ asset('assets/static/js/components/dark.js') }}"></script> --}}
     <script src="{{ asset('assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
 
     <script src="{{ asset('assets/compiled/js/app.js') }}"></script>
