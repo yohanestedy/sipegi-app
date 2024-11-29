@@ -179,6 +179,10 @@ class OrtuController extends Controller
             "updated_by" => Auth::id(),
         ]);
 
+        Orangtua::find($id)->balita()->update(['posyandu_id' => $request->dusun]);
+
+
+
         return Redirect::route('orangtua.index')->with('successToast', 'Berhasil memperbaharui data orangtua.');
     }
 
