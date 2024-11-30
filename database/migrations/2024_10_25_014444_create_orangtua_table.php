@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name', 50);
             $table->string('no_kk', 16);
             $table->string('nik', 16)->unique(); // Membuat nik unik
+            $table->string('bpjs', 15);
             $table->string('telp', 13);
             $table->string('alamat', 50);
             $table->unsignedInteger('rt_id');

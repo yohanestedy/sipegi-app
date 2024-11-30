@@ -30,9 +30,10 @@
     <div class="page-heading">
         <div class="page-title">
             <div class="row">
-                <div class="col-12 col-md-6 order-md-1 order-last">
+                <div class="col-12 col-md-12 order-md-1 order-last">
                     <h3>Indeks Standar Antropometri Anak</h3>
-                    <p class="text-subtitle text-muted">Standar Antropometri Anak didasarkan pada parameter berat badan
+                    <p class="text-subtitle text-muted">Berdasarkan PMK No. 2 Tahun 2020 tentang Standar Antropometri Anak,
+                        bahwa Standar Antropometri Anak didasarkan pada parameter berat badan
                         dan panjang/tinggi badan yang terdiri atas 4 (empat) indeks.</p>
                 </div>
 
@@ -69,67 +70,174 @@
                             </thead>
                             <tbody style="text-align: center;">
 
+                                {{-- BB/U --}}
+                                <div>
+                                    <tr style="text-align: center;">
+                                        <td rowspan="5">Berat Badan menurut Umur <strong>(BB/U)</strong></td>
+                                    </tr>
 
-                                <tr style="text-align: center;">
-                                    <td rowspan="5">Berat Badan menurut Umur (BB/U) anak usia 0 - 60 bulan</td>
+                                    <tr>
+                                        <td>Berat badan sangat kurang ( <i>severely underweight</i> )</td>
+                                        <td>
+                                            < -3 SD </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Berat badan kurang ( <i>underweight</i> )</td>
+                                        <td> -3 SD s.d. -2 SD </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Berat badan normal</td>
+                                        <td>-2 SD s.d. 1 SD </td>
 
-                                </tr>
+                                    </tr>
+                                    <tr>
+                                        <td>Resiko Berat badan lebih</td>
+                                        <td> > 3 SD </td>
+                                    </tr>
+                                </div>
 
-                                <tr>
-                                    <td>Berat badan sangat kurang ( <i>severely underweight</i> )</td>
-                                    <td>
-                                        < -3 SD </td>
-
-                                </tr>
-                                <tr>
-                                    <td>Berat badan kurang ( <i>underweight</i> )</td>
-                                    <td> -3 SD s.d. -2 SD </td>
-
-                                </tr>
-                                <tr>
-                                    <td>Berat badan normal</td>
-                                    <td>-2 SD s.d. 1 SD </td>
-
-                                </tr>
-                                <tr>
-                                    <td>Resiko Berat badan lebih</td>
-                                    <td>
-                                        > 3 SD </td>
-                                </tr>
-
-                                <tr>
+                                <tr style=" background-color: rgba(206, 206, 206, 0.3); color:rgb(61, 61, 61);">
                                     <td></td>
                                     <td></td>
                                     <td></td>
                                 </tr>
 
-                                <tr style="text-align: center;">
-                                    <td rowspan="5">Panjang Badan atau Tinggi Badan menurut Umur (BB/U) anak usia 0 - 60
-                                        bulan</td>
+                                {{-- TB/U --}}
+                                <div>
+                                    <tr style="text-align: center;">
+                                        <td rowspan="5">Panjang Badan atau Tinggi Badan menurut Umur <strong>(PB/U atau
+                                                TB/U)</strong></td>
+                                    </tr>
 
+                                    <tr>
+                                        <td>Sangat Pendek ( <i>severely stunted</i> )</td>
+                                        <td>
+                                            < -3 SD </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Pendek ( <i>stunted</i> )</td>
+                                        <td> -3 SD s.d. -2 SD </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Normal</td>
+                                        <td> -2 SD s.d. 3 SD </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tinggi</td>
+                                        <td> > 3 SD </td>
+                                    </tr>
+                                </div>
+
+                                <tr style=" background-color: rgba(206, 206, 206, 0.3); color:rgb(61, 61, 61);">
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
                                 </tr>
 
-                                <tr>
-                                    <td>Sangat Pendek ( <i>severely stunted</i> )</td>
-                                    <td>
-                                        < -3 SD </td>
+                                {{-- BB/TB --}}
+                                <div>
+                                    <tr style="text-align: center;">
+                                        <td rowspan="7">Berat Badan menurut Panjang Badan atau Tinggi Badan
+                                            <strong>(BB/PB atau BB/TB)</strong>
+                                        </td>
+                                    </tr>
 
-                                </tr>
-                                <tr>
-                                    <td>Pendek ( <i>stunted</i> )</td>
-                                    <td> -3 SD s.d. -2 SD </td>
+                                    <tr>
+                                        <td>Gizi Buruk ( <i>severely wasted</i> )</td>
+                                        <td>
+                                            < -3 SD </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Gizi Kurang ( <i>wasted</i> )</td>
+                                        <td> -3 SD s.d. -2 SD </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Gizi Baik ( <i>normal</i> )</td>
+                                        <td> -2 SD s.d. 1 SD </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Beresiko Gizi Lebih</td>
+                                        <td> 1 SD s.d. 2 SD </td>
 
-                                </tr>
-                                <tr>
-                                    <td>Normal</td>
-                                    <td> -2 SD s.d. 3 SD </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Gizi lebih ( <i>overweight</i> )</td>
+                                        <td> 2 SD s.d. 3 SD </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Obesitas ( <i>obese</i> )</td>
+                                        <td> > 3 SD </td>
+                                    </tr>
+                                </div>
 
+                                <tr style=" background-color: rgba(206, 206, 206, 0.3); color:rgb(61, 61, 61);">
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
                                 </tr>
-                                <tr>
-                                    <td>Tinggi</td>
-                                    <td>
-                                        > 3 SD </td>
+
+                                {{-- IMT/U --}}
+                                <div>
+                                    <tr style="text-align: center;">
+                                        <td rowspan="7">Indeks Massa Tubuh menurut Umur <strong>(IMT/U)</strong></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Gizi Buruk ( <i>severely wasted</i> )</td>
+                                        <td>
+                                            < -3 SD </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Gizi Kurang ( <i>wasted</i> )</td>
+                                        <td> -3 SD s.d. -2 SD </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Gizi Baik ( <i>normal</i> )</td>
+                                        <td> -2 SD s.d. 1 SD </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Beresiko Gizi Lebih</td>
+                                        <td> 1 SD s.d. 2 SD </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td>Gizi lebih ( <i>overweight</i> )</td>
+                                        <td> 2 SD s.d. 3 SD </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Obesitas ( <i>obese</i> )</td>
+                                        <td> > 3 SD </td>
+                                    </tr>
+                                </div>
+
+                                <tr style=" background-color: rgba(206, 206, 206, 0.3); color:rgb(61, 61, 61);">
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
                                 </tr>
+
+                                {{-- IMT/U --}}
+                                <div>
+                                    <tr style="text-align: center;">
+                                        <td rowspan="4">Lingkar Kepala menurut Umur <strong>(LK/U)</strong></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Mikrosefali</td>
+                                        <td>
+                                            < -2 SD </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Normal</td>
+                                        <td> -2 SD s.d. 2 SD </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Makrosefali</td>
+                                        <td> > 2 SD </td>
+                                    </tr>
+
+                                </div>
+
 
 
                             </tbody>

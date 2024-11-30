@@ -19,6 +19,7 @@ class OrangtuaSeeder extends Seeder
             'name' => 'Maria Frety Arwindhi',
             'no_kk' => '3173061208220037',
             'nik' => '1807065105930006',
+            'bpjs' => 'Punya',
             'telp' => '082261586891',
             'alamat' => 'Dusun Suko Makmur',
             'rt_id' => 13,

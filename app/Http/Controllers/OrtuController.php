@@ -55,6 +55,8 @@ class OrtuController extends Controller
     public function store(Request $request)
     {
 
+
+
         // Mengubah input nama menjadi huruf kapital
         $request->merge([
             'name' => strtoupper($request->name),
@@ -65,6 +67,7 @@ class OrtuController extends Controller
             'nik' => ['required', 'numeric', 'digits:16', Rule::unique('orangtua', 'nik')],   // Memastikan hanya angka dengan panjang tepat 16
             'name' => ['required', 'regex:/^[a-zA-Z\s]+$/'],
             'telp' => 'required',
+            'bpjs' => 'required',
             'provinsi' => 'required',
             'kabupaten' => 'required',
             'kecamatan' => 'required',
@@ -83,6 +86,7 @@ class OrtuController extends Controller
             'name.required' => 'Nama harus diisi',
             'name.regex' => 'Nama tidak boleh mengandung angka atau karakter khusus',
             'telp.required' => 'Telepon harus diisi',
+            'bpjs.required' => 'BPJS harus diisi',
             'provinsi.required' => 'Provinsi harus dipilih',
             'kabupaten.required' => 'Kabupaten harus dipilih',
             'kecamatan.required' => 'Kecamatan harus dipilih',
@@ -97,10 +101,12 @@ class OrtuController extends Controller
             return Redirect::back()->withErrors($validator)->withInput();
         }
 
+
         Orangtua::create([
             "no_kk" => $request->no_kk,
             "nik" => $request->nik,
             "name" => $request->name,
+            "bpjs" => $request->bpjs,
             "telp" => $request->telp,
             "provinsi" => $request->provinsi,
             "kabupaten" => $request->kabupaten,
@@ -131,6 +137,7 @@ class OrtuController extends Controller
             'nik' => ['required', 'numeric', 'digits:16', Rule::unique('orangtua', 'nik')->ignore($id)],   // Memastikan hanya angka dengan panjang tepat 16
             'name' => ['required', 'regex:/^[a-zA-Z\s]+$/'],
             'telp' => 'required',
+            'bpjs' => 'required',
             'provinsi' => 'required',
             'kabupaten' => 'required',
             'kecamatan' => 'required',
@@ -149,6 +156,7 @@ class OrtuController extends Controller
             'name.required' => 'Nama harus diisi',
             'name.regex' => 'Nama tidak boleh mengandung angka atau karakter khusus',
             'telp.required' => 'Telepon harus diisi',
+            'bpjs.required' => 'BPJS harus diisi',
             'provinsi.required' => 'Provinsi harus dipilih',
             'kabupaten.required' => 'Kabupaten harus dipilih',
             'kecamatan.required' => 'Kecamatan harus dipilih',
@@ -169,6 +177,7 @@ class OrtuController extends Controller
             "nik" => $request->nik,
             "name" => $request->name,
             "telp" => $request->telp,
+            "bpjs" => $request->bpjs,
             "provinsi" => $request->provinsi,
             "kabupaten" => $request->kabupaten,
             "kecamatan" => $request->kecamatan,
