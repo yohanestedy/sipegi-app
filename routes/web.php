@@ -89,6 +89,7 @@ Route::group(['middleware' => 'auth'], function () {
         // POSYANDU
         Route::get('/list-posyandu', [MasterDataController::class, 'listPosyandu'])->name('masterdata.listposyandu');
         Route::get('/standar-pertumbuhan-anak', [MasterDatacontroller::class, 'standarPertumbuhanAnak'])->name('masterdata.spa');
+        Route::get('/indeks-standar-antropometri-anak', [MasterDatacontroller::class, 'indeksStandar'])->name('masterdata.indeks-standar');
     });
 
 

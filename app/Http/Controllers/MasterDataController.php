@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class MasterDataController extends Controller
 {
-    //
+    // Daftar Posyandu
     public function listPosyandu()
     {
         $posyandus = Posyandu::with('dusun', 'user')->get();
@@ -17,6 +17,7 @@ class MasterDataController extends Controller
         return view('pages.main.master-data.list-posyandu', compact('posyandus'));
     }
 
+    // Standar Pertumbuhan Anak (WHO Child Growth Standard)
     public function standarPertumbuhanAnak()
     {
         $data = [
@@ -55,5 +56,14 @@ class MasterDataController extends Controller
 
 
         return view('pages.main.master-data.spa', compact('data'));
+    }
+
+    // Indeks Standar Antropometri Anak
+    public function indeksStandar()
+    {
+
+
+
+        return view('pages.main.master-data.indeks-standar');
     }
 }

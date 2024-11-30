@@ -1,4 +1,4 @@
-@extends('layout.main', ['title' => 'Daftar Posyandu'])
+@extends('layout.main', ['title' => 'Indeks Standar Antropometri Anak'])
 
 @section('cssLibraries')
     <link rel="stylesheet" href="{{ asset('assets/extensions/datatables.net-bs5/css/dataTables.bootstrap5.min.css') }}">
@@ -20,7 +20,7 @@
                 <a href="#">Master Data</a>
             </li>
             <li class="breadcrumb-item active" aria-current="page">
-                Daftar Posyandu
+                Indeks Standar Antropometri Anak
             </li>
         </ol>
     </nav>
@@ -31,8 +31,9 @@
         <div class="page-title">
             <div class="row">
                 <div class="col-12 col-md-6 order-md-1 order-last">
-                    <h3>Daftar Posyandu</h3>
-                    <p class="text-subtitle text-muted">Halaman daftar posyandu.</p>
+                    <h3>Indeks Standar Antropometri Anak</h3>
+                    <p class="text-subtitle text-muted">Standar Antropometri Anak didasarkan pada parameter berat badan
+                        dan panjang/tinggi badan yang terdiri atas 4 (empat) indeks.</p>
                 </div>
 
             </div>
@@ -41,14 +42,12 @@
 
 
             <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
+                {{-- <div class="card-header d-flex justify-content-between align-items-center">
                     <h5 class="card-title mb-0">
                         Daftar Posyandu Desa Selorejo
                     </h5>
-                    {{-- <a href="{{ route('balita.add') }}" class="btn btn-primary">
-                        <i class="fa-solid fa-plus"></i> Tambah
-                    </a> --}}
-                </div>
+
+                </div> --}}
                 <div class="card-body">
 
                     <div class="mb-2">
@@ -61,52 +60,77 @@
 
                         <table class="table table-hover table-bordered medium-text">
                             <thead>
-                                <tr>
-                                    <th style="text-align: center;">RW</th>
-                                    <th style="text-align: center;">Posyandu</th>
-                                    <th style="text-align: center;">Dusun</th>
-                                    <th style="text-align: center;">Petugas SiPeGi</th>
+                                <tr style=" background-color: rgba(206, 206, 206, 0.3); color:rgb(61, 61, 61);">
+                                    <th style="text-align: center; width: 30%">Indeks Standar Pertumbuhan</th>
+                                    <th style="text-align: center; white-space: nowrap;">Kategori Status Gizi</th>
+                                    <th style="text-align: center; white-space: nowrap;">Ambang Batas (Z-Score)</th>
 
                                 </tr>
                             </thead>
-                            <tbody>
-
-                                @foreach ($posyandus as $posyandu)
-                                    <tr style="text-align: center;">
-                                        {{-- <td style="text-align: center">
-                                            <a href="{{ route('balita.edit', ['id' => $balita->id]) }}"
-                                                class="btn icon btn-sm btn-primary " data-bs-toggle="tooltip"
-                                                data-bs-placement="top" data-bs-original-title="Edit"
-                                                style="border-radius: 8px;">
-                                                <i class="fa-regular fa-pen-to-square"></i></a>
-                                            <form action="{{ route('balita.delete', ['id' => $balita->id]) }}"
-                                                method="POST" style="display: inline">
-                                                @csrf
-                                                @method('DELETE')
-
-                                                <button type="submit"
-                                                    class="btn icon btn-sm btn-danger mt-1 mb-1 me-1 swal-delete"
-                                                    data-bs-toggle="tooltip" data-bs-placement="top"
-                                                    data-bs-original-title="Hapus" style="border-radius: 8px;">
-                                                    <i class="fa-solid fa-trash"></i>
-                                                </button>
-                                            </form>
+                            <tbody style="text-align: center;">
 
 
-                                        </td> --}}
-                                        <td>{{ $posyandu->dusun->rw }}</td>
-                                        <td>{{ $posyandu->name }}</td>
-                                        <td>{{ $posyandu->dusun->name }}</td>
-                                        <td>
-                                            @foreach ($posyandu->user as $user)
-                                                {{ $user->name }}
-                                            @endforeach
-                                        </td>
+                                <tr style="text-align: center;">
+                                    <td rowspan="5">Berat Badan menurut Umur (BB/U) anak usia 0 - 60 bulan</td>
 
+                                </tr>
 
+                                <tr>
+                                    <td>Berat badan sangat kurang ( <i>severely underweight</i> )</td>
+                                    <td>
+                                        < -3 SD </td>
 
-                                    </tr>
-                                @endforeach
+                                </tr>
+                                <tr>
+                                    <td>Berat badan kurang ( <i>underweight</i> )</td>
+                                    <td> -3 SD s.d. -2 SD </td>
+
+                                </tr>
+                                <tr>
+                                    <td>Berat badan normal</td>
+                                    <td>-2 SD s.d. 1 SD </td>
+
+                                </tr>
+                                <tr>
+                                    <td>Resiko Berat badan lebih</td>
+                                    <td>
+                                        > 3 SD </td>
+                                </tr>
+
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+
+                                <tr style="text-align: center;">
+                                    <td rowspan="5">Panjang Badan atau Tinggi Badan menurut Umur (BB/U) anak usia 0 - 60
+                                        bulan</td>
+
+                                </tr>
+
+                                <tr>
+                                    <td>Sangat Pendek ( <i>severely stunted</i> )</td>
+                                    <td>
+                                        < -3 SD </td>
+
+                                </tr>
+                                <tr>
+                                    <td>Pendek ( <i>stunted</i> )</td>
+                                    <td> -3 SD s.d. -2 SD </td>
+
+                                </tr>
+                                <tr>
+                                    <td>Normal</td>
+                                    <td> -2 SD s.d. 3 SD </td>
+
+                                </tr>
+                                <tr>
+                                    <td>Tinggi</td>
+                                    <td>
+                                        > 3 SD </td>
+                                </tr>
+
 
                             </tbody>
                         </table>

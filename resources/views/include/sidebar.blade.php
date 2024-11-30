@@ -57,8 +57,9 @@
                             <a href="{{ route('masterdata.spa') }}" class="submenu-link">Standar Pertumbuhan Anak</a>
                         </li>
 
-                        <li class="submenu-item">
-                            <a href="#" class="submenu-link">Ambang Batas Status Gizi Anak</a>
+                        <li class="submenu-item {{ Route::is('masterdata.indeks-standar') ? 'active' : '' }}">
+                            <a href="{{ route('masterdata.indeks-standar') }}" class="submenu-link">Indeks Standar
+                                Antropometri Anak</a>
                         </li>
                     </ul>
                 </li>
