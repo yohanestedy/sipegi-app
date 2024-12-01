@@ -23,7 +23,7 @@ class BalitaSeederFake extends Seeder
             $childrenCount = $faker->numberBetween(1, 2); // Setiap orang tua punya 1-2 anak
             for ($i = 1; $i <= $childrenCount; $i++) {
                 Balita::create([
-                    'name' => $faker->firstName . ' ' . $faker->lastName, // Nama balita minimal 2 kata
+                    'name' => $faker->firstName . ' ' . $faker->firstName . ' ' . $faker->lastName, // Nama balita minimal 3 kata
                     'nik' => $faker->numerify('180706##########'),
                     'tgl_lahir' => $faker->dateTimeBetween('-5 years', 'now')->format('Y-m-d'),
                     'gender' => $faker->randomElement(['P', 'L']),

@@ -26,12 +26,12 @@ class OrangtuaSeederFake extends Seeder
         ];
 
         $dusunAddresses = [
-            'Dusun Sumber Mulyo',
-            'Dusun Sidodadi',
-            'Dusun Sukorejo',
-            'Dusun Sumber Rahayu',
-            'Dusun Sidorejo',
-            'Dusun Suko Makmur',
+            1 => ['Dusun Sumber Mulyo'],
+            2 => ['Dusun Sidodadi'],
+            3 => ['Dusun Sukorejo'],
+            4 => ['Dusun Sumber Rahayu'],
+            5 => ['Dusun Sidorejo'],
+            6 => ['Dusun Suko Makmur'],
         ];
 
         for ($i = 1; $i <= 60; $i++) { // Membuat 60 data orang tua
@@ -44,7 +44,7 @@ class OrangtuaSeederFake extends Seeder
                 'nik' => $faker->numerify('180706##########'),
                 'bpjs' => $faker->randomElement(['Punya', 'Tidak Punya']),
                 'telp' => $faker->numerify('08###########'),
-                'alamat' => $faker->randomElement($dusunAddresses),
+                'alamat' => $faker->randomElement($dusunAddresses[$dusunId]),
                 'rt_id' => $rtId,
                 'dusun_id' => $dusunId,
                 'desa' => 'Selorejo',
