@@ -32,9 +32,8 @@
             <div class="row">
                 <div class="col-12 col-md-12 order-md-1 order-last">
                     <h3>Indeks Standar Antropometri Anak</h3>
-                    <p class="text-subtitle text-muted">Berdasarkan PMK No. 2 Tahun 2020 tentang Standar Antropometri Anak,
-                        bahwa Standar Antropometri Anak didasarkan pada parameter berat badan
-                        dan panjang/tinggi badan yang terdiri atas 4 (empat) indeks.</p>
+                    <p class="text-subtitle text-muted">Standar Antropometri Anak didasarkan pada parameter berat badan,
+                        panjang/tinggi badan, dan lingkar kepala yang terdiri atas 5 (lima) indeks, meliputi:</p>
                 </div>
 
             </div>
