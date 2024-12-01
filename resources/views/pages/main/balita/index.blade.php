@@ -113,9 +113,10 @@
                                                 {{ $balita->gender_display }}</div>
                                         </td>
                                         <td>{{ \Carbon\Carbon::parse($balita->tgl_lahir)->translatedFormat('d F Y') }}</td>
-                                        <td>{{ $balita->umur_display }}</td>
+                                        <td data-sort="{{ $balita->umur_hari }}">{{ $balita->umur_display }}</td>
                                         <td>{{ $balita->orangtua->name }}</td>
-                                        <td style="text-align: center">{{ $balita->posyandu->name }}</td>
+                                        <td data-sort="{{ $balita->posyandu_id }}" style="text-align: center">
+                                            {{ $balita->posyandu->name }}</td>
 
 
                                     </tr>

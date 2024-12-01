@@ -39,12 +39,12 @@ let customized_datatable2 = $("#tableOrtu").DataTable({
     info: false,
     pagingType: 'simple',
     order: [
-        [2, 'desc'],  // Kolom Dusun, urut descending
-        [1, 'asc'],  // Kolom Nama, urut ascending
+        // [3, 'desc'],  // Kolom Dusun, urut descending
+        [2, 'asc'],  // Kolom Nama, urut ascending
     ],
     columnDefs: [
 
-        { orderable: false, targets: [0, 4, 5] } // Nonaktifkan sorting di kolom lainnya
+        { orderable: false, targets: [0, 1, 5] } // Nonaktifkan sorting di kolom lainnya
     ],
     dom:
 		"<'row'<'col-3'l><'col-9'f>>" +
@@ -65,7 +65,7 @@ let customized_datatable3 = $("#tableBalita").DataTable({
     ],
     columnDefs: [
 
-        { orderable: false, targets: [0,2,3,4,5,6,7] } // Nonaktifkan sorting di kolom lainnya
+        { orderable: false, targets: [0,2,4,6] } // Nonaktifkan sorting di kolom lainnya
     ],
     dom:
 		"<'row'<'col-3'l><'col-9'f>>" +

@@ -61,28 +61,24 @@
                         <table class="table table-hover table-bordered medium-text" id="tableOrtu">
                             <thead>
                                 <tr>
+                                    <th style="text-align: center;">Aksi</th>
                                     <th style="text-align: center;">NIK</th>
                                     <th style="text-align: center;">Nama</th>
                                     <th style="text-align: center;">Dusun</th>
                                     <th style="text-align: center;">RT</th>
                                     <th style="text-align: center;">Telp</th>
-                                    <th style="text-align: center;">Aksi</th>
+
                                 </tr>
                             </thead>
                             <tbody>
 
                                 @foreach ($orangtua as $orangtua)
                                     <tr>
-                                        <td>{{ $orangtua->nik }}</td>
-                                        <td>{{ $orangtua->name }}</td>
-                                        <td>{{ $orangtua->dusun->name }}</td>
-                                        <td>{{ $orangtua->rt->rt }}</td>
-                                        <td>{{ $orangtua->telp }}</td>
                                         <td style="text-align: center">
                                             <a href="{{ route('orangtua.edit', ['id' => $orangtua->id]) }}"
                                                 class="btn icon btn-sm btn-primary mt-1 mb-1 me-1" data-bs-toggle="tooltip"
                                                 data-bs-placement="top" data-bs-original-title="Edit"
-                                                style="border-radius: 8px;">
+                                                style="border-radius: 8px; padding: .2rem .4rem;">
                                                 <i class="fa-regular fa-pen-to-square"></i></a>
                                             {{-- <form action="{{ route('orangtua.delete', ['id' => $orangtua->id]) }}"
                                                 method="POST" style="display: inline">
@@ -98,6 +94,12 @@
                                             </form> --}}
 
                                         </td>
+                                        <td>{{ $orangtua->nik }}</td>
+                                        <td>{{ $orangtua->name }}</td>
+                                        <td>{{ $orangtua->dusun->name }}</td>
+                                        <td>{{ $orangtua->rt->rt }}</td>
+                                        <td>{{ $orangtua->telp }}</td>
+
 
                                     </tr>
                                 @endforeach

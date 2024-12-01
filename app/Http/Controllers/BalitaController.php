@@ -27,6 +27,7 @@ class BalitaController extends Controller
         // return $balita;
 
 
+
         return view('pages.main.balita.index', compact('balita'));
     }
     //VIEW ADD BALITA
