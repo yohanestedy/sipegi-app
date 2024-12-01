@@ -64,6 +64,13 @@
                     </ul>
                 </li>
 
+                {{-- Pengukuran --}}
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link">
+                        <i class="fa-duotone fa-regular fa-weight-scale fa-lg"></i>
+                        <span>Pengukuran</span>
+                    </a>
+                </li>
                 {{-- Orangtua --}}
                 <li class="sidebar-item {{ Route::is('orangtua.*') ? 'active' : '' }}">
                     <a href="{{ route('orangtua.index') }}" class="sidebar-link">
