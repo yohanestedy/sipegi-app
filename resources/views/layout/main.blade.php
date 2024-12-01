@@ -22,7 +22,7 @@
     <link rel="stylesheet" crossorigin href="{{ asset('/assets/compiled/css/app.css') }}" />
     {{-- <link rel="stylesheet" crossorigin href="{{ asset('/assets/compiled/css/app-dark.css') }}" /> --}}
     {{-- <link rel="stylesheet" href="https://atugatran.github.io/FontAwesome6Pro/css/all.min.css"> --}}
-    <link rel="stylesheet" href="{{ asset('/assets/fontawesome/css/all.css') }}">
+    <link rel="stylesheet" href="{{ asset('/assets/fontawesome/css/all2.css') }}">
     <style>
         body {
 
