@@ -19,8 +19,8 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(DusunSeeder::class);
         $this->call(RtSeeder::class);
-        $this->call(OrangtuaSeeder::class);
-        $this->call(BalitaSeeder::class);
+        $this->call(OrangtuaSeederFake::class);
+        $this->call(BalitaSeederFake::class);
         $this->call(StandarPertumbuhanAnak::class);
         $this->call(StandarPertumbuhanAnakExpanded::class);
     }
