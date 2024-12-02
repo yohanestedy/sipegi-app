@@ -122,9 +122,13 @@
                     <h5 class="card-title mb-0">
                         Daftar Hasil Pengukuran
                     </h5>
-                    <a href="{{ route('balitaukur.add', ['id' => $balita->id]) }}" class="btn btn-primary rounded-pill">
-                        <i class="fa-solid fa-plus"></i> Tambah Pengukuran
-                    </a>
+
+                    @if ($balita->umur_hari <= 1856)
+                        <a href="{{ route('balitaukur.add', ['id' => $balita->id]) }}" class="btn btn-primary rounded-pill">
+                            <i class="fa-solid fa-plus"></i> Tambah Pengukuran
+                        </a>
+                    @endif
+
 
 
                 </div>
