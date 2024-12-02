@@ -6,6 +6,7 @@ use App\Models\Dusun;
 use App\Models\Balita;
 use App\Models\Orangtua;
 use App\Models\Posyandu;
+use App\Models\BalitaLulus;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Log;
@@ -219,5 +220,43 @@ class BalitaController extends Controller
     {
         Balita::find($id)->delete();
         return Redirect::route('balita.index')->with('success', 'Data Balita berhasil di hapus.');
+    }
+
+
+    // PINDAHKAN BALITA YANG BERUMUR 5 TAHUN KE ATAS/UMUR 1856 HARI KE ATAS
+    public function pindahkanBalitaLulus()
+    {
+        // Ambil data balita yang sudah berumur lebih dari 1856 hari
+        $balitas = Balita::whereRaw('DATEDIFF(CURDATE(), tgl_lahir) > 1856')->get();
+
+        foreach ($balitas as $balita) {
+            // Pindahkan data ke tabel balita_lulus
+            BalitaLulus::create([
+                'id' => $balita->id,
+                'name' => $balita->name,
+                'nik' => $balita->nik,
+                'tgl_lahir' => $balita->tgl_lahir,
+                'gender' => $balita->gender,
+                'orangtua_id' => $balita->orangtua_id,
+                'posyandu_id' => $balita->posyandu_id,
+                'family_order' => $balita->family_order,
+                'bb_lahir' => $balita->bb_lahir,
+                'tb_lahir' => $balita->tb_lahir,
+                'created_by' => $balita->created_by,
+            ]);
+
+            // Ambil semua relasi balitaUkur yang terkait dengan balita ini
+            $balitaUkurRecords = $balita->balitaUkur;
+
+            // Update setiap data balita_ukur yang terkait
+            foreach ($balitaUkurRecords as $balitaUkur) {
+                $balitaUkur->update(["balita_id" => null, "balita_lulus_id" => $balita->id]);
+            }
+
+            // Hapus data dari tabel balita
+            $balita->delete();
+        }
+
+        return response()->json(['message' => 'Data balita yang lulus berhasil dipindahkan!']);
     }
 }
