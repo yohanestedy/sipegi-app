@@ -19,6 +19,10 @@ class Posyandu extends Model
     {
         return $this->hasMany(Balita::class);
     }
+    public function balitaLulus()
+    {
+        return $this->hasMany(BalitaLulus::class);
+    }
     public function dusun()
     {
         return $this->hasOne(Dusun::class, 'id', 'id');

@@ -17,6 +17,8 @@ return new class extends Migration
             $table->increments('id');
             $table->unsignedInteger('balita_id');
             $table->foreign('balita_id')->references('id')->on('balita')->onDelete('cascade');
+            $table->unsignedInteger('balita_lulus_id')->nullable();
+            $table->foreign('balita_lulus_id')->references('id')->on('balita_lulus')->onDelete('cascade');
             $table->date('tgl_ukur');
             $table->string('umur_ukur', 30);
             $table->double('bb');

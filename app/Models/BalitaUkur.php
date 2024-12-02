@@ -16,6 +16,10 @@ class BalitaUkur extends Model
     {
         return $this->belongsTo(Balita::class);
     }
+    public function balitaLulus()
+    {
+        return $this->belongsTo(BalitaLulus::class);
+    }
 
     protected $appends = ['tgl_ukur_display'];
     public function getTglUkurDisplayAttribute()
