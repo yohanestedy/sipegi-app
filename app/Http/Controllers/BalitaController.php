@@ -153,6 +153,8 @@ class BalitaController extends Controller
         }
         $balita = $queryBalita->first();
         $orangtua = $queryOrtu->get();
+
+        // return $balita;
         return view('pages.main.balita.edit', compact('balita', 'posyandus', 'orangtua'));
     }
 
