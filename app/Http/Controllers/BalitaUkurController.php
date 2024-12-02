@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Balita;
+use App\Models\BalitaLulus;
 use App\Models\BalitaUkur;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -22,7 +23,13 @@ class BalitaUkurController extends Controller
     {
 
         $user = auth()->user();
-        $query = Balita::with(['posyandu', 'balitaUkur']);
+        if (Balita::find($id)) {
+
+            $query = Balita::with(['posyandu', 'balitaUkur']);
+        } else {
+
+            $query = BalitaLulus::with(['posyandu', 'balitaUkur']);
+        }
 
         if ($user->posyandu_id !== null) {
             $query->where('posyandu_id', $user->posyandu_id);
