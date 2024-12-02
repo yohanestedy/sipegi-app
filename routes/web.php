@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BalitaController;
+use App\Http\Controllers\BalitaLulusController;
 use App\Http\Controllers\BalitaUkurController;
 use App\Http\Controllers\MasterDataController;
 use App\Http\Controllers\OrtuController;
@@ -85,6 +86,12 @@ Route::group(['middleware' => 'auth'], function () {
         // DELETE
         Route::delete('/delete/{id}', [BalitaController::class, 'delete'])->name('balita.delete');
     });
+
+    // BALITA LULUS
+    Route::prefix('balita-lulus')->group(function () {
+        Route::get('/', [BalitaLulusController::class, 'index'])->name('balitalulus.index');
+    });
+
     Route::prefix('master-data')->group(function () {
         // POSYANDU
         Route::get('/list-posyandu', [MasterDataController::class, 'listPosyandu'])->name('masterdata.listposyandu');
