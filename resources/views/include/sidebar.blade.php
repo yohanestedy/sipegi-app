@@ -80,10 +80,19 @@
                 </li>
 
                 {{-- Balita --}}
-                <li class="sidebar-item {{ Route::is('balita.*') || Route::is('balitaukur.*') ? 'active' : '' }} ">
+                <li
+                    class="sidebar-item {{ Route::is('balita.*') ? 'active' : (Route::is('balitaukur.*') && $balita->umur_hari <= 1856 ? 'active' : '') }} ">
                     <a href="{{ route('balita.index') }}" class="sidebar-link">
                         <i class="fa-solid fa-children fa-lg"></i>
                         <span>Balita</span>
+                    </a>
+                </li>
+                {{-- Balita Lulus --}}
+                <li
+                    class="sidebar-item {{ Route::is('balitalulus.*') ? 'active' : (Route::is('balitaukur.*') && $balita->umur_hari > 1856 ? 'active' : '') }} ">
+                    <a href="{{ route('balitalulus.index') }}" class="sidebar-link">
+                        <i class="fa-duotone fa-solid fa-child-reaching fa-lg"></i>
+                        <span>Balita Lulus</span>
                     </a>
                 </li>
                 {{-- User Management --}}
