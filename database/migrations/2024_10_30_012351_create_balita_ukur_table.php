@@ -15,7 +15,7 @@ return new class extends Migration
 
         Schema::create('balita_ukur', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('balita_id');
+            $table->unsignedInteger('balita_id')->nullable();
             $table->foreign('balita_id')->references('id')->on('balita')->onDelete('cascade');
             $table->unsignedInteger('balita_lulus_id')->nullable();
             $table->foreign('balita_lulus_id')->references('id')->on('balita_lulus')->onDelete('cascade');
