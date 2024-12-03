@@ -74,9 +74,17 @@ let customized_datatable3 = $("#tableBalita").DataTable({
     "language": {
         "lengthMenu": "_MENU_ ",
         "search": "",
-        "searchPlaceholder": "Ketik nama.."
+        "searchPlaceholder": "Cari Nama, Posyandu.."
     }
 })
+// Event listener untuk dropdown filter
+$('#filterPosyandu').on('change', function () {
+    let selectedValue = $(this).val(); // Ambil nilai yang dipilih
+    customized_datatable3.column(7) // Kolom Posyandu (index ke-7)
+        .search(selectedValue)      // Terapkan filter berdasarkan nilai
+        .draw();                    // Refresh tabel
+});
+
 let customized_datatable5 = $("#tableBalitaUkur").DataTable({
     responsive: true,
     info: false,

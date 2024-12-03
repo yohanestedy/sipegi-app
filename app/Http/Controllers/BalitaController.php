@@ -25,11 +25,13 @@ class BalitaController extends Controller
         } else {
             $balita = Balita::with(['posyandu', 'orangtua'])->get();
         }
+
+        $posyandus = Posyandu::all();
         // return $balita;
 
 
 
-        return view('pages.main.balita.index', compact('balita'));
+        return view('pages.main.balita.index', compact('balita', 'posyandus'));
     }
     //VIEW ADD BALITA
     public function add()

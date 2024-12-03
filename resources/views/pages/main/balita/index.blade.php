@@ -58,6 +58,19 @@
                         </p>
                     </div>
                     <div class="table-responsive datatable-minimal">
+                        @if (Auth::user()->role == 'super_admin')
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    <select id="filterPosyandu" class="form-select">
+                                        <option value="">Semua Posyandu</option>
+                                        @foreach ($posyandus as $posyandu)
+                                            <option value="{{ $posyandu->name }}">{{ $posyandu->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        @endif
+
 
                         <table class="table table-hover table-bordered medium-text" id="tableBalita">
                             <thead>
