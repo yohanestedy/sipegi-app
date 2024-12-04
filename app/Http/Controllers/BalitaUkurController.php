@@ -23,12 +23,15 @@ class BalitaUkurController extends Controller
     {
 
         $user = auth()->user();
+        // Mengecek apakah balita ada atau tidak
         if (Balita::find($id)) {
-
-            $query = Balita::with(['posyandu', 'balitaUkur']);
+            $query = Balita::with(['posyandu', 'balitaUkur' => function ($query) {
+                $query->orderBy('tgl_ukur', 'desc'); // Urutkan balitaUkur berdasarkan tgl_ukur desc
+            }]);
         } else {
-
-            $query = BalitaLulus::with(['posyandu', 'balitaUkur']);
+            $query = BalitaLulus::with(['posyandu', 'balitaUkur' => function ($query) {
+                $query->orderBy('tgl_ukur', 'desc'); // Urutkan balitaUkur berdasarkan tgl_ukur desc
+            }]);
         }
 
         if ($user->posyandu_id !== null) {
@@ -39,6 +42,7 @@ class BalitaUkurController extends Controller
 
 
         $balita = $query->first();
+        // return $balita;
 
 
         return view('pages.main.balita-ukur.index', compact('balita'));
