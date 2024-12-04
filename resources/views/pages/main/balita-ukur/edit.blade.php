@@ -774,7 +774,7 @@
                         // Setelah efek toast, lanjutkan dengan redirect
                         setTimeout(() => {
                             const balitaId = hasilPengukuran.balita_id;
-                            window.location.href = `{{ route('balitaukur.index', ':id') }}`.replace(
+                            window.location.href = `{{ route('balitaukur.detail', ':id') }}`.replace(
                                 ':id', balitaId);
                         }, 2300);
 

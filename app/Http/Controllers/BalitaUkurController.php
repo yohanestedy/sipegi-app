@@ -19,7 +19,7 @@ use App\Models\StandarPertumbuhanAnakExpanded;
 class BalitaUkurController extends Controller
 {
     //
-    public function index($id)
+    public function detail($id)
     {
 
         $user = auth()->user();
@@ -45,7 +45,7 @@ class BalitaUkurController extends Controller
         // return $balita;
 
 
-        return view('pages.main.balita-ukur.index', compact('balita'));
+        return view('pages.main.balita-ukur.detail', compact('balita'));
     }
 
     // HALAMAN INPUT PENGHITUNGAN

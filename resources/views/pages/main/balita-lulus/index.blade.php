@@ -79,7 +79,7 @@
                                     <tr>
 
                                         <td style="text-align: center">
-                                            <a href="{{ route('balitaukur.index', ['id' => $balita->id]) }}"
+                                            <a href="{{ route('balitaukur.detail', ['id' => $balita->id]) }}"
                                                 class="btn icon btn-primary " data-bs-toggle="tooltip"
                                                 data-bs-placement="top" data-bs-original-title="Pengukuran"
                                                 style="border-radius: 8px; padding: .2rem .4rem;">
