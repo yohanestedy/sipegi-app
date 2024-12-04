@@ -165,6 +165,8 @@ class BalitaUkurController extends Controller
 
         $tgl_ukur_display = Carbon::parse($request->tgl_ukur)->translatedFormat('d F Y');
 
+        $status_bb_naik = $this->statusBBNaik($request->balita_id, $request->tgl_ukur, $request->bb);
+
 
 
         // Ambil Gender
@@ -292,6 +294,7 @@ class BalitaUkurController extends Controller
             'bb' => $request->bb,
             'tb' => $request->tb,
             'lk' => $request->lk,
+            'status_bb_naik' => $status_bb_naik,
             'cara_ukur' => $request->cara_ukur,
             'zscore_bb_u' => round($zScoreBB_U, 2),
             'status_bb_u' => $statusGiziBB_U,
@@ -474,5 +477,35 @@ class BalitaUkurController extends Controller
     private function hitungZScore($X, $L, $M, $S)
     {
         return (($X / $M) ** $L - 1) / ($L * $S);
+    }
+
+    // Status BB Naik(N)/Turun(T)/Lewat Sekali pengukuran
+    public function statusBBNaik($balita_id, $tgl_ukur, $bb)
+    {
+
+
+        // Ambil data tepat sebelum tanggal ukur saat ini
+        $previous = BalitaUkur::where('balita_id', $balita_id) // Hanya untuk balita yang sama
+            ->where('tgl_ukur', '<', $tgl_ukur) // Tanggal sebelum pengukuran saat ini
+            ->orderBy('tgl_ukur', 'desc') // Urutkan dari yang terbaru
+            ->first(); // Ambil data pertama (terdekat sebelum tanggal saat ini)
+
+        // Jika tidak ada data sebelumnya
+        if (!$previous) {
+            return 'B';
+        }
+        $diffInDays = Carbon::parse($tgl_ukur)->diffInDays(Carbon::parse($previous->tgl_ukur));
+        $diffInMonths = Carbon::parse($tgl_ukur)->diffInMonths(Carbon::parse($previous->tgl_ukur));
+
+        if ($diffInDays > 35) {
+            return 'O';
+        }
+
+
+        if ($bb < $previous->bb) {
+            return 'T';
+        } else {
+            return 'N';
+        }
     }
 }
