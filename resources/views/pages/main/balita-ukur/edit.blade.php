@@ -327,6 +327,10 @@
                                             <label class="medium-text">Lingkar Kepala :</label><br>
                                             <p class="badge bg-light-secondary form-control-static fw-normal"
                                                 id="lk"></p><br>
+                                            <label class="medium-text">Status BB :</label><br>
+                                            <p class="badge bg-light-secondary form-control-static fw-normal"
+                                                id="status_bb_naik">
+                                            </p><br>
 
                                         </div>
                                     </div>
@@ -588,6 +592,7 @@
                         document.getElementById('bb').innerText = data.bb + " kg";
                         document.getElementById('tb').innerText = data.tb + " cm";
                         document.getElementById('lk').innerText = data.lk + " cm";
+                        document.getElementById('status_bb_naik').innerText = data.status_bb_naik;
                         document.getElementById('cara_ukur').innerText = data.cara_ukur;
                         document.getElementById('zscore_bb_u').innerText = data.zscore_bb_u;
                         document.getElementById('status_bb_u').innerText = data.status_bb_u;
