@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('umur_ukur', 30);
             $table->double('bb');
             $table->double('tb');
-            $table->double('lk');
+            $table->double('lk')->nullable();
             $table->string('cara_ukur', 10);
             $table->string('status_bb_u', 30);
             $table->double('zscore_bb_u');
@@ -33,8 +33,8 @@ return new class extends Migration
             $table->double('zscore_bb_tb');
             $table->string('status_imt_u', 30);
             $table->double('zscore_imt_u');
-            $table->string('status_lk_u', 30);
-            $table->double('zscore_lk_u');
+            $table->string('status_lk_u', 30)->nullable();
+            $table->double('zscore_lk_u')->nullable();
             $table->unsignedInteger('created_by');
             $table->unsignedInteger('updated_by')->nullable();
             $table->timestamps();

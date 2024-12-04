@@ -80,6 +80,8 @@ class BalitaUkurController extends Controller
 
         $balitas = $query->get();
 
+        // return $balitas;
+
         return view('pages.main.balita-ukur.add', compact('balitas'));
     }
 
