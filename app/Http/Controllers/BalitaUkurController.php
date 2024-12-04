@@ -163,6 +163,8 @@ class BalitaUkurController extends Controller
         // Umur Pas Pengukuran
         $umurUkurDisplay = $this->hitungUmurDisplay($balita->tgl_lahir, $request->tgl_ukur);
 
+        $tgl_ukur_display = Carbon::parse($request->tgl_ukur)->translatedFormat('d F Y');
+
 
 
         // Ambil Gender
@@ -285,6 +287,7 @@ class BalitaUkurController extends Controller
             'balita_id' => $balita->id,
             'balita_name' => $balita->name,
             'tgl_ukur' => $request->tgl_ukur,
+            'tgl_ukur_display' => $tgl_ukur_display,
             'umur_ukur' => $umurUkurDisplay,
             'bb' => $request->bb,
             'tb' => $request->tb,
