@@ -27,6 +27,7 @@ class BalitaUkur extends Model
         return Carbon::parse($this->tgl_ukur)->translatedFormat('d F Y');
     }
 
+    // Status BB Naik(N)/Turun(T)/Lewat Sekali pengukuran
     public function getStatusBbNaikAttribute()
     {
 
