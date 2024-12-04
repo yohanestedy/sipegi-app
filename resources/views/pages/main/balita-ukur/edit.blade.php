@@ -293,8 +293,18 @@
                                 <div class="col-md-12">
                                     <div class="row">
                                         <div class="col-7 col-md-6">
+                                            <style>
+                                                #balita_name {
+                                                    word-wrap: break-word;
+                                                    /* Potong kata jika terlalu panjang */
+                                                    word-break: break-word;
+                                                    /* Izinkan pemenggalan kata */
+                                                    white-space: normal;
+                                                    /* Izinkan teks berada di lebih dari satu baris */
+                                                }
+                                            </style>
                                             <label class="medium-text">Nama Balita :</label><br>
-                                            <p class="badge bg-light-secondary form-control-static fw-normal"
+                                            <p class="text-start badge bg-light-secondary form-control-static fw-normal"
                                                 id="balita_name"></p><br>
                                             <label class="medium-text">Tanggal Pengukuran :</label><br>
                                             <p class="badge bg-light-secondary form-control-static fw-normal"
@@ -573,7 +583,7 @@
 
                         // Tampilkan data di modal
                         document.getElementById('balita_name').innerText = data.balita_name;
-                        document.getElementById('tgl_ukur1').innerText = data.tgl_ukur;
+                        document.getElementById('tgl_ukur1').innerText = data.tgl_ukur_display;
                         document.getElementById('umur_ukur').innerText = data.umur_ukur;
                         document.getElementById('bb').innerText = data.bb + " kg";
                         document.getElementById('tb').innerText = data.tb + " cm";
