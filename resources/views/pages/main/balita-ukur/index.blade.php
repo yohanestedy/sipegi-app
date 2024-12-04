@@ -194,13 +194,22 @@
                                                 data-bs-placement="top" data-bs-original-title="Pengukuran"
                                                 style="border-radius: 8px; padding: .2rem .4rem;">
                                                 <i class="fa-solid fa-calculator"></i></a> --}}
+                                            <button type="button" class="btn icon btn-info modal-btn"
+                                                data-balita='@json($balita)'
+                                                data-ukur='@json($balitaUkur)' data-bs-toggle="tooltip"
+                                                data-bs-placement="top" data-bs-original-title="Lihat Detail"
+                                                style="border-radius: 8px; padding: .2rem .4rem; color:white;">
+                                                <i class="fa-solid fa-eye"></i>
+                                            </button>
+
+
                                             <a href="{{ route('balitaukur.edit', ['id' => $balitaUkur->id]) }}"
                                                 class="btn icon btn-success " data-bs-toggle="tooltip"
                                                 data-bs-placement="top" data-bs-original-title="Ubah Pengukuran"
                                                 style="border-radius: 8px; padding: .2rem .4rem;">
-                                                <i class="fa-regular fa-pen-to-square"></i></a>
+                                                <i class="fa-regular fa-pen-to-square"></i></button>
 
-                                            {{-- <form action="{{ route('balita.delete', ['id' => $balita->id]) }}"
+                                                {{-- <form action="{{ route('balita.delete', ['id' => $balita->id]) }}"
                                                 method="POST" style="display: inline">
                                                 @csrf
                                                 @method('DELETE')
@@ -272,11 +281,156 @@
 
 
 
+
+
         </section>
 
 
+
+
+    </div>
+    {{-- MODAL HASIL PENGUKURAN --}}
+    <div class="modal fade" id="zscoreModal" tabindex="-1" aria-labelledby="zscoreModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <h5 class="modal-title white" id="zscoreModalLabel">Hasil Pengukuran Balita</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-7 col-md-6">
+                                    <style>
+                                        #balita_name {
+                                            word-wrap: break-word;
+                                            /* Potong kata jika terlalu panjang */
+                                            word-break: break-word;
+                                            /* Izinkan pemenggalan kata */
+                                            white-space: normal;
+                                            /* Izinkan teks berada di lebih dari satu baris */
+                                        }
+                                    </style>
+                                    <label class="medium-text">Nama Balita :</label><br>
+                                    <p class="text-start badge bg-light-secondary form-control-static fw-normal"
+                                        id="balita_name">
+                                    </p><br>
+                                    <label class="medium-text">Tanggal Pengukuran :</label><br>
+                                    <p class="badge bg-light-secondary form-control-static fw-normal" id="tgl_ukur1">
+                                    </p><br>
+                                    <label class="medium-text">Umur Pengukuran :</label><br>
+                                    <p class="badge bg-light-secondary form-control-static fw-normal" id="umur_ukur">
+                                    </p>
+                                    <br>
+                                    <label class="medium-text">Cara Pengukuran :</label><br>
+                                    <p class="badge bg-light-secondary form-control-static fw-normal" id="cara_ukur">
+                                    </p><br>
+
+                                </div>
+                                <div class="col-5 col-md-6">
+                                    <label class="medium-text">Berat Badan :</label><br>
+                                    <p class="badge bg-light-secondary form-control-static fw-normal" id="bb">
+                                    </p><br>
+                                    <label class="medium-text">Tinggi Badan :</label><br>
+                                    <p class="badge bg-light-secondary form-control-static fw-normal" id="tb">
+                                    </p><br>
+                                    <label class="medium-text">Lingkar Kepala :</label><br>
+                                    <p class="badge bg-light-secondary form-control-static fw-normal" id="lk">
+                                    </p><br>
+                                    <label class="medium-text">Status BB :</label><br>
+                                    <p class="badge bg-light-secondary form-control-static fw-normal" id="status_bb_naik">
+                                    </p><br>
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="col-md-12">
+                            <hr>
+                            {{-- ROW KOLOM HEADER --}}
+                            <div class="row mb-2">
+                                <div class="col-9 col-md-9">
+                                    <label class="medium-text"><strong>PENILAIAN STATUS GIZI</strong></label>
+                                </div>
+                                <div class="col-3 col-md-3">
+                                    <label class="medium-text"><strong>Z-SCORE</strong></label>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row mb-2 ">
+                                <div class="col-2 col-md-3">
+                                    <label>BB/U</label>
+                                </div>
+                                <div class="col-7 col-md-6">
+                                    <span id="status_bb_u" class="badge"></span>
+                                </div>
+                                <div class="col-2 col-md-2 text-end">
+                                    <span id="zscore_bb_u"></span>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row mb-2">
+                                <div class="col-2 col-md-3">
+                                    <label>TB/U</label>
+                                </div>
+                                <div class="col-7 col-md-6">
+                                    <span id="status_tb_u" class="badge"></span>
+                                </div>
+                                <div class="col-2 col-md-2 text-end">
+                                    <span id="zscore_tb_u"></span>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row mb-2">
+                                <div class="col-2 col-md-3">
+                                    <label>BB/TB</label>
+                                </div>
+                                <div class="col-7 col-md-6">
+                                    <span id="status_bb_tb" class="badge"></span>
+                                </div>
+                                <div class="col-2 col-md-2 text-end">
+                                    <span id="zscore_bb_tb"></span>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row mb-2">
+                                <div class="col-2 col-md-3">
+                                    <label>IMT/U</label>
+                                </div>
+                                <div class="col-7 col-md-6">
+                                    <span id="status_imt_u" class="badge"></span>
+                                </div>
+                                <div class="col-2 col-md-2 text-end">
+                                    <span id="zscore_imt_u"></span>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row mb-2">
+                                <div class="col-2 col-md-3">
+                                    <label>LK/U</label>
+                                </div>
+                                <div class="col-7 col-md-6">
+                                    <span id="status_lk_u" class="badge"></span>
+                                </div>
+                                <div class="col-2 col-md-2 text-end">
+                                    <span id="zscore_lk_u"></span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                {{-- <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+
+                </div> --}}
+            </div>
+        </div>
     </div>
 
+    {{-- Fungsi Badge Status Gizi --}}
     @php
         function getStatusClass($status)
         {
@@ -365,6 +519,79 @@
 
         });
     </script>
+
+    <script>
+        $(document).ready(function() {
+            // Open modal and populate input
+            $('.modal-btn').click(function() {
+                const balita = $(this).data('balita'); // Langsung parse objek data dari atribut
+                const ukur = $(this).data('ukur');
+
+                // Isi modal dengan data dari objek balita dan ukur
+                $('#balita_name').text(balita.name);
+                $('#tgl_ukur1').text(ukur.tgl_ukur_display);
+                $('#umur_ukur').text(ukur.umur_ukur);
+                $('#cara_ukur').text(ukur.cara_ukur);
+                $('#bb').text(ukur.bb + " kg");
+                $('#tb').text(ukur.tb + " cm");
+                $('#lk').text(ukur.lk ? ukur.lk + " cm" : '-');
+                $('#status_bb_naik').text(ukur.status_bb_naik);
+
+                // Perbaharui status gizi dan z-score
+                $('#status_bb_u').text(ukur.status_bb_u).attr('class', 'badge ' + getStatusClass(ukur
+                    .status_bb_u));
+                $('#zscore_bb_u').text(ukur.zscore_bb_u);
+                $('#status_tb_u').text(ukur.status_tb_u).attr('class', 'badge ' + getStatusClass(ukur
+                    .status_tb_u));
+                $('#zscore_tb_u').text(ukur.zscore_tb_u);
+                $('#status_bb_tb').text(ukur.status_bb_tb).attr('class', 'badge ' + getStatusClass(ukur
+                    .status_bb_tb));
+                $('#zscore_bb_tb').text(ukur.zscore_bb_tb);
+                $('#status_imt_u').text(ukur.status_imt_u).attr('class', 'badge ' + getStatusClass(ukur
+                    .status_imt_u));
+                $('#zscore_imt_u').text(ukur.zscore_imt_u);
+                $('#status_lk_u').text(ukur.status_lk_u ? ukur.status_lk_u : '-').attr('class', 'badge ' +
+                    getStatusClass(ukur.status_lk_u ? ukur.status_lk_u : ''));
+                $('#zscore_lk_u').text(ukur.zscore_lk_u ? ukur.zscore_lk_u : '-');
+
+                // Tampilkan modal
+                $('#zscoreModal').modal('show');
+            });
+        });
+
+
+        // Fungsi untuk mengembalikan class badge berdasarkan status
+        function getStatusClass(status) {
+            switch (status) {
+                case 'Berat badan normal':
+                case 'Normal':
+                case 'Gizi baik':
+                    return 'bg-light-success';
+
+                case 'Resiko berat badan lebih':
+                case 'Beresiko gizi lebih':
+                    return 'bg-light-warning';
+
+                case 'Berat badan kurang':
+                case 'Pendek':
+                case 'Gizi kurang':
+                case 'Gizi lebih':
+                    return 'bg-light-warning1';
+
+                case 'Berat badan sangat kurang':
+                case 'Sangat pendek':
+                case 'Tinggi':
+                case 'Gizi buruk':
+                case 'Obesitas':
+                case 'Mikrosefali':
+                case 'Makrosefali':
+                    return 'bg-light-danger';
+                default:
+                    return 'bg-secondary';
+            }
+        }
+    </script>
+
 
     {{-- Toast Sweatalert2 --}}
     @if (session('successToast'))
