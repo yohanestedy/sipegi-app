@@ -154,6 +154,7 @@
                                     <th rowspan="2" style="text-align: center;">BB (kg)</th>
                                     <th rowspan="2" style="text-align: center;">TB (cm)</th>
                                     <th rowspan="2" style="text-align: center;">Cara Ukur</th>
+                                    <th rowspan="2" style="text-align: center;">BB N/T/0</th>
                                     <th colspan="2" style="text-align: center;">BB / Umur</th>
                                     <th colspan="2" style="text-align: center;">TB / Umur</th>
                                     <th colspan="2" style="text-align: center;">BB / TB</th>
@@ -221,6 +222,7 @@
                                         <td style="text-align: center">{{ $balitaUkur->bb }}</td>
                                         <td style="text-align: center">{{ $balitaUkur->tb }}</td>
                                         <td style="text-align: center">{{ $balitaUkur->cara_ukur }}</td>
+                                        <td style="text-align: center">{{ $balitaUkur->status_bb_naik }}</td>
 
                                         <td style="text-align: center">
                                             <span class="badge {{ getStatusClass($balitaUkur->status_bb_u) }}">
