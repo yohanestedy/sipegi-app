@@ -202,12 +202,15 @@
                                             </span>
                                         </td>
                                         <td style="text-align: center">{{ $balitaUkur->zscore_imt_u }}</td>
+
+                                        {{-- LINGKAR KEPALA --}}
                                         <td style="text-align: center">
-                                            <span class="badge bg-secondary">
-                                                {{ $balitaUkur->status_lk_u }}
+                                            <span class="{{ $balitaUkur->status_lk_u ? 'badge bg-secondary' : '' }}">
+                                                {{ $balitaUkur->status_lk_u ? $balitaUkur->status_lk_u : '-' }}
                                             </span>
                                         </td>
-                                        <td style="text-align: center">{{ $balitaUkur->zscore_lk_u }}</td>
+                                        <td style="text-align: center">
+                                            {{ $balitaUkur->zscore_lk_u ? $balitaUkur->zscore_lk_u : '-' }}</td>
 
 
 

@@ -260,12 +260,18 @@
                                             </span>
                                         </td>
                                         <td style="text-align: center">{{ $balitaUkur->zscore_imt_u }}</td>
+
                                         <td style="text-align: center">
-                                            <span class="badge {{ getStatusClass($balitaUkur->status_lk_u) }}">
-                                                {{ $balitaUkur->status_lk_u }}
-                                            </span>
+                                            @if ($balitaUkur->status_lk_u)
+                                                <span class="badge {{ getStatusClass($balitaUkur->status_lk_u) }}">
+                                                    {{ $balitaUkur->status_lk_u }}
+                                                </span>
+                                            @else
+                                                -
+                                            @endif
                                         </td>
-                                        <td style="text-align: center">{{ $balitaUkur->zscore_lk_u }}</td>
+                                        <td style="text-align: center">
+                                            {{ $balitaUkur->zscore_lk_u ? $balitaUkur->zscore_lk_u : '-' }}</td>
 
 
 
