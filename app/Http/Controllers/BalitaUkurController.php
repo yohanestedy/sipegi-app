@@ -149,7 +149,7 @@ class BalitaUkurController extends Controller
             ],
             'bb' => 'required',
             'tb' => 'required',
-            'lk' => 'required',
+            // 'lk' => 'required',
             'cara_ukur' => 'required',
         ], [
             'balita_id.required' => 'Pilih balita untuk di ukur',
@@ -157,7 +157,7 @@ class BalitaUkurController extends Controller
             'tgl_ukur.unique' => 'Balita sudah di ukur di tanggal ini',
             'bb.required' => 'Isi berat badan balita',
             'tb.required' => 'Isi tinggi badan balita',
-            'lk.required' => 'Isi lingkar kepala balita',
+            // 'lk.required' => 'Isi lingkar kepala balita',
             'cara_ukur.required' => 'Pilih metode pengukuran balita',
 
         ]);
@@ -203,6 +203,8 @@ class BalitaUkurController extends Controller
         // Lingkar Kepala
         $lingkarKepala = $request->lk;
 
+
+
         // Pengkondisian koreksi tinggi badan
         if ($umurHari <= 730 && $request->cara_ukur === "Berdiri") {
             $tinggiBadan += 0.7;
@@ -242,6 +244,8 @@ class BalitaUkurController extends Controller
         $zScoreBB_TB = $this->hitungZScore($beratBadan, $bbtbLMS->L, $bbtbLMS->M, $bbtbLMS->S);
         $zScoreIMT_U = $this->hitungZScore($IMT, $imtLMS->L, $imtLMS->M, $imtLMS->S);
         $zScoreLK_U = $this->hitungZScore($lingkarKepala, $lkLMS->L, $lkLMS->M, $lkLMS->S);
+
+
 
 
         // STATUS GIZI BB/U
@@ -305,6 +309,11 @@ class BalitaUkurController extends Controller
             $statusGiziLK_U = "Makrosefali";
         }
 
+        if ($request->lk == null) {
+            $zScoreLK_U = null;
+            $statusGiziLK_U = null;
+        }
+
 
         return response()->json([
 
@@ -326,7 +335,7 @@ class BalitaUkurController extends Controller
             'status_bb_tb' => $statusGiziBB_TB,
             'zscore_imt_u' => round($zScoreIMT_U, 2),
             'status_imt_u' => $statusGiziIMT_U,
-            'zscore_lk_u' => round($zScoreLK_U, 2),
+            'zscore_lk_u' => $zScoreLK_U !== null ? round($zScoreLK_U, 2) : null,
             'status_lk_u' => $statusGiziLK_U,
         ]);
     }
