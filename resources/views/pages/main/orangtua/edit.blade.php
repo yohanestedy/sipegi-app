@@ -110,33 +110,7 @@
                                     </div>
                                 </div>
 
-                                {{-- Form BPJS --}}
-                                <div class="row d-flex mt-2">
-                                    <div class="col-md-4 text-md-end justify-content-end">
-                                        <label>BPJS Kesehatan</label>
-                                    </div>
-                                    <div class="col-md-7 form-group">
-                                        <div class="form-check form-check-inline">
-                                            <input name="bpjs" value="Punya"
-                                                class="form-check-input @error('bpjs') is-invalid @enderror" type="radio"
-                                                id="radioPunya"
-                                                {{ old('bpjs') == 'Punya' ? 'checked' : ($orangtua->bpjs == 'Punya' ? 'checked' : '') }}>
-                                            <label class="form-check-label" for="radioPunya" style="font-weight: normal;">
-                                                Punya
-                                            </label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input name="bpjs" value="Tidak Punya"
-                                                class="form-check-input @error('bpjs') is-invalid @enderror" type="radio"
-                                                id="radioTidakPunya"
-                                                {{ old('bpjs') == 'Tidak Punya' ? 'checked' : ($orangtua->bpjs == 'Tidak Punya' ? 'checked' : '') }}>
-                                            <label class="form-check-label" for="radioTidakPunya"
-                                                style="font-weight: normal;">
-                                                Tidak Punya
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
+
 
                                 {{-- Alamat Domisili Label --}}
                                 <div class="row d-flex">

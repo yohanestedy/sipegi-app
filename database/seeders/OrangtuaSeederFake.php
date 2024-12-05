@@ -42,7 +42,6 @@ class OrangtuaSeederFake extends Seeder
                 'name' => $faker->name,
                 'no_kk' => $faker->numerify('180706##########'),
                 'nik' => $faker->numerify('180706##########'),
-                'bpjs' => $faker->randomElement(['Punya', 'Tidak Punya']),
                 'telp' => $faker->numerify('08###########'),
                 'alamat' => $faker->randomElement($dusunAddresses[$dusunId]),
                 'rt_id' => $rtId,
