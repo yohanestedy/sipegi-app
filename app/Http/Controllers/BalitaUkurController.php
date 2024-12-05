@@ -32,7 +32,7 @@ class BalitaUkurController extends Controller
         }
 
         $balitaUkur = $query->with('balita.posyandu')->orderBy('created_at', 'desc')->get();
-        return $balitaUkur;
+        // return $balitaUkur;
 
         // dd($balitaUkur->toArray());
 
@@ -512,8 +512,17 @@ class BalitaUkurController extends Controller
             ->orderBy('tgl_ukur', 'desc') // Urutkan dari yang terbaru
             ->first(); // Ambil data pertama (terdekat sebelum tanggal saat ini)
 
+        $previous_kedua = BalitaUkur::where('balita_id', $balita_id) // Hanya untuk balita yang sama
+            ->where('tgl_ukur', '<', $tgl_ukur) // Tanggal sebelum pengukuran saat ini
+            ->orderBy('tgl_ukur', 'desc')
+            ->skip(1) // Lewati data pertama
+            ->take(1) // Ambil satu data berikutnya
+            ->first();
+
         // Jika tidak ada data sebelumnya
         if (!$previous) {
+            return 'L';
+        } else if (!$previous_kedua) {
             return 'B';
         }
         $diffInDays = Carbon::parse($tgl_ukur)->diffInDays(Carbon::parse($previous->tgl_ukur));
