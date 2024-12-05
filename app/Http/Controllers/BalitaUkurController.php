@@ -18,6 +18,28 @@ use App\Models\StandarPertumbuhanAnakExpanded;
 
 class BalitaUkurController extends Controller
 {
+
+    public function index()
+    {
+        $user = auth()->user();
+        $userPosyanduId = auth()->user()->posyandu_id; // Posyandu ID user
+        $query = BalitaUkur::query();
+
+        if ($user->posyandu_id !== null) {
+            $query->whereHas('balita', function ($query) use ($userPosyanduId) {
+                $query->where('posyandu_id', $userPosyanduId);
+            });
+        }
+
+        $balitaUkur = $query->with('balita.posyandu')->orderBy('created_at', 'desc')->get();
+        return $balitaUkur;
+
+        // dd($balitaUkur->toArray());
+
+
+
+        return view('pages.main.balita-ukur.index', compact('balitaUkur'));
+    }
     //
     public function detail($id)
     {
@@ -497,13 +519,15 @@ class BalitaUkurController extends Controller
         $diffInDays = Carbon::parse($tgl_ukur)->diffInDays(Carbon::parse($previous->tgl_ukur));
         $diffInMonths = Carbon::parse($tgl_ukur)->diffInMonths(Carbon::parse($previous->tgl_ukur));
 
+
+
+
         if ($diffInDays > 35) {
             return 'O';
-        }
-
-
-        if ($bb < $previous->bb) {
+        } else if ($bb < $previous->bb) {
             return 'T';
+        } else if ($bb == $previous->bb) {
+            return '2T';
         } else {
             return 'N';
         }

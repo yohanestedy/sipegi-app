@@ -102,6 +102,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::prefix('pengukuran')->group(function () {
         // POSYANDU
+        Route::get('/', [BalitaUkurController::class, 'index'])->name('balitaukur.index');
         Route::get('/detail/{id}', [BalitaUkurController::class, 'detail'])->name('balitaukur.detail');
 
         Route::get('/add/{id?}', [BalitaUkurController::class, 'add'])->name('balitaukur.add');

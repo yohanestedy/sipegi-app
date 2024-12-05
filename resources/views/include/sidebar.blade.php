@@ -65,8 +65,9 @@
                 </li>
 
                 {{-- Pengukuran --}}
-                <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
+                <li
+                    class="sidebar-item {{ Route::is('balitaukur.index') ? 'active' : (Route::is('balitaukur.detail') && $balita->umur_hari < 1856 ? 'active' : '') }}">
+                    <a href="{{ route('balitaukur.index') }}" class="sidebar-link">
                         <i class="fa-duotone fa-regular fa-weight-scale fa-lg"></i>
                         <span>Pengukuran</span>
                     </a>
@@ -80,8 +81,7 @@
                 </li>
 
                 {{-- Balita --}}
-                <li
-                    class="sidebar-item {{ Route::is('balita.*') ? 'active' : (Route::is('balitaukur.*') && $balita->umur_hari <= 1856 ? 'active' : '') }} ">
+                <li class="sidebar-item {{ Route::is('balita.*') ? 'active' : '' }} ">
                     <a href="{{ route('balita.index') }}" class="sidebar-link">
                         <i class="fa-solid fa-children fa-lg"></i>
                         <span>Balita</span>
@@ -89,7 +89,7 @@
                 </li>
                 {{-- Balita Lulus --}}
                 <li
-                    class="sidebar-item {{ Route::is('balitalulus.*') ? 'active' : (Route::is('balitaukur.*') && $balita->umur_hari > 1856 ? 'active' : '') }} ">
+                    class="sidebar-item {{ Route::is('balitalulus.*') ? 'active' : (Route::is('balitaukur.detail') && $balita->umur_hari > 1856 ? 'active' : '') }} ">
                     <a href="{{ route('balitalulus.index') }}" class="sidebar-link">
                         <i class="fa-duotone fa-solid fa-child-reaching fa-lg"></i>
                         <span>Balita Lulus</span>
