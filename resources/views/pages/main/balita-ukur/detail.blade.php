@@ -153,8 +153,9 @@
                                     <th rowspan="2" style="text-align: center;">Umur Ukur</th>
                                     <th rowspan="2" style="text-align: center;">BB (kg)</th>
                                     <th rowspan="2" style="text-align: center;">TB (cm)</th>
+                                    <th rowspan="2" style="text-align: center;">LK (cm)</th>
                                     <th rowspan="2" style="text-align: center;">Cara Ukur</th>
-                                    <th rowspan="2" style="text-align: center;">BB N/T/0</th>
+                                    <th rowspan="2" style="text-align: center;">Status BB Naik</th>
                                     <th colspan="2" style="text-align: center;">BB / Umur</th>
                                     <th colspan="2" style="text-align: center;">TB / Umur</th>
                                     <th colspan="2" style="text-align: center;">BB / TB</th>
@@ -230,6 +231,7 @@
                                             {{ $balitaUkur->umur_ukur }}</td>
                                         <td style="text-align: center">{{ $balitaUkur->bb }}</td>
                                         <td style="text-align: center">{{ $balitaUkur->tb }}</td>
+                                        <td style="text-align: center">{{ $balitaUkur->lk ? $balitaUkur->lk : '-' }}</td>
                                         <td style="text-align: center">{{ $balitaUkur->cara_ukur }}</td>
                                         <td style="text-align: center">{{ $balitaUkur->status_bb_naik }}</td>
 
@@ -523,7 +525,7 @@
     <script>
         $(document).ready(function() {
             // Open modal and populate input
-            $('.modal-btn').click(function() {
+            $('#tableBalitaUkur').on('click', '.modal-btn', function() {
                 const balita = $(this).data('balita'); // Langsung parse objek data dari atribut
                 const ukur = $(this).data('ukur');
 
@@ -550,8 +552,8 @@
                 $('#status_imt_u').text(ukur.status_imt_u).attr('class', 'badge ' + getStatusClass(ukur
                     .status_imt_u));
                 $('#zscore_imt_u').text(ukur.zscore_imt_u);
-                $('#status_lk_u').text(ukur.status_lk_u ? ukur.status_lk_u : '-').attr('class', 'badge ' +
-                    getStatusClass(ukur.status_lk_u ? ukur.status_lk_u : ''));
+                $('#status_lk_u').text(ukur.status_lk_u ? ukur.status_lk_u : '-').attr('class', ukur
+                    .status_lk_u ? 'badge ' + getStatusClass(ukur.status_lk_u) : '');
                 $('#zscore_lk_u').text(ukur.zscore_lk_u ? ukur.zscore_lk_u : '-');
 
                 // Tampilkan modal

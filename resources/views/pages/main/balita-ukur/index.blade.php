@@ -88,7 +88,7 @@
                                     <th rowspan="2" style="text-align: center;">TB (cm)</th>
                                     <th rowspan="2" style="text-align: center;">LK (cm)</th>
                                     <th rowspan="2" style="text-align: center;">Cara Ukur</th>
-                                    <th rowspan="2" style="text-align: center;">BB N/T/0</th>
+                                    <th rowspan="2" style="text-align: center;">Status BB Naik</th>
                                     <th colspan="2" style="text-align: center;">BB / Umur</th>
                                     <th colspan="2" style="text-align: center;">TB / Umur</th>
                                     <th colspan="2" style="text-align: center;">BB / TB</th>
@@ -461,8 +461,8 @@
                 $('#status_imt_u').text(ukur.status_imt_u).attr('class', 'badge ' + getStatusClass(ukur
                     .status_imt_u));
                 $('#zscore_imt_u').text(ukur.zscore_imt_u);
-                $('#status_lk_u').text(ukur.status_lk_u ? ukur.status_lk_u : '-').attr('class', 'badge ' +
-                    getStatusClass(ukur.status_lk_u ? ukur.status_lk_u : ''));
+                $('#status_lk_u').text(ukur.status_lk_u ? ukur.status_lk_u : '-').attr('class', ukur
+                    .status_lk_u ? 'badge ' + getStatusClass(ukur.status_lk_u) : '');
                 $('#zscore_lk_u').text(ukur.zscore_lk_u ? ukur.zscore_lk_u : '-');
 
                 // Tampilkan modal

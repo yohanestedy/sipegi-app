@@ -589,7 +589,7 @@
                         document.getElementById('umur_ukur').innerText = data.umur_ukur;
                         document.getElementById('bb').innerText = data.bb + " kg";
                         document.getElementById('tb').innerText = data.tb + " cm";
-                        document.getElementById('lk').innerText = data.lk + " cm";
+                        document.getElementById('lk').innerText = data.lk ? data.lk + " cm" : "-";
                         document.getElementById('status_bb_naik').innerText = data.status_bb_naik;
                         document.getElementById('cara_ukur').innerText = data.cara_ukur;
                         document.getElementById('zscore_bb_u').innerText = data.zscore_bb_u;
