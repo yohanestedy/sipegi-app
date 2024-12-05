@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('nik', 16)->nullable()->unique(); // Membuat nik unik
             $table->date('tgl_lahir');
             $table->string('gender', 1);
+            $table->string('bpjs', 15);
             $table->unsignedInteger('orangtua_id');
             $table->foreign('orangtua_id')->references('id')->on('orangtua')->onDelete('cascade');
             $table->unsignedInteger('posyandu_id');

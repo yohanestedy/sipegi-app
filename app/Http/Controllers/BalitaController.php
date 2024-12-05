@@ -82,6 +82,7 @@ class BalitaController extends Controller
             'nik' => [$nikRequired, 'numeric', 'digits:16', 'unique:balita,nik'],   // Memastikan hanya angka dengan panjang tepat 16
             'tgl_lahir' => 'required',
             'gender' => 'required',
+            'bpjs' => 'required',
             'orangtua' => 'required',
             'posyandu' => 'required',
             'family_order' => 'required',
@@ -116,6 +117,7 @@ class BalitaController extends Controller
                 "nik" => $request->nik,
                 "tgl_lahir" => $request->tgl_lahir,
                 "gender" => $request->gender,
+                "bpjs" => $request->bpjs,
                 "orangtua_id" => $request->orangtua,
                 "posyandu_id" => $request->posyandu,
                 "family_order" => $request->family_order,
@@ -286,6 +288,7 @@ class BalitaController extends Controller
             'nik' => [$nikRequired, 'numeric', 'digits:16', Rule::unique('balita', 'nik')->ignore($id)], // Abaikan NIK yang sesuai dengan ID],   // Memastikan hanya angka dengan panjang tepat 16
             'tgl_lahir' => 'required',
             'gender' => 'required',
+            'bpjs' => 'required',
             'orangtua' => 'required',
             'posyandu' => 'required',
             'family_order' => 'required',
@@ -318,6 +321,7 @@ class BalitaController extends Controller
                 "nik" => $request->nik,
                 "tgl_lahir" => $request->tgl_lahir,
                 "gender" => $request->gender,
+                "bpjs" => $request->bpjs,
                 "orangtua_id" => $request->orangtua,
                 "posyandu_id" => $request->posyandu,
                 "family_order" => $request->family_order,

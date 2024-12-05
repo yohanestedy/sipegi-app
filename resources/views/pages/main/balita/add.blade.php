@@ -144,6 +144,33 @@
                                     </div>
                                 </div>
 
+                                {{-- Form BPJS --}}
+                                <div class="row d-flex mt-2">
+                                    <div class="col-md-4 text-md-end justify-content-end">
+                                        <label>BPJS Kesehatan Balita</label>
+                                    </div>
+                                    <div class="col-md-7 form-group">
+                                        <div class="form-check">
+                                            <input name="bpjs" value="Ada"
+                                                class="form-check-input @error('bpjs') is-invalid @enderror" type="radio"
+                                                id="radioAda" {{ old('bpjs') == 'Ada' ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="radioAda" style="font-weight: normal;">
+                                                Ada
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input name="bpjs" value="Tidak Ada"
+                                                class="form-check-input @error('bpjs') is-invalid @enderror"
+                                                type="radio" id="radioTidakPunya"
+                                                {{ old('bpjs') == 'Tidak Ada' ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="radioTidakPunya"
+                                                style="font-weight: normal;">
+                                                Tidak Ada
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 {{-- Form Nama Orangtua --}}
                                 <div class="row d-flex">
                                     <div class="col-md-4 mt-3 text-md-end justify-content-end">

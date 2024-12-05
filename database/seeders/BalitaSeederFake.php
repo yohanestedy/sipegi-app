@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Carbon\Carbon;
 use App\Models\Balita;
 use App\Models\Orangtua;
 use App\Models\BalitaUkur;
@@ -29,6 +30,7 @@ class BalitaSeederFake extends Seeder
                     'nik' => $faker->numerify('180706##########'),
                     'tgl_lahir' => $faker->dateTimeBetween('-5 years', 'now')->format('Y-m-d'),
                     'gender' => $faker->randomElement(['P', 'L']),
+                    'bpjs' => $faker->randomElement(['Ada', 'Tidak Ada']),
                     'orangtua_id' => $orangtuaId,
                     'posyandu_id' => $dusunId,
                     'family_order' => $i,
@@ -36,8 +38,8 @@ class BalitaSeederFake extends Seeder
                     'tb_lahir' => $faker->numberBetween(46, 55), // Tinggi badan lahir antara 45cm - 55cm
                     'created_by' => 1,
                     'updated_by' => null,
-                    'created_at' => now(),
-                    'updated_at' => now(),
+                    'created_at' => Carbon::now(),
+                    'updated_at' => null,
                 ]);
 
                 // HITUNG Z-SCORE BAYI BARU LAHIR
