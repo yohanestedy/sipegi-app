@@ -60,36 +60,68 @@
                                     </div>
                                 </div>
 
-                                {{-- Form NIK Orangtua --}}
+                                {{-- Form NIK Ibu --}}
                                 <div class="row d-flex">
                                     <div class="mt-3 col-md-4 text-md-end justify-content-end">
-                                        <label for="nik">NIK Orangtua</label>
+                                        <label for="nik_ibu">NIK Ibu</label>
                                     </div>
                                     <div class="col-md-5 form-group mt-2">
-                                        <input name="nik" type="number" id="nik"
-                                            class="form-control  @error('nik') is-invalid @enderror"
-                                            value="{{ old('nik') }}">
+                                        <input name="nik_ibu" type="number" id="nik_ibu"
+                                            class="form-control  @error('nik_ibu') is-invalid @enderror"
+                                            value="{{ old('nik_ibu') }}">
                                         <div class="invalid-feedback">
-                                            @error('nik')
+                                            @error('nik_ibu')
                                                 {{ $message }}
                                             @enderror
                                         </div>
                                     </div>
                                 </div>
 
-
-
-                                {{-- Form Nama Orangtua --}}
+                                {{-- Form Nama Ibu --}}
                                 <div class="row d-flex">
                                     <div class="mt-3 col-md-4 text-md-end justify-content-end">
-                                        <label for="nameOrtu">Nama Orangtua</label>
+                                        <label for="name_ibu">Nama Ibu</label>
                                     </div>
                                     <div class="col-md-5 form-group mt-2">
-                                        <input name="name" type="text" id="nameOrtu"
-                                            class="form-control @error('name') is-invalid @enderror"
-                                            value="{{ old('name') }}">
+                                        <input name="name_ibu" type="text" id="name_ibu"
+                                            class="form-control @error('name_ibu') is-invalid @enderror"
+                                            value="{{ old('name_ibu') }}">
                                         <div class="invalid-feedback">
-                                            @error('name')
+                                            @error('name_ibu')
+                                                {{ $message }}
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {{-- Form NIK Ayah --}}
+                                <div class="row d-flex">
+                                    <div class="mt-3 col-md-4 text-md-end justify-content-end">
+                                        <label for="nik_ayah">NIK Ayah</label>
+                                    </div>
+                                    <div class="col-md-5 form-group mt-2">
+                                        <input name="nik_ayah" type="number" id="nik_ayah"
+                                            class="form-control  @error('nik_ayah') is-invalid @enderror"
+                                            value="{{ old('nik_ayah') }}">
+                                        <div class="invalid-feedback">
+                                            @error('nik_ayah')
+                                                {{ $message }}
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {{-- Form Nama Ayah --}}
+                                <div class="row d-flex">
+                                    <div class="mt-3 col-md-4 text-md-end justify-content-end">
+                                        <label for="name_ayah">Nama Ayah</label>
+                                    </div>
+                                    <div class="col-md-5 form-group mt-2">
+                                        <input name="name_ayah" type="text" id="name_ayah"
+                                            class="form-control @error('name_ayah') is-invalid @enderror"
+                                            value="{{ old('name_ayah') }}">
+                                        <div class="invalid-feedback">
+                                            @error('name_ayah')
                                                 {{ $message }}
                                             @enderror
                                         </div>

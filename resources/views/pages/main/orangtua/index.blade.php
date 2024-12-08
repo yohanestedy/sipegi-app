@@ -94,8 +94,8 @@
                                             </form> --}}
 
                                         </td>
-                                        <td>{{ $orangtua->nik }}</td>
-                                        <td>{{ $orangtua->name }}</td>
+                                        <td>{{ $orangtua->nik_ibu }}</td>
+                                        <td>{{ $orangtua->name_ibu }}</td>
                                         <td>{{ $orangtua->dusun->name }}</td>
                                         <td>{{ $orangtua->rt->rt }}</td>
                                         <td>{{ $orangtua->telp }}</td>

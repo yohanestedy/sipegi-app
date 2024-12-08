@@ -13,9 +13,11 @@ return new class extends Migration
     {
         Schema::create('orangtua', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name', 50);
             $table->string('no_kk', 16);
-            $table->string('nik', 16)->unique(); // Membuat nik unik
+            $table->string('name_ibu', 50);
+            $table->string('nik_ibu', 16)->unique(); // Membuat nik unik
+            $table->string('name_ayah', 50);
+            $table->string('nik_ayah', 16)->unique()->nullable(); // Membuat nik unik
             $table->string('telp', 13);
             $table->string('alamat', 50);
             $table->unsignedInteger('rt_id');

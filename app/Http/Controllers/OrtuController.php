@@ -64,8 +64,10 @@ class OrtuController extends Controller
         // return $request;
         $validator = Validator::make($request->all(), [
             'no_kk' => ['required', 'numeric', 'digits:16'], // Memastikan hanya angka dengan panjang tepat 16
-            'nik' => ['required', 'numeric', 'digits:16', Rule::unique('orangtua', 'nik')],   // Memastikan hanya angka dengan panjang tepat 16
-            'name' => ['required', 'regex:/^[a-zA-Z\s]+$/'],
+            'nik_ibu' => ['required', 'numeric', 'digits:16', Rule::unique('orangtua', 'nik_ibu')],   // Memastikan hanya angka dengan panjang tepat 16
+            'name_ibu' => ['required', 'regex:/^[a-zA-Z\s]+$/'],
+            'nik_ayah' => ['required', 'numeric', 'digits:16', Rule::unique('orangtua', 'nik_ayah')],   // Memastikan hanya angka dengan panjang tepat 16
+            'name_ayah' => ['required', 'regex:/^[a-zA-Z\s]+$/'],
             'telp' => 'required',
             'provinsi' => 'required',
             'kabupaten' => 'required',
@@ -78,12 +80,21 @@ class OrtuController extends Controller
             'no_kk.required' => 'Nomor KK harus diisi',
             'no_kk.numeric' => 'Nomor KK harus berisi angka saja',
             'no_kk.digits' => 'Nomor KK harus berisi tepat 16 digit angka',
-            'nik.required' => 'NIK harus diisi',
-            'nik.numeric' => 'NIK harus berisi angka saja',
-            'nik.digits' => 'NIK harus berisi tepat 16 digit angka',
-            'nik.unique' => 'NIK sudah terdaftar. Silahkan cek di daftar orangtua.',
-            'name.required' => 'Nama harus diisi',
-            'name.regex' => 'Nama tidak boleh mengandung angka atau karakter khusus',
+
+            'nik_ibu.required' => 'NIK harus diisi',
+            'nik_ibu.numeric' => 'NIK harus berisi angka saja',
+            'nik_ibu.digits' => 'NIK harus berisi tepat 16 digit angka',
+            'nik_ibu.unique' => 'NIK sudah terdaftar. Silahkan cek di daftar orangtua.',
+            'name_ibu.required' => 'Nama harus diisi',
+            'name_ibu.regex' => 'Nama tidak boleh mengandung angka atau karakter khusus',
+
+            'nik_ayah.required' => 'NIK harus diisi',
+            'nik_ayah.numeric' => 'NIK harus berisi angka saja',
+            'nik_ayah.digits' => 'NIK harus berisi tepat 16 digit angka',
+            'nik_ayah.unique' => 'NIK sudah terdaftar. Silahkan cek di daftar orangtua.',
+            'name_ayah.required' => 'Nama harus diisi',
+            'name_ayah.regex' => 'Nama tidak boleh mengandung angka atau karakter khusus',
+
             'telp.required' => 'Telepon harus diisi',
             'provinsi.required' => 'Provinsi harus dipilih',
             'kabupaten.required' => 'Kabupaten harus dipilih',
@@ -102,8 +113,10 @@ class OrtuController extends Controller
 
         Orangtua::create([
             "no_kk" => $request->no_kk,
-            "nik" => $request->nik,
-            "name" => $request->name,
+            "nik_ibu" => $request->nik_ibu,
+            "name_ibu" => $request->name_ibu,
+            "nik_ayah" => $request->nik_ayah,
+            "name_ayah" => $request->name_ayah,
             "telp" => $request->telp,
             "provinsi" => $request->provinsi,
             "kabupaten" => $request->kabupaten,
@@ -131,8 +144,10 @@ class OrtuController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'no_kk' => ['required', 'numeric', 'digits:16'], // Memastikan hanya angka dengan panjang tepat 16
-            'nik' => ['required', 'numeric', 'digits:16', Rule::unique('orangtua', 'nik')->ignore($id)],   // Memastikan hanya angka dengan panjang tepat 16
-            'name' => ['required', 'regex:/^[a-zA-Z\s]+$/'],
+            'nik_ibu' => ['required', 'numeric', 'digits:16', Rule::unique('orangtua', 'nik_ibu')->ignore($id)],   // Memastikan hanya angka dengan panjang tepat 16
+            'name_ibu' => ['required', 'regex:/^[a-zA-Z\s]+$/'],
+            'nik_ayah' => ['required', 'numeric', 'digits:16', Rule::unique('orangtua', 'nik_ayah')->ignore($id)],   // Memastikan hanya angka dengan panjang tepat 16
+            'name_ayah' => ['required', 'regex:/^[a-zA-Z\s]+$/'],
             'telp' => 'required',
             'provinsi' => 'required',
             'kabupaten' => 'required',
@@ -145,12 +160,21 @@ class OrtuController extends Controller
             'no_kk.required' => 'Nomor KK harus diisi',
             'no_kk.numeric' => 'Nomor KK harus berisi angka saja',
             'no_kk.digits' => 'Nomor KK harus berisi tepat 16 digit angka',
-            'nik.required' => 'NIK harus diisi',
-            'nik.numeric' => 'NIK harus berisi angka saja',
-            'nik.digits' => 'NIK harus berisi tepat 16 digit angka',
-            'nik.unique' => 'NIK sudah terdaftar. Silahkan cek di daftar orangtua.',
-            'name.required' => 'Nama harus diisi',
-            'name.regex' => 'Nama tidak boleh mengandung angka atau karakter khusus',
+
+            'nik_ibu.required' => 'NIK harus diisi',
+            'nik_ibu.numeric' => 'NIK harus berisi angka saja',
+            'nik_ibu.digits' => 'NIK harus berisi tepat 16 digit angka',
+            'nik_ibu.unique' => 'NIK sudah terdaftar. Silahkan cek di daftar orangtua.',
+            'name_ibu.required' => 'Nama harus diisi',
+            'name_ibu.regex' => 'Nama tidak boleh mengandung angka atau karakter khusus',
+
+            'nik_ayah.required' => 'NIK harus diisi',
+            'nik_ayah.numeric' => 'NIK harus berisi angka saja',
+            'nik_ayah.digits' => 'NIK harus berisi tepat 16 digit angka',
+            'nik_ayah.unique' => 'NIK sudah terdaftar. Silahkan cek di daftar orangtua.',
+            'name_ayah.required' => 'Nama harus diisi',
+            'name_ayah.regex' => 'Nama tidak boleh mengandung angka atau karakter khusus',
+
             'telp.required' => 'Telepon harus diisi',
             'provinsi.required' => 'Provinsi harus dipilih',
             'kabupaten.required' => 'Kabupaten harus dipilih',
@@ -169,8 +193,10 @@ class OrtuController extends Controller
 
         Orangtua::find($id)->update([
             "no_kk" => $request->no_kk,
-            "nik" => $request->nik,
-            "name" => $request->name,
+            "nik_ibu" => $request->nik_ibu,
+            "name_ibu" => $request->name_ibu,
+            "nik_ayah" => $request->nik_ayah,
+            "name_ayah" => $request->name_ayah,
             "telp" => $request->telp,
             "provinsi" => $request->provinsi,
             "kabupaten" => $request->kabupaten,

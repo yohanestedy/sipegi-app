@@ -39,9 +39,11 @@ class OrangtuaSeederFake extends Seeder
             $rtId = $faker->randomElement($dusunRtMap[$dusunId]);
 
             Orangtua::create([
-                'name' => $faker->name,
                 'no_kk' => $faker->numerify('180706##########'),
-                'nik' => $faker->numerify('180706##########'),
+                'nik_ibu' => $faker->numerify('180706##########'),
+                'name_ibu' => $faker->name('female'),
+                'nik_ayah' => $faker->numerify('180706##########'),
+                'name_ayah' => $faker->name('male'),
                 'telp' => $faker->numerify('08###########'),
                 'alamat' => $faker->randomElement($dusunAddresses[$dusunId]),
                 'rt_id' => $rtId,

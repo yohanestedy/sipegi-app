@@ -185,8 +185,8 @@
                                                 <option value="{{ $orangtua->id }}"
                                                     data-dusun-id="{{ $orangtua->dusun_id }}"
                                                     {{ old('orangtua') == $orangtua->id ? 'selected' : '' }}>
-                                                    {{ $orangtua->name }} -
-                                                    {{ $orangtua->nik }}</option>
+                                                    {{ $orangtua->name_ibu }} -
+                                                    {{ $orangtua->nik_ibu }}</option>
                                             @endforeach
                                         </select>
                                         <div class="invalid-feedback">
@@ -292,7 +292,8 @@
                                 <div class="col-sm-12 d-flex justify-content-center">
                                     <button id="submitBtn" type="submit"
                                         class="btn btn-primary me-3 mb-1">Simpan</button>
-                                    <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
+                                    <button type="reset" id="resetButton"
+                                        class="btn btn-light-secondary me-1 mb-1">Reset</button>
                                 </div>
 
                             </div>
@@ -326,7 +327,10 @@
             width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
             placeholder: $(this).data('placeholder'),
         });
-
+        // Reset select2
+        $('#resetButton').on('click', function() {
+            $('.select2').val(null).trigger('change');
+        });
 
 
 
