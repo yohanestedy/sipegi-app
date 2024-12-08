@@ -107,8 +107,8 @@
                 @endif
 
                 {{-- Laporan --}}
-                <li class="sidebar-item">
-                    <a href="index.html" class="sidebar-link">
+                <li class="sidebar-item {{ Route::is('laporan.*') ? 'active' : '' }}">
+                    <a href="{{ route('laporan.index') }}" class="sidebar-link">
                         {{-- <i class="fa-duotone fa-solid fa-users"></i> --}}
                         <i class="fa-duotone fa-solid fa-file-circle-check fa-lg"></i>
                         <span>Laporan</span>
