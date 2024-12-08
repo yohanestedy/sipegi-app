@@ -1,13 +1,19 @@
 <?php
 
+use App\Models\Posyandu;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+use App\Exports\BalitaUkurTableExport;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\BalitaController;
-use App\Http\Controllers\BalitaLulusController;
-use App\Http\Controllers\BalitaUkurController;
-use App\Http\Controllers\MasterDataController;
 use App\Http\Controllers\OrtuController;
 use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BalitaController;
+use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\BalitaUkurController;
+use App\Http\Controllers\MasterDataController;
+use App\Http\Controllers\BalitaLulusController;
+use App\Models\Dusun;
 
 /*
 |--------------------------------------------------------------------------
@@ -112,6 +118,22 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::post('/hitung/{id?}', [BalitaUkurController::class, 'hitung'])->name('balitaukur.hitung');
         Route::post('/simpan-zscore', [BalitaUkurController::class, 'simpanZScore'])->name('balitaukur.simpanZScore');
+    });
+
+    Route::prefix('laporan')->group(function () {
+        // POSYANDU
+        Route::get('/', [LaporanController::class, 'index'])->name('laporan.index');
+        Route::get('/export/pengukuran-balita', function (Request $request) {
+            $posyandu_name = $request->posyandu_id ? Posyandu::find($request->posyandu_id)->name : 'Semua Dusun';
+            $dusun_name = $request->posyandu_id ? Dusun::find($request->posyandu_id)->name : 'Semua Dusun';
+            $periode = $request->periode;
+            $fileName = 'Laporan_Pengukuran_Balita_' . str_replace('/', '_', $posyandu_name) . '_' . str_replace('.', '_', $periode) . '.xlsx';
+
+            return Excel::download(
+                new BalitaUkurTableExport($request->posyandu_id, $request->periode, $posyandu_name,  $dusun_name),
+                $fileName
+            );
+        })->name('laporan.export-pengukuranbalita');
     });
 
     // Route untuk mengambil RT dan RW berdasarkan dusun_id
