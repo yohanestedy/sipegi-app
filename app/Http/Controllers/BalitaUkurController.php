@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Balita;
-use App\Models\BalitaLulus;
+use App\Models\Posyandu;
 use App\Models\BalitaUkur;
+use App\Models\BalitaLulus;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Monolog\Handler\NullHandler;
@@ -30,15 +31,26 @@ class BalitaUkurController extends Controller
                 $query->where('posyandu_id', $userPosyanduId);
             });
         }
+        $posyandus = Posyandu::all();
 
         $balitaUkur = $query->with('balita.posyandu')->orderBy('created_at', 'desc')->get();
-        // return $balitaUkur;
-
-        // dd($balitaUkur->toArray());
 
 
+        // $balitaUkur = $mentah->filter(function ($item) {
+        //     return $item->status_bb_naik === '2T'; // Tidak ada data sebelumnya
+        // });
 
-        return view('pages.main.balita-ukur.index', compact('balitaUkur'));
+        // // Filter berdasarkan status_bb_naik jika parameter `status` tersedia
+        // if ($request->has('status')) {
+        //     $status = $request->input('status');
+        //     $balitaUkur = $balitaUkur->filter(function ($item) use ($status) {
+        //         return $item->status_bb_naik === $status;
+        //     });
+        // }
+
+
+
+        return view('pages.main.balita-ukur.index', compact('balitaUkur', 'posyandus'));
     }
     //
     public function detail($id)
