@@ -3,8 +3,11 @@
 
 @section('cssLibraries')
     <link rel="stylesheet" href="{{ asset('assets/extensions/datatables.net-bs5/css/dataTables.bootstrap5.min.css') }}">
-
     <link rel="stylesheet" crossorigin href="{{ asset('/assets/compiled/css/table-datatable-jquery.css') }}">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <!-- CDN untuk monthSelectPlugin -->
+    <link href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/plugins/monthSelect/style.css" rel="stylesheet">
     <style>
         /* Mengatur padding untuk semua <td> dalam tabel dengan ID 'tableUser' */
         table.dataTable td {
@@ -75,13 +78,40 @@
                         </p>
                     </div>
                     <div class="table-responsive datatable-minimal">
+                        @if (Auth::user()->role == 'super_admin')
+                            <form method="GET" action="{{ route('laporan.export-pengukuranbalita') }}"
+                                class="form form-horizontal">
+                                <div class="row mb-3">
+                                    <div class="col-6 col-md-2">
+                                        <select id="filterPosyanduPengukuran" class="form-select">
+                                            <option value="">Semua Posyandu</option>
+                                            @foreach ($posyandus as $posyandu)
+                                                <option value="{{ $posyandu->name }}">{{ $posyandu->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-6 col-md-3 mb-3">
+
+                                        <input id="filterBulanPengukuran" name="periode" type="text"
+                                            class="form-control periode" placeholder="Pilih Bulan dan Tahun" />
+                                    </div>
+                                    {{-- <div class="col-12 col-md-2 mb-3">
+                                        <button type="submit" class="btn btn-success w-100"><i
+                                                class="fa-solid fa-file-excel"></i>
+                                            Export</button>
+                                    </div> --}}
+                                </div>
+                            </form>
+                        @endif
 
                         <table class="table table-hover table-bordered medium-text text-center"
                             id="tableDaftarBalitaDiukur">
                             <thead>
                                 <tr>
                                     <th rowspan="2" style="text-align: center;">Tindakan</th>
+                                    <th rowspan="2" style="text-align: center;">No</th>
                                     <th rowspan="2" style="text-align: center;">Nama</th>
+                                    <th rowspan="2" style="text-align: center;">NIK</th>
                                     <th rowspan="2" style="text-align: center;">Tgl Ukur</th>
                                     <th rowspan="2" style="text-align: center;">Umur Ukur</th>
                                     <th rowspan="2" style="text-align: center;">BB (kg)</th>
@@ -89,11 +119,21 @@
                                     <th rowspan="2" style="text-align: center;">LK (cm)</th>
                                     <th rowspan="2" style="text-align: center;">Cara Ukur</th>
                                     <th rowspan="2" style="text-align: center;">Status BB Naik</th>
+
+                                    {{-- ZScore Header --}}
                                     <th colspan="2" style="text-align: center;">BB / Umur</th>
                                     <th colspan="2" style="text-align: center;">TB / Umur</th>
                                     <th colspan="2" style="text-align: center;">BB / TB</th>
                                     <th colspan="2" style="text-align: center;">IMT / Umur</th>
                                     <th colspan="2" style="text-align: center;">LK / Umur</th>
+                                    {{-- End ZScore Header --}}
+
+                                    <th rowspan="2" style="text-align: center;">Posyandu</th>
+                                    <th rowspan="2" style="text-align: center;">BPJS</th>
+
+
+
+
 
                                 </tr>
 
@@ -118,55 +158,40 @@
 
                             </thead>
                             <tbody>
-
+                                @php
+                                    $n = 1;
+                                @endphp
                                 @foreach ($balitaUkur as $balitaUkur)
                                     <tr>
 
+
                                         <td style="text-align: center">
-                                            {{-- <a href="{{ route('balitaukur.add', ['id' => $balita->id]) }}"
-                                                class="btn icon btn-primary " data-bs-toggle="tooltip"
-                                                data-bs-placement="top" data-bs-original-title="Pengukuran"
-                                                style="border-radius: 8px; padding: .2rem .4rem;">
-                                                <i class="fa-solid fa-calculator"></i></a> --}}
-                                            <button type="button" class="btn icon btn-info modal-btn"
+                                            <a type="button" class="btn icon btn-info modal-btn"
                                                 data-ukur='@json($balitaUkur)' data-bs-toggle="tooltip"
                                                 data-bs-placement="top" data-bs-original-title="Lihat Detail"
                                                 style="border-radius: 8px; padding: .2rem .4rem; color:white;">
                                                 <i class="fa-solid fa-eye"></i>
-                                            </button>
-
+                                            </a>
 
                                             <a href="{{ route('balitaukur.edit', ['id' => $balitaUkur->id]) }}"
                                                 class="btn icon btn-success " data-bs-toggle="tooltip"
                                                 data-bs-placement="top" data-bs-original-title="Ubah Pengukuran"
                                                 style="border-radius: 8px; padding: .2rem .4rem;">
-                                                <i class="fa-regular fa-pen-to-square"></i></button>
+                                                <i class="fa-regular fa-pen-to-square"></i></a>
 
-                                                {{-- <form action="{{ route('balita.delete', ['id' => $balita->id]) }}"
-                                                method="POST" style="display: inline">
-                                                @csrf
-                                                @method('DELETE')
-
-                                                <button type="submit"
-                                                    class="btn icon btn-sm btn-danger mt-1 mb-1 me-1 swal-delete"
-                                                    data-bs-toggle="tooltip" data-bs-placement="top"
-                                                    data-bs-original-title="Hapus" style="border-radius: 8px;">
-                                                    <i class="fa-solid fa-trash"></i>
-                                                </button>
-                                            </form> --}}
-
+                                            <a href="{{ route('balitaukur.detail', ['id' => $balitaUkur->balita_id]) }}"
+                                                class="btn icon btn-primary " data-bs-toggle="tooltip"
+                                                data-bs-placement="top" data-bs-original-title="Riwayat Pengukuran"
+                                                style="border-radius: 8px; padding: .2rem .4rem;">
+                                                <i class="fa-regular fa-list-check"></i></a>
 
                                         </td>
+                                        <td>{{ $n++ }}</td>
 
                                         {{-- <td style="text-align: center">{{ $balitaUkur->balita->name }}</td> --}}
-                                        <td style="text-align: center">
 
-                                            {{ $balitaUkur->balita->name }}
-
-                                        </td>
-
-
-
+                                        <td style="text-align: center">{{ $balitaUkur->balita->name }}</td>
+                                        <td style="text-align: center">{{ $balitaUkur->balita->nik }}</td>
                                         <td data-order="{{ $balitaUkur->tgl_ukur }}" style="text-align: center">
                                             {{ $balitaUkur->tgl_ukur_display }}</td>
                                         <td style="text-align: center">
@@ -177,6 +202,7 @@
                                         <td style="text-align: center">{{ $balitaUkur->cara_ukur }}</td>
                                         <td style="text-align: center">{{ $balitaUkur->status_bb_naik }}</td>
 
+                                        {{-- ZSCORE SECTION --}}
                                         <td style="text-align: center">
                                             <span class="badge bg-secondary">
                                                 {{ $balitaUkur->status_bb_u }}
@@ -211,6 +237,12 @@
                                         </td>
                                         <td style="text-align: center">
                                             {{ $balitaUkur->zscore_lk_u ? $balitaUkur->zscore_lk_u : '-' }}</td>
+
+                                        {{-- END ZSCORE SECTION --}}
+
+
+                                        <td style="text-align: center">{{ $balitaUkur->balita->posyandu->name }}</td>
+                                        <td style="text-align: center">{{ $balitaUkur->balita->bpjs }}</td>
 
 
 
@@ -286,7 +318,7 @@
                                     <label class="medium-text">Lingkar Kepala :</label><br>
                                     <p class="badge bg-light-secondary form-control-static fw-normal" id="lk">
                                     </p><br>
-                                    <label class="medium-text">Status BB :</label><br>
+                                    <label class="medium-text">Status BB Naik :</label><br>
                                     <p class="badge bg-light-secondary form-control-static fw-normal" id="status_bb_naik">
                                     </p><br>
 
@@ -384,6 +416,25 @@
     <script src="{{ asset('assets/extensions/datatables.net/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/extensions/datatables.net-bs5/js/dataTables.bootstrap5.min.js') }}"></script>
     <script src="{{ asset('assets/static/js/pages/datatables.js') }}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/plugins/monthSelect/index.js"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/id.js"></script>
+    <script>
+        flatpickr(".periode", {
+            "locale": "id",
+            altInput: true,
+            plugins: [
+                new monthSelectPlugin({
+
+                    shorthand: false,
+                    dateFormat: "m.y",
+                    altFormat: "F Y",
+
+                }),
+            ],
+        });
+    </script>
 
 
 

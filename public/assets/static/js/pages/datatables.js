@@ -58,7 +58,11 @@ let customized_datatable2 = $("#tableOrtu").DataTable({
 })
 let customized_datatable3 = $("#tableBalita").DataTable({
     responsive: true,
-    info: false,
+    lengthMenu: [
+        [10, 25, 50, -1],
+        [10, 25, 50, 'Semua']
+    ],
+    pageLength: -1,
     pagingType: 'simple',
     order: [
         [1, 'asc'],  // Kolom Dusun, urut descending
@@ -72,11 +76,13 @@ let customized_datatable3 = $("#tableBalita").DataTable({
 		"<'row dt-row'<'col-sm-12'tr>>" +
 		"<'row'<'col-4'i><'col-8'p>>",
     "language": {
+        "info": "Hal _PAGE_ dari _PAGES_",
         "lengthMenu": "_MENU_ ",
         "search": "",
         "searchPlaceholder": "Cari Nama, Posyandu.."
     }
 })
+
 // Event listener untuk dropdown filter
 $('#filterPosyandu').on('change', function () {
     let selectedValue = $(this).val(); // Ambil nilai yang dipilih
@@ -84,6 +90,7 @@ $('#filterPosyandu').on('change', function () {
         .search(selectedValue)      // Terapkan filter berdasarkan nilai
         .draw();                    // Refresh tabel
 });
+
 
 let customized_datatable5 = $("#tableBalitaUkur").DataTable({
     responsive: true,
@@ -108,6 +115,94 @@ let customized_datatable5 = $("#tableBalitaUkur").DataTable({
         "searchPlaceholder": "Ketik nama.."
     }
 })
+let customized_datatable7 = $("#tableDaftarBalitaDiukur").DataTable({
+    responsive: true,
+    pagingType: 'simple',
+    lengthMenu: [
+        [10, 25, 50, -1],
+        [10, 25, 50, 'Semua']
+    ],
+    pageLength: -1,
+    order: [
+        [2, 'desc'],  // Kolom Dusun, urut descending
+    ],
+    columnDefs: [
+
+        { orderable: false, targets: [0,3,4,5,6,7,8,9,10,11,12,13,14,15] } // Nonaktifkan sorting di kolom lainnya
+    ],
+
+    dom:
+		"<'row'<'col-3'l><'col-9'f>>" +
+		"<'row dt-row'<'col-sm-12'tr>>" +
+		"<'row'<'col-4'i><'col-8'p>>",
+    "language": {
+        "info": "Hal _PAGE_ dari _PAGES_",
+        "lengthMenu": "_MENU_ ",
+        "search": "",
+        "searchPlaceholder": "Ketik nama.."
+    }
+})
+$('#filterPosyanduPengukuran').on('change', function () {
+    let selectedValue = $(this).val(); // Ambil nilai yang dipilih
+    customized_datatable7.column(21) // Kolom Posyandu (index ke-7)
+        .search(selectedValue)      // Terapkan filter berdasarkan nilai
+        .draw();                    // Refresh tabel
+});
+$('#filterBulanPengukuran').on('change', function () {
+    let selectedValue = $(this).val();
+    let [month, year] = selectedValue.split('.');
+    let formattedDate = `20${year}-${month}`;  // Format tanggal menjadi yyyy-mm
+
+    console.log(formattedDate);  // Debug log untuk memastikan formatnya benar
+
+    // Filter berdasarkan bulan dan tahun, pastikan sesuai dengan format data-order
+    customized_datatable7.column(4)
+        .search(formattedDate)  // Pencocokan berdasarkan yyyy-mm
+        .draw();
+});
+$('#filterBulanPengukuran').on('change', function () {
+    let selectedValue = $(this).val();
+
+    if (!selectedValue) { // Jika value kosong (reset)
+        // Reset pencarian dan tampilkan semua data
+        customized_datatable7.column(4).search('').draw();
+        return;
+    }
+
+    let [month, year] = selectedValue.split('.');
+    year = `20${year}`;
+
+    // Daftar bulan dalam Bahasa Indonesia untuk konversi
+    const bulanIndo = {
+        '01': 'Januari',
+        '02': 'Februari',
+        '03': 'Maret',
+        '04': 'April',
+        '05': 'Mei',
+        '06': 'Juni',
+        '07': 'Juli',
+        '08': 'Agustus',
+        '09': 'September',
+        '10': 'Oktober',
+        '11': 'November',
+        '12': 'Desember'
+    };
+
+    // Mengonversi nama bulan menjadi angka bulan
+    let monthName = bulanIndo[month]; // Mendapatkan nama bulan (Januari, Februari, ...)
+
+    let formattedDate = `${monthName} ${year}`; // Format menjadi "Bulan Tahun"
+
+    console.log(formattedDate); // Debug untuk melihat hasil yang diformat
+
+    // Filter berdasarkan bulan yang diformat
+    customized_datatable7.column(4)
+        .search(formattedDate)  // Pencocokan berdasarkan nama bulan dan tahun
+        .draw();  // Refresh tabel
+});
+
+
+
 let customized_datatable4 = $("#tablePosyandu").DataTable({
     responsive: true,
     info: false,
