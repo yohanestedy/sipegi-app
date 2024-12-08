@@ -4,6 +4,8 @@
     <link rel="stylesheet" href="{{ asset('assets/extensions/datatables.net-bs5/css/dataTables.bootstrap5.min.css') }}">
 
     <link rel="stylesheet" crossorigin href="{{ asset('/assets/compiled/css/table-datatable-jquery.css') }}">
+
+
     <style>
         /* Mengatur padding untuk semua <td> dalam tabel dengan ID 'tableUser' */
         table.dataTable td {
@@ -59,16 +61,25 @@
                     </div>
                     <div class="table-responsive datatable-minimal">
                         @if (Auth::user()->role == 'super_admin')
-                            <div class="row mb-3">
-                                <div class="col-md-4">
-                                    <select id="filterPosyandu" class="form-select">
-                                        <option value="">Semua Posyandu</option>
-                                        @foreach ($posyandus as $posyandu)
-                                            <option value="{{ $posyandu->name }}">{{ $posyandu->name }}</option>
-                                        @endforeach
-                                    </select>
+                            <form method="GET" action="{{ route('laporan.export-pengukuranbalita') }}"
+                                class="form form-horizontal">
+                                <div class="row mb-3">
+                                    <div class="col-12 col-md-4">
+                                        <select id="filterPosyandu" class="form-select">
+                                            <option value="">Semua Posyandu</option>
+                                            @foreach ($posyandus as $posyandu)
+                                                <option value="{{ $posyandu->name }}">{{ $posyandu->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    {{-- <div class="col-12 col-md-2 mb-3">
+                                        <button type="submit" class="btn btn-success w-100"><i
+                                                class="fa-solid fa-file-excel"></i>
+                                            Export</button>
+                                    </div> --}}
                                 </div>
-                            </div>
+                            </form>
                         @endif
 
 
@@ -81,7 +92,7 @@
                                     <th style="text-align: center;">Jenis Kelamin</th>
                                     <th style="text-align: center;">Tanggal Lahir</th>
                                     <th style="text-align: center;">Umur</th>
-                                    <th style="text-align: center;">Nama Orangtua</th>
+                                    <th style="text-align: center;">Nama Ibu</th>
                                     <th style="text-align: center;">Posyandu</th>
 
                                 </tr>
@@ -127,7 +138,7 @@
                                         </td>
                                         <td>{{ \Carbon\Carbon::parse($balita->tgl_lahir)->translatedFormat('d F Y') }}</td>
                                         <td data-sort="{{ $balita->umur_hari }}">{{ $balita->umur_display }}</td>
-                                        <td>{{ $balita->orangtua->name }}</td>
+                                        <td>{{ $balita->orangtua->name_ibu }}</td>
                                         <td data-sort="{{ $balita->posyandu_id }}" style="text-align: center">
                                             {{ $balita->posyandu->name }}</td>
 
@@ -156,6 +167,8 @@
     <script src="{{ asset('assets/extensions/datatables.net/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/extensions/datatables.net-bs5/js/dataTables.bootstrap5.min.js') }}"></script>
     <script src="{{ asset('assets/static/js/pages/datatables.js') }}"></script>
+
+
 
 
 
