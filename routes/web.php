@@ -123,17 +123,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::prefix('laporan')->group(function () {
         // POSYANDU
         Route::get('/', [LaporanController::class, 'index'])->name('laporan.index');
-        Route::get('/export/pengukuran-balita', function (Request $request) {
-            $posyandu_name = $request->posyandu_id ? Posyandu::find($request->posyandu_id)->name : 'Semua Dusun';
-            $dusun_name = $request->posyandu_id ? Dusun::find($request->posyandu_id)->name : 'Semua Dusun';
-            $periode = $request->periode;
-            $fileName = 'Laporan_Pengukuran_Balita_' . str_replace('/', '_', $posyandu_name) . '_' . str_replace('.', '_', $periode) . '.xlsx';
-
-            return Excel::download(
-                new BalitaUkurTableExport($request->posyandu_id, $request->periode, $posyandu_name,  $dusun_name),
-                $fileName
-            );
-        })->name('laporan.export-pengukuranbalita');
+        Route::get('/export/pengukuran-balita', [LaporanController::class, 'exportPengukuran'])->name('laporan.export-pengukuranbalita');
     });
 
     // Route untuk mengambil RT dan RW berdasarkan dusun_id
