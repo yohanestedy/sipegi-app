@@ -67,6 +67,7 @@ class BalitaUkurTableExport implements FromCollection, WithHeadings, WithStyles,
                 'No',
                 'Nama',
                 'NIK',
+                'L/P',
                 'Tanggal Ukur',
                 'Umur Ukur',
                 'BB (kg)',
@@ -88,6 +89,7 @@ class BalitaUkurTableExport implements FromCollection, WithHeadings, WithStyles,
                 'BPJS',
             ],
             [
+                '',
                 '',
                 '',
                 '',
@@ -127,6 +129,7 @@ class BalitaUkurTableExport implements FromCollection, WithHeadings, WithStyles,
             '',
             $balitaUkur->balita->name,
             " " . $balitaUkur->balita->nik,
+            $balitaUkur->balita->gender,
             Carbon::parse($balitaUkur->tgl_ukur)->format('d-m-Y'),
             $balitaUkur->umur_ukur,
             $balitaUkur->bb,
@@ -163,11 +166,12 @@ class BalitaUkurTableExport implements FromCollection, WithHeadings, WithStyles,
         $sheet->mergeCells('A1:V1'); // Title
         $sheet->mergeCells('A2:V2'); // Posyandu
         $sheet->mergeCells('A3:V3'); // Bulan
-        $sheet->mergeCells('K5:L5'); // BB/Umur
-        $sheet->mergeCells('M5:N5'); // TB/Umur
-        $sheet->mergeCells('O5:P5'); // BB/TB
-        $sheet->mergeCells('Q5:R5'); // IMT/Umur
-        $sheet->mergeCells('S5:T5'); // LK/Umur
+
+        $sheet->mergeCells('L5:M5'); // BB/Umur
+        $sheet->mergeCells('N5:O5'); // TB/Umur
+        $sheet->mergeCells('P5:Q5'); // BB/TB
+        $sheet->mergeCells('R5:S5'); // IMT/Umur
+        $sheet->mergeCells('T5:U5'); // LK/Umur
 
         // Merge kolom
         $sheet->mergeCells('A5:A6');
@@ -180,8 +184,9 @@ class BalitaUkurTableExport implements FromCollection, WithHeadings, WithStyles,
         $sheet->mergeCells('H5:H6');
         $sheet->mergeCells('I5:I6');
         $sheet->mergeCells('J5:J6');
-        $sheet->mergeCells('U5:U6');
+        $sheet->mergeCells('K5:K6');
         $sheet->mergeCells('V5:V6');
+        $sheet->mergeCells('W5:W6');
 
         // Style for title
         $sheet->getStyle('A1')->getFont()->setBold(true)->setSize(14);
@@ -191,21 +196,21 @@ class BalitaUkurTableExport implements FromCollection, WithHeadings, WithStyles,
         $lastRow = $sheet->getHighestRow();
 
         // Set font size to 12 for the entire sheet
-        $sheet->getStyle("A5:V{$lastRow}")->getFont()->setSize(12);
+        $sheet->getStyle("A5:W{$lastRow}")->getFont()->setSize(12);
 
         // Center alignment for header
-        $sheet->getStyle('A5:V6')->getAlignment()->setHorizontal('center');
-        $sheet->getStyle('A5:V6')->getAlignment()->setVertical('center');
+        $sheet->getStyle('A5:W6')->getAlignment()->setHorizontal('center');
+        $sheet->getStyle('A5:W6')->getAlignment()->setVertical('center');
 
         // Bold headings
-        $sheet->getStyle('A5:V6')->getFont()->setBold(true);
+        $sheet->getStyle('A5:W6')->getFont()->setBold(true);
 
         // Add borders to header
-        $sheet->getStyle('A5:V6')->getBorders()->getAllBorders()->setBorderStyle('thin');
+        $sheet->getStyle('A5:W6')->getBorders()->getAllBorders()->setBorderStyle('thin');
 
         // Add borders to body (from row 7 to the last row)
         // Determine the last row of the sheet
-        $sheet->getStyle("A7:V{$lastRow}")->getBorders()->getAllBorders()->setBorderStyle('thin');
+        $sheet->getStyle("A7:W{$lastRow}")->getBorders()->getAllBorders()->setBorderStyle('thin');
 
         // Set cell height to 20 pixels
         foreach (range(1, $sheet->getHighestRow()) as $row) {
@@ -213,22 +218,23 @@ class BalitaUkurTableExport implements FromCollection, WithHeadings, WithStyles,
         }
 
         // Auto-size all columns
-        foreach (range('A', 'V') as $column) {
+        foreach (range('A', 'W') as $column) {
             $sheet->getColumnDimension($column)->setAutoSize(true);
         }
 
         // Center Vertical for all records
-        $sheet->getStyle('A1:V' . $sheet->getHighestRow())->getAlignment()->setVertical('center');
+        $sheet->getStyle('A1:W' . $sheet->getHighestRow())->getAlignment()->setVertical('center');
 
         // Alignment for Body (Left for columns B, C, E; Center for others)
         // Kolom B, C, E: Left Align
         $sheet->getStyle('B7:B' . $lastRow)->getAlignment()->setHorizontal('left');
         $sheet->getStyle('C7:C' . $lastRow)->getAlignment()->setHorizontal('left');
-        $sheet->getStyle('E7:E' . $lastRow)->getAlignment()->setHorizontal('left');
+        $sheet->getStyle('F7:F' . $lastRow)->getAlignment()->setHorizontal('left');
 
         // Kolom D, F sampai V: Center Align
         $sheet->getStyle('D7:D' . $lastRow)->getAlignment()->setHorizontal('center');
-        $sheet->getStyle('F7:V' . $lastRow)->getAlignment()->setHorizontal('center');
+        $sheet->getStyle('E7:E' . $lastRow)->getAlignment()->setHorizontal('center');
+        $sheet->getStyle('G7:W' . $lastRow)->getAlignment()->setHorizontal('center');
     }
 
     public function title(): string

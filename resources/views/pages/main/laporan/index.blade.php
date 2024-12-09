@@ -14,7 +14,7 @@
     <nav aria-label="breadcrumb" class="breadcrumb-header">
         <ol class="breadcrumb mb-0">
             <li class="breadcrumb-item">
-                <a href="#">Laporan</a>
+                <a href="{{ route('laporan.index') }}">Laporan</a>
             </li>
             {{-- <li class="breadcrumb-item active" aria-current="page">
                 Data Pengukuran Balita
@@ -36,9 +36,10 @@
         </div>
         <section class="section">
 
+            {{-- BALITA UKUR EXPORT --}}
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Ekspor Pengukuran Balita</h4>
+                    <h4 class="card-title">Ekspor Hasil Pengukuran Balita</h4>
                 </div>
                 <div class="card-body">
 
@@ -61,11 +62,11 @@
                             <div class="col-12 col-md-5 mb-3">
 
                                 <input id="periode" name="periode" type="text" class="form-control"
-                                    placeholder="Pilih Bulan dan Tahun" />
+                                    placeholder="--Pilih Bulan dan Tahun--" />
                             </div>
                             <div class="col-12 col-md-2 mb-3">
                                 <button type="submit" class="btn btn-success w-100"><i class="fa-solid fa-file-excel"></i>
-                                    Export</button>
+                                    Ekspor Excel</button>
                             </div>
                         </div>
                     </form>
@@ -75,9 +76,10 @@
                 </div>
             </div>
 
-            <div class="card">
+            {{-- BALITA EXPORT --}}
+            {{-- <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Ekspor Daftar Balita</h4>
+                    <h4 class="card-title">Ekspor Data Balita</h4>
                 </div>
                 <div class="card-body">
 
@@ -97,14 +99,10 @@
                                     <option value="6">Anggrek / Suko Makmur</option>
                                 </select>
                             </div>
-                            <div class="col-12 col-md-5 mb-3">
 
-                                <input id="periode" name="periode" type="text" class="form-control"
-                                    placeholder="Pilih Bulan dan Tahun" />
-                            </div>
                             <div class="col-12 col-md-2 mb-3">
-                                <button type="submit" class="btn btn-success w-100"><i class="fa-solid fa-file-excel"></i>
-                                    Export</button>
+                                <button type="submit" class="btn btn-success w-100"><i class="fa-solid fa-file-export"></i>
+                                    Download Excel</button>
                             </div>
                         </div>
                     </form>
@@ -112,7 +110,7 @@
 
 
                 </div>
-            </div>
+            </div> --}}
         </section>
     @endsection
     @section('jsLibraries')
