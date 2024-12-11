@@ -78,7 +78,7 @@ class BalitaController extends Controller
         $nikRequired = $request->has('disableNIK') ? 'nullable' : 'required';
 
         $validator = Validator::make($request->all(), [
-            'name' => ['required', 'regex:/^[a-zA-Z\s]+$/'],
+            'name' => ['required', 'regex:/^[a-zA-Z\s\.]+$/'],
             'nik' => [$nikRequired, 'numeric', 'digits:16', 'unique:balita,nik'],   // Memastikan hanya angka dengan panjang tepat 16
             'tgl_lahir' => 'required',
             'gender' => 'required',
@@ -108,6 +108,9 @@ class BalitaController extends Controller
             Log::error('Validation failed', $validator->errors()->toArray());
             return Redirect::back()->withErrors($validator)->withInput();
         }
+        $request->merge([
+            'bb_lahir' => $request->bb_lahir / 1000,
+        ]);
 
         DB::beginTransaction();
         try {
@@ -281,10 +284,11 @@ class BalitaController extends Controller
             'name' => ucwords(strtolower($request->name)), // Membuat kapital setiap awal kata
         ]);
 
+
         $nikRequired = $request->has('disableNIK') ? 'nullable' : 'required';
 
         $validator = Validator::make($request->all(), [
-            'name' => ['required', 'regex:/^[a-zA-Z\s]+$/'],
+            'name' => ['required', 'regex:/^[a-zA-Z\s\.]+$/'],
             'nik' => [$nikRequired, 'numeric', 'digits:16', Rule::unique('balita', 'nik')->ignore($id)], // Abaikan NIK yang sesuai dengan ID],   // Memastikan hanya angka dengan panjang tepat 16
             'tgl_lahir' => 'required',
             'gender' => 'required',
@@ -314,6 +318,9 @@ class BalitaController extends Controller
             Log::error('Validation failed', $validator->errors()->toArray());
             return Redirect::back()->withErrors($validator)->withInput();
         }
+        $request->merge([
+            'bb_lahir' => $request->bb_lahir / 1000,
+        ]);
         DB::beginTransaction();
         try {
             Balita::find($id)->update([

@@ -19,7 +19,7 @@
     <nav aria-label="breadcrumb" class="breadcrumb-header">
         <ol class="breadcrumb mb-0">
             <li class="breadcrumb-item">
-                <a href="#">Balita</a>
+                <a href="{{ route('balita.index') }}">Balita</a>
             </li>
             {{-- <li class="breadcrumb-item active" aria-current="page">
                 Data Pengukuran Balita
@@ -61,25 +61,16 @@
                     </div>
                     <div class="table-responsive datatable-minimal">
                         @if (Auth::user()->role == 'super_admin')
-                            <form method="GET" action="{{ route('laporan.export-pengukuranbalita') }}"
-                                class="form form-horizontal">
-                                <div class="row mb-3">
-                                    <div class="col-12 col-md-4">
-                                        <select id="filterPosyandu" class="form-select">
-                                            <option value="">Semua Posyandu</option>
-                                            @foreach ($posyandus as $posyandu)
-                                                <option value="{{ $posyandu->name }}">{{ $posyandu->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-
-                                    {{-- <div class="col-12 col-md-2 mb-3">
-                                        <button type="submit" class="btn btn-success w-100"><i
-                                                class="fa-solid fa-file-excel"></i>
-                                            Export</button>
-                                    </div> --}}
+                            <div class="row mb-3">
+                                <div class="col-12 col-md-4">
+                                    <select id="filterPosyandu" class="form-select form-select-sm">
+                                        <option value="">Semua Posyandu</option>
+                                        @foreach ($posyandus as $posyandu)
+                                            <option value="{{ $posyandu->name }}">{{ $posyandu->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
-                            </form>
+                            </div>
                         @endif
 
 
@@ -91,7 +82,7 @@
                                     <th style="text-align: center;">NIK</th>
                                     <th style="text-align: center;">Jenis Kelamin</th>
                                     <th style="text-align: center;">Tanggal Lahir</th>
-                                    <th style="text-align: center;">Umur</th>
+                                    <th style="text-align: center;">Umur Saat Ini</th>
                                     <th style="text-align: center;">Nama Ibu</th>
                                     <th style="text-align: center;">Posyandu</th>
 
@@ -105,9 +96,9 @@
                                         <td style="text-align: center">
                                             <a href="{{ route('balitaukur.detail', ['id' => $balita->id]) }}"
                                                 class="btn icon btn-primary " data-bs-toggle="tooltip"
-                                                data-bs-placement="top" data-bs-original-title="Pengukuran"
+                                                data-bs-placement="top" data-bs-original-title="Riwayat Pengukuran"
                                                 style="border-radius: 8px; padding: .2rem .4rem;">
-                                                <i class="fa-solid fa-calculator"></i></a>
+                                                <i class="fa-regular fa-list-check"></i></a>
                                             <a href="{{ route('balita.edit', ['id' => $balita->id]) }}"
                                                 class="btn icon btn-success " data-bs-toggle="tooltip"
                                                 data-bs-placement="top" data-bs-original-title="Edit"

@@ -10,7 +10,7 @@
     <nav aria-label="breadcrumb" class="breadcrumb-header">
         <ol class="breadcrumb mb-0">
             <li class="breadcrumb-item">
-                <a href="#">Balita</a>
+                <a href="{{ route('balita.index') }}">Balita</a>
             </li>
             <li class="breadcrumb-item active" aria-current="page">
                 Edit Data Balita
@@ -49,7 +49,7 @@
                                 {{-- Form Nama Balita --}}
                                 <div class="row d-flex">
                                     <div class="col-md-4 mt-3 text-md-end justify-content-end">
-                                        <label>Nama Balita</label>
+                                        <label>Nama Lengkap Balita</label>
                                     </div>
                                     <div class="col-md-5 form-group mt-2">
                                         <input name="name" type="text"
@@ -187,8 +187,8 @@
                                                 <option value="{{ $orangtua->id }}"
                                                     data-dusun-id="{{ $orangtua->dusun_id }}"
                                                     {{ old('orangtua') == $orangtua->id ? 'selected' : ($balita->orangtua_id == $orangtua->id ? 'selected' : '') }}>
-                                                    {{ $orangtua->name }} -
-                                                    {{ $orangtua->nik }}</option>
+                                                    {{ $orangtua->name_ibu }} -
+                                                    {{ $orangtua->nik_ibu }}</option>
                                             @endforeach
                                         </select>
                                         <div class="invalid-feedback">
@@ -251,7 +251,7 @@
                                             <div class="col-10 col-md-5">
                                                 <input name="bb_lahir" type="number"
                                                     class="form-control  @error('bb_lahir') is-invalid @enderror"
-                                                    value="{{ old('bb_lahir') ?? $balita->bb_lahir }}">
+                                                    value="{{ old('bb_lahir') ?? $balita->bb_lahir * 1000 }}">
                                                 <div class="invalid-feedback">
                                                     @error('bb_lahir')
                                                         {{ $message }}
@@ -259,7 +259,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-2 p-0 justify-content-start mt-auto">
-                                                <label style="font-weight: 350; font-size: 1.2em">kg</label>
+                                                <label style="font-weight: 350; font-size: 1.2em">gram</label>
                                             </div>
 
                                         </div>

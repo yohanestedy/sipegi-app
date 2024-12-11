@@ -12,7 +12,7 @@
     <nav aria-label="breadcrumb" class="breadcrumb-header">
         <ol class="breadcrumb mb-0">
             <li class="breadcrumb-item">
-                <a href="#">Balita</a>
+                <a href="{{ route('balita.index') }}">Balita</a>
             </li>
             <li class="breadcrumb-item active" aria-current="page">
                 Tambah Data Balita
@@ -50,7 +50,7 @@
                                 {{-- Form Nama Balita --}}
                                 <div class="row d-flex">
                                     <div class="col-md-4 mt-3 text-md-end justify-content-end">
-                                        <label>Nama Balita</label>
+                                        <label>Nama Lengkap Balita</label>
                                     </div>
                                     <div class="col-md-5 form-group mt-2">
                                         <input name="name" type="text"
@@ -256,7 +256,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-2 p-0 justify-content-start mt-2">
-                                                <label style="font-weight: 350; font-size: 1.2em">kg</label>
+                                                <label style="font-weight: 350; font-size: 1.2em">gram</label>
                                             </div>
 
                                         </div>
