@@ -43,6 +43,7 @@ class BalitaUkurTableExport implements FromCollection, WithHeadings, WithStyles,
             })
             ->whereMonth('tgl_ukur', $month)
             ->whereYear('tgl_ukur', $year)
+            ->whereNot('umur_ukur', '0 Bulan')
             // ->orderBy('tgl_ukur')
             ->get();
         $balitaQuery = $balitaQ->sortBy(function ($item) {
