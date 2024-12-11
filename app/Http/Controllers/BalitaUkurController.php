@@ -159,17 +159,17 @@ class BalitaUkurController extends Controller
                     return $query->where('balita_id', $request->balita_id);
                 })->ignore($id),
             ],
-            'bb' => 'required',
-            'tb' => 'required',
-            // 'lk' => 'required',
+            'bb' => 'required|numeric',
+            'tb' => 'required|numeric',
+            'lk' => 'required|numeric',
             'cara_ukur' => 'required',
         ], [
-            'balita_id.required' => 'Pilih balita untuk di ukur',
+            'balita_id.required' => 'Pilih balita untuk diukur',
             'tgl_ukur.required' => 'Pilih tanggal pengukuran',
-            'tgl_ukur.unique' => 'Balita sudah di ukur di tanggal ini',
+            'tgl_ukur.unique' => 'Balita sudah diukur di tanggal ini',
             'bb.required' => 'Isi berat badan balita',
             'tb.required' => 'Isi tinggi badan balita',
-            // 'lk.required' => 'Isi lingkar kepala balita',
+            'lk.required' => 'Isi lingkar kepala balita',
             'cara_ukur.required' => 'Pilih metode pengukuran balita',
 
         ]);
