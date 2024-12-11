@@ -59,15 +59,16 @@ class OrtuController extends Controller
 
         // Mengubah input nama menjadi huruf kapital
         $request->merge([
-            'name' => strtoupper($request->name),
+            'name_ibu' => ucwords(strtolower($request->name_ibu)), // Membuat kapital setiap awal kata
+            'name_ayah' => ucwords(strtolower($request->name_ayah)), // Membuat kapital setiap awal kata
         ]);
         // return $request;
         $validator = Validator::make($request->all(), [
             'no_kk' => ['required', 'numeric', 'digits:16'], // Memastikan hanya angka dengan panjang tepat 16
             'nik_ibu' => ['required', 'numeric', 'digits:16', Rule::unique('orangtua', 'nik_ibu')],   // Memastikan hanya angka dengan panjang tepat 16
-            'name_ibu' => ['required', 'regex:/^[a-zA-Z\s]+$/'],
+            'name_ibu' => ['required', 'regex:/^[a-zA-Z\s\.]+$/'],
             'nik_ayah' => ['required', 'numeric', 'digits:16', Rule::unique('orangtua', 'nik_ayah')],   // Memastikan hanya angka dengan panjang tepat 16
-            'name_ayah' => ['required', 'regex:/^[a-zA-Z\s]+$/'],
+            'name_ayah' => ['required', 'regex:/^[a-zA-Z\s\.]+$/'],
             'telp' => 'required',
             'provinsi' => 'required',
             'kabupaten' => 'required',
@@ -145,9 +146,9 @@ class OrtuController extends Controller
         $validator = Validator::make($request->all(), [
             'no_kk' => ['required', 'numeric', 'digits:16'], // Memastikan hanya angka dengan panjang tepat 16
             'nik_ibu' => ['required', 'numeric', 'digits:16', Rule::unique('orangtua', 'nik_ibu')->ignore($id)],   // Memastikan hanya angka dengan panjang tepat 16
-            'name_ibu' => ['required', 'regex:/^[a-zA-Z\s]+$/'],
+            'name_ibu' => ['required', 'regex:/^[a-zA-Z\s\.]+$/'],
             'nik_ayah' => ['required', 'numeric', 'digits:16', Rule::unique('orangtua', 'nik_ayah')->ignore($id)],   // Memastikan hanya angka dengan panjang tepat 16
-            'name_ayah' => ['required', 'regex:/^[a-zA-Z\s]+$/'],
+            'name_ayah' => ['required', 'regex:/^[a-zA-Z\s\.]+$/'],
             'telp' => 'required',
             'provinsi' => 'required',
             'kabupaten' => 'required',
