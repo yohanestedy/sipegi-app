@@ -17,7 +17,7 @@
     <nav aria-label="breadcrumb" class="breadcrumb-header">
         <ol class="breadcrumb mb-0">
             <li class="breadcrumb-item">
-                <a href="#">Balita</a>
+                <a href="{{ route('balitalulus.index') }}">Balita Lulus</a>
             </li>
             {{-- <li class="breadcrumb-item active" aria-current="page">
                 Data Pengukuran Balita
