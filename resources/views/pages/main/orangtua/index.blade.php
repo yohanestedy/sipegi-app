@@ -62,8 +62,8 @@
                             <thead>
                                 <tr>
                                     <th style="text-align: center;">Aksi</th>
-                                    <th style="text-align: center;">NIK</th>
-                                    <th style="text-align: center;">Nama</th>
+                                    <th style="text-align: center;">NIK Ibu</th>
+                                    <th style="text-align: center;">Nama Ibu</th>
                                     <th style="text-align: center;">Dusun</th>
                                     <th style="text-align: center;">RT</th>
                                     <th style="text-align: center;">Telp</th>

@@ -21,7 +21,7 @@ class BalitaUkur extends Model
         return $this->belongsTo(BalitaLulus::class);
     }
 
-    protected $appends = ['tgl_ukur_display', 'status_bb_naik'];
+    protected $appends = ['tgl_ukur_display'];
     public function getTglUkurDisplayAttribute()
     {
         return Carbon::parse($this->tgl_ukur)->translatedFormat('d F Y');
@@ -32,30 +32,28 @@ class BalitaUkur extends Model
     {
 
 
-        // Ambil data tepat sebelum tanggal ukur saat ini
-        $previous = self::where('balita_id', $this->balita_id) // Hanya untuk balita yang sama
-            ->where('tgl_ukur', '<', $this->tgl_ukur) // Tanggal sebelum pengukuran saat ini
-            ->orderBy('tgl_ukur', 'desc') // Urutkan dari yang terbaru
-            ->first(); // Ambil data pertama (terdekat sebelum tanggal saat ini)
-
-        $previous_kedua = self::where('balita_id', $this->balita_id) // Hanya untuk balita yang sama
-            ->where('tgl_ukur', '<', $this->tgl_ukur) // Tanggal sebelum pengukuran saat ini
+        // Ambil semua data sebelumnya untuk balita yang sama
+        $allPrevious = self::where('balita_id', $this->balita_id)
+            ->where('tgl_ukur', '<', $this->tgl_ukur)
             ->orderBy('tgl_ukur', 'desc')
-            ->skip(1) // Lewati data pertama
-            ->take(1) // Ambil satu data berikutnya
-            ->first();
+            ->get();
+
+
+        // Ambil data pertama dan kedua dari collection
+        $previous = $allPrevious->first(); // Data pertama
+        $previousKedua = $allPrevious->skip(1)->first(); // Data kedua
 
 
         // return $previous_kedua;
         // Jika tidak ada data sebelumnya
         if (!$previous) {
             return 'L';
-        } else if (!$previous_kedua) {
+        } else if (!$previousKedua) {
             return 'B';
         }
 
         $diffInDays = Carbon::parse($this->tgl_ukur)->diffInDays(Carbon::parse($previous->tgl_ukur));
-        $diffInMonths = Carbon::parse($this->tgl_ukur)->diffInMonths(Carbon::parse($previous->tgl_ukur));
+
 
 
         if ($diffInDays > 35) {

@@ -91,7 +91,7 @@
                                     </tr>
                                     <tr>
                                         <td>Resiko Berat badan lebih</td>
-                                        <td> > 3 SD </td>
+                                        <td> > 1 SD </td>
                                     </tr>
                                 </div>
 

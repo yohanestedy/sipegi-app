@@ -48,10 +48,16 @@ class BalitaUkurController extends Controller
         //     });
         // }
 
+        // Tambahkan status_bb_n ke setiap record BalitaUkur
+        $balitaUkurs->each(function ($balitaUkur) {
+            $balitaUkur->status_bb_n = $this->statusBBNaik($balitaUkur->balita_id, $balitaUkur->tgl_ukur, $balitaUkur->bb);
+        });
 
 
-        return view('pages.main.balita-ukur.index', compact('balitaUkur', 'posyandus'));
+
+        return view('pages.main.balita-ukur.index', compact('balitaUkurs', 'posyandus'));
     }
+
     //
     public function detail($id)
     {
@@ -59,27 +65,33 @@ class BalitaUkurController extends Controller
         $user = auth()->user();
         // Mengecek apakah balita ada atau tidak
         if (Balita::find($id)) {
-            $query = Balita::with(['posyandu', 'balitaUkur' => function ($query) {
-                $query->orderBy('tgl_ukur', 'desc'); // Urutkan balitaUkur berdasarkan tgl_ukur desc
-            }]);
+            $query = Balita::with('posyandu');
+            $balitaUkurs = BalitaUkur::where('balita_id', $id)->orderBy('tgl_ukur', 'desc')->get();
         } else {
-            $query = BalitaLulus::with(['posyandu', 'balitaUkur' => function ($query) {
-                $query->orderBy('tgl_ukur', 'desc'); // Urutkan balitaUkur berdasarkan tgl_ukur desc
-            }]);
+            $query = BalitaLulus::with('posyandu');
+            $balitaUkurs = BalitaUkur::where('balita_lulus_id', $id)->orderBy('tgl_ukur', 'desc')->get();
         }
 
         if ($user->posyandu_id !== null) {
             $query->where('posyandu_id', $user->posyandu_id);
         }
 
+
         $query->where('id', $id);
 
 
         $balita = $query->first();
+
+
+        // $balitaUkurs = BalitaUkur::where('balita_id', $id)->orderBy('tgl_ukur', 'desc')->get();
+        // Tambahkan status_bb_n ke setiap record BalitaUkur
+        $balitaUkurs->each(function ($balitaUkur) {
+            $balitaUkur->status_bb_n = $this->statusBBNaik($balitaUkur->balita_id, $balitaUkur->tgl_ukur, $balitaUkur->bb);
+        });
         // return $balita;
 
 
-        return view('pages.main.balita-ukur.detail', compact('balita'));
+        return view('pages.main.balita-ukur.detail', compact('balita', 'balitaUkurs'));
     }
 
     // HALAMAN INPUT PENGHITUNGAN
@@ -151,7 +163,6 @@ class BalitaUkurController extends Controller
     public function hitung(Request $request, $id = null)
     {
         $validator = Validator::make($request->all(), [
-
             'balita_id' => 'required',
             'tgl_ukur' => [
                 'required',
@@ -171,7 +182,6 @@ class BalitaUkurController extends Controller
             'tb.required' => 'Isi tinggi badan balita',
             'lk.required' => 'Isi lingkar kepala balita',
             'cara_ukur.required' => 'Pilih metode pengukuran balita',
-
         ]);
         if ($validator->fails()) {
             return response()->json([
@@ -221,6 +231,7 @@ class BalitaUkurController extends Controller
                 'errors' => $validator->errors()
             ], 422); // Mengirimkan response error dengan kode status 422
         }
+
 
 
         // Ambil Data Balita
@@ -486,7 +497,7 @@ class BalitaUkurController extends Controller
         return StandarPertumbuhanAnak::where('kategori', $kategori)
             ->where('umur_atau_tinggi', $umurAtautinggi)
             ->where('gender', $gender)
-            ->first(['L', 'M', 'S']);
+            ->first();
     }
 
     // Fungsi untuk mengambil nilai L, M, S dari tabel referensi WHO berdasarkan gender dan umur/tinggi
@@ -496,7 +507,7 @@ class BalitaUkurController extends Controller
         return StandarPertumbuhanAnakExpanded::where('kategori', $kategori)
             ->where('umur_atau_tinggi', $umurAtautinggi)
             ->where('gender', $gender)
-            ->first(['L', 'M', 'S']);
+            ->first(['L', 'M', 'S', 'sd4neg', 'sd4']);
     }
 
     private function hitungUmurBulan($tglLahir, $tglUkur)
@@ -565,28 +576,25 @@ class BalitaUkurController extends Controller
     public function statusBBNaik($balita_id, $tgl_ukur, $bb)
     {
 
-
-        // Ambil data tepat sebelum tanggal ukur saat ini
-        $previous = BalitaUkur::where('balita_id', $balita_id) // Hanya untuk balita yang sama
-            ->where('tgl_ukur', '<', $tgl_ukur) // Tanggal sebelum pengukuran saat ini
-            ->orderBy('tgl_ukur', 'desc') // Urutkan dari yang terbaru
-            ->first(); // Ambil data pertama (terdekat sebelum tanggal saat ini)
-
-        $previous_kedua = BalitaUkur::where('balita_id', $balita_id) // Hanya untuk balita yang sama
-            ->where('tgl_ukur', '<', $tgl_ukur) // Tanggal sebelum pengukuran saat ini
+        // Ambil semua data sebelumnya untuk balita yang sama
+        $allPrevious = BalitaUkur::where('balita_id', $balita_id)
+            ->where('tgl_ukur', '<', $tgl_ukur)
             ->orderBy('tgl_ukur', 'desc')
-            ->skip(1) // Lewati data pertama
-            ->take(1) // Ambil satu data berikutnya
-            ->first();
+            ->get();
+
+
+        // Ambil data pertama dan kedua dari collection
+        $previous = $allPrevious->first(); // Data pertama
+        $previousKedua = $allPrevious->skip(1)->first(); // Data kedua
 
         // Jika tidak ada data sebelumnya
         if (!$previous) {
             return 'L';
-        } else if (!$previous_kedua) {
+        } else if (!$previousKedua) {
             return 'B';
         }
         $diffInDays = Carbon::parse($tgl_ukur)->diffInDays(Carbon::parse($previous->tgl_ukur));
-        $diffInMonths = Carbon::parse($tgl_ukur)->diffInMonths(Carbon::parse($previous->tgl_ukur));
+
 
 
 

@@ -80,7 +80,7 @@
                                 {{-- Form Nama Ibu --}}
                                 <div class="row d-flex">
                                     <div class="mt-3 col-md-4 text-md-end justify-content-end">
-                                        <label for="name_ibu">Nama Ibu</label>
+                                        <label for="name_ibu">Nama Lengkap Ibu</label>
                                     </div>
                                     <div class="col-md-5 form-group mt-2">
                                         <input name="name_ibu" type="text" id="name_ibu"
@@ -114,7 +114,7 @@
                                 {{-- Form Nama Ayah --}}
                                 <div class="row d-flex">
                                     <div class="mt-3 col-md-4 text-md-end justify-content-end">
-                                        <label for="name_ayah">Nama Ayah</label>
+                                        <label for="name_ayah">Nama Lengkap Ayah</label>
                                     </div>
                                     <div class="col-md-5 form-group mt-2">
                                         <input name="name_ayah" type="text" id="name_ayah"

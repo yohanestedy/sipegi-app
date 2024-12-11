@@ -117,18 +117,23 @@ let customized_datatable5 = $("#tableBalitaUkur").DataTable({
 })
 let customized_datatable7 = $("#tableDaftarBalitaDiukur").DataTable({
     responsive: true,
+
+    searching: true,
     pagingType: 'simple',
+    layout: {
+        topStart: 'searchPanes'
+    },
     lengthMenu: [
         [10, 25, 50, -1],
         [10, 25, 50, 'Semua']
     ],
     pageLength: -1,
     order: [
-        [2, 'desc'],  // Kolom Dusun, urut descending
+        [3, 'desc'],  // Kolom Tgl Ukur urut descending
     ],
     columnDefs: [
 
-        { orderable: false, targets: [0,3,4,5,6,7,8,9,10,11,12,13,14,15] } // Nonaktifkan sorting di kolom lainnya
+        { orderable: false, targets: [0,4,5,6,7,8,9,10,11,12,13,14,15] } // Nonaktifkan sorting di kolom lainnya
     ],
 
     dom:
@@ -139,33 +144,22 @@ let customized_datatable7 = $("#tableDaftarBalitaDiukur").DataTable({
         "info": "Hal _PAGE_ dari _PAGES_",
         "lengthMenu": "_MENU_ ",
         "search": "",
-        "searchPlaceholder": "Ketik nama.."
+        "searchPlaceholder": "Cari..."
     }
 })
 $('#filterPosyanduPengukuran').on('change', function () {
     let selectedValue = $(this).val(); // Ambil nilai yang dipilih
-    customized_datatable7.column(21) // Kolom Posyandu (index ke-7)
+    customized_datatable7.column(19) // Kolom Posyandu (index ke-7)
         .search(selectedValue)      // Terapkan filter berdasarkan nilai
         .draw();                    // Refresh tabel
 });
-$('#filterBulanPengukuran').on('change', function () {
-    let selectedValue = $(this).val();
-    let [month, year] = selectedValue.split('.');
-    let formattedDate = `20${year}-${month}`;  // Format tanggal menjadi yyyy-mm
 
-    console.log(formattedDate);  // Debug log untuk memastikan formatnya benar
-
-    // Filter berdasarkan bulan dan tahun, pastikan sesuai dengan format data-order
-    customized_datatable7.column(4)
-        .search(formattedDate)  // Pencocokan berdasarkan yyyy-mm
-        .draw();
-});
 $('#filterBulanPengukuran').on('change', function () {
     let selectedValue = $(this).val();
 
     if (!selectedValue) { // Jika value kosong (reset)
         // Reset pencarian dan tampilkan semua data
-        customized_datatable7.column(4).search('').draw();
+        customized_datatable7.column(3).search('').draw();
         return;
     }
 
@@ -196,9 +190,15 @@ $('#filterBulanPengukuran').on('change', function () {
     console.log(formattedDate); // Debug untuk melihat hasil yang diformat
 
     // Filter berdasarkan bulan yang diformat
-    customized_datatable7.column(4)
+    customized_datatable7.column(3)
         .search(formattedDate)  // Pencocokan berdasarkan nama bulan dan tahun
         .draw();  // Refresh tabel
+});
+// Pencarian real-time berdasarkan input teks
+$('#searchKeyword').on('keyup', function () {
+    let searchValue = $(this).val(); // Ambil nilai input teks
+    customized_datatable7.search(searchValue).draw(); // Terapkan filter global di tabel
+    customized_datatable3.search(searchValue).draw(); // Terapkan filter global di tabel
 });
 
 
