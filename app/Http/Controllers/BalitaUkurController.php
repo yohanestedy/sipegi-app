@@ -173,10 +173,48 @@ class BalitaUkurController extends Controller
             'cara_ukur.required' => 'Pilih metode pengukuran balita',
 
         ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors()
+            ], 422); // Mengirimkan response error dengan kode status 422
+        }
 
-        // if ($validator->fails()) {
-        //     return Redirect::back()->withErrors($validator)->withInput();
-        // }
+        // Validasi tambahan untuk cek tinggi badan tidak boleh lebih kecil dari data sebelumnya
+        $validator->after(function ($validator) use ($request) {
+            $previousMeasurement = BalitaUkur::where('balita_id', $request->balita_id)
+                ->where('tgl_ukur', '<', $request->tgl_ukur)
+                ->orderBy('tgl_ukur', 'desc')
+                ->first();
+
+            $balita = Balita::find($request->balita_id);
+            $umurHari = $this->hitungUmurHari($balita->tgl_lahir, $request->tgl_ukur);
+            $bbUmurLMS = $this->ambilLmsExpanded('BB_U', $umurHari, $balita->gender);
+            $tbUmurLMS = $this->ambilLmsExpanded('TB_U', $umurHari, $balita->gender);
+
+
+            // // VALIDASI SALAH INPUT BERAT BADAN
+            // if ($bbUmurLMS && $request->bb < $bbUmurLMS->sd4neg) {
+            //     $validator->errors()->add('bb', 'BB tidak boleh kurang dari standar bawah(' . round($bbUmurLMS->sd4neg, 2) . ' kg).');
+            // }
+            // if ($bbUmurLMS && $request->bb > $bbUmurLMS->sd4) {
+            //     $validator->errors()->add('bb', 'BB tidak boleh lebih dari standar atas(' . round($bbUmurLMS->sd4, 2) . ' kg).');
+            // }
+            // VALIDASI SALAH INPUT TINGGI BADAN
+            // if ($tbUmurLMS && $request->tb < $tbUmurLMS->sd4neg) {
+            //     $validator->errors()->add('tb', 'TB tidak boleh kurang dari standar bawah(' . round($tbUmurLMS->sd4neg, 2) . ' cm).');
+            // }
+            if ($tbUmurLMS && $request->tb > $tbUmurLMS->sd4) {
+                $validator->errors()->add('tb', 'TB tidak boleh lebih dari standar atas(' . round($tbUmurLMS->sd4, 2) . ' cm).');
+            }
+
+            // VALIDASI TB DAN LK KURANG DARI PENGUKURAN SEBELUMNYA
+            if ($previousMeasurement && $request->tb < $previousMeasurement->tb) {
+                $validator->errors()->add('tb', 'TB tidak boleh kurang dari pengukuran sebelumnya (' . $previousMeasurement->tb . ' cm).');
+            }
+            if ($previousMeasurement && $request->lk < $previousMeasurement->lk) {
+                $validator->errors()->add('lk', 'LK tidak boleh kurang dari pengukuran sebelumnya (' . $previousMeasurement->lk . ' cm).');
+            }
+        });
 
         if ($validator->fails()) {
             return response()->json([
