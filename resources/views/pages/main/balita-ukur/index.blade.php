@@ -296,6 +296,10 @@
                                     <p class="text-start badge bg-light-secondary form-control-static fw-normal"
                                         id="balita_name">
                                     </p><br>
+                                    <label class="medium-text">Jenis Kelamin :</label><br>
+                                    <p class="text-start badge bg-light-secondary form-control-static fw-normal"
+                                        id="gender">
+                                    </p><br>
                                     <label class="medium-text">Tanggal Pengukuran :</label><br>
                                     <p class="badge bg-light-secondary form-control-static fw-normal" id="tgl_ukur1">
                                     </p><br>
@@ -494,6 +498,7 @@
 
                 // Isi modal dengan data dari objek balita dan ukur
                 $('#balita_name').text(ukur.balita.name);
+                $('#gender').text(ukur.balita.gender_display);
                 $('#tgl_ukur1').text(ukur.tgl_ukur_display);
                 $('#umur_ukur').text(ukur.umur_ukur);
                 $('#cara_ukur').text(ukur.cara_ukur);

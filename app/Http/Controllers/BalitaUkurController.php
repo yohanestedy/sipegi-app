@@ -369,6 +369,7 @@ class BalitaUkurController extends Controller
 
             'balita_id' => $balita->id,
             'balita_name' => $balita->name,
+            'gender' => $balita->gender_display,
             'tgl_ukur' => $request->tgl_ukur,
             'tgl_ukur_display' => $tgl_ukur_display,
             'umur_ukur' => $umurUkurDisplay,
