@@ -1,4 +1,4 @@
-@extends('layout.main', ['title' => 'Data Pengukuran Balita'])
+@extends('layout.main', ['title' => 'Riwayat Pengukuran Balita'])
 
 
 @section('cssLibraries')
@@ -13,9 +13,24 @@
             /* Ubah nilai sesuai kebutuhan */
         }
 
-        .bg-light-warning1 {
-            background-color: hsl(33, 100%, 92%) !important;
-            color: #3f1f00 !important;
+        .bg-light-success {
+            background-color: hsl(116, 100%, 84%) !important;
+            color: #0c2d00 !important;
+        }
+
+        .bg-light-warning {
+            background-color: hsl(37, 96%, 79%) !important;
+            color: #311900 !important;
+        }
+
+        .bg-light-danger {
+            background-color: hsl(0, 100%, 79%) !important;
+            color: #350000 !important;
+        }
+
+        .bg-light-danger1 {
+            background-color: hsl(3, 36%, 42%) !important;
+            color: #fff6f6 !important;
         }
     </style>
 @endsection
@@ -24,10 +39,10 @@
     <nav aria-label="breadcrumb" class="breadcrumb-header">
         <ol class="breadcrumb mb-0">
             <li class="breadcrumb-item">
-                <a href="#">Balita</a>
+                <a href="{{ route('balitaukur.index') }}">Pengukuran</a>
             </li>
             <li class="breadcrumb-item active" aria-current="page">
-                Data Pengukuran Balita
+                Riwayat Pengukuran Balita
             </li>
         </ol>
     </nav>
@@ -36,9 +51,11 @@
     <div class="page-heading medium-text">
         <div class="page-title">
             <div class="row">
+
                 <div class="col-12 col-md-6 order-md-1 order-last">
-                    <h3>Data Pengukuran Balita</h3>
-                    <p class="text-subtitle text-muted">Halaman data pengukuran balita.</p>
+
+                    <h3>Riwayat Pengukuran Balita</h3>
+                    <p class="text-subtitle text-muted">Halaman riwayat pengukuran balita.</p>
                 </div>
 
             </div>
@@ -67,7 +84,7 @@
                             <span>:</span>
                         </div>
                         <div class="col-8 col-md-8">
-                            <p class="mb-1">{{ $balita->name }}</p>
+                            <p class="mb-1"><strong>{{ $balita->name }}</strong></p>
                         </div>
 
                     </div>
@@ -83,7 +100,7 @@
                     </div>
                     <div class="row">
                         <div class="pe-0 col-3 col-md-2 d-flex justify-content-between">
-                            <span>P/L</span>
+                            <span>JK</span>
                             <span>:</span>
                         </div>
                         <div class="col-8 col-md-8">
@@ -186,7 +203,7 @@
                             </thead>
                             <tbody>
 
-                                @foreach ($balita->balitaUkur as $balitaUkur)
+                                @foreach ($balitaUkurs as $balitaUkur)
                                     <tr>
 
                                         <td style="text-align: center">
@@ -233,29 +250,29 @@
                                         <td style="text-align: center">{{ $balitaUkur->tb }}</td>
                                         <td style="text-align: center">{{ $balitaUkur->lk ? $balitaUkur->lk : '-' }}</td>
                                         <td style="text-align: center">{{ $balitaUkur->cara_ukur }}</td>
-                                        <td style="text-align: center">{{ $balitaUkur->status_bb_naik }}</td>
+                                        <td style="text-align: center">{{ $balitaUkur->status_bb_n }}</td>
 
                                         <td style="text-align: center">
-                                            <span class="badge {{ getStatusClass($balitaUkur->status_bb_u) }}">
+                                            <span class="badge {{ warnaBadge($balitaUkur->zscore_bb_u) }}">
                                                 {{ $balitaUkur->status_bb_u }}
                                             </span>
                                         </td>
                                         <td style="text-align: center">{{ $balitaUkur->zscore_bb_u }}</td>
 
                                         <td style="text-align: center">
-                                            <span class="badge {{ getStatusClass($balitaUkur->status_tb_u) }}">
+                                            <span class="badge {{ warnaBadge($balitaUkur->zscore_tb_u) }}">
                                                 {{ $balitaUkur->status_tb_u }}
                                             </span>
                                         </td>
                                         <td style="text-align: center">{{ $balitaUkur->zscore_tb_u }}</td>
                                         <td style="text-align: center">
-                                            <span class="badge {{ getStatusClass($balitaUkur->status_bb_tb) }}">
+                                            <span class="badge {{ warnaBadge($balitaUkur->zscore_bb_tb) }}">
                                                 {{ $balitaUkur->status_bb_tb }}
                                             </span>
                                         </td>
                                         <td style="text-align: center">{{ $balitaUkur->zscore_bb_tb }}</td>
                                         <td style="text-align: center">
-                                            <span class="badge {{ getStatusClass($balitaUkur->status_imt_u) }}">
+                                            <span class="badge {{ warnaBadge($balitaUkur->zscore_imt_u) }}">
                                                 {{ $balitaUkur->status_imt_u }}
                                             </span>
                                         </td>
@@ -263,7 +280,7 @@
 
                                         <td style="text-align: center">
                                             @if ($balitaUkur->status_lk_u)
-                                                <span class="badge {{ getStatusClass($balitaUkur->status_lk_u) }}">
+                                                <span class="badge {{ warnaBadge($balitaUkur->zscore_lk_u) }}">
                                                     {{ $balitaUkur->status_lk_u }}
                                                 </span>
                                             @else
@@ -440,36 +457,29 @@
 
     {{-- Fungsi Badge Status Gizi --}}
     @php
-        function getStatusClass($status)
+        function warnaBadge($nilaiZscore)
         {
-            switch ($status) {
-                case 'Berat badan normal':
-                case 'Normal':
-                case 'Gizi baik':
-                    return 'bg-light-success';
-
-                case 'Resiko berat badan lebih':
-                case 'Beresiko gizi lebih':
-                    return 'bg-light-warning';
-
-                case 'Berat badan kurang':
-                case 'Pendek':
-                case 'Gizi kurang':
-                case 'Gizi lebih':
-                    return 'bg-light-warning1';
-
-                case 'Berat badan sangat kurang':
-                case 'Sangat pendek':
-                case 'Tinggi':
-                case 'Gizi buruk':
-                case 'Obesitas':
-                case 'Mikrosefali':
-                case 'Makrosefali':
-                    return 'bg-light-danger';
-                default:
-                    return 'bg-secondary';
+            if ($nilaiZscore >= 3) {
+                return 'bg-light-danger1';
+            } elseif ($nilaiZscore <= -3) {
+                return 'bg-light-danger1';
+            } elseif ($nilaiZscore >= 2) {
+                return 'bg-light-danger';
+            } elseif ($nilaiZscore <= -2) {
+                return 'bg-light-danger';
+            } elseif ($nilaiZscore >= 1) {
+                return 'bg-light-warning';
+            } elseif ($nilaiZscore <= -1) {
+                return 'bg-light-warning';
+            } elseif ($nilaiZscore >= 0) {
+                return 'bg-light-success';
+            } elseif ($nilaiZscore <= 0) {
+                return 'bg-light-success';
+            } else {
+                return 'bg-secondary';
             }
         }
+
     @endphp
 @endsection
 
@@ -543,23 +553,23 @@
                 $('#bb').text(ukur.bb + " kg");
                 $('#tb').text(ukur.tb + " cm");
                 $('#lk').text(ukur.lk ? ukur.lk + " cm" : '-');
-                $('#status_bb_naik').text(ukur.status_bb_naik);
+                $('#status_bb_naik').text(ukur.status_bb_n);
 
                 // Perbaharui status gizi dan z-score
-                $('#status_bb_u').text(ukur.status_bb_u).attr('class', 'badge ' + getStatusClass(ukur
-                    .status_bb_u));
+                $('#status_bb_u').text(ukur.status_bb_u).attr('class', 'badge ' + warnaBadge(ukur
+                    .zscore_bb_u));
                 $('#zscore_bb_u').text(ukur.zscore_bb_u);
-                $('#status_tb_u').text(ukur.status_tb_u).attr('class', 'badge ' + getStatusClass(ukur
-                    .status_tb_u));
+                $('#status_tb_u').text(ukur.status_tb_u).attr('class', 'badge ' + warnaBadge(ukur
+                    .zscore_tb_u));
                 $('#zscore_tb_u').text(ukur.zscore_tb_u);
-                $('#status_bb_tb').text(ukur.status_bb_tb).attr('class', 'badge ' + getStatusClass(ukur
-                    .status_bb_tb));
+                $('#status_bb_tb').text(ukur.status_bb_tb).attr('class', 'badge ' + warnaBadge(ukur
+                    .zscore_bb_tb));
                 $('#zscore_bb_tb').text(ukur.zscore_bb_tb);
-                $('#status_imt_u').text(ukur.status_imt_u).attr('class', 'badge ' + getStatusClass(ukur
-                    .status_imt_u));
+                $('#status_imt_u').text(ukur.status_imt_u).attr('class', 'badge ' + warnaBadge(ukur
+                    .zscore_imt_u));
                 $('#zscore_imt_u').text(ukur.zscore_imt_u);
                 $('#status_lk_u').text(ukur.status_lk_u ? ukur.status_lk_u : '-').attr('class', ukur
-                    .status_lk_u ? 'badge ' + getStatusClass(ukur.status_lk_u) : '');
+                    .status_lk_u ? 'badge ' + warnaBadge(ukur.zscore_lk_u) : '');
                 $('#zscore_lk_u').text(ukur.zscore_lk_u ? ukur.zscore_lk_u : '-');
 
                 // Tampilkan modal
@@ -568,34 +578,26 @@
         });
 
 
-        // Fungsi untuk mengembalikan class badge berdasarkan status
-        function getStatusClass(status) {
-            switch (status) {
-                case 'Berat badan normal':
-                case 'Normal':
-                case 'Gizi baik':
-                    return 'bg-light-success';
-
-                case 'Resiko berat badan lebih':
-                case 'Beresiko gizi lebih':
-                    return 'bg-light-warning';
-
-                case 'Berat badan kurang':
-                case 'Pendek':
-                case 'Gizi kurang':
-                case 'Gizi lebih':
-                    return 'bg-light-warning1';
-
-                case 'Berat badan sangat kurang':
-                case 'Sangat pendek':
-                case 'Tinggi':
-                case 'Gizi buruk':
-                case 'Obesitas':
-                case 'Mikrosefali':
-                case 'Makrosefali':
-                    return 'bg-light-danger';
-                default:
-                    return 'bg-secondary';
+        // Fungsi untuk mengembalikan class badge berdasarkan zscore
+        function warnaBadge(nilaiZscore) {
+            if (nilaiZscore >= 3) {
+                return 'bg-light-danger1';
+            } else if (nilaiZscore <= -3) {
+                return 'bg-light-danger1';
+            } else if (nilaiZscore >= 2) {
+                return 'bg-light-danger';
+            } else if (nilaiZscore <= -2) {
+                return 'bg-light-danger';
+            } else if (nilaiZscore >= 1) {
+                return 'bg-light-warning';
+            } else if (nilaiZscore <= -1) {
+                return 'bg-light-warning';
+            } else if (nilaiZscore >= 0) {
+                return 'bg-light-success';
+            } else if (nilaiZscore <= 0) {
+                return 'bg-light-success';
+            } else {
+                return 'bg-secondary';
             }
         }
     </script>

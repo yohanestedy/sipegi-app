@@ -16,9 +16,24 @@
             /* Ubah nilai sesuai kebutuhan */
         }
 
-        .bg-light-warning1 {
-            background-color: hsl(33, 100%, 92%) !important;
-            color: #3f1f00 !important;
+        .bg-light-success {
+            background-color: hsl(116, 100%, 84%) !important;
+            color: #0c2d00 !important;
+        }
+
+        .bg-light-warning {
+            background-color: hsl(37, 96%, 79%) !important;
+            color: #311900 !important;
+        }
+
+        .bg-light-danger {
+            background-color: hsl(0, 100%, 79%) !important;
+            color: #350000 !important;
+        }
+
+        .bg-light-danger1 {
+            background-color: hsl(3, 36%, 42%) !important;
+            color: #fff6f6 !important;
         }
     </style>
 @endsection
@@ -27,11 +42,11 @@
     <nav aria-label="breadcrumb" class="breadcrumb-header">
         <ol class="breadcrumb mb-0">
             <li class="breadcrumb-item">
-                <a href="#">Balita</a>
+                <a href="{{ route('balitaukur.index') }}">Pengukuran</a>
             </li>
-            <li class="breadcrumb-item active" aria-current="page">
+            {{-- <li class="breadcrumb-item active" aria-current="page">
                 Data Pengukuran Balita
-            </li>
+            </li> --}}
         </ol>
     </nav>
 @endsection
@@ -78,40 +93,37 @@
                         </p>
                     </div>
                     <div class="table-responsive datatable-minimal">
-                        @if (Auth::user()->role == 'super_admin')
-                            <form method="GET" action="{{ route('laporan.export-pengukuranbalita') }}"
-                                class="form form-horizontal">
-                                <div class="row mb-3">
-                                    <div class="col-6 col-md-2">
-                                        <select id="filterPosyanduPengukuran" class="form-select">
-                                            <option value="">Semua Posyandu</option>
-                                            @foreach ($posyandus as $posyandu)
-                                                <option value="{{ $posyandu->name }}">{{ $posyandu->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="col-6 col-md-3 mb-3">
 
-                                        <input id="filterBulanPengukuran" name="periode" type="text"
-                                            class="form-control periode" placeholder="Pilih Bulan dan Tahun" />
-                                    </div>
-                                    {{-- <div class="col-12 col-md-2 mb-3">
-                                        <button type="submit" class="btn btn-success w-100"><i
-                                                class="fa-solid fa-file-excel"></i>
-                                            Export</button>
-                                    </div> --}}
+
+                        {{-- FILTER --}}
+                        <div class="row mb-3">
+                            @if (Auth::user()->role == 'super_admin')
+                                <div class="col-6 col-md-3">
+                                    <select id="filterPosyanduPengukuran" class="form-select">
+                                        <option value="">Semua Posyandu</option>
+                                        @foreach ($posyandus as $posyandu)
+                                            <option value="{{ $posyandu->name }}">{{ $posyandu->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
-                            </form>
-                        @endif
+                            @endif
+                            <div class="col-6 col-md-3 mb-3">
 
+                                <input id="filterBulanPengukuran" name="periode" type="text" class="form-control periode"
+                                    placeholder="--Pilih Bulan dan Tahun--" />
+                            </div>
+                        </div>
+
+                        {{-- TABEL --}}
                         <table class="table table-hover table-bordered medium-text text-center"
                             id="tableDaftarBalitaDiukur">
                             <thead>
                                 <tr>
                                     <th rowspan="2" style="text-align: center;">Tindakan</th>
-                                    <th rowspan="2" style="text-align: center;">No</th>
+
                                     <th rowspan="2" style="text-align: center;">Nama</th>
-                                    <th rowspan="2" style="text-align: center;">NIK</th>
+                                    <th rowspan="2" style="text-align: center;">Jenis Kelamin</th>
+
                                     <th rowspan="2" style="text-align: center;">Tgl Ukur</th>
                                     <th rowspan="2" style="text-align: center;">Umur Ukur</th>
                                     <th rowspan="2" style="text-align: center;">BB (kg)</th>
@@ -158,10 +170,8 @@
 
                             </thead>
                             <tbody>
-                                @php
-                                    $n = 1;
-                                @endphp
-                                @foreach ($balitaUkur as $balitaUkur)
+
+                                @foreach ($balitaUkurs as $balitaUkur)
                                     <tr>
 
 
@@ -173,25 +183,31 @@
                                                 <i class="fa-solid fa-eye"></i>
                                             </a>
 
-                                            <a href="{{ route('balitaukur.edit', ['id' => $balitaUkur->id]) }}"
-                                                class="btn icon btn-success " data-bs-toggle="tooltip"
-                                                data-bs-placement="top" data-bs-original-title="Ubah Pengukuran"
-                                                style="border-radius: 8px; padding: .2rem .4rem;">
-                                                <i class="fa-regular fa-pen-to-square"></i></a>
-
                                             <a href="{{ route('balitaukur.detail', ['id' => $balitaUkur->balita_id]) }}"
                                                 class="btn icon btn-primary " data-bs-toggle="tooltip"
                                                 data-bs-placement="top" data-bs-original-title="Riwayat Pengukuran"
                                                 style="border-radius: 8px; padding: .2rem .4rem;">
                                                 <i class="fa-regular fa-list-check"></i></a>
 
+                                            <a href="{{ route('balitaukur.edit', ['id' => $balitaUkur->id]) }}"
+                                                class="btn icon btn-success " data-bs-toggle="tooltip"
+                                                data-bs-placement="top" data-bs-original-title="Ubah Pengukuran"
+                                                style="border-radius: 8px; padding: .2rem .4rem;">
+                                                <i class="fa-regular fa-pen-to-square"></i></a>
+
+
                                         </td>
-                                        <td>{{ $n++ }}</td>
+
 
                                         {{-- <td style="text-align: center">{{ $balitaUkur->balita->name }}</td> --}}
 
                                         <td style="text-align: center">{{ $balitaUkur->balita->name }}</td>
-                                        <td style="text-align: center">{{ $balitaUkur->balita->nik }}</td>
+                                        <td style="text-align: center">
+                                            <div style="font-weight: 600; {{ $balitaUkur->balita->gender_display == 'Perempuan' ? 'background-color: #fcd8ff; color:#855f82' : 'background-color: #d2eeff; color: #526483' }} "
+                                                class="badge">
+                                                {{ $balitaUkur->balita->gender_display }}</div>
+                                        </td>
+
                                         <td data-order="{{ $balitaUkur->tgl_ukur }}" style="text-align: center">
                                             {{ $balitaUkur->tgl_ukur_display }}</td>
                                         <td style="text-align: center">
@@ -200,30 +216,30 @@
                                         <td style="text-align: center">{{ $balitaUkur->tb }}</td>
                                         <td style="text-align: center">{{ $balitaUkur->lk ? $balitaUkur->lk : '-' }}</td>
                                         <td style="text-align: center">{{ $balitaUkur->cara_ukur }}</td>
-                                        <td style="text-align: center">{{ $balitaUkur->status_bb_naik }}</td>
+                                        <td style="text-align: center">{{ $balitaUkur->status_bb_n }}</td>
 
                                         {{-- ZSCORE SECTION --}}
                                         <td style="text-align: center">
-                                            <span class="badge bg-secondary">
+                                            <span class="badge {{ warnaBadge($balitaUkur->zscore_bb_u) }}">
                                                 {{ $balitaUkur->status_bb_u }}
                                             </span>
                                         </td>
                                         <td style="text-align: center">{{ $balitaUkur->zscore_bb_u }}</td>
 
                                         <td style="text-align: center">
-                                            <span class="badge bg-secondary">
+                                            <span class="badge {{ warnaBadge($balitaUkur->zscore_tb_u) }}">
                                                 {{ $balitaUkur->status_tb_u }}
                                             </span>
                                         </td>
                                         <td style="text-align: center">{{ $balitaUkur->zscore_tb_u }}</td>
                                         <td style="text-align: center">
-                                            <span class="badge bg-secondary">
+                                            <span class="badge {{ warnaBadge($balitaUkur->zscore_bb_tb) }}">
                                                 {{ $balitaUkur->status_bb_tb }}
                                             </span>
                                         </td>
                                         <td style="text-align: center">{{ $balitaUkur->zscore_bb_tb }}</td>
                                         <td style="text-align: center">
-                                            <span class="badge bg-secondary">
+                                            <span class="badge {{ warnaBadge($balitaUkur->zscore_imt_u) }}">
                                                 {{ $balitaUkur->status_imt_u }}
                                             </span>
                                         </td>
@@ -231,7 +247,8 @@
 
                                         {{-- LINGKAR KEPALA --}}
                                         <td style="text-align: center">
-                                            <span class="{{ $balitaUkur->status_lk_u ? 'badge bg-secondary' : '' }}">
+                                            <span
+                                                class="{{ $balitaUkur->status_lk_u ? 'badge ' . warnaBadge($balitaUkur->zscore_lk_u) : '' }}">
                                                 {{ $balitaUkur->status_lk_u ? $balitaUkur->status_lk_u : '-' }}
                                             </span>
                                         </td>
@@ -267,6 +284,32 @@
 
 
 
+        {{-- Fungsi Badge Status Gizi --}}
+        @php
+            function warnaBadge($nilaiZscore)
+            {
+                if ($nilaiZscore >= 3) {
+                    return 'bg-light-danger1';
+                } elseif ($nilaiZscore <= -3) {
+                    return 'bg-light-danger1';
+                } elseif ($nilaiZscore >= 2) {
+                    return 'bg-light-danger';
+                } elseif ($nilaiZscore <= -2) {
+                    return 'bg-light-danger';
+                } elseif ($nilaiZscore >= 1) {
+                    return 'bg-light-warning';
+                } elseif ($nilaiZscore <= -1) {
+                    return 'bg-light-warning';
+                } elseif ($nilaiZscore >= 0) {
+                    return 'bg-light-success';
+                } elseif ($nilaiZscore <= 0) {
+                    return 'bg-light-success';
+                } else {
+                    return 'bg-secondary';
+                }
+            }
+
+        @endphp
 
     </div>
     {{-- MODAL HASIL PENGUKURAN --}}
@@ -505,23 +548,23 @@
                 $('#bb').text(ukur.bb + " kg");
                 $('#tb').text(ukur.tb + " cm");
                 $('#lk').text(ukur.lk ? ukur.lk + " cm" : '-');
-                $('#status_bb_naik').text(ukur.status_bb_naik);
+                $('#status_bb_naik').text(ukur.status_bb_n);
 
                 // Perbaharui status gizi dan z-score
-                $('#status_bb_u').text(ukur.status_bb_u).attr('class', 'badge ' + getStatusClass(ukur
-                    .status_bb_u));
+                $('#status_bb_u').text(ukur.status_bb_u).attr('class', 'badge ' + warnaBadge(ukur
+                    .zscore_bb_u));
                 $('#zscore_bb_u').text(ukur.zscore_bb_u);
-                $('#status_tb_u').text(ukur.status_tb_u).attr('class', 'badge ' + getStatusClass(ukur
-                    .status_tb_u));
+                $('#status_tb_u').text(ukur.status_tb_u).attr('class', 'badge ' + warnaBadge(ukur
+                    .zscore_tb_u));
                 $('#zscore_tb_u').text(ukur.zscore_tb_u);
-                $('#status_bb_tb').text(ukur.status_bb_tb).attr('class', 'badge ' + getStatusClass(ukur
-                    .status_bb_tb));
+                $('#status_bb_tb').text(ukur.status_bb_tb).attr('class', 'badge ' + warnaBadge(ukur
+                    .zscore_bb_tb));
                 $('#zscore_bb_tb').text(ukur.zscore_bb_tb);
-                $('#status_imt_u').text(ukur.status_imt_u).attr('class', 'badge ' + getStatusClass(ukur
-                    .status_imt_u));
+                $('#status_imt_u').text(ukur.status_imt_u).attr('class', 'badge ' + warnaBadge(ukur
+                    .zscore_imt_u));
                 $('#zscore_imt_u').text(ukur.zscore_imt_u);
                 $('#status_lk_u').text(ukur.status_lk_u ? ukur.status_lk_u : '-').attr('class', ukur
-                    .status_lk_u ? 'badge ' + getStatusClass(ukur.status_lk_u) : '');
+                    .status_lk_u ? 'badge ' + warnaBadge(ukur.zscore_lk_u) : '');
                 $('#zscore_lk_u').text(ukur.zscore_lk_u ? ukur.zscore_lk_u : '-');
 
                 // Tampilkan modal
@@ -531,34 +574,26 @@
 
 
 
-        // Fungsi untuk mengembalikan class badge berdasarkan status
-        function getStatusClass(status) {
-            switch (status) {
-                case 'Berat badan normal':
-                case 'Normal':
-                case 'Gizi baik':
-                    return 'bg-light-success';
-
-                case 'Resiko berat badan lebih':
-                case 'Beresiko gizi lebih':
-                    return 'bg-light-warning';
-
-                case 'Berat badan kurang':
-                case 'Pendek':
-                case 'Gizi kurang':
-                case 'Gizi lebih':
-                    return 'bg-light-warning1';
-
-                case 'Berat badan sangat kurang':
-                case 'Sangat pendek':
-                case 'Tinggi':
-                case 'Gizi buruk':
-                case 'Obesitas':
-                case 'Mikrosefali':
-                case 'Makrosefali':
-                    return 'bg-light-danger';
-                default:
-                    return 'bg-secondary';
+        // Fungsi untuk mengembalikan class badge berdasarkan zscore
+        function warnaBadge(nilaiZscore) {
+            if (nilaiZscore >= 3) {
+                return 'bg-light-danger1';
+            } else if (nilaiZscore <= -3) {
+                return 'bg-light-danger1';
+            } else if (nilaiZscore >= 2) {
+                return 'bg-light-danger';
+            } else if (nilaiZscore <= -2) {
+                return 'bg-light-danger';
+            } else if (nilaiZscore >= 1) {
+                return 'bg-light-warning';
+            } else if (nilaiZscore <= -1) {
+                return 'bg-light-warning';
+            } else if (nilaiZscore >= 0) {
+                return 'bg-light-success';
+            } else if (nilaiZscore <= 0) {
+                return 'bg-light-success';
+            } else {
+                return 'bg-secondary';
             }
         }
     </script>

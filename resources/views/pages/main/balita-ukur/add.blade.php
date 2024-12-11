@@ -15,9 +15,24 @@
             /* Ukuran medium */
         }
 
-        .bg-light-warning1 {
-            background-color: hsl(33, 100%, 92%) !important;
-            color: #3f1f00 !important;
+        .bg-light-success {
+            background-color: hsl(116, 100%, 84%) !important;
+            color: #0c2d00 !important;
+        }
+
+        .bg-light-warning {
+            background-color: hsl(37, 96%, 79%) !important;
+            color: #311900 !important;
+        }
+
+        .bg-light-danger {
+            background-color: hsl(0, 100%, 79%) !important;
+            color: #350000 !important;
+        }
+
+        .bg-light-danger1 {
+            background-color: hsl(3, 36%, 42%) !important;
+            color: #fff6f6 !important;
         }
     </style>
 @endsection
@@ -25,7 +40,7 @@
     <nav aria-label="breadcrumb" class="breadcrumb-header">
         <ol class="breadcrumb mb-0">
             <li class="breadcrumb-item">
-                <a href="#">Balita</a>
+                <a href="{{ route('balitaukur.index') }}">Pengukuran</a>
             </li>
             <li class="breadcrumb-item active" aria-current="page">
                 Tambah Pengukuran Balita
@@ -304,6 +319,9 @@
                                             <label class="medium-text">Nama Balita :</label><br>
                                             <p class="text-start badge bg-light-secondary form-control-static fw-normal"
                                                 id="balita_name"></p><br>
+                                            {{-- <label class="medium-text">Jenis Kelamin :</label><br>
+                                            <p class="text-start badge bg-light-secondary form-control-static fw-normal"
+                                                id="gender"></p><br> --}}
                                             <label class="medium-text">Tanggal Pengukuran :</label><br>
                                             <p class="badge bg-light-secondary form-control-static fw-normal"
                                                 id="tgl_ukur1"></p><br>
@@ -325,7 +343,7 @@
                                             <label class="medium-text">Lingkar Kepala :</label><br>
                                             <p class="badge bg-light-secondary form-control-static fw-normal"
                                                 id="lk"></p><br>
-                                            <label class="medium-text">Status BB :</label><br>
+                                            <label class="medium-text">Status BB Naik:</label><br>
                                             <p class="badge bg-light-secondary form-control-static fw-normal"
                                                 id="status_bb_naik">
                                             </p><br>
@@ -585,6 +603,7 @@
 
                         // Tampilkan data di modal
                         document.getElementById('balita_name').innerText = data.balita_name;
+                        // document.getElementById('gender').innerText = data.gender;
                         document.getElementById('tgl_ukur1').innerText = data.tgl_ukur_display;
                         document.getElementById('umur_ukur').innerText = data.umur_ukur;
                         document.getElementById('bb').innerText = data.bb + " kg";
@@ -594,24 +613,24 @@
                         document.getElementById('cara_ukur').innerText = data.cara_ukur;
                         document.getElementById('zscore_bb_u').innerText = data.zscore_bb_u;
                         document.getElementById('status_bb_u').innerText = data.status_bb_u;
-                        document.getElementById('status_bb_u').className = 'badge ' + getStatusClass(data
-                            .status_bb_u);
+                        document.getElementById('status_bb_u').className = 'badge ' + warnaBadge(data
+                            .zscore_bb_u);
                         document.getElementById('zscore_tb_u').innerText = data.zscore_tb_u;
                         document.getElementById('status_tb_u').innerText = data.status_tb_u;
-                        document.getElementById('status_tb_u').className = 'badge ' + getStatusClass(data
-                            .status_tb_u);
+                        document.getElementById('status_tb_u').className = 'badge ' + warnaBadge(data
+                            .zscore_tb_u);
                         document.getElementById('zscore_bb_tb').innerText = data.zscore_bb_tb;
                         document.getElementById('status_bb_tb').innerText = data.status_bb_tb;
-                        document.getElementById('status_bb_tb').className = 'badge ' + getStatusClass(data
-                            .status_bb_tb);
+                        document.getElementById('status_bb_tb').className = 'badge ' + warnaBadge(data
+                            .zscore_bb_tb);
                         document.getElementById('zscore_imt_u').innerText = data.zscore_imt_u;
                         document.getElementById('status_imt_u').innerText = data.status_imt_u;
-                        document.getElementById('status_imt_u').className = 'badge ' + getStatusClass(data
-                            .status_imt_u);
+                        document.getElementById('status_imt_u').className = 'badge ' + warnaBadge(data
+                            .zscore_imt_u);
                         document.getElementById('zscore_lk_u').innerText = data.zscore_lk_u;
                         document.getElementById('status_lk_u').innerText = data.status_lk_u;
-                        document.getElementById('status_lk_u').className = 'badge ' + getStatusClass(data
-                            .status_lk_u);
+                        document.getElementById('status_lk_u').className = 'badge ' + warnaBadge(data
+                            .zscore_lk_u);
 
                         // Tampilkan modal
                         var myModal = new bootstrap.Modal(document.getElementById('zscoreModal'));
@@ -664,34 +683,26 @@
                 });
         });
 
-        // Fungsi untuk mengembalikan class badge berdasarkan status
-        function getStatusClass(status) {
-            switch (status) {
-                case 'Berat badan normal':
-                case 'Normal':
-                case 'Gizi baik':
-                    return 'bg-light-success';
-
-                case 'Resiko berat badan lebih':
-                case 'Beresiko gizi lebih':
-                    return 'bg-light-warning';
-
-                case 'Berat badan kurang':
-                case 'Pendek':
-                case 'Gizi kurang':
-                case 'Gizi lebih':
-                    return 'bg-light-warning1';
-
-                case 'Berat badan sangat kurang':
-                case 'Sangat pendek':
-                case 'Tinggi':
-                case 'Gizi buruk':
-                case 'Obesitas':
-                case 'Mikrosefali':
-                case 'Makrosefali':
-                    return 'bg-light-danger';
-                default:
-                    return 'bg-secondary';
+        // Fungsi untuk mengembalikan class badge berdasarkan zscore
+        function warnaBadge(nilaiZscore) {
+            if (nilaiZscore >= 3) {
+                return 'bg-light-danger1';
+            } else if (nilaiZscore <= -3) {
+                return 'bg-light-danger1';
+            } else if (nilaiZscore >= 2) {
+                return 'bg-light-danger';
+            } else if (nilaiZscore <= -2) {
+                return 'bg-light-danger';
+            } else if (nilaiZscore >= 1) {
+                return 'bg-light-warning';
+            } else if (nilaiZscore <= -1) {
+                return 'bg-light-warning';
+            } else if (nilaiZscore >= 0) {
+                return 'bg-light-success';
+            } else if (nilaiZscore <= 0) {
+                return 'bg-light-success';
+            } else {
+                return 'bg-secondary';
             }
         }
 
@@ -772,8 +783,9 @@
                         // Setelah efek toast, lanjutkan dengan redirect
                         setTimeout(() => {
                             const balitaId = hasilPengukuran.balita_id;
-                            window.location.href = `{{ route('balitaukur.detail', ':id') }}`.replace(
-                                ':id', balitaId);
+                            // window.location.href = `{{ route('balitaukur.detail', ':id') }}`.replace(
+                            //     ':id', balitaId);
+                            window.location.href = `{{ route('balitaukur.index') }}`;
                         }, 2300);
 
                     } else {

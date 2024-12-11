@@ -12,6 +12,26 @@
 
             /* Ubah nilai sesuai kebutuhan */
         }
+
+        .bg-light-success {
+            background-color: hsl(116, 100%, 84%) !important;
+            color: #0c2d00 !important;
+        }
+
+        .bg-light-warning {
+            background-color: hsl(37, 96%, 79%) !important;
+            color: #311900 !important;
+        }
+
+        .bg-light-danger {
+            background-color: hsl(0, 100%, 79%) !important;
+            color: #350000 !important;
+        }
+
+        .bg-light-danger1 {
+            background-color: hsl(3, 36%, 42%) !important;
+            color: #fff6f6 !important;
+        }
     </style>
 @endsection
 @section('breadcrumb')
@@ -131,26 +151,19 @@
                                                                 <td style="color:rgb(61, 61, 61);">
                                                                     {{ (int) $item->umur_atau_tinggi }}</td>
 
-                                                                <td
-                                                                    style=" background-color: rgba(255, 0, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger1">
                                                                     {{ $item->sd3neg }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 128, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger">
                                                                     {{ $item->sd2neg }}</td>
-                                                                <td
-                                                                    style="background-color: rgba(255, 255, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-warning">
                                                                     {{ $item->sd1neg }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(117, 255, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-success">
                                                                     {{ $item->median }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 255, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-warning">
                                                                     {{ $item->sd1 }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 128, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger">
                                                                     {{ $item->sd2 }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 0, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger1">
                                                                     {{ $item->sd3 }}</td>
 
                                                             </tr>
@@ -200,26 +213,19 @@
                                                                 <td style="color:rgb(61, 61, 61);">
                                                                     {{ (int) $item->umur_atau_tinggi }}</td>
 
-                                                                <td
-                                                                    style=" background-color: rgba(255, 0, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger1">
                                                                     {{ $item->sd3neg }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 128, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger">
                                                                     {{ $item->sd2neg }}</td>
-                                                                <td
-                                                                    style="background-color: rgba(255, 255, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-warning">
                                                                     {{ $item->sd1neg }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(117, 255, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-success">
                                                                     {{ $item->median }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 255, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-warning">
                                                                     {{ $item->sd1 }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 128, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger">
                                                                     {{ $item->sd2 }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 0, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger1">
                                                                     {{ $item->sd3 }}</td>
 
                                                             </tr>
@@ -303,26 +309,19 @@
                                                                 <td style="color:rgb(61, 61, 61);">
                                                                     {{ (int) $item->umur_atau_tinggi }}</td>
 
-                                                                <td
-                                                                    style=" background-color: rgba(255, 0, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger1">
                                                                     {{ $item->sd3neg }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 128, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger">
                                                                     {{ $item->sd2neg }}</td>
-                                                                <td
-                                                                    style="background-color: rgba(255, 255, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-warning">
                                                                     {{ $item->sd1neg }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(117, 255, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-success">
                                                                     {{ $item->median }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 255, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-warning">
                                                                     {{ $item->sd1 }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 128, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger">
                                                                     {{ $item->sd2 }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 0, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger1">
                                                                     {{ $item->sd3 }}</td>
 
                                                             </tr>
@@ -372,26 +371,19 @@
                                                                 <td style="color:rgb(61, 61, 61);">
                                                                     {{ (int) $item->umur_atau_tinggi }}</td>
 
-                                                                <td
-                                                                    style=" background-color: rgba(255, 0, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger1">
                                                                     {{ $item->sd3neg }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 128, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger">
                                                                     {{ $item->sd2neg }}</td>
-                                                                <td
-                                                                    style="background-color: rgba(255, 255, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-warning">
                                                                     {{ $item->sd1neg }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(117, 255, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-success">
                                                                     {{ $item->median }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 255, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-warning">
                                                                     {{ $item->sd1 }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 128, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger">
                                                                     {{ $item->sd2 }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 0, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger1">
                                                                     {{ $item->sd3 }}</td>
 
                                                             </tr>
@@ -441,26 +433,19 @@
                                                                 <td style="color:rgb(61, 61, 61);">
                                                                     {{ (int) $item->umur_atau_tinggi }}</td>
 
-                                                                <td
-                                                                    style=" background-color: rgba(255, 0, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger1">
                                                                     {{ $item->sd3neg }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 128, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger">
                                                                     {{ $item->sd2neg }}</td>
-                                                                <td
-                                                                    style="background-color: rgba(255, 255, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-warning">
                                                                     {{ $item->sd1neg }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(117, 255, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-success">
                                                                     {{ $item->median }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 255, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-warning">
                                                                     {{ $item->sd1 }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 128, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger">
                                                                     {{ $item->sd2 }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 0, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger1">
                                                                     {{ $item->sd3 }}</td>
 
                                                             </tr>
@@ -510,26 +495,19 @@
                                                                 <td style="color:rgb(61, 61, 61);">
                                                                     {{ (int) $item->umur_atau_tinggi }}</td>
 
-                                                                <td
-                                                                    style=" background-color: rgba(255, 0, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger1">
                                                                     {{ $item->sd3neg }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 128, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger">
                                                                     {{ $item->sd2neg }}</td>
-                                                                <td
-                                                                    style="background-color: rgba(255, 255, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-warning">
                                                                     {{ $item->sd1neg }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(117, 255, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-success">
                                                                     {{ $item->median }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 255, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-warning">
                                                                     {{ $item->sd1 }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 128, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger">
                                                                     {{ $item->sd2 }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 0, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger1">
                                                                     {{ $item->sd3 }}</td>
 
                                                             </tr>
@@ -612,26 +590,19 @@
                                                                 <td style="color:rgb(61, 61, 61);">
                                                                     {{ rtrim($item->umur_atau_tinggi, '.0') }}</td>
 
-                                                                <td
-                                                                    style=" background-color: rgba(255, 0, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger1">
                                                                     {{ $item->sd3neg }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 128, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger">
                                                                     {{ $item->sd2neg }}</td>
-                                                                <td
-                                                                    style="background-color: rgba(255, 255, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-warning">
                                                                     {{ $item->sd1neg }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(117, 255, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-success">
                                                                     {{ $item->median }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 255, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-warning">
                                                                     {{ $item->sd1 }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 128, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger">
                                                                     {{ $item->sd2 }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 0, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger1">
                                                                     {{ $item->sd3 }}</td>
 
                                                             </tr>
@@ -680,26 +651,19 @@
                                                                 <td style="color:rgb(61, 61, 61);">
                                                                     {{ rtrim($item->umur_atau_tinggi, '.0') }}</td>
 
-                                                                <td
-                                                                    style=" background-color: rgba(255, 0, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger1">
                                                                     {{ $item->sd3neg }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 128, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger">
                                                                     {{ $item->sd2neg }}</td>
-                                                                <td
-                                                                    style="background-color: rgba(255, 255, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-warning">
                                                                     {{ $item->sd1neg }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(117, 255, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-success">
                                                                     {{ $item->median }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 255, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-warning">
                                                                     {{ $item->sd1 }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 128, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger">
                                                                     {{ $item->sd2 }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 0, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger1">
                                                                     {{ $item->sd3 }}</td>
 
                                                             </tr>
@@ -748,26 +712,19 @@
                                                                 <td style="color:rgb(61, 61, 61);">
                                                                     {{ rtrim($item->umur_atau_tinggi, '.0') }}</td>
 
-                                                                <td
-                                                                    style=" background-color: rgba(255, 0, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger1">
                                                                     {{ $item->sd3neg }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 128, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger">
                                                                     {{ $item->sd2neg }}</td>
-                                                                <td
-                                                                    style="background-color: rgba(255, 255, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-warning">
                                                                     {{ $item->sd1neg }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(117, 255, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-success">
                                                                     {{ $item->median }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 255, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-warning">
                                                                     {{ $item->sd1 }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 128, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger">
                                                                     {{ $item->sd2 }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 0, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger1">
                                                                     {{ $item->sd3 }}</td>
 
                                                             </tr>
@@ -816,26 +773,19 @@
                                                                 <td style="color:rgb(61, 61, 61);">
                                                                     {{ rtrim($item->umur_atau_tinggi, '.0') }}</td>
 
-                                                                <td
-                                                                    style=" background-color: rgba(255, 0, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger1">
                                                                     {{ $item->sd3neg }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 128, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger">
                                                                     {{ $item->sd2neg }}</td>
-                                                                <td
-                                                                    style="background-color: rgba(255, 255, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-warning">
                                                                     {{ $item->sd1neg }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(117, 255, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-success">
                                                                     {{ $item->median }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 255, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-warning">
                                                                     {{ $item->sd1 }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 128, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger">
                                                                     {{ $item->sd2 }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 0, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger1">
                                                                     {{ $item->sd3 }}</td>
 
                                                             </tr>
@@ -919,26 +869,19 @@
                                                                 <td style="color:rgb(61, 61, 61);">
                                                                     {{ (int) $item->umur_atau_tinggi }}</td>
 
-                                                                <td
-                                                                    style=" background-color: rgba(255, 0, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger1">
                                                                     {{ $item->sd3neg }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 128, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger">
                                                                     {{ $item->sd2neg }}</td>
-                                                                <td
-                                                                    style="background-color: rgba(255, 255, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-warning">
                                                                     {{ $item->sd1neg }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(117, 255, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-success">
                                                                     {{ $item->median }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 255, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-warning">
                                                                     {{ $item->sd1 }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 128, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger">
                                                                     {{ $item->sd2 }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 0, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger1">
                                                                     {{ $item->sd3 }}</td>
 
                                                             </tr>
@@ -987,26 +930,19 @@
                                                                 <td style="color:rgb(61, 61, 61);">
                                                                     {{ (int) $item->umur_atau_tinggi }}</td>
 
-                                                                <td
-                                                                    style=" background-color: rgba(255, 0, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger1">
                                                                     {{ $item->sd3neg }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 128, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger">
                                                                     {{ $item->sd2neg }}</td>
-                                                                <td
-                                                                    style="background-color: rgba(255, 255, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-warning">
                                                                     {{ $item->sd1neg }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(117, 255, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-success">
                                                                     {{ $item->median }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 255, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-warning">
                                                                     {{ $item->sd1 }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 128, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger">
                                                                     {{ $item->sd2 }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 0, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger1">
                                                                     {{ $item->sd3 }}</td>
 
                                                             </tr>
@@ -1055,26 +991,19 @@
                                                                 <td style="color:rgb(61, 61, 61);">
                                                                     {{ (int) $item->umur_atau_tinggi }}</td>
 
-                                                                <td
-                                                                    style=" background-color: rgba(255, 0, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger1">
                                                                     {{ $item->sd3neg }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 128, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger">
                                                                     {{ $item->sd2neg }}</td>
-                                                                <td
-                                                                    style="background-color: rgba(255, 255, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-warning">
                                                                     {{ $item->sd1neg }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(117, 255, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-success">
                                                                     {{ $item->median }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 255, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-warning">
                                                                     {{ $item->sd1 }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 128, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger">
                                                                     {{ $item->sd2 }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 0, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger1">
                                                                     {{ $item->sd3 }}</td>
 
                                                             </tr>
@@ -1123,26 +1052,19 @@
                                                                 <td style="color:rgb(61, 61, 61);">
                                                                     {{ (int) $item->umur_atau_tinggi }}</td>
 
-                                                                <td
-                                                                    style=" background-color: rgba(255, 0, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger1">
                                                                     {{ $item->sd3neg }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 128, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger">
                                                                     {{ $item->sd2neg }}</td>
-                                                                <td
-                                                                    style="background-color: rgba(255, 255, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-warning">
                                                                     {{ $item->sd1neg }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(117, 255, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-success">
                                                                     {{ $item->median }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 255, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-warning">
                                                                     {{ $item->sd1 }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 128, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger">
                                                                     {{ $item->sd2 }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 0, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger1">
                                                                     {{ $item->sd3 }}</td>
 
                                                             </tr>
@@ -1214,26 +1136,19 @@
                                                                 <td style="color:rgb(61, 61, 61);">
                                                                     {{ (int) $item->umur_atau_tinggi }}</td>
 
-                                                                <td
-                                                                    style=" background-color: rgba(255, 0, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger1">
                                                                     {{ $item->sd3neg }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 128, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger">
                                                                     {{ $item->sd2neg }}</td>
-                                                                <td
-                                                                    style="background-color: rgba(255, 255, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-warning">
                                                                     {{ $item->sd1neg }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(117, 255, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-success">
                                                                     {{ $item->median }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 255, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-warning">
                                                                     {{ $item->sd1 }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 128, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger">
                                                                     {{ $item->sd2 }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 0, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger1">
                                                                     {{ $item->sd3 }}</td>
 
                                                             </tr>
@@ -1282,26 +1197,19 @@
                                                                 <td style="color:rgb(61, 61, 61);">
                                                                     {{ (int) $item->umur_atau_tinggi }}</td>
 
-                                                                <td
-                                                                    style=" background-color: rgba(255, 0, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger1">
                                                                     {{ $item->sd3neg }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 128, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger">
                                                                     {{ $item->sd2neg }}</td>
-                                                                <td
-                                                                    style="background-color: rgba(255, 255, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-warning">
                                                                     {{ $item->sd1neg }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(117, 255, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-success">
                                                                     {{ $item->median }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 255, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-warning">
                                                                     {{ $item->sd1 }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 128, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger">
                                                                     {{ $item->sd2 }}</td>
-                                                                <td
-                                                                    style=" background-color: rgba(255, 0, 0, 0.3); color:rgb(61, 61, 61);">
+                                                                <td class="bg-light-danger1">
                                                                     {{ $item->sd3 }}</td>
 
                                                             </tr>
