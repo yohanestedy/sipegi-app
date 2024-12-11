@@ -33,7 +33,7 @@ class BalitaUkurController extends Controller
         }
         $posyandus = Posyandu::all();
 
-        $balitaUkur = $query->with('balita.posyandu')->orderBy('created_at', 'desc')->get();
+        $balitaUkurs = $query->with('balita.posyandu')->whereNot('umur_ukur', '0 Bulan')->orderBy('tgl_ukur', 'desc')->get();
 
 
         // $balitaUkur = $mentah->filter(function ($item) {
