@@ -7,7 +7,8 @@ use App\Models\Balita;
 use App\Models\Orangtua;
 use App\Models\Posyandu;
 use App\Models\BalitaUkur;
-use App\Models\BalitaLulus;
+use App\Models\BalitaNonaktif;
+use App\Models\BalitaUkurNonaktif;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
@@ -16,8 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use App\Models\StandarPertumbuhanAnakExpanded;
-
-
+use Carbon\Carbon;
 
 class BalitaController extends Controller
 {
@@ -88,6 +88,7 @@ class BalitaController extends Controller
             'family_order' => 'required',
             'bb_lahir' => 'required',
             'tb_lahir' => 'required',
+            'status' => 'required',
         ], [
             'name.required' => 'Isi Nama balita',
             'name.regex' => 'Nama tidak boleh mengandung angka atau karakter khusus',
@@ -102,6 +103,7 @@ class BalitaController extends Controller
             'family_order.required' => 'Isi kolom anak ke berapa',
             'bb_lahir.required' => 'Isi berat badan saat lahir',
             'tb_lahir.required' => 'Isi panjang badan saat Lahir',
+            'status.required' => 'Pilih Jenis Pendaftaran',
         ]);
 
         if ($validator->fails()) {
@@ -126,7 +128,12 @@ class BalitaController extends Controller
                 "family_order" => $request->family_order,
                 "bb_lahir" => $request->bb_lahir,
                 "tb_lahir" => $request->tb_lahir,
+                "status" => $request->status,
+                "tgl_aktif" => Carbon::now()->format('Y-m-d'),
                 "created_by" => Auth::id(),
+                "created_at" => Carbon::now(),
+                "updated_at" => null,
+
 
             ]);
 
@@ -298,6 +305,7 @@ class BalitaController extends Controller
             'family_order' => 'required',
             'bb_lahir' => 'required',
             'tb_lahir' => 'required',
+            'status' => 'required',
         ], [
             'name.required' => 'Nama balita harus di isi',
             'name.regex' => 'Nama tidak boleh mengandung angka atau karakter khusus',
@@ -312,6 +320,7 @@ class BalitaController extends Controller
             'family_order.required' => 'Kolom anak ke berapa harus di isi',
             'bb_lahir.required' => 'Berat Badan saat lahir harus di isi',
             'tb_lahir.required' => 'Panjang Badan saat Lahir harus di isi',
+            'status.required' => 'Pilih Jenis Pendaftaran',
         ]);
 
         if ($validator->fails()) {
@@ -334,7 +343,9 @@ class BalitaController extends Controller
                 "family_order" => $request->family_order,
                 "bb_lahir" => $request->bb_lahir,
                 "tb_lahir" => $request->tb_lahir,
+                "status" => $request->status,
                 "updated_by" => Auth::id(),
+                "updated_at" => Carbon::now(),
 
             ]);
 
@@ -458,7 +469,7 @@ class BalitaController extends Controller
 
         foreach ($balitas as $balita) {
             // Pindahkan data ke tabel balita_lulus
-            BalitaLulus::create([
+            BalitaNonaktif::create([
                 'id' => $balita->id,
                 'name' => $balita->name,
                 'nik' => $balita->nik,
@@ -469,15 +480,43 @@ class BalitaController extends Controller
                 'family_order' => $balita->family_order,
                 'bb_lahir' => $balita->bb_lahir,
                 'tb_lahir' => $balita->tb_lahir,
+                'status' => "Lulus",
+                'tgl_nonaktif' => Carbon::now()->format('Y-m-d'),
                 'created_by' => $balita->created_by,
             ]);
 
             // Ambil semua relasi balitaUkur yang terkait dengan balita ini
-            $balitaUkurRecords = $balita->balitaUkur;
+            // $balitaUkurRecords = $balita->balitaUkur;
+            $balitaUkurRecords = BalitaUkur::where('balita_id', $balita->id)->get();
+
 
             // Update setiap data balita_ukur yang terkait
             foreach ($balitaUkurRecords as $balitaUkur) {
-                $balitaUkur->update(["balita_id" => null, "balita_lulus_id" => $balita->id]);
+
+
+                // $balitaUkur->update(["balita_id" => null, "balita_lulus_id" => $balita->id]);
+                BalitaUkurNonaktif::create([
+                    "id" => $balitaUkur->id,
+                    "balita_nonaktif_id" => $balitaUkur->balita_id,
+                    "tgl_ukur" => $balitaUkur->tgl_ukur,
+                    "umur_ukur" => $balitaUkur->umur_ukur,
+                    "bb" => $balitaUkur->bb,
+                    "tb" => $balitaUkur->tb,
+                    "cara_ukur" => $balitaUkur->cara_ukur,
+                    "status_bb_u" => $balitaUkur->status_bb_u,
+                    "zscore_bb_u" => $balitaUkur->zscore_bb_u,
+                    "status_tb_u" => $balitaUkur->status_tb_u,
+                    "zscore_tb_u" => $balitaUkur->zscore_tb_u,
+                    "status_bb_tb" => $balitaUkur->status_bb_tb,
+                    "zscore_bb_tb" => $balitaUkur->zscore_bb_tb,
+                    "status_imt_u" => $balitaUkur->status_imt_u,
+                    "zscore_imt_u" => $balitaUkur->zscore_imt_u,
+                    "created_by" => $balitaUkur->created_by,
+                    "updated_by" => $balitaUkur->updated_by,
+                    "created_at" => $balitaUkur->created_at,
+                    "updated_at" => $balitaUkur->updated_at,
+
+                ]);
             }
 
             // Hapus data dari tabel balita

@@ -12,7 +12,7 @@ use App\Http\Controllers\BalitaController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\BalitaUkurController;
 use App\Http\Controllers\MasterDataController;
-use App\Http\Controllers\BalitaLulusController;
+use App\Http\Controllers\BalitaNonaktifController;
 use App\Models\Dusun;
 
 /*
@@ -94,8 +94,9 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     // BALITA LULUS
-    Route::prefix('balita-lulus')->group(function () {
-        Route::get('/', [BalitaLulusController::class, 'index'])->name('balitalulus.index');
+    Route::prefix('balita-nonaktif')->group(function () {
+        Route::get('/lulus', [BalitaNonaktifController::class, 'balitaLulus'])->name('balitanonaktif.lulus');
+        Route::get('/detail/{id}', [BalitaNonaktifController::class, 'detail'])->name('balitanonaktif.detail');
     });
 
     Route::prefix('master-data')->group(function () {

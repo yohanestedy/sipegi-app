@@ -6,15 +6,15 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class BalitaUkur extends Model
+class BalitaUkurNonaktif extends Model
 {
     use HasFactory;
-    protected $table = 'balita_ukur';
+    protected $table = 'balita_ukur_nonaktif';
     protected $guarded = [];
 
-    public function balita()
+    public function balitaNonaktif()
     {
-        return $this->belongsTo(Balita::class);
+        return $this->belongsTo(BalitaNonaktif::class);
     }
 
 

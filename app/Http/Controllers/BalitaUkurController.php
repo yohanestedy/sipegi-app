@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use App\Models\Balita;
 use App\Models\Posyandu;
 use App\Models\BalitaUkur;
-use App\Models\BalitaLulus;
+use App\Models\BalitaNonaktif;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Monolog\Handler\NullHandler;
@@ -68,7 +68,7 @@ class BalitaUkurController extends Controller
             $query = Balita::with('posyandu');
             $balitaUkurs = BalitaUkur::where('balita_id', $id)->orderBy('tgl_ukur', 'desc')->get();
         } else {
-            $query = BalitaLulus::with('posyandu');
+            $query = BalitaNonaktif::with('posyandu');
             $balitaUkurs = BalitaUkur::where('balita_lulus_id', $id)->orderBy('tgl_ukur', 'desc')->get();
         }
 

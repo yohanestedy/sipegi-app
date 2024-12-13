@@ -17,7 +17,7 @@
     <nav aria-label="breadcrumb" class="breadcrumb-header">
         <ol class="breadcrumb mb-0">
             <li class="breadcrumb-item">
-                <a href="{{ route('balitalulus.index') }}">Balita Lulus</a>
+                <a href="#">Balita Nonaktif</a>
             </li>
             {{-- <li class="breadcrumb-item active" aria-current="page">
                 Data Pengukuran Balita
@@ -79,11 +79,11 @@
                                     <tr>
 
                                         <td style="text-align: center">
-                                            <a href="{{ route('balitaukur.detail', ['id' => $balita->id]) }}"
+                                            <a href="{{ route('balitanonaktif.detail', ['id' => $balita->id]) }}"
                                                 class="btn icon btn-primary " data-bs-toggle="tooltip"
                                                 data-bs-placement="top" data-bs-original-title="Pengukuran"
                                                 style="border-radius: 8px; padding: .2rem .4rem;">
-                                                <i class="fa-solid fa-calculator"></i></a>
+                                                <i class="fa-regular fa-list-check"></i></a></a>
                                             <a href="{{ route('balita.edit', ['id' => $balita->id]) }}"
                                                 class="btn icon btn-success " data-bs-toggle="tooltip"
                                                 data-bs-placement="top" data-bs-original-title="Edit"

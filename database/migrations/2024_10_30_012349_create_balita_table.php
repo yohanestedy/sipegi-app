@@ -27,6 +27,8 @@ return new class extends Migration
             $table->integer('family_order');
             $table->float('bb_lahir');
             $table->float('tb_lahir');
+            $table->string('status', 20);
+            $table->date('tgl_aktif');
             $table->unsignedInteger('created_by');
             $table->unsignedInteger('updated_by')->nullable();
             $table->timestamps();

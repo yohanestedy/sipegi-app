@@ -87,14 +87,28 @@
                         <span>Balita</span>
                     </a>
                 </li>
-                {{-- Balita Lulus --}}
-                <li
-                    class="sidebar-item {{ Route::is('balitalulus.*') ? 'active' : (Route::is('balitaukur.detail') && $balita->umur_hari > 1856 ? 'active' : '') }} ">
-                    <a href="{{ route('balitalulus.index') }}" class="sidebar-link">
-                        <i class="fa-duotone fa-solid fa-child-reaching fa-lg"></i>
-                        <span>Balita Lulus</span>
+                {{-- Balita Nonaktif --}}
+                <li class="sidebar-item {{ Route::is('balitanonaktif.*') ? 'active' : '' }}  has-sub">
+                    <a href="#" class="sidebar-link">
+                        <i class="fa-duotone fa-solid fa-family fa-lg"></i>
+                        <span>Balita Nonaktif</span>
                     </a>
+
+                    <ul class="submenu">
+                        <li class="submenu-item {{ Route::is('balitanonaktif.lulus') ? 'active' : '' }}">
+                            <a href="{{ route('balitanonaktif.lulus') }}" class="submenu-link">Lulus</a>
+                        </li>
+                        <li class="submenu-item">
+                            <a href="#" class="submenu-link">Pindah Keluar</a>
+                        </li>
+                        <li class="submenu-item">
+                            <a href="#" class="submenu-link">Meninggal</a>
+                        </li>
+
+
+                    </ul>
                 </li>
+
                 {{-- User Management --}}
                 @if (Auth::user()->role == 'super_admin')
                     <li class="sidebar-item {{ Route::is('user.*') ? 'active' : '' }}">
@@ -116,12 +130,12 @@
                 </li>
 
                 {{-- Info --}}
-                <li class="sidebar-item">
+                {{-- <li class="sidebar-item">
                     <a href="index.html" class="sidebar-link">
                         <i class="fa-duotone fa-solid fa-circle-info fa-lg"></i>
                         <span>Info</span>
                     </a>
-                </li>
+                </li> --}}
 
 
             </ul>

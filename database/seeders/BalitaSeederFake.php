@@ -36,6 +36,8 @@ class BalitaSeederFake extends Seeder
                     'family_order' => $i,
                     'bb_lahir' => $faker->randomFloat(1, 2.5, 4.5), // Berat badan lahir antara 2.5kg - 4.5kg
                     'tb_lahir' => $faker->numberBetween(46, 55), // Tinggi badan lahir antara 45cm - 55cm
+                    'status' => $faker->randomElement(['Daftar Baru', 'Pindah Masuk']),
+                    'tgl_aktif' => Carbon::now(),
                     'created_by' => 1,
                     'updated_by' => null,
                     'created_at' => Carbon::now(),

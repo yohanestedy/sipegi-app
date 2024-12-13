@@ -47,6 +47,35 @@
                                 {{-- tanda wajib diisi --}}
                                 {{-- <span style="color: #dc3545;">*</span> --}}
 
+                                {{-- Form Jenis Pendaftaran --}}
+                                <div class="row d-flex">
+                                    <div class="col-md-4 text-md-end justify-content-end">
+                                        <label>Jenis Pendaftaran</label>
+                                    </div>
+                                    <div class="col-md-7 form-group">
+                                        <div class="form-check-inline">
+                                            <input name="status" value="Daftar Baru"
+                                                class="form-check-input @error('status') is-invalid @enderror"
+                                                type="radio" id="radioDaftar Baru"
+                                                {{ old('status') == 'Daftar Baru' ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="radioDaftar Baru"
+                                                style="font-weight: normal;">
+                                                Daftar Baru
+                                            </label>
+                                        </div>
+                                        <div class="form-check-inline">
+                                            <input name="status" value="Pindah Masuk"
+                                                class="form-check-input @error('status') is-invalid @enderror"
+                                                type="radio" id="radioPindah Masuk"
+                                                {{ old('status') == 'Pindah Masuk' ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="radioPindah Masuk"
+                                                style="font-weight: normal;">
+                                                Pindah Masuk
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 {{-- Form Nama Balita --}}
                                 <div class="row d-flex">
                                     <div class="col-md-4 mt-3 text-md-end justify-content-end">
@@ -152,8 +181,9 @@
                                     <div class="col-md-7 form-group">
                                         <div class="form-check">
                                             <input name="bpjs" value="Ada"
-                                                class="form-check-input @error('bpjs') is-invalid @enderror" type="radio"
-                                                id="radioAda" {{ old('bpjs') == 'Ada' ? 'checked' : '' }}>
+                                                class="form-check-input @error('bpjs') is-invalid @enderror"
+                                                type="radio" id="radioAda"
+                                                {{ old('bpjs') == 'Ada' ? 'checked' : '' }}>
                                             <label class="form-check-label" for="radioAda" style="font-weight: normal;">
                                                 Ada
                                             </label>

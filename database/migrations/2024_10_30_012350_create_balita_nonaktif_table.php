@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('balita_lulus', function (Blueprint $table) {
+        Schema::create('balita_nonaktif', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 50);
             $table->string('nik', 16)->nullable()->unique(); // Membuat nik unik
@@ -26,6 +26,8 @@ return new class extends Migration
             $table->integer('family_order');
             $table->float('bb_lahir');
             $table->float('tb_lahir');
+            $table->string('status', 20);
+            $table->date('tgl_nonaktif');
             $table->unsignedInteger('created_by');
             $table->unsignedInteger('updated_by')->nullable();
             $table->timestamps();
@@ -39,6 +41,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('balita_lulus');
+        Schema::dropIfExists('balita_nonaktif');
     }
 };

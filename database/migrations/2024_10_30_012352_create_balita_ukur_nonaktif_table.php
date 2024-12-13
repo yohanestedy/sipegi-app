@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('balita_ukur', function (Blueprint $table) {
+        Schema::create('balita_ukur_nonaktif', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('balita_id');
-            $table->foreign('balita_id')->references('id')->on('balita')->onDelete('cascade');
+            $table->unsignedInteger('balita_nonaktif_id');
+            $table->foreign('balita_nonaktif_id')->references('id')->on('balita_nonaktif')->onDelete('cascade');
             $table->date('tgl_ukur');
             $table->string('umur_ukur', 30);
             $table->double('bb');
@@ -46,6 +46,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('balita_ukur');
+        Schema::dropIfExists('balita_ukur_nonaktif');
     }
 };
