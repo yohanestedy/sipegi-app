@@ -475,6 +475,7 @@ class BalitaController extends Controller
                 'nik' => $balita->nik,
                 'tgl_lahir' => $balita->tgl_lahir,
                 'gender' => $balita->gender,
+                'bpjs' => $balita->bpjs,
                 'orangtua_id' => $balita->orangtua_id,
                 'posyandu_id' => $balita->posyandu_id,
                 'family_order' => $balita->family_order,
