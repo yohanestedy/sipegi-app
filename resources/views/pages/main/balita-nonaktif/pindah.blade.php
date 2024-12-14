@@ -46,7 +46,7 @@
             {{-- FORM BALITA PINDAH --}}
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Formulir Pindah Keluar Balita</h4>
+                    <h4 class="card-title">Formulir Balita Pindah Keluar</h4>
                 </div>
                 <div class="card-body">
 
@@ -57,7 +57,7 @@
                             <div class="col-md-5 form-group">
                                 <select id="balitaSelect" name="balita_id"
                                     class="form-select select2 @error('balita_id') is-invalid @enderror"
-                                    data-placeholder="Pilih Nama Balita" required>
+                                    data-placeholder="--Pilih Nama Balita--" required>
                                     <option></option>
                                     @foreach ($balitasAktif as $balita)
                                         <option value="{{ $balita->id }}"
@@ -83,7 +83,7 @@
                             </div>
                             <div class="col-12 col-md-2 mb-3">
                                 <button id="btn-pindahkan" type="submit" class="btn btn-danger w-100 swal-delete"
-                                    disabled><i class="fa-solid fa-plane-departure me-2"></i>
+                                    disabled><i class="fa-regular fa-circle-x me-1"></i>
                                     Nonaktifkan</button>
                             </div>
                         </div>
@@ -136,7 +136,7 @@
                                         <td style="text-align: center">
                                             <a href="{{ route('balitanonaktif.detail', ['id' => $balita->id]) }}"
                                                 class="btn icon btn-primary " data-bs-toggle="tooltip"
-                                                data-bs-placement="top" data-bs-original-title="Pengukuran"
+                                                data-bs-placement="top" data-bs-original-title="Riwayat Pengukuran"
                                                 style="border-radius: 8px; padding: .2rem .4rem;">
                                                 <i class="fa-regular fa-list-check"></i></a></a>
                                             <a href="{{ route('balita.edit', ['id' => $balita->id]) }}"
@@ -229,13 +229,13 @@
                 let form = $(this).closest("form");
 
                 Swal.fire({
-                    title: "Pindah Keluarkan Balita?",
+                    title: "Nonaktifkan Balita Meninggal?",
                     text: "Pastikan nama balita yang anda pilih sudah benar!",
                     icon: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#d33",
                     cancelButtonColor: "#9c9c9c",
-                    confirmButtonText: "Ya, Pindahkan!",
+                    confirmButtonText: "Ya, Nonaktifkan!",
                     cancelButtonText: "Batal",
                 }).then((willDelete) => {
                     if (willDelete.isConfirmed) {

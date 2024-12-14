@@ -39,7 +39,7 @@
     <nav aria-label="breadcrumb" class="breadcrumb-header">
         <ol class="breadcrumb mb-0">
             <li class="breadcrumb-item">
-                <a href="{{ route('balitaukur.index') }}">Pengukuran</a>
+                <a href="#">Balita Nonaktif</a>
             </li>
             <li class="breadcrumb-item active" aria-current="page">
                 Riwayat Pengukuran Balita
@@ -54,7 +54,7 @@
 
                 <div class="col-12 col-md-6 order-md-1 order-last">
 
-                    <h3>Riwayat Pengukuran Balita</h3>
+                    <h3>Riwayat Pengukuran Balita Nonaktif</h3>
                     <p class="text-subtitle text-muted">Halaman riwayat pengukuran balita.</p>
                 </div>
 
@@ -150,12 +150,12 @@
                         Daftar Hasil Pengukuran
                     </h5>
 
-                    @if ($balita->umur_hari <= 1856)
+                    {{-- @if ($balita->umur_hari <= 1856)
                         <a href="{{ route('balitaukur.add', ['id' => $balita->id]) }}"
                             class="btn btn-primary rounded-pill">
                             <i class="fa-solid fa-plus"></i> Tambah Pengukuran
                         </a>
-                    @endif
+                    @endif --}}
 
 
 

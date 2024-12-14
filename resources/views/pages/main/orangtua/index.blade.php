@@ -78,7 +78,7 @@
                                             <a href="{{ route('orangtua.edit', ['id' => $orangtua->id]) }}"
                                                 class="btn icon btn-sm btn-primary mt-1 mb-1 me-1" data-bs-toggle="tooltip"
                                                 data-bs-placement="top" data-bs-original-title="Edit"
-                                                style="border-radius: 8px; padding: .2rem .4rem;">
+                                                style="border-radius: 8px; padding: .2rem .35rem;">
                                                 <i class="fa-regular fa-pen-to-square"></i></a>
                                             {{-- <form action="{{ route('orangtua.delete', ['id' => $orangtua->id]) }}"
                                                 method="POST" style="display: inline">
