@@ -15,7 +15,9 @@ let customized_datatable = $("#table2").DataTable({
         "searchPlaceholder": "Search.."
     }
 })
-let customized_datatable1 = $("#tableUser").DataTable({
+
+
+let tableUser = $("#tableUser").DataTable({
     responsive: true,
     info: false,
     pagingType: 'simple',
@@ -34,7 +36,7 @@ let customized_datatable1 = $("#tableUser").DataTable({
         "searchPlaceholder": "Search.."
     }
 })
-let customized_datatable2 = $("#tableOrtu").DataTable({
+let tableOrangTua = $("#tableOrtu").DataTable({
     responsive: true,
     info: false,
     pagingType: 'simple',
@@ -56,7 +58,8 @@ let customized_datatable2 = $("#tableOrtu").DataTable({
         "searchPlaceholder": "Search.."
     }
 })
-let customized_datatable3 = $("#tableBalita").DataTable({
+
+let tableBalita = $("#tableBalita").DataTable({
     responsive: true,
     lengthMenu: [
         [10, 25, 50, -1],
@@ -86,13 +89,13 @@ let customized_datatable3 = $("#tableBalita").DataTable({
 // Event listener untuk dropdown filter
 $('#filterPosyandu').on('change', function () {
     let selectedValue = $(this).val(); // Ambil nilai yang dipilih
-    customized_datatable3.column(7) // Kolom Posyandu (index ke-7)
-        .search(selectedValue)      // Terapkan filter berdasarkan nilai
-        .draw();                    // Refresh tabel
+    tableBalita.column(7) .search(selectedValue).draw();  // Tabel Balita
+    tablePengukuran.column(20).search(selectedValue).draw();    //Tabel Pengukuran
+    tablePengukuran.column(20).search(selectedValue).draw();    //Tabel Balita Nonaktif
 });
 
 
-let customized_datatable5 = $("#tableBalitaUkur").DataTable({
+let tableRiwayatPengukuran = $("#tableBalitaUkur").DataTable({
     responsive: true,
     info: false,
     paging: false,
@@ -115,7 +118,7 @@ let customized_datatable5 = $("#tableBalitaUkur").DataTable({
         "searchPlaceholder": "Ketik nama.."
     }
 })
-let customized_datatable7 = $("#tableDaftarBalitaDiukur").DataTable({
+let tablePengukuran = $("#tableDaftarBalitaDiukur").DataTable({
     responsive: true,
 
     searching: true,
@@ -149,7 +152,7 @@ let customized_datatable7 = $("#tableDaftarBalitaDiukur").DataTable({
 })
 $('#filterPosyanduPengukuran').on('change', function () {
     let selectedValue = $(this).val(); // Ambil nilai yang dipilih
-    customized_datatable7.column(19) // Kolom Posyandu (index ke-7)
+    tablePengukuran.column(20) // Kolom Posyandu (index ke-7)
         .search(selectedValue)      // Terapkan filter berdasarkan nilai
         .draw();                    // Refresh tabel
 });
@@ -159,7 +162,7 @@ $('#filterBulanPengukuran').on('change', function () {
 
     if (!selectedValue) { // Jika value kosong (reset)
         // Reset pencarian dan tampilkan semua data
-        customized_datatable7.column(3).search('').draw();
+        tablePengukuran.column(3).search('').draw();
         return;
     }
 
@@ -190,15 +193,15 @@ $('#filterBulanPengukuran').on('change', function () {
     console.log(formattedDate); // Debug untuk melihat hasil yang diformat
 
     // Filter berdasarkan bulan yang diformat
-    customized_datatable7.column(3)
+    tablePengukuran.column(3)
         .search(formattedDate)  // Pencocokan berdasarkan nama bulan dan tahun
         .draw();  // Refresh tabel
 });
 // Pencarian real-time berdasarkan input teks
 $('#searchKeyword').on('keyup', function () {
     let searchValue = $(this).val(); // Ambil nilai input teks
-    customized_datatable7.search(searchValue).draw(); // Terapkan filter global di tabel
-    customized_datatable3.search(searchValue).draw(); // Terapkan filter global di tabel
+    tablePengukuran.search(searchValue).draw(); // Terapkan filter global di tabel
+    tableBalita.search(searchValue).draw(); // Terapkan filter global di tabel
 });
 
 
@@ -252,5 +255,32 @@ const setTableColor = () => {
         dt.classList.add('pagination-primary')
     })
 }
+
+let customized_datatable9 = $("#tableBalitaLulus").DataTable({
+    responsive: true,
+    lengthMenu: [
+        [10, 25, 50, -1],
+        [10, 25, 50, 'Semua']
+    ],
+    pageLength: -1,
+    pagingType: 'simple',
+    order: [
+        [5, 'asc'],  // Kolom Dusun, urut descending
+    ],
+    columnDefs: [
+
+        { orderable: false, targets: [0,2,4,6] } // Nonaktifkan sorting di kolom lainnya
+    ],
+    dom:
+		"<'row'<'col-3'l><'col-9'f>>" +
+		"<'row dt-row'<'col-sm-12'tr>>" +
+		"<'row'<'col-4'i><'col-8'p>>",
+    "language": {
+        "info": "Hal _PAGE_ dari _PAGES_",
+        "lengthMenu": "_MENU_ ",
+        "search": "",
+        "searchPlaceholder": "Cari Nama, Posyandu.."
+    }
+})
 setTableColor()
 jquery_datatable.on('draw', setTableColor)
