@@ -176,15 +176,54 @@
 
 
                                         <td style="text-align: center">
-                                            <a type="button" class="btn icon btn-info modal-btn"
+
+
+
+                                            <a type="button" class="btn icon btn-info modal-btn btn-sm"
                                                 data-ukur='@json($balitaUkur)' data-bs-toggle="tooltip"
                                                 data-bs-placement="top" data-bs-original-title="Lihat Detail"
-                                                style="border-radius: 8px; padding: .2rem .4rem; color:white;">
+                                                style="border-radius: 8px; padding: .2rem .35rem; color:white;">
                                                 <i class="fa-solid fa-eye"></i>
                                             </a>
+                                            <div class="btn-group">
+                                                <div class="dropdown">
+                                                    <button class="btn btn-primary btn-sm show"
+                                                        style="border-radius: 8px; padding: .2rem .35rem;" type="button"
+                                                        id="dropdownMenuButtonIcon" data-bs-toggle="dropdown"
+                                                        aria-haspopup="true" aria-expanded="true">
+                                                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                                                    </button>
 
-                                            <a href="{{ route('balitaukur.detail', ['id' => $balitaUkur->balita_id]) }}"
-                                                class="btn icon btn-primary " data-bs-toggle="tooltip"
+                                                    <div class="dropdown-menu dropdown-menu-dark"
+                                                        aria-labelledby="dropdownMenuButtonIcon"
+                                                        style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(0px, 40px, 0px);"
+                                                        data-popper-placement="bottom-start">
+                                                        <a class="dropdown-item ps-3"
+                                                            href="{{ route('balitaukur.detail', ['id' => $balitaUkur->balita_id]) }}"><i
+                                                                class="fa-regular fa-list-check me-1"></i>
+                                                            Riwayat Pengukuran</a>
+                                                        <a class="dropdown-item ps-3"
+                                                            href="{{ route('balitaukur.edit', ['id' => $balitaUkur->id]) }}"><i
+                                                                class="fa-regular fa-pen-to-square me-1"></i>
+                                                            Ubah Pengukuran</a>
+
+
+                                                        <form id="deleteForm"
+                                                            action="{{ route('balitaukur.delete', ['id' => $balitaUkur->id]) }}"
+                                                            method="POST" style="display: inline">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                        </form>
+
+                                                        <a href="#" class="dropdown-item swal-delete ps-3"><i
+                                                                class="fa-solid fa-trash me-1"></i> Hapus Pengukuran</a>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            {{-- <a href="{{ route('balitaukur.detail', ['id' => $balitaUkur->balita_id]) }}"
+                                                class="btn icon btn-primary btn-sm" data-bs-toggle="tooltip"
                                                 data-bs-placement="top" data-bs-original-title="Riwayat Pengukuran"
                                                 style="border-radius: 8px; padding: .2rem .4rem;">
                                                 <i class="fa-regular fa-list-check"></i></a>
@@ -506,7 +545,7 @@
                 let form = $(this).closest("form");
 
                 Swal.fire({
-                    title: "Hapus Data Balita?",
+                    title: "Hapus Data Pengukuran Balita?",
                     text: "Setelah dihapus, Anda tidak dapat memulihkan data ini!",
                     icon: "warning",
                     showCancelButton: true,
@@ -516,17 +555,13 @@
                     cancelButtonText: "Batal",
                 }).then((willDelete) => {
                     if (willDelete.isConfirmed) {
-                        form.submit(); // Submit form setelah konfirmasi
+                        document.getElementById('deleteForm')
+                            .submit(); // Submit form setelah konfirmasi
                     }
                 });
             });
 
-            // SweetAlert untuk notifikasi sukses atau error dari session
-            @if (session()->has('success'))
-                Swal.fire('Success', '{{ session('success') }}', 'success');
-            @elseif (session()->has('error'))
-                Swal.fire('Error', '{{ session('error') }}', 'error');
-            @endif
+
 
 
         });

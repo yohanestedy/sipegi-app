@@ -119,6 +119,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/edit/{id?}', [BalitaUkurController::class, 'edit'])->name('balitaukur.edit');
         Route::put('/update-zscore/{id}', [BalitaUkurController::class, 'updateZScore'])->name('balitaukur.updateZScore');
 
+        Route::delete('/delete/{id}', [BalitaUkurController::class, 'delete'])->name('balitaukur.delete');
+
         Route::post('/hitung/{id?}', [BalitaUkurController::class, 'hitung'])->name('balitaukur.hitung');
         Route::post('/simpan-zscore', [BalitaUkurController::class, 'simpanZScore'])->name('balitaukur.simpanZScore');
     });

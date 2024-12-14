@@ -157,6 +157,12 @@ class BalitaUkurController extends Controller
         return view('pages.main.balita-ukur.edit', compact(['balitas', 'balitaUkur']));
     }
 
+    public function delete($id)
+    {
+        BalitaUkur::find($id)->delete();
+        return redirect()->back()->with('success', 'Pengukuran balita berhasil dihapus.');
+    }
+
 
 
     // PENGHITUNGAN ZSCORE / STANDARD DEVIATION SCORE

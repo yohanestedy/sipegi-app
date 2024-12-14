@@ -212,16 +212,52 @@
                                                 data-bs-placement="top" data-bs-original-title="Pengukuran"
                                                 style="border-radius: 8px; padding: .2rem .4rem;">
                                                 <i class="fa-solid fa-calculator"></i></a> --}}
-                                            <button type="button" class="btn icon btn-info modal-btn"
+                                            <button type="button" class="btn icon btn-info modal-btn btn-sm"
                                                 data-balita='@json($balita)'
                                                 data-ukur='@json($balitaUkur)' data-bs-toggle="tooltip"
                                                 data-bs-placement="top" data-bs-original-title="Lihat Detail"
-                                                style="border-radius: 8px; padding: .2rem .4rem; color:white;">
+                                                style="border-radius: 8px; padding: .2rem .35rem; color:white;">
                                                 <i class="fa-solid fa-eye"></i>
                                             </button>
+                                            @if ($balitaUkur->umur_ukur !== '0 Bulan')
+                                                <div class="btn-group">
+                                                    <div class="dropdown">
+                                                        <button class="btn btn-primary btn-sm show"
+                                                            style="border-radius: 8px; padding: .2rem .35rem;"
+                                                            type="button" id="dropdownMenuButtonIcon"
+                                                            data-bs-toggle="dropdown" aria-haspopup="true"
+                                                            aria-expanded="true">
+                                                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                                                        </button>
+
+                                                        <div class="dropdown-menu dropdown-menu-dark"
+                                                            aria-labelledby="dropdownMenuButtonIcon"
+                                                            style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(0px, 40px, 0px);"
+                                                            data-popper-placement="bottom-start">
+
+                                                            <a class="dropdown-item ps-3"
+                                                                href="{{ route('balitaukur.edit', ['id' => $balitaUkur->id]) }}"><i
+                                                                    class="fa-regular fa-pen-to-square me-1"></i>
+                                                                Ubah Pengukuran</a>
+
+                                                            <form id="deleteForm"
+                                                                action="{{ route('balitaukur.delete', ['id' => $balitaUkur->id]) }}"
+                                                                method="POST" style="display: inline">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                            </form>
+
+                                                            <a href="#" class="dropdown-item swal-delete ps-3"><i
+                                                                    class="fa-solid fa-trash me-1"></i> Hapus
+                                                                Pengukuran</a>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            @endif
 
 
-                                            <a href="{{ route('balitaukur.edit', ['id' => $balitaUkur->id]) }}"
+                                            {{-- <a href="{{ route('balitaukur.edit', ['id' => $balitaUkur->id]) }}"
                                                 class="btn icon btn-success " data-bs-toggle="tooltip"
                                                 data-bs-placement="top" data-bs-original-title="Ubah Pengukuran"
                                                 style="border-radius: 8px; padding: .2rem .4rem;">
@@ -575,6 +611,29 @@
                 // Tampilkan modal
                 $('#zscoreModal').modal('show');
             });
+
+            // SweetAlert untuk konfirmasi penghapusan
+            $(".swal-delete").click(function(event) {
+                event.preventDefault();
+
+                let form = $(this).closest("form");
+
+                Swal.fire({
+                    title: "Hapus Data Pengukuran Balita?",
+                    text: "Setelah dihapus, Anda tidak dapat memulihkan data ini!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#d33",
+                    cancelButtonColor: "#9c9c9c",
+                    confirmButtonText: "Ya, Hapus!",
+                    cancelButtonText: "Batal",
+                }).then((willDelete) => {
+                    if (willDelete.isConfirmed) {
+                        document.getElementById('deleteForm')
+                            .submit(); // Submit form setelah konfirmasi
+                    }
+                });
+            });
         });
 
 
@@ -601,44 +660,4 @@
             }
         }
     </script>
-
-
-    {{-- Toast Sweatalert2 --}}
-    @if (session('successToast'))
-        <script>
-            const Toast = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.onmouseenter = Swal.stopTimer;
-                    toast.onmouseleave = Swal.resumeTimer;
-                }
-            });
-            Toast.fire({
-                icon: "success",
-                title: "{{ session('successToast') }}"
-            });
-        </script>
-    @elseif (session('errorToast'))
-        <script>
-            const Toast = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.onmouseenter = Swal.stopTimer;
-                    toast.onmouseleave = Swal.resumeTimer;
-                }
-            });
-            Toast.fire({
-                icon: "error",
-                title: "{{ session('errorToast') }}"
-            });
-        </script>
-    @endif
 @endsection
