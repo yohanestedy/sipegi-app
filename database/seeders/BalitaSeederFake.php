@@ -28,7 +28,7 @@ class BalitaSeederFake extends Seeder
                 $newBalita = Balita::create([
                     'name' => $faker->firstName . ' ' . $faker->firstName . ' ' . $faker->lastName, // Nama balita minimal 3 kata
                     'nik' => $faker->numerify('180706##########'),
-                    'tgl_lahir' => $faker->dateTimeBetween('-5 years', 'now')->format('Y-m-d'),
+                    'tgl_lahir' => $faker->dateTimeBetween('-6 years', 'now')->format('Y-m-d'),
                     'gender' => $faker->randomElement(['P', 'L']),
                     'bpjs' => $faker->randomElement(['Ada', 'Tidak Ada']),
                     'orangtua_id' => $orangtuaId,

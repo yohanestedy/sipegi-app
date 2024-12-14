@@ -128,6 +128,16 @@
                         </div>
 
                     </div>
+                    <div class="row">
+                        <div class="pe-0 col-3 col-md-2 d-flex justify-content-between">
+                            <span>BPJS</span>
+                            <span>:</span>
+                        </div>
+                        <div class="col-8 col-md-8">
+                            <p class="mb-1">{{ $balita->bpjs }}</p>
+                        </div>
+
+                    </div>
 
 
 
@@ -141,7 +151,8 @@
                     </h5>
 
                     @if ($balita->umur_hari <= 1856)
-                        <a href="{{ route('balitaukur.add', ['id' => $balita->id]) }}" class="btn btn-primary rounded-pill">
+                        <a href="{{ route('balitaukur.add', ['id' => $balita->id]) }}"
+                            class="btn btn-primary rounded-pill">
                             <i class="fa-solid fa-plus"></i> Tambah Pengukuran
                         </a>
                     @endif
@@ -261,9 +272,9 @@
                                                 class="btn icon btn-success " data-bs-toggle="tooltip"
                                                 data-bs-placement="top" data-bs-original-title="Ubah Pengukuran"
                                                 style="border-radius: 8px; padding: .2rem .4rem;">
-                                                <i class="fa-regular fa-pen-to-square"></i></button>
+                                                <i class="fa-regular fa-pen-to-square"></i></button> --}}
 
-                                                {{-- <form action="{{ route('balita.delete', ['id' => $balita->id]) }}"
+                                            {{-- <form action="{{ route('balita.delete', ['id' => $balita->id]) }}"
                                                 method="POST" style="display: inline">
                                                 @csrf
                                                 @method('DELETE')
@@ -281,7 +292,8 @@
                                         <td data-order="{{ $balitaUkur->tgl_ukur }}" style="text-align: center">
                                             {{ $balitaUkur->tgl_ukur_display }}</td>
                                         <td style="text-align: center">
-                                            {{ $balitaUkur->umur_ukur }}</td>
+                                            {{ $balitaUkur->umur_ukur }}
+                                            {{ $balitaUkur->tgl_ukur == $balita->tgl_lahir ? ' / Lahir' : '' }}</td>
                                         <td style="text-align: center">{{ $balitaUkur->bb }}</td>
                                         <td style="text-align: center">{{ $balitaUkur->tb }}</td>
                                         <td style="text-align: center">{{ $balitaUkur->lk ? $balitaUkur->lk : '-' }}</td>

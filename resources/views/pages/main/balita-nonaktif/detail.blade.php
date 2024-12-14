@@ -128,6 +128,16 @@
                         </div>
 
                     </div>
+                    <div class="row">
+                        <div class="pe-0 col-3 col-md-2 d-flex justify-content-between">
+                            <span>BPJS</span>
+                            <span>:</span>
+                        </div>
+                        <div class="col-8 col-md-8">
+                            <p class="mb-1">{{ $balita->bpjs }}</p>
+                        </div>
+
+                    </div>
 
 
 
@@ -141,7 +151,8 @@
                     </h5>
 
                     @if ($balita->umur_hari <= 1856)
-                        <a href="{{ route('balitaukur.add', ['id' => $balita->id]) }}" class="btn btn-primary rounded-pill">
+                        <a href="{{ route('balitaukur.add', ['id' => $balita->id]) }}"
+                            class="btn btn-primary rounded-pill">
                             <i class="fa-solid fa-plus"></i> Tambah Pengukuran
                         </a>
                     @endif
