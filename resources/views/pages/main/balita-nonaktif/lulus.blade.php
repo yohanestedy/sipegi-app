@@ -19,9 +19,9 @@
             <li class="breadcrumb-item">
                 <a href="#">Balita Nonaktif</a>
             </li>
-            {{-- <li class="breadcrumb-item active" aria-current="page">
-                Data Pengukuran Balita
-            </li> --}}
+            <li class="breadcrumb-item active" aria-current="page">
+                Lulus
+            </li>
         </ol>
     </nav>
 @endsection
@@ -59,7 +59,7 @@
                     </div>
                     <div class="table-responsive datatable-minimal">
 
-                        <table class="table table-hover table-bordered medium-text" id="tableBalita">
+                        <table class="table table-hover table-bordered medium-text" id="tableBalitaLulus">
                             <thead>
                                 <tr>
                                     <th style="text-align: center;">Tindakan</th>
@@ -114,7 +114,7 @@
                                         </td>
                                         <td>{{ \Carbon\Carbon::parse($balita->tgl_lahir)->translatedFormat('d F Y') }}</td>
                                         <td data-sort="{{ $balita->umur_hari }}">{{ $balita->umur_display }}</td>
-                                        <td>{{ $balita->orangtua->name }}</td>
+                                        <td>{{ $balita->orangtua->name_ibu }}</td>
                                         <td data-sort="{{ $balita->posyandu_id }}" style="text-align: center">
                                             {{ $balita->posyandu->name }}</td>
 

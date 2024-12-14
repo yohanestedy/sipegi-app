@@ -128,6 +128,8 @@ class BalitaUkurController extends Controller
             $query->where('id', $id);
         }
 
+        $query->orderBy('name', 'asc');
+
         $balitas = $query->get();
 
         // return $balitas;

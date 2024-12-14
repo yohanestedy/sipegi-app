@@ -54,9 +54,10 @@
     <div class="page-heading medium-text">
         <div class="page-title">
             <div class="row">
-                <div class="col-12 col-md-6 order-md-1 order-last">
-                    <h3>Data Pengukuran Balita</h3>
-                    <p class="text-subtitle text-muted">Halaman data pengukuran balita.</p>
+                <div class="col-12 col-md-12 order-md-1 order-last">
+                    <h3>Pengukuran</h3>
+                    <p class="text-subtitle text-muted">Halaman yang berisi nama-nama balita yang sudah melakukan
+                        pengukuran.</p>
                 </div>
 
             </div>
@@ -99,7 +100,7 @@
                         <div class="row mb-3">
                             @if (Auth::user()->role == 'super_admin')
                                 <div class="col-6 col-md-3">
-                                    <select id="filterPosyanduPengukuran" class="form-select">
+                                    <select id="filterPosyandu" class="form-select">
                                         <option value="">Semua Posyandu</option>
                                         @foreach ($posyandus as $posyandu)
                                             <option value="{{ $posyandu->name }}">{{ $posyandu->name }}</option>
@@ -119,13 +120,13 @@
                             id="tableDaftarBalitaDiukur">
                             <thead>
                                 <tr>
-                                    <th rowspan="2" style="text-align: center;">Tindakan</th>
+                                    <th rowspan="2" style="text-align: center;">Tombol</th>
 
                                     <th rowspan="2" style="text-align: center;">Nama</th>
                                     <th rowspan="2" style="text-align: center;">Jenis Kelamin</th>
 
-                                    <th rowspan="2" style="text-align: center;">Tgl Ukur</th>
-                                    <th rowspan="2" style="text-align: center;">Umur Ukur</th>
+                                    <th rowspan="2" style="text-align: center;">Tanggal Pengukuran</th>
+                                    <th rowspan="2" style="text-align: center;">Umur Pengukuran</th>
                                     <th rowspan="2" style="text-align: center;">BB (kg)</th>
                                     <th rowspan="2" style="text-align: center;">TB (cm)</th>
                                     <th rowspan="2" style="text-align: center;">LK (cm)</th>
@@ -225,14 +226,30 @@
                                             {{-- <a href="{{ route('balitaukur.detail', ['id' => $balitaUkur->balita_id]) }}"
                                                 class="btn icon btn-primary btn-sm" data-bs-toggle="tooltip"
                                                 data-bs-placement="top" data-bs-original-title="Riwayat Pengukuran"
-                                                style="border-radius: 8px; padding: .2rem .4rem;">
+                                                style="border-radius: 8px; padding: .2rem .35rem;">
                                                 <i class="fa-regular fa-list-check"></i></a>
 
+
+
                                             <a href="{{ route('balitaukur.edit', ['id' => $balitaUkur->id]) }}"
-                                                class="btn icon btn-success " data-bs-toggle="tooltip"
+                                                class="btn icon btn-success btn-sm" data-bs-toggle="tooltip"
                                                 data-bs-placement="top" data-bs-original-title="Ubah Pengukuran"
-                                                style="border-radius: 8px; padding: .2rem .4rem;">
+                                                style="border-radius: 8px; padding: .2rem .35rem;">
                                                 <i class="fa-regular fa-pen-to-square"></i></a>
+
+                                            <form action="{{ route('balitaukur.delete', ['id' => $balitaUkur->id]) }}"
+                                                method="POST" style="display: inline">
+                                                @csrf
+                                                @method('DELETE')
+
+                                                <button type="submit"
+                                                    class="btn icon btn-sm btn-danger btn-sm mt-1 mb-1 me-1 swal-delete"
+                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                    data-bs-original-title="Hapus"
+                                                    style="border-radius: 8px; padding: .2rem .35rem;">
+                                                    <i class="fa-solid fa-trash"></i>
+                                                </button>
+                                            </form> --}}
 
 
                                         </td>
@@ -314,10 +331,6 @@
                 </div>
 
             </div>
-
-
-
-
 
         </section>
 
@@ -406,6 +419,9 @@
                                     </p><br>
                                     <label class="medium-text">Status BB Naik :</label><br>
                                     <p class="badge bg-light-secondary form-control-static fw-normal" id="status_bb_naik">
+                                    </p><br>
+                                    <label class="medium-text">Posyandu :</label><br>
+                                    <p class="badge bg-light-secondary form-control-static fw-normal" id="posyandu">
                                     </p><br>
 
                                 </div>
@@ -584,6 +600,7 @@
                 $('#tb').text(ukur.tb + " cm");
                 $('#lk').text(ukur.lk ? ukur.lk + " cm" : '-');
                 $('#status_bb_naik').text(ukur.status_bb_n);
+                $('#posyandu').text(ukur.balita.posyandu.name);
 
                 // Perbaharui status gizi dan z-score
                 $('#status_bb_u').text(ukur.status_bb_u).attr('class', 'badge ' + warnaBadge(ukur

@@ -95,14 +95,14 @@
 
                                         <td style="text-align: center">
                                             <a href="{{ route('balitaukur.detail', ['id' => $balita->id]) }}"
-                                                class="btn icon btn-primary " data-bs-toggle="tooltip"
+                                                class="btn icon btn-primary btn-sm" data-bs-toggle="tooltip"
                                                 data-bs-placement="top" data-bs-original-title="Riwayat Pengukuran"
-                                                style="border-radius: 8px; padding: .2rem .4rem;">
+                                                style="border-radius: 8px; padding: .2rem .35rem;">
                                                 <i class="fa-regular fa-list-check"></i></a>
                                             <a href="{{ route('balita.edit', ['id' => $balita->id]) }}"
-                                                class="btn icon btn-success " data-bs-toggle="tooltip"
+                                                class="btn icon btn-success btn-sm" data-bs-toggle="tooltip"
                                                 data-bs-placement="top" data-bs-original-title="Edit"
-                                                style="border-radius: 8px; padding: .2rem .4rem;">
+                                                style="border-radius: 8px; padding: .2rem .35rem;">
                                                 <i class="fa-regular fa-pen-to-square"></i></a>
 
                                             {{-- <form action="{{ route('balita.delete', ['id' => $balita->id]) }}"
