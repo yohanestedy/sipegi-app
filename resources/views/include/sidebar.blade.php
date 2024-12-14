@@ -98,8 +98,9 @@
                         <li class="submenu-item {{ Route::is('balitanonaktif.lulus') ? 'active' : '' }}">
                             <a href="{{ route('balitanonaktif.lulus') }}" class="submenu-link">Lulus</a>
                         </li>
-                        <li class="submenu-item">
-                            <a href="#" class="submenu-link">Pindah Keluar</a>
+                        <li class="submenu-item {{ Route::is('balitanonaktif.index-pindahkeluar') ? 'active' : '' }}">
+                            <a href="{{ route('balitanonaktif.index-pindahkeluar') }}" class="submenu-link">Pindah
+                                Keluar</a>
                         </li>
                         <li class="submenu-item">
                             <a href="#" class="submenu-link">Meninggal</a>
