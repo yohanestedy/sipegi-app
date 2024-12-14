@@ -201,6 +201,10 @@ class BalitaUkurController extends Controller
                 ->where('tgl_ukur', '<', $request->tgl_ukur)
                 ->orderBy('tgl_ukur', 'desc')
                 ->first();
+            $afterMeasurement = BalitaUkur::where('balita_id', $request->balita_id)
+                ->where('tgl_ukur', '>', $request->tgl_ukur)
+                ->orderBy('tgl_ukur', 'asc')
+                ->first();
 
             $balita = Balita::find($request->balita_id);
             $umurHari = $this->hitungUmurHari($balita->tgl_lahir, $request->tgl_ukur);
@@ -225,10 +229,18 @@ class BalitaUkurController extends Controller
 
             // VALIDASI TB DAN LK KURANG DARI PENGUKURAN SEBELUMNYA
             if ($previousMeasurement && $request->tb < $previousMeasurement->tb) {
-                $validator->errors()->add('tb', 'TB tidak boleh kurang dari pengukuran sebelumnya (' . $previousMeasurement->tb . ' cm).');
+                $validator->errors()->add('tb', 'Tidak boleh lebih pendek dari pengukuran sebelumnya (' . $previousMeasurement->tb . ' cm).');
             }
             if ($previousMeasurement && $request->lk < $previousMeasurement->lk) {
-                $validator->errors()->add('lk', 'LK tidak boleh kurang dari pengukuran sebelumnya (' . $previousMeasurement->lk . ' cm).');
+                $validator->errors()->add('lk', 'Tidak boleh lebih kecil dari pengukuran sebelumnya (' . $previousMeasurement->lk . ' cm).');
+            }
+
+            // VALIDASI TB DAN LK LEBIH DARI PENGUKURAN SETELAHNYA
+            if ($afterMeasurement && $request->tb > $afterMeasurement->tb) {
+                $validator->errors()->add('tb', 'Tidak boleh lebih tinggi dari pengukuran setelahnya (' . $afterMeasurement->tb . ' cm).');
+            }
+            if ($afterMeasurement && $request->lk > $afterMeasurement->lk) {
+                $validator->errors()->add('lk', 'Tidak boleh lebih besar dari pengukuran setelahnya (' . $afterMeasurement->lk . ' cm).');
             }
         });
 
