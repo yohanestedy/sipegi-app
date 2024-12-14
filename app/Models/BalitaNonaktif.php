@@ -85,6 +85,12 @@ class BalitaNonaktif extends Model
         return Carbon::parse($this->tgl_lahir)->translatedFormat('d F Y');
     }
 
+    public function getTglNonaktifDisplayAttribute()
+    {
+
+        return Carbon::parse($this->tgl_nonaktif)->translatedFormat('d F Y');
+    }
+
     // Mengembalikan gender dalam format yang diinginkan
     public function getGenderDisplayAttribute()
     {

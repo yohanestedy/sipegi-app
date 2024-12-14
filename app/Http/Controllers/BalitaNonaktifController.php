@@ -113,6 +113,91 @@ class BalitaNonaktifController extends Controller
         return redirect()->route('balitanonaktif.index-pindahkeluar')->with('success', 'Balita berhasil dinonaktifkan(Pindah Keluar).');
     }
 
+    // VIEW BALITA PINDAH KELUAR
+    public function indexMeninggal()
+    {
+        $user = auth()->user();
+        $query = Balita::with('posyandu');
+        $queryNonaktif = BalitaNonaktif::with(['posyandu', 'orangtua']);
+        if ($user->posyandu_id !== null) {
+            $query->where('posyandu_id', $user->posyandu_id);
+            $queryNonaktif->where('posyandu_id', $user->posyandu_id);
+        }
+        $query->orderBy('name', 'asc');
+        $queryNonaktif->where('status', 'Meninggal');
+        $balitasAktif = $query->get();
+        $balitas = $queryNonaktif->get();
+
+        // return $balitas;
+        return view('pages.main.balita-nonaktif.meninggal', compact('balitas', 'balitasAktif'));
+    }
+
+    // FUNGSI MEMINDAH KELUARKAN BALITA
+    public function storeMeninggal(Request $request)
+    {
+        $request->validate([
+            'balita_id' => 'required',
+        ], [
+            'balita_id.required' => 'Anda harus memilih balita.',
+        ]);
+
+
+        $balita = Balita::find($request->balita_id);
+        // Pindahkan data ke tabel balita_nonaktif
+        BalitaNonaktif::create([
+            'id' => $balita->id,
+            'name' => $balita->name,
+            'nik' => $balita->nik,
+            'tgl_lahir' => $balita->tgl_lahir,
+            'gender' => $balita->gender,
+            'bpjs' => $balita->bpjs,
+            'orangtua_id' => $balita->orangtua_id,
+            'posyandu_id' => $balita->posyandu_id,
+            'family_order' => $balita->family_order,
+            'bb_lahir' => $balita->bb_lahir,
+            'tb_lahir' => $balita->tb_lahir,
+            'status' => "Meninggal",
+            'tgl_nonaktif' => Carbon::now()->format('Y-m-d'),
+            'created_by' => Auth::id(),
+        ]);
+
+        $balitaUkurRecords = BalitaUkur::where('balita_id', $balita->id)->get();
+
+
+        // Update setiap data balita_ukur yang terkait
+        foreach ($balitaUkurRecords as $balitaUkur) {
+
+
+            // $balitaUkur->update(["balita_id" => null, "balita_lulus_id" => $balita->id]);
+            BalitaUkurNonaktif::create([
+                "id" => $balitaUkur->id,
+                "balita_nonaktif_id" => $balitaUkur->balita_id,
+                "tgl_ukur" => $balitaUkur->tgl_ukur,
+                "umur_ukur" => $balitaUkur->umur_ukur,
+                "bb" => $balitaUkur->bb,
+                "tb" => $balitaUkur->tb,
+                "cara_ukur" => $balitaUkur->cara_ukur,
+                "status_bb_u" => $balitaUkur->status_bb_u,
+                "zscore_bb_u" => $balitaUkur->zscore_bb_u,
+                "status_tb_u" => $balitaUkur->status_tb_u,
+                "zscore_tb_u" => $balitaUkur->zscore_tb_u,
+                "status_bb_tb" => $balitaUkur->status_bb_tb,
+                "zscore_bb_tb" => $balitaUkur->zscore_bb_tb,
+                "status_imt_u" => $balitaUkur->status_imt_u,
+                "zscore_imt_u" => $balitaUkur->zscore_imt_u,
+                "created_by" => $balitaUkur->created_by,
+                "updated_by" => $balitaUkur->updated_by,
+                "created_at" => $balitaUkur->created_at,
+                "updated_at" => $balitaUkur->updated_at,
+
+            ]);
+        }
+
+        $balita->delete();
+
+        return redirect()->route('balitanonaktif.index-meninggal')->with('success', 'Balita berhasil dinonaktifkan(Meninggal).');
+    }
+
 
     // RIWAYAT PENGUKURAN BALITA NONAKTIF
     public function detail($id)

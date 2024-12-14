@@ -97,7 +97,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::prefix('balita-nonaktif')->group(function () {
         Route::get('/lulus', [BalitaNonaktifController::class, 'balitaLulus'])->name('balitanonaktif.lulus');
         Route::get('/pindah-keluar', [BalitaNonaktifController::class, 'indexPindahKeluar'])->name('balitanonaktif.index-pindahkeluar');
-        Route::post('/pindahkan-balita', [BalitaNonaktifController::class, 'storePindahKeluar'])->name('balitanonaktif.store-pindahkeluar');
+        Route::get('/meninggal', [BalitaNonaktifController::class, 'indexMeninggal'])->name('balitanonaktif.index-meninggal');
+        Route::post('/store/pindah-keluar', [BalitaNonaktifController::class, 'storePindahKeluar'])->name('balitanonaktif.store-pindahkeluar');
+        Route::post('/store/meninggal', [BalitaNonaktifController::class, 'storeMeninggal'])->name('balitanonaktif.store-meninggal');
         Route::get('/detail/{id}', [BalitaNonaktifController::class, 'detail'])->name('balitanonaktif.detail');
     });
 

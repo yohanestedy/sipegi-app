@@ -102,8 +102,8 @@
                             <a href="{{ route('balitanonaktif.index-pindahkeluar') }}" class="submenu-link">Pindah
                                 Keluar</a>
                         </li>
-                        <li class="submenu-item">
-                            <a href="#" class="submenu-link">Meninggal</a>
+                        <li class="submenu-item {{ Route::is('balitanonaktif.index-meninggal') ? 'active' : '' }}">
+                            <a href="{{ route('balitanonaktif.index-meninggal') }}" class="submenu-link">Meninggal</a>
                         </li>
 
 
