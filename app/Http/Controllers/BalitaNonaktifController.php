@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Balita;
+use App\Models\Posyandu;
 use App\Models\BalitaUkur;
 use Illuminate\Http\Request;
 use App\Models\BalitaNonaktif;
@@ -22,9 +23,10 @@ class BalitaNonaktifController extends Controller
         }
         $query->where('status', 'Lulus');
         $balitas = $query->get();
+        $posyandus = Posyandu::all();
 
         // return $balitas;
-        return view('pages.main.balita-nonaktif.lulus', compact('balitas'));
+        return view('pages.main.balita-nonaktif.lulus', compact('balitas', 'posyandus'));
     }
 
     // VIEW BALITA PINDAH KELUAR

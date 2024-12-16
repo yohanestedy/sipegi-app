@@ -58,16 +58,28 @@
                         </p>
                     </div>
                     <div class="table-responsive datatable-minimal">
-
+                        @if (Auth::user()->role == 'super_admin')
+                            <div class="row mb-3">
+                                <div class="col-12 col-md-4">
+                                    <select id="filterPosyandu" class="form-select form-select-sm">
+                                        <option value="">Semua Posyandu</option>
+                                        @foreach ($posyandus as $posyandu)
+                                            <option value="{{ $posyandu->name }}">{{ $posyandu->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        @endif
                         <table class="table table-hover table-bordered medium-text" id="tableBalitaLulus">
                             <thead>
                                 <tr>
                                     <th style="text-align: center;">Tindakan</th>
+                                    <th style="text-align: center;">Tanggal Nonaktif</th>
                                     <th style="text-align: center;">Nama</th>
                                     <th style="text-align: center;">NIK</th>
                                     <th style="text-align: center;">Jenis Kelamin</th>
                                     <th style="text-align: center;">Tanggal Lahir</th>
-                                    <th style="text-align: center;">Umur</th>
+                                    <th style="text-align: center;">Umur Saat Ini</th>
                                     <th style="text-align: center;">Nama Orangtua</th>
                                     <th style="text-align: center;">Posyandu</th>
 
@@ -105,6 +117,7 @@
 
 
                                         </td>
+                                        <td>{{ $balita->tgl_nonaktif_display }}</td>
                                         <td>{{ $balita->name }}</td>
                                         <td style="text-align: center">{{ $balita->nik == null ? '-' : $balita->nik }}</td>
                                         <td style="text-align: center">

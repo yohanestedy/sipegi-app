@@ -91,7 +91,7 @@ $('#filterPosyandu').on('change', function () {
     let selectedValue = $(this).val(); // Ambil nilai yang dipilih
     tableBalita.column(7) .search(selectedValue).draw();  // Tabel Balita
     tablePengukuran.column(20).search(selectedValue).draw();    //Tabel Pengukuran
-    tablePengukuran.column(20).search(selectedValue).draw();    //Tabel Balita Nonaktif
+    tableBalitaLulus.column(8).search(selectedValue).draw();    //Tabel Balita Lulus
 });
 
 
@@ -256,7 +256,7 @@ const setTableColor = () => {
     })
 }
 
-let customized_datatable9 = $("#tableBalitaLulus").DataTable({
+let tableBalitaLulus = $("#tableBalitaLulus").DataTable({
     responsive: true,
     lengthMenu: [
         [10, 25, 50, -1],
