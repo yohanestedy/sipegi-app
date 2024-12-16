@@ -110,6 +110,23 @@ class BalitaController extends Controller
             Log::error('Validation failed', $validator->errors()->toArray());
             return Redirect::back()->withErrors($validator)->withInput();
         }
+
+        // Validasi tambahan
+        $tglLahir = $request->tgl_lahir;
+        $familyOrder = $request->family_order;
+
+        // Balita lebih tua
+        $olderBalita = Balita::where('orangtua_id', $request->orangtua)
+            ->where('tgl_lahir', '<', $tglLahir)
+            ->orderBy('tgl_lahir', 'desc')
+            ->first();
+
+        if ($olderBalita && $familyOrder <= $olderBalita->family_order) {
+            return Redirect::back()->withErrors([
+                'family_order' => "Urutan keluarga tidak valid. Harus lebih besar dari anak ke-{$olderBalita->family_order}.",
+            ])->withInput();
+        }
+
         $request->merge([
             'bb_lahir' => $request->bb_lahir / 1000,
         ]);
@@ -327,6 +344,23 @@ class BalitaController extends Controller
             Log::error('Validation failed', $validator->errors()->toArray());
             return Redirect::back()->withErrors($validator)->withInput();
         }
+
+        // Validasi tambahan
+        $tglLahir = $request->tgl_lahir;
+        $familyOrder = $request->family_order;
+
+        // Balita lebih tua
+        $olderBalita = Balita::where('orangtua_id', $request->orangtua)
+            ->where('tgl_lahir', '<', $tglLahir)
+            ->orderBy('tgl_lahir', 'desc')
+            ->first();
+
+        if ($olderBalita && $familyOrder <= $olderBalita->family_order) {
+            return Redirect::back()->withErrors([
+                'family_order' => "Urutan keluarga tidak valid. Harus lebih besar dari anak ke-{$olderBalita->family_order}.",
+            ])->withInput();
+        }
+
         $request->merge([
             'bb_lahir' => $request->bb_lahir / 1000,
         ]);
