@@ -203,6 +203,18 @@
         }
     </script>
 
+    <!-- Tambahkan Library PullToRefresh.js -->
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/pulltorefreshjs/0.1.20/pulltorefresh.min.js"></script>
+    <script>
+        PullToRefresh.init({
+            mainElement: 'body', // Elemen utama yang dipantau
+            onRefresh() {
+                location.reload(); // Reload halaman saat refresh
+            },
+        });
+    </script> --}}
+
+
 </body>
 
 </html>
