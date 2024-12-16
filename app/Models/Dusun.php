@@ -19,4 +19,8 @@ class Dusun extends Model
     {
         return $this->hasMany(Orangtua::class);
     }
+    public function posyandu()
+    {
+        return $this->hasOne(Posyandu::class, 'id', 'id');
+    }
 }
