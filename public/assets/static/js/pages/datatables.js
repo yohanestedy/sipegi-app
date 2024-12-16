@@ -16,7 +16,6 @@ let customized_datatable = $("#table2").DataTable({
     }
 })
 
-
 let tableUser = $("#tableUser").DataTable({
     responsive: true,
     info: false,
@@ -36,17 +35,24 @@ let tableUser = $("#tableUser").DataTable({
         "searchPlaceholder": "Search.."
     }
 })
+
 let tableOrangTua = $("#tableOrtu").DataTable({
+
     responsive: true,
+    lengthMenu: [
+        [10, 25, 50, -1],
+        [10, 25, 50, 'Semua']
+    ],
+    pageLength: -1,
     info: false,
     pagingType: 'simple',
     order: [
         // [3, 'desc'],  // Kolom Dusun, urut descending
-        [2, 'asc'],  // Kolom Nama, urut ascending
+        [1, 'asc'],  // Kolom Nama, urut ascending
     ],
     columnDefs: [
 
-        { orderable: false, targets: [0, 1, 5] } // Nonaktifkan sorting di kolom lainnya
+        { orderable: false, targets: [0, 2, 6] } // Nonaktifkan sorting di kolom lainnya
     ],
     dom:
 		"<'row'<'col-3'l><'col-9'f>>" +
@@ -86,15 +92,6 @@ let tableBalita = $("#tableBalita").DataTable({
     }
 })
 
-// Event listener untuk dropdown filter
-$('#filterPosyandu').on('change', function () {
-    let selectedValue = $(this).val(); // Ambil nilai yang dipilih
-    tableBalita.column(7) .search(selectedValue).draw();  // Tabel Balita
-    tablePengukuran.column(20).search(selectedValue).draw();    //Tabel Pengukuran
-    tableBalitaLulus.column(8).search(selectedValue).draw();    //Tabel Balita Lulus
-});
-
-
 let tableRiwayatPengukuran = $("#tableBalitaUkur").DataTable({
     responsive: true,
     info: false,
@@ -118,6 +115,7 @@ let tableRiwayatPengukuran = $("#tableBalitaUkur").DataTable({
         "searchPlaceholder": "Ketik nama.."
     }
 })
+
 let tablePengukuran = $("#tableDaftarBalitaDiukur").DataTable({
     responsive: true,
 
@@ -150,11 +148,94 @@ let tablePengukuran = $("#tableDaftarBalitaDiukur").DataTable({
         "searchPlaceholder": "Cari..."
     }
 })
-$('#filterPosyanduPengukuran').on('change', function () {
+
+let tableBalitaLulus = $("#tableBalitaLulus").DataTable({
+    responsive: true,
+    lengthMenu: [
+        [10, 25, 50, -1],
+        [10, 25, 50, 'Semua']
+    ],
+    pageLength: -1,
+    pagingType: 'simple',
+    order: [
+        [5, 'asc'],  // Kolom Dusun, urut descending
+    ],
+    columnDefs: [
+
+        { orderable: false, targets: [0,2,4,6] } // Nonaktifkan sorting di kolom lainnya
+    ],
+    dom:
+		"<'row'<'col-3'l><'col-9'f>>" +
+		"<'row dt-row'<'col-sm-12'tr>>" +
+		"<'row'<'col-4'i><'col-8'p>>",
+    "language": {
+        "info": "Hal _PAGE_ dari _PAGES_",
+        "lengthMenu": "_MENU_ ",
+        "search": "",
+        "searchPlaceholder": "Cari Nama, Posyandu.."
+    }
+})
+
+let tablePosyandu = $("#tablePosyandu").DataTable({
+    responsive: true,
+    info: false,
+    paging: false,
+    searching: false,
+    pagingType: 'simple',
+    // order: [
+    //     [1, 'asc'],  // Kolom Dusun, urut descending
+    // ],
+    columnDefs: [
+
+        { orderable: false, targets: [0,1,2,3] } // Nonaktifkan sorting di semua kolom
+    ],
+    dom:
+		"<'row'<'col-3'l><'col-9'f>>" +
+		"<'row dt-row'<'col-sm-12'tr>>" +
+		"<'row'<'col-4'i><'col-8'p>>",
+    "language": {
+        "lengthMenu": "_MENU_ ",
+        "search": "",
+        "searchPlaceholder": "Ketik nama.."
+    }
+})
+
+let tableIndeksStandar = $("#tableIndeksStandar").DataTable({
+    responsive: true,
+    info: false,
+    paging: false,
+    searching: false,
+    pagingType: 'simple',
+    // order: [
+    //     [1, 'asc'],  // Kolom Dusun, urut descending
+    // ],
+
+    dom:
+		"<'row'<'col-3'l><'col-9'f>>" +
+		"<'row dt-row'<'col-sm-12'tr>>" +
+		"<'row'<'col-4'i><'col-8'p>>",
+    "language": {
+        "lengthMenu": "_MENU_ ",
+        "search": "",
+        "searchPlaceholder": "Ketik nama.."
+    }
+})
+
+
+// HELPER
+
+// Event listener untuk dropdown filter
+$('#filterPosyandu').on('change', function () {
     let selectedValue = $(this).val(); // Ambil nilai yang dipilih
-    tablePengukuran.column(20) // Kolom Posyandu (index ke-7)
-        .search(selectedValue)      // Terapkan filter berdasarkan nilai
-        .draw();                    // Refresh tabel
+    tableBalita.column(7) .search(selectedValue).draw();  // Tabel Balita
+    tablePengukuran.column(20).search(selectedValue).draw();    //Tabel Pengukuran
+    tableBalitaLulus.column(8).search(selectedValue).draw();    //Tabel Balita Lulus
+    tableOrangTua.column(5).search(selectedValue).draw();
+
+    // updateRowCount(tableOrangTua, 'rowCountDisplayPengukuran');
+    // updateRowCount(tablePengukuran, 'rowCountDisplayPengukuran');
+
+
 });
 
 $('#filterBulanPengukuran').on('change', function () {
@@ -196,6 +277,8 @@ $('#filterBulanPengukuran').on('change', function () {
     tablePengukuran.column(3)
         .search(formattedDate)  // Pencocokan berdasarkan nama bulan dan tahun
         .draw();  // Refresh tabel
+
+
 });
 // Pencarian real-time berdasarkan input teks
 $('#searchKeyword').on('keyup', function () {
@@ -204,51 +287,13 @@ $('#searchKeyword').on('keyup', function () {
     tableBalita.search(searchValue).draw(); // Terapkan filter global di tabel
 });
 
+// Fungsi generik untuk menghitung jumlah baris terlihat
+function updateRowCount(table, displayElementId) {
+    let rowCount = table.rows({ filter: 'applied' }).count();
+    $(`#${displayElementId}`).text(`Jumlah data yang terlihat: ${rowCount}`);
+}
+// updateRowCount(tableOrangTua, 'rowCountDisplayPengukuran');
 
-
-let customized_datatable4 = $("#tablePosyandu").DataTable({
-    responsive: true,
-    info: false,
-    paging: false,
-    searching: false,
-    pagingType: 'simple',
-    // order: [
-    //     [1, 'asc'],  // Kolom Dusun, urut descending
-    // ],
-    columnDefs: [
-
-        { orderable: false, targets: [0,1,2,3] } // Nonaktifkan sorting di semua kolom
-    ],
-    dom:
-		"<'row'<'col-3'l><'col-9'f>>" +
-		"<'row dt-row'<'col-sm-12'tr>>" +
-		"<'row'<'col-4'i><'col-8'p>>",
-    "language": {
-        "lengthMenu": "_MENU_ ",
-        "search": "",
-        "searchPlaceholder": "Ketik nama.."
-    }
-})
-let customized_datatable6 = $("#tableIndeksStandar").DataTable({
-    responsive: true,
-    info: false,
-    paging: false,
-    searching: false,
-    pagingType: 'simple',
-    // order: [
-    //     [1, 'asc'],  // Kolom Dusun, urut descending
-    // ],
-
-    dom:
-		"<'row'<'col-3'l><'col-9'f>>" +
-		"<'row dt-row'<'col-sm-12'tr>>" +
-		"<'row'<'col-4'i><'col-8'p>>",
-    "language": {
-        "lengthMenu": "_MENU_ ",
-        "search": "",
-        "searchPlaceholder": "Ketik nama.."
-    }
-})
 
 const setTableColor = () => {
     document.querySelectorAll('.dataTables_paginate .pagination').forEach(dt => {
@@ -256,31 +301,6 @@ const setTableColor = () => {
     })
 }
 
-let tableBalitaLulus = $("#tableBalitaLulus").DataTable({
-    responsive: true,
-    lengthMenu: [
-        [10, 25, 50, -1],
-        [10, 25, 50, 'Semua']
-    ],
-    pageLength: -1,
-    pagingType: 'simple',
-    order: [
-        [5, 'asc'],  // Kolom Dusun, urut descending
-    ],
-    columnDefs: [
 
-        { orderable: false, targets: [0,2,4,6] } // Nonaktifkan sorting di kolom lainnya
-    ],
-    dom:
-		"<'row'<'col-3'l><'col-9'f>>" +
-		"<'row dt-row'<'col-sm-12'tr>>" +
-		"<'row'<'col-4'i><'col-8'p>>",
-    "language": {
-        "info": "Hal _PAGE_ dari _PAGES_",
-        "lengthMenu": "_MENU_ ",
-        "search": "",
-        "searchPlaceholder": "Cari Nama, Posyandu.."
-    }
-})
 setTableColor()
 jquery_datatable.on('draw', setTableColor)

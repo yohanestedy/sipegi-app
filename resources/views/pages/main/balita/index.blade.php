@@ -77,7 +77,7 @@
                         <table class="table table-hover table-bordered medium-text" id="tableBalita">
                             <thead>
                                 <tr>
-                                    <th style="text-align: center;">Tindakan</th>
+                                    <th style="text-align: center;">Tombol</th>
                                     <th style="text-align: center;">Nama</th>
                                     <th style="text-align: center;">NIK</th>
                                     <th style="text-align: center;">Jenis Kelamin</th>
@@ -230,13 +230,12 @@
                                     <label class="medium-text">BB / TB Lahir :</label><br>
                                     <p class="badge bg-light-secondary form-control-static fw-normal" id="bbtb_lahir">
                                     </p><br>
-                                    <label class="medium-text">Posyandu :</label><br>
-                                    <p class="badge bg-light-secondary form-control-static fw-normal" id="posyandu">
-                                    </p><br>
                                     <label class="medium-text">BPJS Balita :</label><br>
                                     <p class="badge bg-light-secondary form-control-static fw-normal" id="bpjs">
                                     </p><br>
-
+                                    <label class="medium-text">Posyandu :</label><br>
+                                    <p class="badge bg-light-secondary form-control-static fw-normal" id="posyandu">
+                                    </p><br>
 
                                 </div>
                             </div>
@@ -246,7 +245,7 @@
                         <div class="col-md-12 mt-3">
 
 
-                            {{-- ROW KOLOM HEADER --}}
+                            {{-- ROW KOLOM ORANGTUA --}}
                             <div class="row">
                                 <div class="col-9 col-md-9">
                                     <label><strong>DATA ORANGTUA</strong></label>
@@ -374,8 +373,6 @@
             $('#tableBalita').on('click', '.modal-btn', function() {
                 // Langsung parse objek data dari atribut
                 const balita = $(this).data('balita');
-                console.log(balita.orangtua.dusun.name);
-
 
                 // Isi modal dengan data dari objek balita dan ukur
                 $('#balita_name').text(balita.name);
