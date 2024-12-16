@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Rt;
 use App\Models\Dusun;
 use App\Models\Orangtua;
+use App\Models\Posyandu;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Log;
@@ -19,12 +20,13 @@ class OrtuController extends Controller
     {
         $user = auth()->user();
         if ($user->posyandu_id !== null) {
-            $orangtua = Orangtua::where('dusun_id', $user->posyandu_id)->with(['dusun', 'rt'])->get();
+            $orangtua = Orangtua::where('dusun_id', $user->posyandu_id)->with(['dusun.posyandu', 'rt', 'balita'])->get();
         } else {
 
-            $orangtua = Orangtua::with(['dusun', 'rt'])->get();
+            $orangtua = Orangtua::with(['dusun.posyandu', 'rt', 'balita'])->get();
         }
-        return view('pages.main.orangtua.index', compact('orangtua'));
+        $posyandus = Posyandu::all();
+        return view('pages.main.orangtua.index', compact('orangtua', 'posyandus'));
     }
     //VIEW ADD BALITA
     public function add()

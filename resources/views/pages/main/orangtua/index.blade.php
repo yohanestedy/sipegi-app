@@ -58,14 +58,28 @@
                     </div>
                     <div class="table-responsive datatable-minimal">
 
+                        @if (Auth::user()->role == 'super_admin')
+                            <div class="row mb-3">
+                                <div class="col-12 col-md-4">
+                                    <select id="filterPosyandu" class="form-select form-select-sm">
+                                        <option value="">Semua Posyandu</option>
+                                        @foreach ($posyandus as $posyandu)
+                                            <option value="{{ $posyandu->name }}">{{ $posyandu->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        @endif
+
                         <table class="table table-hover table-bordered medium-text" id="tableOrtu">
                             <thead>
                                 <tr>
                                     <th style="text-align: center;">Aksi</th>
-                                    <th style="text-align: center;">NIK Ibu</th>
                                     <th style="text-align: center;">Nama Ibu</th>
-                                    <th style="text-align: center;">Dusun</th>
+                                    <th style="text-align: center;">NIK Ibu</th>
                                     <th style="text-align: center;">RT</th>
+                                    <th style="text-align: center;">RW</th>
+                                    <th style="text-align: center;">Posyandu</th>
                                     <th style="text-align: center;">Telp</th>
 
                                 </tr>
@@ -75,9 +89,16 @@
                                 @foreach ($orangtua as $orangtua)
                                     <tr>
                                         <td style="text-align: center">
+
+                                            <button type="button" class="btn icon btn-info modal-btn btn-sm"
+                                                data-orangtua='@json($orangtua)' data-bs-toggle="tooltip"
+                                                data-bs-placement="top" data-bs-original-title="Lihat Detail"
+                                                style="border-radius: 8px; padding: .2rem .35rem; color:white;">
+                                                <i class="fa-solid fa-eye"></i>
+                                            </button>
                                             <a href="{{ route('orangtua.edit', ['id' => $orangtua->id]) }}"
                                                 class="btn icon btn-sm btn-primary mt-1 mb-1 me-1" data-bs-toggle="tooltip"
-                                                data-bs-placement="top" data-bs-original-title="Edit"
+                                                data-bs-placement="top" data-bs-original-title="Ubah Data Ortu"
                                                 style="border-radius: 8px; padding: .2rem .35rem;">
                                                 <i class="fa-regular fa-pen-to-square"></i></a>
                                             {{-- <form action="{{ route('orangtua.delete', ['id' => $orangtua->id]) }}"
@@ -94,10 +115,12 @@
                                             </form> --}}
 
                                         </td>
-                                        <td>{{ $orangtua->nik_ibu }}</td>
                                         <td>{{ $orangtua->name_ibu }}</td>
-                                        <td>{{ $orangtua->dusun->name }}</td>
+                                        <td>{{ $orangtua->nik_ibu }}</td>
                                         <td>{{ $orangtua->rt->rt }}</td>
+                                        <td>{{ $orangtua->dusun->rw }}</td>
+                                        <td data-sort="{{ $orangtua->dusun->posyandu->id }}">
+                                            {{ $orangtua->dusun->posyandu->name }}</td>
                                         <td>{{ $orangtua->telp }}</td>
 
 
@@ -117,6 +140,105 @@
         </section>
 
 
+    </div>
+
+    {{-- MODAL DETAIL ORANGTUA --}}
+    <div class="modal fade" id="ortuModal" tabindex="-1" aria-labelledby="ortuModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <h5 class="modal-title white" id="ortuModalLabel">Data Orangtua</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+
+
+
+
+                            <div class="row">
+                                <div class="col-7 col-md-6 pe-0 ">
+                                    <label class="medium-text">No KK :</label><br>
+                                    <p class="badge bg-light-secondary form-control-static fw-normal" id="kk">
+                                    </p><br>
+                                    <label class="medium-text">Nama Ibu :</label><br>
+                                    <p class="badge bg-light-secondary form-control-static text-wrap text-start"
+                                        id="name_ibu">
+                                    </p><br>
+                                    <label class="medium-text">NIK Ibu :</label><br>
+                                    <p class="badge bg-light-secondary form-control-static fw-normal" id="nik_ibu">
+                                    </p><br>
+                                    <label class="medium-text">Nama Ayah :</label><br>
+                                    <p class="badge bg-light-secondary form-control-static text-wrap text-start"
+                                        id="name_ayah">
+                                    </p><br>
+                                    <label class="medium-text">NIK Ayah :</label><br>
+                                    <p class="badge bg-light-secondary form-control-static fw-normal" id="nik_ayah">
+                                    </p><br>
+
+                                </div>
+                                <div class="col-5 col-md-6">
+
+
+
+                                    <label class="medium-text">No. Telp / WA :</label><br>
+                                    <p class="badge bg-light-secondary form-control-static fw-normal" id="telp">
+                                    </p><br>
+                                    <label class="medium-text">RT / RW :</label><br>
+                                    <p class="badge bg-light-secondary form-control-static fw-normal" id="rtrw">
+                                    </p><br>
+                                    <label class="medium-text">Dusun :</label><br>
+                                    <p class="badge bg-light-secondary form-control-static fw-normal" id="dusun">
+                                    </p><br>
+                                    <label class="medium-text">Alamat :</label><br>
+                                    <p class="badge bg-light-secondary form-control-static fw-normal text-wrap text-start"
+                                        id="alamat">
+                                    </p><br>
+
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="col-md-12 mt-3">
+                            {{-- ROW KOLOM ORANGTUA --}}
+                            <div class="row">
+                                <div class="col-9 col-md-9">
+                                    <label><strong>DATA ANAK</strong></label>
+                                </div>
+                            </div>
+
+
+                            <!-- Tabel untuk menampilkan data balita -->
+                            <div class="table-responsive">
+                                <table class="table table-bordered medium-text">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th class="text-center">No</th>
+                                            <th class="text-center">Nama Balita</th>
+                                            <th>JK</th>
+                                            <th class="text-center">Umur</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="balita_table_body">
+                                        <!-- Data balita akan dimasukkan di sini -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+                {{-- <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+
+                </div> --}}
+            </div>
+        </div>
     </div>
 @endsection
 
@@ -175,42 +297,61 @@
         });
     </script>
 
-    {{-- Toast Sweatalert2 --}}
-    @if (session('successToast'))
-        <script>
-            const Toast = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.onmouseenter = Swal.stopTimer;
-                    toast.onmouseleave = Swal.resumeTimer;
+    <script>
+        $(document).ready(function() {
+            // Delegasikan event click pada tombol modal-btn
+            $('#tableOrtu').on('click', '.modal-btn', function() {
+                // Langsung parse objek data dari atribut
+                const orangtua = $(this).data('orangtua');
+
+                $('#kk').text(orangtua.no_kk);
+                $('#name_ibu').text(orangtua.name_ibu);
+                $('#nik_ibu').text(orangtua.nik_ibu);
+                $('#name_ayah').text(orangtua.name_ayah);
+                $('#nik_ayah').text(orangtua.nik_ayah);
+                $('#telp').text(orangtua.telp);
+                $('#alamat').text(orangtua.alamat);
+                $('#rtrw').text(orangtua.rt.rt + " / " + orangtua.dusun.rw);
+                $('#dusun').text(orangtua.dusun.name);
+
+                // Kosongkan tabel balita sebelumnya
+                $('#balita_table_body').empty();
+
+                // Tambahkan data balita ke dalam tabel
+                if (orangtua.balita && orangtua.balita.length > 0) {
+                    orangtua.balita.forEach(function(balita) {
+                        $('#balita_table_body').append(`
+                            <tr>
+                                <td class="text-center">
+                                    <small>${balita.family_order}</small>
+                                </td>
+                                <td>
+                                    <a href="/pengukuran/detail/${balita.id}">
+                                        <small>${balita.name}</small>
+                                    </a>
+                                </td>
+                                <td class="text-center">
+                                    <small>${balita.gender}</small>
+                                </td>
+                                <td>
+                                    <small>${balita.umur_display}</small>
+                                </td>
+                            </tr>`);
+                    });
+                } else {
+                    $('#balita_table_body').append(`
+                            <tr>
+                                <td colspan="4" class="text-center"><em>Tidak ada data balita</em></td>
+                            </tr>`);
                 }
+
+
+
+
+
+                // Tampilkan modal
+                $('#ortuModal').modal('show');
             });
-            Toast.fire({
-                icon: "success",
-                title: "{{ session('successToast') }}"
-            });
-        </script>
-    @elseif (session('errorToast'))
-        <script>
-            const Toast = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.onmouseenter = Swal.stopTimer;
-                    toast.onmouseleave = Swal.resumeTimer;
-                }
-            });
-            Toast.fire({
-                icon: "error",
-                title: "{{ session('errorToast') }}"
-            });
-        </script>
-    @endif
+        });
+    </script>
 @endsection
