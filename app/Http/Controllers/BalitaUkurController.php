@@ -573,9 +573,15 @@ class BalitaUkurController extends Controller
         // $bulan = $umurBulan % 12;
         // $hari = $umurHari % 30;
         $umurBulan = floor($umurHari / 30.4375);
+
         $tahun = floor($umurHari / 365.25);
-        $bulan = $umurBulan % 12;
-        $hari = round($umurHari - floor($umurHari / 30.4375) * 30.4375);
+        $sisaHariSetelahTahun = $umurHari - $tahun * 365.25;
+        // $bulan = $umurBulan % 12;
+        $bulan = floor($sisaHariSetelahTahun / 30.4375);
+        // $sisaHariSetelahBulan = $sisaHariSetelahTahun - $bulan * 30.4375;
+        $hari = floor($umurHari - $umurBulan * 30.4375);
+
+
 
         if ($umurHari <= 730) {
             // Jika umur kurang dari atau sama dengan 730 hari (2 tahun)
@@ -621,12 +627,14 @@ class BalitaUkurController extends Controller
 
         if ($diffInDays > 35) {
             return 'O';
-        } else if ($bb < $previous->bb) {
-            return 'T';
+        } else if ($bb < $previous->bb && $previous->bb < $previousKedua->bb) {
+            return '2T'; // Berat badan turun dua kali berturut-turut
         } else if ($bb == $previous->bb) {
-            return '2T';
+            return '2T'; // Berat badan sama dengan bulan lalu
+        } else if ($bb < $previous->bb) {
+            return 'T'; // Berat badan turun sekali
         } else {
-            return 'N';
+            return 'N'; // Berat badan naik
         }
     }
 }

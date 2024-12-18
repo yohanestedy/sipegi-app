@@ -54,7 +54,7 @@ class Balita extends Model
         $hariSelisih = $tanggalLahir->diffInDays(Carbon::now());
 
         // Menghitung umur dalam bulan penuh (1 bulan dihitung genap 30 hari)
-        $umurBulan = intdiv($hariSelisih, 30);
+        $umurBulan = intdiv($hariSelisih, 30.4375);
 
         return $umurBulan;
     }
@@ -70,9 +70,19 @@ class Balita extends Model
         // $bulan = $umurBulan % 12;
         // $hari = $umurHari % 30;
         $umurBulan = floor($umurHari / 30.4375);
+
         $tahun = floor($umurHari / 365.25);
-        $bulan = $umurBulan % 12;
-        $hari = round($umurHari - floor($umurHari / 30.4375) * 30.4375);
+        $sisaHariSetelahTahun = $umurHari - $tahun * 365.25;
+        // $bulan = $umurBulan % 12;
+        $bulan = floor($sisaHariSetelahTahun / 30.4375);
+        // $sisaHariSetelahBulan = $sisaHariSetelahTahun - $bulan * 30.4375;
+        $hari = floor($umurHari - $umurBulan * 30.4375);
+
+
+
+
+
+
 
 
         if ($umurHari <= 730) {
