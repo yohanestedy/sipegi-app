@@ -206,7 +206,7 @@
                             {{-- ROW KOLOM ORANGTUA --}}
                             <div class="row">
                                 <div class="col-9 col-md-9">
-                                    <label><strong>DATA ANAK</strong></label>
+                                    <label><strong>Data Anak</strong></label>
                                 </div>
                             </div>
 

@@ -352,6 +352,7 @@ class BalitaController extends Controller
         // Balita lebih tua
         $olderBalita = Balita::where('orangtua_id', $request->orangtua)
             ->where('tgl_lahir', '<', $tglLahir)
+            ->where('id', '!=', $id) //Pengecualian
             ->orderBy('tgl_lahir', 'desc')
             ->first();
 
@@ -499,7 +500,7 @@ class BalitaController extends Controller
     public function pindahkanBalitaLulus()
     {
         // Ambil data balita yang sudah berumur lebih dari 1856 hari
-        $balitas = Balita::whereRaw('DATEDIFF(CURDATE(), tgl_lahir) > 1856')->get();
+        $balitas = Balita::whereRaw('DATEDIFF(CURDATE(), tgl_lahir) > 1825')->get();
 
         foreach ($balitas as $balita) {
             // Pindahkan data ke tabel balita_lulus
