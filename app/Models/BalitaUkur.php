@@ -55,12 +55,14 @@ class BalitaUkur extends Model
 
         if ($diffInDays > 35) {
             return 'O';
-        } else if ($this->bb < $previous->bb) {
-            return 'T';
+        } else if ($this->bb < $previous->bb && $previous->bb < $previousKedua->bb) {
+            return '2T'; // Berat badan turun dua kali berturut-turut
         } else if ($this->bb == $previous->bb) {
-            return '2T';
+            return '2T'; // Berat badan sama dengan bulan lalu
+        } else if ($this->bb < $previous->bb) {
+            return 'T'; // Berat badan turun sekali
         } else {
-            return 'N';
+            return 'N'; // Berat badan naik
         }
     }
 }
