@@ -388,7 +388,7 @@
                                         }
                                     </style>
                                     <label class="medium-text">Nama Balita :</label><br>
-                                    <p class="text-start badge bg-light-secondary form-control-static fw-normal"
+                                    <p class="text-start badge bg-light-secondary form-control-static fw-bold"
                                         id="balita_name">
                                     </p><br>
                                     <label class="medium-text">Jenis Kelamin :</label><br>

@@ -518,7 +518,10 @@ class BalitaController extends Controller
                 'tb_lahir' => $balita->tb_lahir,
                 'status' => "Lulus",
                 'tgl_nonaktif' => Carbon::now()->format('Y-m-d'),
+                'created_at' => $balita->created_at,
+                'updated_at' => $balita->updated_at,
                 'created_by' => $balita->created_by,
+                'updated_by' => $balita->updated_by,
             ]);
 
             // Ambil semua relasi balitaUkur yang terkait dengan balita ini

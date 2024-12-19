@@ -161,7 +161,7 @@
                                                 class="badge">
                                                 {{ $balita->gender_display }}</div>
                                         </td>
-                                        <td>{{ \Carbon\Carbon::parse($balita->tgl_lahir)->translatedFormat('d F Y') }}</td>
+                                        <td>{{ $balita->tgl_lahir_display }}</td>
                                         <td data-sort="{{ $balita->umur_hari }}">{{ $balita->umur_display }}</td>
                                         <td>{{ $balita->orangtua->name_ibu }}</td>
                                         <td data-sort="{{ $balita->posyandu_id }}" style="text-align: center">
@@ -217,6 +217,9 @@
                                     <p class="badge bg-light-secondary form-control-static fw-normal" id="umur">
                                     </p>
                                     <br>
+                                    <label class="medium-text">Anak ke :</label><br>
+                                    <p class="badge bg-light-secondary form-control-static fw-normal" id="family_order">
+                                    </p><br>
 
 
 
@@ -236,6 +239,10 @@
                                     <label class="medium-text">Posyandu :</label><br>
                                     <p class="badge bg-light-secondary form-control-static fw-normal" id="posyandu">
                                     </p><br>
+                                    <label class="medium-text">Status :</label><br>
+                                    <p class="badge bg-light-secondary form-control-static fw-normal" id="status">
+                                    </p>
+                                    <br>
 
                                 </div>
                             </div>
@@ -260,14 +267,14 @@
                                     <p class="badge bg-light-secondary form-control-static fw-normal" id="kk">
                                     </p><br>
                                     <label class="medium-text">Nama Ibu :</label><br>
-                                    <p class="badge bg-light-secondary form-control-static fw-normal text-wrap"
+                                    <p class="badge bg-light-secondary form-control-static fw-bold text-wrap"
                                         id="name_ibu">
                                     </p><br>
                                     <label class="medium-text">NIK Ibu :</label><br>
                                     <p class="badge bg-light-secondary form-control-static fw-normal" id="nik_ibu">
                                     </p><br>
                                     <label class="medium-text">Nama Ayah :</label><br>
-                                    <p class="badge bg-light-secondary form-control-static fw-normal text-wrap"
+                                    <p class="badge bg-light-secondary form-control-static fw-bold text-wrap"
                                         id="name_ayah">
                                     </p><br>
                                     <label class="medium-text">NIK Ayah :</label><br>
@@ -383,6 +390,8 @@
                 $('#bbtb_lahir').text(balita.bb_lahir + " kg" + " / " + balita.tb_lahir + " cm");
                 $('#posyandu').text(balita.posyandu.name);
                 $('#bpjs').text(balita.bpjs);
+                $('#status').text(balita.status);
+                $('#family_order').text(balita.family_order);
 
                 $('#kk').text(balita.orangtua.no_kk);
                 $('#name_ibu').text(balita.orangtua.name_ibu);

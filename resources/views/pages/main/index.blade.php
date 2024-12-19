@@ -30,8 +30,8 @@
                                         </div>
                                     </div>
                                     <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                        <h6 class="text-muted font-semibold">BB/U <-2SD </h6>
-                                                <h6 class="font-extrabold mb-0">3</h6>
+                                        <h6 class="text-muted font-semibold">STUNTING </h6>
+                                        <h6 class="font-extrabold mb-0">3</h6>
                                     </div>
                                 </div>
                             </div>
@@ -47,8 +47,8 @@
                                         </div>
                                     </div>
                                     <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                        <h6 class="text-muted font-semibold">TB/U <-2SD </h6>
-                                                <h6 class="font-extrabold mb-0">2</h6>
+                                        <h6 class="text-muted font-semibold">BALITA 2T</h6>
+                                        <h6 class="font-extrabold mb-0">2</h6>
                                     </div>
                                 </div>
                             </div>
@@ -64,8 +64,8 @@
                                         </div>
                                     </div>
                                     <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                        <h6 class="text-muted font-semibold">BB/TB <-2SD </h6>
-                                                <h6 class="font-extrabold mb-0">4</h6>
+                                        <h6 class="text-muted font-semibold">BALITA BGM</h6>
+                                        <h6 class="font-extrabold mb-0">4</h6>
                                     </div>
                                 </div>
                             </div>
@@ -81,8 +81,8 @@
                                         </div>
                                     </div>
                                     <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                        <h6 class="text-muted font-semibold">IMT/U <-2SD </h6>
-                                                <h6 class="font-extrabold mb-0">2</h6>
+                                        <h6 class="text-muted font-semibold">BALITA BGT</h6>
+                                        <h6 class="font-extrabold mb-0">2</h6>
                                     </div>
                                 </div>
                             </div>

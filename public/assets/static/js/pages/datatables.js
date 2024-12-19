@@ -149,7 +149,7 @@ let tablePengukuran = $("#tableDaftarBalitaDiukur").DataTable({
     }
 })
 
-let tableBalitaLulus = $("#tableBalitaLulus").DataTable({
+let tableBalitaNonaktif = $("#tableBalitaNonaktif").DataTable({
     responsive: true,
     lengthMenu: [
         [10, 25, 50, -1],
@@ -158,7 +158,7 @@ let tableBalitaLulus = $("#tableBalitaLulus").DataTable({
     pageLength: -1,
     pagingType: 'simple',
     order: [
-        [5, 'asc'],  // Kolom Dusun, urut descending
+        [1, 'desc'],  // Kolom Dusun, urut descending
     ],
     columnDefs: [
 
@@ -229,7 +229,7 @@ $('#filterPosyandu').on('change', function () {
     let selectedValue = $(this).val(); // Ambil nilai yang dipilih
     tableBalita.column(7) .search(selectedValue).draw();  // Tabel Balita
     tablePengukuran.column(20).search(selectedValue).draw();    //Tabel Pengukuran
-    tableBalitaLulus.column(8).search(selectedValue).draw();    //Tabel Balita Lulus
+    tableBalitaNonaktif.column(8).search(selectedValue).draw();    //Tabel Balita Lulus
     tableOrangTua.column(5).search(selectedValue).draw();
 
     // updateRowCount(tableOrangTua, 'rowCountDisplayPengukuran');
