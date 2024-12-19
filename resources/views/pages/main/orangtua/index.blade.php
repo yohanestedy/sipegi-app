@@ -213,13 +213,14 @@
 
                             <!-- Tabel untuk menampilkan data balita -->
                             <div class="table-responsive">
-                                <table class="table table-bordered medium-text">
+                                <table class="table table-bordered  medium-text">
                                     <thead class="table-light">
                                         <tr>
                                             <th class="text-center">No</th>
                                             <th class="text-center">Nama Balita</th>
                                             <th>JK</th>
                                             <th class="text-center">Umur</th>
+                                            <th class="text-center">Status</th>
                                         </tr>
                                     </thead>
                                     <tbody id="balita_table_body">
@@ -314,10 +315,39 @@
                 $('#rtrw').text(orangtua.rt.rt + " / " + orangtua.dusun.rw);
                 $('#dusun').text(orangtua.dusun.name);
 
+                console.log(orangtua.balita_nonaktif);
+
+
                 // Kosongkan tabel balita sebelumnya
                 $('#balita_table_body').empty();
 
-                // Tambahkan data balita ke dalam tabel
+                // Tambahkan data balita Nonaktif ke dalam tabel jika ada
+                if (orangtua.balita_nonaktif && orangtua.balita_nonaktif.length > 0) {
+                    orangtua.balita_nonaktif.forEach(function(balita) {
+                        $('#balita_table_body').append(`
+                            <tr>
+                                <td class="text-center">
+                                    <small>${balita.family_order}</small>
+                                </td>
+                                <td>
+                                    <a href="/balita-nonaktif/detail/${balita.id}">
+                                        <small>${balita.name}</small>
+                                    </a>
+                                </td>
+                                <td class="text-center">
+                                    <small>${balita.gender}</small>
+                                </td>
+                                <td>
+                                    <small>${balita.umur_display}</small>
+                                </td>
+                                <td>
+                                    <small>${balita.status}</small>
+                                </td>
+                            </tr>`);
+                    });
+                }
+
+                // Tambahkan data balita Aktif ke dalam tabel
                 if (orangtua.balita && orangtua.balita.length > 0) {
                     orangtua.balita.forEach(function(balita) {
                         $('#balita_table_body').append(`
@@ -336,18 +366,17 @@
                                 <td>
                                     <small>${balita.umur_display}</small>
                                 </td>
+                                <td>
+                                    <small>${balita.status}</small>
+                                </td>
                             </tr>`);
                     });
                 } else {
                     $('#balita_table_body').append(`
                             <tr>
-                                <td colspan="4" class="text-center"><em>Tidak ada data balita</em></td>
+                                <td colspan="5" class="text-center"><em>Tidak ada data balita aktif</em></td>
                             </tr>`);
                 }
-
-
-
-
 
                 // Tampilkan modal
                 $('#ortuModal').modal('show');
