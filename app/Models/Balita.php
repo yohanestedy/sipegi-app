@@ -94,10 +94,16 @@ class Balita extends Model
         }
     }
 
-    // Mengembalikan tanggal lahir dalam format yang diinginkan
+    // Mengembalikan tanggal lahir dalam format Huruf
     public function getTglLahirDisplayAttribute()
     {
         return Carbon::parse($this->tgl_lahir)->translatedFormat('d F Y');
+    }
+
+    // Mengembalikan tanggal lahir dalam format Angka
+    public function getTglLahirAngkaAttribute()
+    {
+        return Carbon::parse($this->tgl_lahir)->format('d-m-Y');
     }
 
     // Mengembalikan gender dalam format yang diinginkan
