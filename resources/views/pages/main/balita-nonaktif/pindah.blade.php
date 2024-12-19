@@ -113,16 +113,28 @@
                         </p>
                     </div>
                     <div class="table-responsive datatable-minimal">
-
-                        <table class="table table-hover table-bordered medium-text" id="tableBalitaLulus">
+                        @if (Auth::user()->role == 'super_admin')
+                            <div class="row mb-3">
+                                <div class="col-12 col-md-4">
+                                    <select id="filterPosyandu" class="form-select form-select-sm">
+                                        <option value="">Semua Posyandu</option>
+                                        @foreach ($posyandus as $posyandu)
+                                            <option value="{{ $posyandu->name }}">{{ $posyandu->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        @endif
+                        <table class="table table-hover table-bordered medium-text" id="tableBalitaNonaktif">
                             <thead>
                                 <tr>
                                     <th style="text-align: center;">Tindakan</th>
+                                    <th style="text-align: center;">Tanggal Nonaktif</th>
                                     <th style="text-align: center;">Nama</th>
                                     <th style="text-align: center;">NIK</th>
                                     <th style="text-align: center;">Jenis Kelamin</th>
                                     <th style="text-align: center;">Tanggal Lahir</th>
-                                    <th style="text-align: center;">Umur</th>
+                                    <th style="text-align: center;">Umur Saat Ini</th>
                                     <th style="text-align: center;">Nama Orangtua</th>
                                     <th style="text-align: center;">Posyandu</th>
 
@@ -134,16 +146,22 @@
                                     <tr>
 
                                         <td style="text-align: center">
+                                            <button type="button" class="btn icon btn-info modal-btn btn-sm"
+                                                data-balita='@json($balita)' data-bs-toggle="tooltip"
+                                                data-bs-placement="top" data-bs-original-title="Lihat Detail"
+                                                style="border-radius: 8px; padding: .2rem .35rem; color:white;">
+                                                <i class="fa-solid fa-eye"></i>
+                                            </button>
                                             <a href="{{ route('balitanonaktif.detail', ['id' => $balita->id]) }}"
-                                                class="btn icon btn-primary " data-bs-toggle="tooltip"
+                                                class="btn btn-sm icon btn-primary " data-bs-toggle="tooltip"
                                                 data-bs-placement="top" data-bs-original-title="Riwayat Pengukuran"
-                                                style="border-radius: 8px; padding: .2rem .4rem;">
+                                                style="border-radius: 8px; padding: .2rem .35rem;">
                                                 <i class="fa-regular fa-list-check"></i></a></a>
-                                            <a href="{{ route('balita.edit', ['id' => $balita->id]) }}"
+                                            {{-- <a href="{{ route('balita.edit', ['id' => $balita->id]) }}"
                                                 class="btn icon btn-success " data-bs-toggle="tooltip"
                                                 data-bs-placement="top" data-bs-original-title="Edit"
                                                 style="border-radius: 8px; padding: .2rem .4rem;">
-                                                <i class="fa-regular fa-pen-to-square"></i></a>
+                                                <i class="fa-regular fa-pen-to-square"></i></a> --}}
 
                                             {{-- <form action="{{ route('balita.delete', ['id' => $balita->id]) }}"
                                                 method="POST" style="display: inline">
@@ -160,6 +178,7 @@
 
 
                                         </td>
+                                        <td>{{ $balita->tgl_nonaktif_angka }}</td>
                                         <td>{{ $balita->name }}</td>
                                         <td style="text-align: center">{{ $balita->nik == null ? '-' : $balita->nik }}</td>
                                         <td style="text-align: center">
@@ -190,6 +209,140 @@
         </section>
 
 
+    </div>
+
+
+    {{-- MODAL HASIL PENGUKURAN --}}
+    <div class="modal fade" id="balitaModal" tabindex="-1" aria-labelledby="balitaModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <h5 class="modal-title white" id="balitaModalLabel">Biodata Balita Nonaktif</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-7 col-md-6 pe-0">
+
+
+                                    <label class="medium-text">Nama Balita :</label><br>
+                                    <p class="text-start badge bg-light-secondary form-control-static fw-bold text-wrap"
+                                        id="balita_name">
+                                    </p><br>
+                                    <label class="medium-text">NIK Balita :</label><br>
+                                    <p class="text-start badge bg-light-secondary form-control-static fw-normal"
+                                        id="nik_balita">
+                                    </p><br>
+
+                                    <label class="medium-text">Tanggal Lahir :</label><br>
+                                    <p class="badge bg-light-secondary form-control-static fw-normal" id="tgl_lahir">
+                                    </p><br>
+                                    <label class="medium-text">Umur Saat Ini :</label><br>
+                                    <p class="badge bg-light-secondary form-control-static fw-normal" id="umur">
+                                    </p>
+                                    <br>
+                                    <label class="medium-text">Anak ke :</label><br>
+                                    <p class="badge bg-light-secondary form-control-static fw-normal" id="family_order">
+                                    </p><br>
+
+
+
+
+
+                                </div>
+                                <div class="col-5 col-md-6">
+                                    <label class="medium-text">Jenis Kelamin :</label><br>
+                                    <p class="text-start badge bg-light-secondary form-control-static fw-normal"
+                                        id="gender">
+                                    </p><br>
+                                    <label class="medium-text">BB / TB Lahir :</label><br>
+                                    <p class="badge bg-light-secondary form-control-static fw-normal" id="bbtb_lahir">
+                                    </p><br>
+                                    <label class="medium-text">BPJS Balita :</label><br>
+                                    <p class="badge bg-light-secondary form-control-static fw-normal" id="bpjs">
+                                    </p><br>
+                                    <label class="medium-text">Posyandu :</label><br>
+                                    <p class="badge bg-light-secondary form-control-static fw-normal" id="posyandu">
+                                    </p><br>
+                                    <label class="medium-text">Status :</label><br>
+                                    <p class="badge bg-light-secondary form-control-static fw-normal" id="status">
+                                    </p>
+                                    <br>
+
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="col-md-12 mt-3">
+
+
+                            {{-- ROW KOLOM ORANGTUA --}}
+                            <div class="row">
+                                <div class="col-9 col-md-9">
+                                    <label><strong>DATA ORANGTUA</strong></label>
+                                </div>
+
+                            </div>
+                            <hr class="my-2">
+
+                            <div class="row">
+                                <div class="col-7 col-md-6 pe-0">
+                                    <label class="medium-text">No KK :</label><br>
+                                    <p class="badge bg-light-secondary form-control-static fw-normal" id="kk">
+                                    </p><br>
+                                    <label class="medium-text">Nama Ibu :</label><br>
+                                    <p class="badge bg-light-secondary form-control-static fw-bold text-wrap"
+                                        id="name_ibu">
+                                    </p><br>
+                                    <label class="medium-text">NIK Ibu :</label><br>
+                                    <p class="badge bg-light-secondary form-control-static fw-normal" id="nik_ibu">
+                                    </p><br>
+                                    <label class="medium-text">Nama Ayah :</label><br>
+                                    <p class="badge bg-light-secondary form-control-static fw-bold text-wrap"
+                                        id="name_ayah">
+                                    </p><br>
+                                    <label class="medium-text">NIK Ayah :</label><br>
+                                    <p class="badge bg-light-secondary form-control-static fw-normal" id="nik_ayah">
+                                    </p><br>
+
+                                </div>
+                                <div class="col-5 col-md-6">
+
+
+
+                                    <label class="medium-text">No. Telp / WA :</label><br>
+                                    <p class="badge bg-light-secondary form-control-static fw-normal" id="telp">
+                                    </p><br>
+                                    <label class="medium-text">RT / RW :</label><br>
+                                    <p class="badge bg-light-secondary form-control-static fw-normal" id="rtrw">
+                                    </p><br>
+                                    <label class="medium-text">Dusun :</label><br>
+                                    <p class="badge bg-light-secondary form-control-static fw-normal" id="dusun">
+                                    </p><br>
+                                    <label class="medium-text">Alamat :</label><br>
+                                    <p class="badge bg-light-secondary form-control-static fw-normal text-wrap"
+                                        id="alamat">
+                                    </p><br>
+
+
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                </div>
+                {{-- <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+
+                </div> --}}
+            </div>
+        </div>
     </div>
 @endsection
 
@@ -251,7 +404,7 @@
         });
     </script>
 
-    {{-- Ceklis Delete --}}
+    {{-- Ceklis Formulir Balita Pindah --}}
     <script>
         const checkbox = document.getElementById("iaggree")
         const buttonPindahkan = document.getElementById("btn-pindahkan")
@@ -263,5 +416,42 @@
                 buttonPindahkan.setAttribute("disabled", true)
             }
         })
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            // Delegasikan event click pada tombol modal-btn
+            $('#tableBalitaNonaktif').on('click', '.modal-btn', function() {
+                // Langsung parse objek data dari atribut
+                const balita = $(this).data('balita');
+
+                // Isi modal dengan data dari objek balita dan ukur
+                $('#balita_name').text(balita.name);
+                $('#nik_balita').text(balita.nik ? balita.nik : '-');
+                $('#gender').text(balita.gender_display);
+                $('#tgl_lahir').text(balita.tgl_lahir_display);
+                $('#umur').text(balita.umur_display);
+                $('#bbtb_lahir').text(balita.bb_lahir + " kg" + " / " + balita.tb_lahir + " cm");
+                $('#posyandu').text(balita.posyandu.name);
+                $('#bpjs').text(balita.bpjs);
+                $('#status').text(balita.status);
+                $('#family_order').text(balita.family_order);
+
+                $('#kk').text(balita.orangtua.no_kk);
+                $('#name_ibu').text(balita.orangtua.name_ibu);
+                $('#nik_ibu').text(balita.orangtua.nik_ibu);
+                $('#name_ayah').text(balita.orangtua.name_ayah);
+                $('#nik_ayah').text(balita.orangtua.nik_ayah);
+                $('#telp').text(balita.orangtua.telp);
+                $('#alamat').text(balita.orangtua.alamat);
+                $('#rtrw').text(balita.orangtua.rt.rt + " / " + balita.orangtua.dusun.rw);
+                $('#dusun').text(balita.orangtua.dusun.name);
+
+
+
+                // Tampilkan modal
+                $('#balitaModal').modal('show');
+            });
+        });
     </script>
 @endsection

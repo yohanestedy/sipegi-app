@@ -17,7 +17,7 @@ class BalitaNonaktifController extends Controller
     public function balitaLulus()
     {
         $user = auth()->user();
-        $query = BalitaNonaktif::with(['posyandu', 'orangtua']);
+        $query = BalitaNonaktif::with(['posyandu', 'orangtua.dusun', 'orangtua.rt']);
         if ($user->posyandu_id !== null) {
             $query->where('posyandu_id', $user->posyandu_id);
         }
@@ -33,19 +33,24 @@ class BalitaNonaktifController extends Controller
     public function indexPindahKeluar()
     {
         $user = auth()->user();
-        $query = Balita::with('posyandu');
-        $queryNonaktif = BalitaNonaktif::with(['posyandu', 'orangtua']);
+        $query = Balita::with('posyandu'); // Untuk Formulir Balita Pindah Keluar
+        $queryNonaktif = BalitaNonaktif::with(['posyandu', 'orangtua.dusun', 'orangtua.rt']);
+
         if ($user->posyandu_id !== null) {
             $query->where('posyandu_id', $user->posyandu_id);
             $queryNonaktif->where('posyandu_id', $user->posyandu_id);
         }
+
         $query->orderBy('name', 'asc');
         $queryNonaktif->where('status', 'Pindah Keluar');
+
         $balitasAktif = $query->get();
         $balitas = $queryNonaktif->get();
 
+        $posyandus = Posyandu::all();
+
         // return $balitas;
-        return view('pages.main.balita-nonaktif.pindah', compact('balitas', 'balitasAktif'));
+        return view('pages.main.balita-nonaktif.pindah', compact('balitas', 'balitasAktif', 'posyandus'));
     }
 
 
@@ -119,19 +124,24 @@ class BalitaNonaktifController extends Controller
     public function indexMeninggal()
     {
         $user = auth()->user();
-        $query = Balita::with('posyandu');
-        $queryNonaktif = BalitaNonaktif::with(['posyandu', 'orangtua']);
+        $query = Balita::with('posyandu'); // Untuk Formulir Balita Meninggal
+        $queryNonaktif = BalitaNonaktif::with(['posyandu', 'orangtua.dusun', 'orangtua.rt']);
+
         if ($user->posyandu_id !== null) {
             $query->where('posyandu_id', $user->posyandu_id);
             $queryNonaktif->where('posyandu_id', $user->posyandu_id);
         }
+
         $query->orderBy('name', 'asc');
         $queryNonaktif->where('status', 'Meninggal');
+
         $balitasAktif = $query->get();
         $balitas = $queryNonaktif->get();
 
+        $posyandus = Posyandu::all();
+
         // return $balitas;
-        return view('pages.main.balita-nonaktif.meninggal', compact('balitas', 'balitasAktif'));
+        return view('pages.main.balita-nonaktif.meninggal', compact('balitas', 'balitasAktif', 'posyandus'));
     }
 
     // FUNGSI MEMINDAH KELUARKAN BALITA
