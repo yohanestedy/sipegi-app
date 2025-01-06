@@ -50,6 +50,14 @@ class BalitaUkurTableExport implements FromCollection, WithHeadings, WithStyles,
             return $item->balita->name; // Urutkan berdasarkan nama balita
         });
 
+        // Menambahkan nomor urut pada setiap item
+        $balitaQuery->each(function ($item, $index) {
+            // Menambahkan properti nomor urut pada setiap item
+            $item->nomor_urut = $index + 1; // Mulai dari 1
+        });
+
+        return $balitaQuery;
+
         return $balitaQuery;
     }
 
@@ -124,10 +132,13 @@ class BalitaUkurTableExport implements FromCollection, WithHeadings, WithStyles,
 
     public function map($balitaUkur): array
     {
+        static $index = 1;
+
 
 
         return [
-            '',
+
+            $balitaUkur->nomor_urut,
             $balitaUkur->balita->name,
             " " . $balitaUkur->balita->nik,
             $balitaUkur->balita->gender,
@@ -155,12 +166,12 @@ class BalitaUkurTableExport implements FromCollection, WithHeadings, WithStyles,
 
     public function styles(Worksheet $sheet)
     {
-        // Atur formula otomatis untuk kolom No
-        $highestRow = $sheet->getHighestRow();
+        // // Atur formula otomatis untuk kolom No
+        // $highestRow = $sheet->getHighestRow();
 
-        for ($row = 7; $row <= $highestRow; $row++) {
-            $sheet->setCellValue("A{$row}", "=ROW()-6"); // Penomoran mulai dari baris 7
-        }
+        // for ($row = 7; $row <= $highestRow; $row++) {
+        //     $sheet->setCellValue("A{$row}", "=ROW()-6"); // Penomoran mulai dari baris 7
+        // }
 
 
         // Merge cells for title and header
@@ -232,7 +243,8 @@ class BalitaUkurTableExport implements FromCollection, WithHeadings, WithStyles,
         $sheet->getStyle('C7:C' . $lastRow)->getAlignment()->setHorizontal('left');
         $sheet->getStyle('F7:F' . $lastRow)->getAlignment()->setHorizontal('left');
 
-        // Kolom D, F sampai V: Center Align
+        // Kolom A, D, F sampai V: Center Align
+        $sheet->getStyle('A7:A' . $lastRow)->getAlignment()->setHorizontal('center');
         $sheet->getStyle('D7:D' . $lastRow)->getAlignment()->setHorizontal('center');
         $sheet->getStyle('E7:E' . $lastRow)->getAlignment()->setHorizontal('center');
         $sheet->getStyle('G7:W' . $lastRow)->getAlignment()->setHorizontal('center');
