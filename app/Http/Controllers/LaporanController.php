@@ -20,7 +20,16 @@ class LaporanController extends Controller
 
     public function exportPengukuran(Request $request)
     {
+        $request->validate([
+            'posyandu_id' => 'required',
+            'periode' => 'required',
+        ], [
+            'posyandu_id.required' => 'Pilih posyandu untuk di ekspor.',
+            'periode.required' => 'Pilih bulan dan tahun.',
+        ]);
+
         $periode = $request->periode;
+
         [$bulan, $tahun] = explode('.', $periode);
         $tahun = '20' . $tahun; // Format 4 digit untuk tahun
 
@@ -45,11 +54,21 @@ class LaporanController extends Controller
             $posyandus = Posyandu::with('dusun')->get();
 
             $fileName = 'Laporan_Pengukuran_Balita_Semua_Posiyandu_' . $bulan . '_' . $tahun . '.xlsx';
+            $fileNamePDF = 'Laporan_Pengukuran_Balita_Semua_Posiyandu_' . $bulan . '_' . $tahun . '.pdf';
 
-            return Excel::download(
-                new BalitaUkurMultiSheetExport($periode, $posyandus),
-                $fileName
-            );
+            // return Excel::download(new BalitaUkurMultiSheetExport($periode, $posyandus), $fileNamePDF, \Maatwebsite\Excel\Excel::MPDF);
+
+            // Menentukan format PDF dengan MPDF dan orientasi Landscape
+            // return Excel::download(
+            //     new BalitaUkurMultiSheetExport($periode, $posyandus),
+            //     $fileNamePDF,
+            //     \Maatwebsite\Excel\Excel::MPDF,
+            //     [
+            //         'orientation' => 'L', // Menetapkan orientasi Landscape
+            //     ]
+            // );
+
+            return Excel::download(new BalitaUkurMultiSheetExport($periode, $posyandus), $fileName);
         }
     }
 }
