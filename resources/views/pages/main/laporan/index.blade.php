@@ -47,10 +47,11 @@
                         class="form form-horizontal">
                         <div class="row">
                             <div class="col-12 col-md-5 mb-3">
-                                <select name="posyandu_id" id="posyandu" class="form-select "
-                                    data-placeholder="Pilih Posyandu" required>
+                                <select name="posyandu_id" id="posyandu"
+                                    class="form-select @error('posyandu_id') is-invalid @enderror"
+                                    data-placeholder="Pilih Posyandu">
                                     <option selected disabled value="">--Pilih Posyandu--</option>
-                                    <option value="">Semua Posyandu</option>
+                                    <option value="0">Semua Posyandu</option>
                                     <option value="1">Melati / Sumber Mulyo</option>
                                     <option value="2">Nusa Indah / Sidodadi</option>
                                     <option value="3">Kenanga / Sukorejo</option>
@@ -58,11 +59,22 @@
                                     <option value="5">Dahlia / Sidorejo</option>
                                     <option value="6">Anggrek / Suko Makmur</option>
                                 </select>
+                                <div class="invalid-feedback">
+                                    @error('posyandu_id')
+                                        {{ $message }}
+                                    @enderror
+                                </div>
                             </div>
                             <div class="col-12 col-md-5 mb-3">
 
-                                <input id="periode" name="periode" type="text" class="form-control"
+                                <input id="periode" name="periode" type="text"
+                                    class="form-control @error('periode') is-invalid @enderror"
                                     placeholder="--Pilih Bulan dan Tahun--" />
+                                <div class="invalid-feedback">
+                                    @error('periode')
+                                        {{ $message }}
+                                    @enderror
+                                </div>
                             </div>
                             <div class="col-12 col-md-2 mb-3">
                                 <button type="submit" class="btn btn-success w-100"><i class="fa-solid fa-file-excel"></i>
