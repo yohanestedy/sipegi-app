@@ -158,7 +158,7 @@
             }
         </style>
         <!-- Logout Button -->
-        <div class="logout-container"
+        <div class="logout-container pb-6"
             style="position: sticky; bottom: 0; width: 100%; background-color: #f8f9fa; padding: 1rem;">
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: inline;">
                 @csrf
