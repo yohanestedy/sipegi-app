@@ -49,12 +49,10 @@ class Balita extends Model
             return null;
         }
 
-        // Menghitung selisih antara tanggal lahir dan tanggal saat ini dalam hari
-        $tanggalLahir = Carbon::parse($this->tgl_lahir);
-        $hariSelisih = $tanggalLahir->diffInDays(Carbon::now());
+        $tglLahir = Carbon::parse($this->tgl_lahir);
+        $umurHari = $tglLahir->diffInDays(now());
 
-        // Menghitung umur dalam bulan penuh (1 bulan dihitung genap 30 hari)
-        $umurBulan = intdiv($hariSelisih, 30.4375);
+        $umurBulan = ceil($umurHari / 30.4375);
 
         return $umurBulan;
     }
