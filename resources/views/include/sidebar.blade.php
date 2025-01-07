@@ -8,12 +8,9 @@
                 background-color: #f8f9fa;
                 padding: 1rem;
                 z-index: 999;
+                padding-bottom: 80px;
             }
 
-            .sidebar-menu {
-                padding-bottom: 80px;
-                /* Ruang tambahan di bawah sidebar */
-            }
         }
     </style>
     <div class="sidebar-wrapper active">
