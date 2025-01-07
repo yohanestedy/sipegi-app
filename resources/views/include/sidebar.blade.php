@@ -146,7 +146,7 @@
 
         <style>
             .logout-container {
-                position: fixed;
+                position: sticky;
                 /* Menggunakan fixed agar tombol keluar selalu di bawah */
                 bottom: 0;
                 width: 100%;
@@ -161,7 +161,7 @@
 
             @media (max-width: 900px) {
                 .logout-container {
-                    position: fixed;
+                    position: sticky;
                     bottom: 0;
                     width: 100%;
                     background-color: #f8f9fa;
