@@ -144,9 +144,46 @@
         </div>
 
 
+        <style>
+            .logout-container {
+                position: fixed;
+                /* Menggunakan fixed agar tombol keluar selalu di bawah */
+                bottom: 0;
+                width: 100%;
+                background-color: #f8f9fa;
+                padding: 1rem;
+                box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+                /* Tambahkan sedikit bayangan agar tombol keluar lebih terlihat */
+                z-index: 999;
+            }
 
+            .sidebar-menu {
+                margin-bottom: 80px;
+                /* Memberikan ruang tambahan untuk logout button */
+                min-height: 100vh;
+                /* Memastikan sidebar selalu memenuhi tinggi layar */
+                padding-bottom: 80px;
+                /* Memberikan ruang di bagian bawah untuk tombol keluar */
+            }
+
+            @media (max-width: 768px) {
+                .logout-container {
+                    position: fixed;
+                    bottom: 0;
+                    width: 100%;
+                    background-color: #f8f9fa;
+                    padding: 1rem;
+                    z-index: 999;
+                }
+
+                .sidebar-menu {
+                    padding-bottom: 80px;
+                    /* Ruang tambahan di bawah sidebar */
+                }
+            }
+        </style>
         <!-- Logout Button -->
-        <div class="logout-container pb-6"
+        <div class="logout-container"
             style="position: sticky; bottom: 0; width: 100%; background-color: #f8f9fa; padding: 1rem;">
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: inline;">
                 @csrf
