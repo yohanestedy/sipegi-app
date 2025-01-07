@@ -1,18 +1,5 @@
 <div id="sidebar">
-    <style>
-        @media (max-width: 768px) {
-            .logout-container {
-                position: fixed;
-                bottom: 0;
-                width: 100%;
-                background-color: #f8f9fa;
-                padding: 1rem;
-                z-index: 999;
-                padding-bottom: 80px;
-            }
 
-        }
-    </style>
     <div class="sidebar-wrapper active">
 
         {{-- SIDEBAR HEADER --}}
@@ -156,6 +143,21 @@
             </ul>
         </div>
 
+
+        <style>
+            @media (max-width: 768px) {
+                .logout-container {
+                    position: sticky;
+                    bottom: 0;
+                    width: 100%;
+                    background-color: #f8f9fa;
+                    padding: 1rem;
+                    z-index: 999;
+                    padding-bottom: 80px;
+                }
+
+            }
+        </style>
         <!-- Logout Button -->
         <div class="logout-container"
             style="position: sticky; bottom: 0; width: 100%; background-color: #f8f9fa; padding: 1rem;">
