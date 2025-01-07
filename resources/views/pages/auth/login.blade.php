@@ -25,7 +25,7 @@
 
                     {{-- <h1 class="auth-title">Masuk</h1> --}}
                     <p style="text-align: center;" class="auth-subtitle mb-2">Sipegi adalah aplikasi untuk menilai gizi
-                        balita</p>
+                        balita di Desa Selorejo</p>
 
 
 
