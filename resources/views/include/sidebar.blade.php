@@ -145,24 +145,51 @@
 
 
 
+        <style>
+            /* Default styling for larger screens */
+            .logout-container {
+                position: sticky;
+                bottom: 0;
+                width: 100%;
+                background-color: #f8f9fa;
+                padding: 1rem;
+                height: auto;
+                /* Default height */
+            }
+
+            /* Styling for mobile screens (max-width 768px) */
+            @media (max-width: 768px) {
+                .logout-container {
+                    height: 20vh;
+                    /* Untuk Iphone */
+                }
+            }
+
+            @media (max-width: 360px) {
+                .logout-container {
+                    height: 15vh;
+                    /* Apply 15vh height for entry-level Android devices */
+                }
+            }
+        </style>
+
         <!-- Logout Button -->
-        <div class="logout-container"
-            style="position: sticky; bottom: 0; height: 20vh; width: 100%; background-color: #f8f9fa; padding: 1rem;">
+        <div class="logout-container">
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: inline;">
                 @csrf
                 <div class="row">
                     <div class="col-7">
                         <label> <small>Login sebagai :</small></label>
                         <label>{{ auth()->user()->name }}</label>
-
                     </div>
-                    <div class="col-5"><a type="submit" class="btn btn-danger w-65 swal-logout">
-                            <i class="fa-solid fa-right-from-bracket"></i> Keluar</a>
+                    <div class="col-5">
+                        <a type="submit" class="btn btn-danger w-65 swal-logout">
+                            <i class="fa-solid fa-right-from-bracket"></i> Keluar
+                        </a>
                     </div>
-
                 </div>
-
             </form>
         </div>
+
     </div>
 </div>
