@@ -144,19 +144,7 @@
         </div>
 
 
-        <style>
-            @media (max-width: 768px) {
-                .logout-container {
-                    position: sticky;
-                    bottom: 0;
-                    width: 100%;
-                    background-color: #f8f9fa;
-                    padding: 1rem;
-                    padding-bottom: 80px;
-                }
 
-            }
-        </style>
         <!-- Logout Button -->
         <div class="logout-container pb-6"
             style="position: sticky; bottom: 0; width: 100%; background-color: #f8f9fa; padding: 1rem;">
