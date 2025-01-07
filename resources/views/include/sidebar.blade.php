@@ -154,26 +154,16 @@
                 padding: 1rem;
                 box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
                 /* Tambahkan sedikit bayangan agar tombol keluar lebih terlihat */
-                z-index: 999;
             }
 
-            .sidebar-menu {
-                margin-bottom: 80px;
-                /* Memberikan ruang tambahan untuk logout button */
-                min-height: 100vh;
-                /* Memastikan sidebar selalu memenuhi tinggi layar */
-                padding-bottom: 80px;
-                /* Memberikan ruang di bagian bawah untuk tombol keluar */
-            }
 
-            @media (max-width: 768px) {
+            @media (max-width: 900px) {
                 .logout-container {
                     position: fixed;
                     bottom: 0;
                     width: 100%;
                     background-color: #f8f9fa;
                     padding: 1rem;
-                    z-index: 999;
                 }
 
                 .sidebar-menu {
