@@ -524,8 +524,10 @@
     <script src="https://npmcdn.com/flatpickr/dist/l10n/id.js"></script>
     <script>
         flatpickr(".periode", {
+
             "locale": "id",
             altInput: true,
+            disableMobile: "true",
             plugins: [
                 new monthSelectPlugin({
 
