@@ -307,25 +307,16 @@
                 return new bootstrap.Tooltip(tooltipTriggerEl);
             });
 
-            // Menonaktifkan tooltip saat modal muncul
-            $('.modal').on('show.bs.modal', function() {
-                tooltipList.forEach(function(tooltip) {
+            // Menampilkan tooltip hanya saat tombol diklik
+            $('[data-bs-toggle="tooltip"]').on('click', function() {
+                var tooltip = bootstrap.Tooltip.getInstance(
+                    this); // Mendapatkan instance tooltip yang sesuai
+                tooltip.show(); // Menampilkan tooltip saat tombol diklik
+
+                // Menyembunyikan tooltip setelah 1 detik (1000ms)
+                setTimeout(function() {
                     tooltip.hide();
-                });
-            });
-
-            // Menonaktifkan tooltip saat modal ditutup
-            $('.modal').on('hidden.bs.modal', function() {
-                tooltipList.forEach(function(tooltip) {
-                    tooltip.dispose();
-                });
-            });
-
-            // Menonaktifkan tooltip ketika pindah halaman atau setelah klik tombol
-            window.addEventListener('beforeunload', function() {
-                tooltipList.forEach(function(tooltip) {
-                    tooltip.dispose(); // Menghapus tooltip sebelum halaman berpindah
-                });
+                }, 1000); // Tooltip akan hilang setelah 1 detik
             });
         });
     </script>
