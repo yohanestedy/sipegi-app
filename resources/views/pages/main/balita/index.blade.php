@@ -340,23 +340,12 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
             var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
-                return new bootstrap.Tooltip(tooltipTriggerEl);
-            });
-
-            // Menambahkan event click untuk menutup tooltip setelah klik pada tombol
-            tooltipTriggerList.forEach(function(tooltipEl) {
-                tooltipEl.addEventListener('click', function() {
-                    // Jika tooltip sedang ditampilkan, sembunyikan setelah klik
-                    if (tooltipEl._tooltip._isShown) {
-                        tooltipEl._tooltip.hide();
-                    } else {
-                        // Jika tooltip tidak ditampilkan, tampilkan tooltip
-                        tooltipEl._tooltip.show();
-                    }
-                });
-            });
+                return new bootstrap.Tooltip(tooltipTriggerEl, {
+                    trigger: 'hover' // Tooltip hanya muncul saat hover
+                })
+            })
         }, false);
     </script>
 
