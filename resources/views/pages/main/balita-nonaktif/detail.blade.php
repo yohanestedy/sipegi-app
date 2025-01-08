@@ -138,6 +138,16 @@
                         </div>
 
                     </div>
+                    <div class="row">
+                        <div class="pe-0 col-3 col-md-2 d-flex justify-content-between">
+                            <span>Status</span>
+                            <span>:</span>
+                        </div>
+                        <div class="col-8 col-md-8">
+                            <p class="mb-1">{{ $balita->status }}</p>
+                        </div>
+
+                    </div>
 
 
 
