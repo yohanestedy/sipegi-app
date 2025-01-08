@@ -18,6 +18,11 @@ class Kernel extends ConsoleKernel
         $schedule->call(function () {
             app()->call('App\Http\Controllers\BalitaController@pindahkanBalitaLulus');
         })->everyMinute();
+
+        // // Menjalankan pindahkanBalitaLulus setiap hari pukul 00:00
+        // $schedule->call(function () {
+        //     app()->call('App\Http\Controllers\BalitaController@pindahkanBalitaLulus');
+        // })->dailyAt('00:00');
     }
 
     /**
