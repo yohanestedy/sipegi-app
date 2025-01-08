@@ -167,7 +167,7 @@
 
             @media (max-width: 360px) {
                 .logout-container {
-                    height: 15vh;
+                    height: 17vh;
                     /* Apply 15vh height for entry-level Android devices */
                 }
             }
