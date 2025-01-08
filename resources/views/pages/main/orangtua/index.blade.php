@@ -96,11 +96,36 @@
                                                 style="border-radius: 8px; padding: .2rem .35rem; color:white;">
                                                 <i class="fa-solid fa-eye"></i>
                                             </button>
-                                            <a href="{{ route('orangtua.edit', ['id' => $orangtua->id]) }}"
+
+                                            <div class="btn-group">
+                                                <div class="dropdown">
+                                                    <button class="btn btn-primary btn-sm show"
+                                                        style="border-radius: 8px; padding: .2rem .35rem;" type="button"
+                                                        id="dropdownMenuButtonIcon" data-bs-toggle="dropdown"
+                                                        aria-haspopup="true" aria-expanded="true">
+                                                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                                                    </button>
+
+                                                    <div class="dropdown-menu dropdown-menu-dark"
+                                                        aria-labelledby="dropdownMenuButtonIcon"
+                                                        style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(0px, 40px, 0px);"
+                                                        data-popper-placement="bottom-start">
+
+                                                        <a class="dropdown-item ps-3"
+                                                            href="{{ route('orangtua.edit', ['id' => $orangtua->id]) }}"><i
+                                                                class="fa-regular fa-pen-to-square me-1"></i>
+                                                            Ubah Data Orangtua</a>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            {{-- <a href="{{ route('orangtua.edit', ['id' => $orangtua->id]) }}"
                                                 class="btn icon btn-sm btn-primary mt-1 mb-1 me-1" data-bs-toggle="tooltip"
                                                 data-bs-placement="top" data-bs-original-title="Ubah Data Ortu"
                                                 style="border-radius: 8px; padding: .2rem .35rem;">
-                                                <i class="fa-regular fa-pen-to-square"></i></a>
+                                                <i class="fa-regular fa-pen-to-square"></i></a> --}}
                                             {{-- <form action="{{ route('orangtua.delete', ['id' => $orangtua->id]) }}"
                                                 method="POST" style="display: inline">
                                                 @csrf

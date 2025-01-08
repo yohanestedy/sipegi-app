@@ -123,7 +123,6 @@
                                                                 class="fa-regular fa-pen-to-square me-1"></i>
                                                             Ubah Biodata</a>
 
-
                                                     </div>
 
                                                 </div>

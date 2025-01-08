@@ -152,11 +152,35 @@
                                                 style="border-radius: 8px; padding: .2rem .35rem; color:white;">
                                                 <i class="fa-solid fa-eye"></i>
                                             </button>
-                                            <a href="{{ route('balitanonaktif.detail', ['id' => $balita->id]) }}"
+
+                                            <div class="btn-group">
+                                                <div class="dropdown">
+                                                    <button class="btn btn-primary btn-sm show"
+                                                        style="border-radius: 8px; padding: .2rem .35rem;" type="button"
+                                                        id="dropdownMenuButtonIcon" data-bs-toggle="dropdown"
+                                                        aria-haspopup="true" aria-expanded="true">
+                                                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                                                    </button>
+
+                                                    <div class="dropdown-menu dropdown-menu-dark"
+                                                        aria-labelledby="dropdownMenuButtonIcon"
+                                                        style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(0px, 40px, 0px);"
+                                                        data-popper-placement="bottom-start">
+                                                        <a class="dropdown-item ps-3"
+                                                            href="{{ route('balitanonaktif.detail', ['id' => $balita->id]) }}"><i
+                                                                class="fa-regular fa-list-check me-1"></i>
+                                                            Riwayat Pengukuran</a>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            {{-- <a href="{{ route('balitanonaktif.detail', ['id' => $balita->id]) }}"
                                                 class="btn btn-sm icon btn-primary " data-bs-toggle="tooltip"
                                                 data-bs-placement="top" data-bs-original-title="Riwayat Pengukuran"
                                                 style="border-radius: 8px; padding: .2rem .35rem;">
-                                                <i class="fa-regular fa-list-check"></i></a></a>
+                                                <i class="fa-regular fa-list-check"></i></a></a> --}}
                                             {{-- <a href="{{ route('balita.edit', ['id' => $balita->id]) }}"
                                                 class="btn icon btn-success " data-bs-toggle="tooltip"
                                                 data-bs-placement="top" data-bs-original-title="Edit"
@@ -180,7 +204,8 @@
                                         </td>
                                         <td>{{ $balita->tgl_nonaktif_angka }}</td>
                                         <td>{{ $balita->name }}</td>
-                                        <td style="text-align: center">{{ $balita->nik == null ? '-' : $balita->nik }}</td>
+                                        <td style="text-align: center">{{ $balita->nik == null ? '-' : $balita->nik }}
+                                        </td>
                                         <td style="text-align: center">
                                             <div style="font-weight: 600; {{ $balita->gender_display == 'Perempuan' ? 'background-color: #fcd8ff; color:#855f82' : 'background-color: #d2eeff; color: #526483' }} "
                                                 class="badge">
