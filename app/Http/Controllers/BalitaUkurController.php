@@ -64,13 +64,9 @@ class BalitaUkurController extends Controller
 
         $user = auth()->user();
         // Mengecek apakah balita ada atau tidak
-        if (Balita::find($id)) {
-            $query = Balita::with('posyandu');
-            $balitaUkurs = BalitaUkur::where('balita_id', $id)->orderBy('tgl_ukur', 'desc')->get();
-        } else {
-            $query = BalitaNonaktif::with('posyandu');
-            $balitaUkurs = BalitaUkur::where('balita_lulus_id', $id)->orderBy('tgl_ukur', 'desc')->get();
-        }
+        $query = Balita::with('posyandu');
+        $balitaUkurs = BalitaUkur::where('balita_id', $id)->orderBy('tgl_ukur', 'desc')->get();
+
 
         if ($user->posyandu_id !== null) {
             $query->where('posyandu_id', $user->posyandu_id);
