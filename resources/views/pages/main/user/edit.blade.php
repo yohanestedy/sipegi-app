@@ -68,7 +68,7 @@
                                                 type="radio" name="role" id="inlineRadio1" value="super_admin"
                                                 {{ old('role') == 'super_admin' ? 'checked' : ($user->role == 'super_admin' ? 'checked' : '') }}>
                                             <label class="form-check-label" for="inlineRadio1"
-                                                style="font-weight: normal">Kader Poskesdes</label>
+                                                style="font-weight: normal">Kader RDS</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input @error('role') is-invalid @enderror"
@@ -163,14 +163,14 @@
     <script>
         // Menangani perubahan pada input radio
         document.addEventListener('DOMContentLoaded', function() {
-            const radioPoskesdes = document.getElementById('inlineRadio1');
+            const radioRDS = document.getElementById('inlineRadio1');
             const radioPosyandu = document.getElementById('inlineRadio2');
             const posyanduSelect = document.getElementById('posyanduSelect');
             const hiddenPosyandu = document.getElementById('posyanduHidden')
 
             // Fungsi untuk menonaktifkan atau mengaktifkan select Posyandu
             function handleRoleChange() {
-                if (radioPoskesdes.checked) {
+                if (radioRDS.checked) {
                     // Reset dropdown menggunakan jQuery dan trigger 'change' event
                     $('#posyanduSelect').val(null).trigger('change');
 
@@ -184,7 +184,7 @@
             }
 
             // Event listener ketika input radio berubah
-            radioPoskesdes.addEventListener('change', handleRoleChange);
+            radioRDS.addEventListener('change', handleRoleChange);
             radioPosyandu.addEventListener('change', handleRoleChange);
 
             // Event listener ketika select posyandu berubah

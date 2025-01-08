@@ -76,7 +76,7 @@
                                         <td>{{ $u->name }}</td>
                                         <td>{{ $u->username }}</td>
                                         <td>
-                                            {{ $u->role == 'super_admin' ? 'Kader Poskesdes' : ($u->role == 'admin' ? 'Kader Posyandu' : 'Role Tidak Dikenal') }}
+                                            {{ $u->role == 'super_admin' ? 'Kader RDS' : ($u->role == 'admin' ? 'Kader Posyandu' : 'Role Tidak Dikenal') }}
                                         </td>
 
                                         <td>{{ $u->posyandu ? $u->posyandu->name : '-' }}</td>
