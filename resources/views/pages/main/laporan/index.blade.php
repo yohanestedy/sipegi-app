@@ -135,6 +135,7 @@
             flatpickr("#periode", {
                 "locale": "id",
                 altInput: true,
+                disableMobile: "true",
                 plugins: [
                     new monthSelectPlugin({
 

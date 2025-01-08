@@ -375,6 +375,7 @@
             altInput: true,
             altFormat: "j F Y",
             maxDate: "today",
+            disableMobile: "true",
 
         });
     </script>

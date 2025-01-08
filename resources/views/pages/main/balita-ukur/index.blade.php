@@ -528,6 +528,7 @@
             "locale": "id",
             altInput: true,
             disableMobile: "true",
+            disableMobile: "true",
             plugins: [
                 new monthSelectPlugin({
 

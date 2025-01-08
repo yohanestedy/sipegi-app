@@ -466,6 +466,7 @@
             altInputClass: 'form-control',
             altFormat: "j F Y",
             maxDate: "today",
+            disableMobile: "true",
 
 
         });
