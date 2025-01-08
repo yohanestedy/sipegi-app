@@ -135,11 +135,25 @@
     {{-- JS Tooltip --}}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
             var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
-                return new bootstrap.Tooltip(tooltipTriggerEl)
-            })
-        }, false);
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
+
+            // Menonaktifkan tooltip saat modal muncul
+            $('#balitaModal').on('show.bs.modal', function() {
+                tooltipList.forEach(function(tooltip) {
+                    tooltip.hide();
+                });
+            });
+
+            // Menonaktifkan tooltip saat modal ditutup
+            $('#balitaModal').on('hidden.bs.modal', function() {
+                tooltipList.forEach(function(tooltip) {
+                    tooltip.dispose();
+                });
+            });
+        });
     </script>
 
     {{-- Swal Alert --}}
