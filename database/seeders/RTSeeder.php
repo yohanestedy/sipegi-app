@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class RtSeeder extends Seeder
+class RTSeeder extends Seeder
 {
     /**
      * Run the database seeds.

@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PosyanduSeeder::class);
         $this->call(UserSeeder::class);
         $this->call(DusunSeeder::class);
-        $this->call(RtSeeder::class);
+        $this->call(RTSeeder::class);
         $this->call(OrangtuaSeederFake::class);
         $this->call(BalitaSeederFake::class);
     }
