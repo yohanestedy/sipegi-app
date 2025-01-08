@@ -272,14 +272,14 @@
             });
 
             // Menonaktifkan tooltip saat modal muncul
-            $('#balitaModal').on('show.bs.modal', function() {
+            $('.modal').on('show.bs.modal', function() {
                 tooltipList.forEach(function(tooltip) {
                     tooltip.hide();
                 });
             });
 
             // Menonaktifkan tooltip saat modal ditutup
-            $('#balitaModal').on('hidden.bs.modal', function() {
+            $('.modal').on('hidden.bs.modal', function() {
                 tooltipList.forEach(function(tooltip) {
                     tooltip.dispose();
                 });
