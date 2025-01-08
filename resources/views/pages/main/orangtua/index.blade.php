@@ -272,6 +272,13 @@
                     tooltip.dispose();
                 });
             });
+
+            // Menonaktifkan tooltip ketika pindah halaman atau setelah klik tombol
+            window.addEventListener('beforeunload', function() {
+                tooltipList.forEach(function(tooltip) {
+                    tooltip.dispose(); // Menghapus tooltip sebelum halaman berpindah
+                });
+            });
         });
     </script>
 
