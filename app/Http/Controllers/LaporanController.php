@@ -2,20 +2,30 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Dusun;
 
+use App\Models\Posyandu;
+use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\BalitaUkurTableExport;
+use Barryvdh\Debugbar\Facades\Debugbar;
 use App\Exports\BalitaUkurMultiSheetExport;
-use App\Models\Posyandu;
-use App\Models\Dusun;
 
 class LaporanController extends Controller
 {
     //
     public function index()
     {
-        return view('pages.main.laporan.index');
+        $user = auth()->user();
+        $query = Posyandu::with('dusun');
+        if ($user->posyandu_id != null) {
+            $posyandus = $query->where('id', $user->posyandu_id)->get();
+        } else {
+            $posyandus = $query->get();
+        }
+        // Debugbar::info($posyandus->toArray());
+
+        return view('pages.main.laporan.index', compact('posyandus'));
     }
 
     public function exportPengukuran(Request $request)
@@ -38,7 +48,7 @@ class LaporanController extends Controller
             $posyandu = Posyandu::find($request->posyandu_id);
             $dusun = Dusun::find($request->posyandu_id);
 
-            $fileName = 'Laporan_Pengukuran_Balita_' . $posyandu->name . '_' . $bulan . '_' . $tahun . '.xlsx';
+            $fileName = 'Laporan_Pengukuran_Balita_Posyandu_' . $posyandu->name . '_' . $bulan . '_' . $tahun . '.xlsx';
 
             return Excel::download(
                 new BalitaUkurTableExport(
@@ -53,8 +63,8 @@ class LaporanController extends Controller
             // Jika semua posyandu dipilih
             $posyandus = Posyandu::with('dusun')->get();
 
-            $fileName = 'Laporan_Pengukuran_Balita_Semua_Posiyandu_' . $bulan . '_' . $tahun . '.xlsx';
-            $fileNamePDF = 'Laporan_Pengukuran_Balita_Semua_Posiyandu_' . $bulan . '_' . $tahun . '.pdf';
+            $fileName = 'Laporan_Pengukuran_Balita_Semua_Posyandu_' . $bulan . '_' . $tahun . '.xlsx';
+            $fileNamePDF = 'Laporan_Pengukuran_Balita_Semua_Posyandu_' . $bulan . '_' . $tahun . '.pdf';
 
             // return Excel::download(new BalitaUkurMultiSheetExport($periode, $posyandus), $fileNamePDF, \Maatwebsite\Excel\Excel::MPDF);
 

@@ -51,13 +51,13 @@
                                     class="form-select @error('posyandu_id') is-invalid @enderror"
                                     data-placeholder="Pilih Posyandu">
                                     <option selected disabled value="">--Pilih Posyandu--</option>
-                                    <option value="0">Semua Posyandu</option>
-                                    <option value="1">Melati / Sumber Mulyo</option>
-                                    <option value="2">Nusa Indah / Sidodadi</option>
-                                    <option value="3">Kenanga / Sukorejo</option>
-                                    <option value="4">Mawar / Sumber Rahayu</option>
-                                    <option value="5">Dahlia / Sidorejo</option>
-                                    <option value="6">Anggrek / Suko Makmur</option>
+                                    @if (Auth::user()->role == 'super_admin')
+                                        <option value="0">Semua Posyandu</option>
+                                    @endif
+                                    @foreach ($posyandus as $posyandu)
+                                        <option value="{{ $posyandu->id }}">{{ $posyandu->name }} /
+                                            {{ $posyandu->dusun->name }}</option>
+                                    @endforeach
                                 </select>
                                 <div class="invalid-feedback">
                                     @error('posyandu_id')
