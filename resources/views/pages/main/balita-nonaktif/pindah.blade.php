@@ -421,7 +421,7 @@
                 let form = $(this).closest("form");
 
                 Swal.fire({
-                    title: "Nonaktifkan Balita Meninggal?",
+                    title: "Nonaktifkan Balita Pindah-Keluar?",
                     text: "Pastikan nama balita yang anda pilih sudah benar!",
                     icon: "warning",
                     showCancelButton: true,
