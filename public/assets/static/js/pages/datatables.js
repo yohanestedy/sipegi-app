@@ -16,7 +16,7 @@ let customized_datatable = $("#table2").DataTable({
     }
 })
 
-let tableUser = $("#tableUser").DataTable({
+let tableUser = $("#tableUse").DataTable({
     responsive: true,
     info: false,
     pagingType: 'simple',
