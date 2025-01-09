@@ -15,14 +15,14 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')->hourly();
 
         // PINDAHKAN BALITA LULUS
-        $schedule->call(function () {
-            app()->call('App\Http\Controllers\BalitaController@pindahkanBalitaLulus');
-        })->everyMinute();
-
-        // // Menjalankan pindahkanBalitaLulus setiap hari pukul 00:00
         // $schedule->call(function () {
         //     app()->call('App\Http\Controllers\BalitaController@pindahkanBalitaLulus');
-        // })->dailyAt('00:00');
+        // })->everyMinute();
+
+        // Menjalankan pindahkanBalitaLulus setiap hari pukul 00:00
+        $schedule->call(function () {
+            app()->call('App\Http\Controllers\BalitaController@pindahkanBalitaLulus');
+        })->dailyAt('00:00');
     }
 
     /**
