@@ -56,8 +56,8 @@
             <div class="row">
                 <div class="col-12 col-md-12 order-md-1 order-last">
                     <h3>Pengukuran</h3>
-                    <p class="text-subtitle text-muted">Halaman yang berisi nama-nama balita yang sudah melakukan
-                        pengukuran.</p>
+                    <p class="text-subtitle text-muted">Pastikan data orangtua dan balita sudah di tambahkan sebelum
+                        melakukan pengukuran</p>
                 </div>
 
             </div>
