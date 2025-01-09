@@ -22,7 +22,7 @@ class Kernel extends ConsoleKernel
         // Menjalankan pindahkanBalitaLulus setiap hari pukul 00:00 tengah malam
         $schedule->call(function () {
             app()->call('App\Http\Controllers\BalitaController@pindahkanBalitaLulus');
-        })->dailyAt('00:00');
+        })->dailyAt('20:14');
     }
 
     /**
