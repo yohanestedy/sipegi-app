@@ -336,8 +336,8 @@
                             <img src="{{ asset('assets/static/images/logo/sipegi-logo.svg') }}" alt="Sipegi Logo"
                                 class="mb-4" style="max-width: 200px;">
                             <h2>Dashboard Sedang Dalam Proses Pengembangan</h2>
-                            <p class="lead">Tunggu sebentar! Kami sedang mengutak-atik tombol!</p>
-                            <p>Jika Anda sabar, Orang sabar di sayang Tuhan hehe ☕️</p>
+                            <p class="lead">Kami sedang mengutak-atiknya!</p>
+                            <p>Klik tombol di bawah untuk memulai pengukuran</p>
                             <p class="mt-4">
                                 <i class="fas fa-cog fa-spin" style="font-size: 3rem;"></i>
                             </p>
