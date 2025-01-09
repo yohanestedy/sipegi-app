@@ -112,7 +112,7 @@
                 </li>
 
                 {{-- User Management --}}
-                @if (Auth::user()->role == 'super_admin')
+                @if (Auth::user()->id == 1)
                     <li class="sidebar-item {{ Route::is('user.*') ? 'active' : '' }}">
                         <a href="{{ route('user.index') }}" class="sidebar-link">
                             {{-- <i class="fa-duotone fa-solid fa-users"></i> --}}
