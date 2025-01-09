@@ -262,31 +262,6 @@
                 </div>
             </div> --}}
 
-            {{-- DUMMY MAINTENANCE --}}
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-
-                        <div class="card-body">
-
-                            <div class="text-center mt-5 mb-4">
-                                <img src="{{ asset('assets/static/images/logo/sipegi-logo.svg') }}" alt="Sipegi Logo"
-                                    class="mb-4" style="max-width: 200px;">
-                                <h2>Dashboard Sedang Dalam Proses Pengembangan</h2>
-                                <p class="lead">Tunggu sebentar! Kami sedang mengutak-atik tombol!</p>
-                                <p>Jika Anda sabar, Orang sabar di sayang Tuhan hehe ☕️</p>
-                                <p class="mt-4">
-                                    <i class="fas fa-cog fa-spin" style="font-size: 3rem;"></i>
-                                </p>
-                                <a href="{{ route('balitaukur.index') }}" class="btn btn-primary mt-4">Mulai Pengukuran</a>
-                            </div>
-
-
-
-                        </div>
-                    </div>
-                </div>
-            </div>
             {{-- <div class="col-12 col-lg-3">
                 <div class="card">
                     <div class="card-body py-4 px-4">
@@ -349,6 +324,32 @@
                 </div>
             </div> --}}
         </section>
+
+        {{-- DUMMY MAINTENANCE --}}
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+
+                    <div class="card-body">
+
+                        <div class="text-center mt-5 mb-4">
+                            <img src="{{ asset('assets/static/images/logo/sipegi-logo.svg') }}" alt="Sipegi Logo"
+                                class="mb-4" style="max-width: 200px;">
+                            <h2>Dashboard Sedang Dalam Proses Pengembangan</h2>
+                            <p class="lead">Tunggu sebentar! Kami sedang mengutak-atik tombol!</p>
+                            <p>Jika Anda sabar, Orang sabar di sayang Tuhan hehe ☕️</p>
+                            <p class="mt-4">
+                                <i class="fas fa-cog fa-spin" style="font-size: 3rem;"></i>
+                            </p>
+                            <a href="{{ route('balitaukur.index') }}" class="btn btn-primary mt-4">Mulai Pengukuran</a>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 
