@@ -20,7 +20,7 @@ let tableUser = $("#tableUser").DataTable({
     responsive: true,
     info: false,
     pagingType: 'simple',
-    order: [[1, 'asc']],
+    order: [[2, 'asc']],
     columnDefs: [
 
         { orderable: false, targets: 4 } // Nonaktifkan sorting di kolom lainnya
