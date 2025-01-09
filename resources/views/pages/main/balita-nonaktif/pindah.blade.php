@@ -113,7 +113,7 @@
                         </p>
                     </div>
                     <div class="table-responsive datatable-minimal">
-                        @if (Auth::user()->role == 'super_admin')
+                        @if (in_array(Auth::user()->role, ['super_admin', 'admin', 'kader_poskesdes']))
                             <div class="row mb-3">
                                 <div class="col-12 col-md-4">
                                     <select id="filterPosyandu" class="form-select form-select-sm">

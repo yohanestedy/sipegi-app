@@ -98,7 +98,7 @@
 
                         {{-- FILTER --}}
                         <div class="row mb-3">
-                            @if (Auth::user()->role == 'super_admin')
+                            @if (in_array(Auth::user()->role, ['super_admin', 'admin', 'kader_poskesdes']))
                                 <div class="col-6 col-md-3">
                                     <select id="filterPosyandu" class="form-select">
                                         <option value="">Semua Posyandu</option>

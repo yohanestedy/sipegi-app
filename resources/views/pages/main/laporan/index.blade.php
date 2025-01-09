@@ -51,7 +51,7 @@
                                     class="form-select @error('posyandu_id') is-invalid @enderror"
                                     data-placeholder="Pilih Posyandu">
                                     <option selected disabled value="">--Pilih Posyandu--</option>
-                                    @if (Auth::user()->role == 'super_admin')
+                                    @if (in_array(Auth::user()->role, ['super_admin', 'admin', 'kader_poskesdes']))
                                         <option value="0">Semua Posyandu</option>
                                     @endif
                                     @foreach ($posyandus as $posyandu)

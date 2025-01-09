@@ -65,15 +65,22 @@
                                     <div class="col-md-9 form-group mb-3">
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input @error('role') is-invalid @enderror"
-                                                type="radio" name="role" id="inlineRadio1" value="super_admin"
-                                                {{ old('role') == 'super_admin' ? 'checked' : ($user->role == 'super_admin' ? 'checked' : '') }}>
+                                                type="radio" name="role" id="inlineRadio1" value="admin"
+                                                {{ old('role') == 'admin' ? 'checked' : ($user->role == 'admin' ? 'checked' : '') }}>
                                             <label class="form-check-label" for="inlineRadio1"
-                                                style="font-weight: normal">Kader RDS</label>
+                                                style="font-weight: normal">Admin RDS</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input @error('role') is-invalid @enderror"
-                                                type="radio" name="role" id="inlineRadio2" value="admin"
-                                                {{ old('role') == 'admin' ? 'checked' : ($user->role == 'admin' ? 'checked' : '') }}>
+                                                type="radio" name="role" id="inlineRadio3" value="kader_poskesdes"
+                                                {{ old('role') == 'kader_poskesdes' ? 'checked' : ($user->role == 'kader_poskesdes' ? 'checked' : '') }}>
+                                            <label class="form-check-label" for="inlineRadio3"
+                                                style="font-weight: normal">Kader Poskesdes</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input @error('role') is-invalid @enderror"
+                                                type="radio" name="role" id="inlineRadio2" value="kader_posyandu"
+                                                {{ old('role') == 'kader_posyandu' ? 'checked' : ($user->role == 'kader_posyandu' ? 'checked' : '') }}>
                                             <label class="form-check-label" for="inlineRadio2"
                                                 style="font-weight: normal">Kader Posyandu</label>
                                         </div>
@@ -165,12 +172,13 @@
         document.addEventListener('DOMContentLoaded', function() {
             const radioRDS = document.getElementById('inlineRadio1');
             const radioPosyandu = document.getElementById('inlineRadio2');
+            const radioPoskesdes = document.getElementById('inlineRadio3'); // Tambahkan ini
             const posyanduSelect = document.getElementById('posyanduSelect');
-            const hiddenPosyandu = document.getElementById('posyanduHidden')
+            const hiddenPosyandu = document.getElementById('posyanduHidden');
 
             // Fungsi untuk menonaktifkan atau mengaktifkan select Posyandu
             function handleRoleChange() {
-                if (radioRDS.checked) {
+                if (radioRDS.checked || radioPoskesdes.checked) { // Tambahkan kondisi untuk radioPoskesdes
                     // Reset dropdown menggunakan jQuery dan trigger 'change' event
                     $('#posyanduSelect').val(null).trigger('change');
 
@@ -186,6 +194,7 @@
             // Event listener ketika input radio berubah
             radioRDS.addEventListener('change', handleRoleChange);
             radioPosyandu.addEventListener('change', handleRoleChange);
+            radioPoskesdes.addEventListener('change', handleRoleChange); // Tambahkan ini
 
             // Event listener ketika select posyandu berubah
             posyanduSelect.addEventListener('change', function() {

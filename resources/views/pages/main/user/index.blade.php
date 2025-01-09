@@ -76,7 +76,26 @@
                                         <td>{{ $u->name }}</td>
                                         <td>{{ $u->username }}</td>
                                         <td>
-                                            {{ $u->role == 'super_admin' ? 'Kader RDS' : ($u->role == 'admin' ? 'Kader Posyandu' : 'Role Tidak Dikenal') }}
+                                            @switch($u->role)
+                                                @case('super_admin')
+                                                    Super Admin
+                                                @break
+
+                                                @case('admin')
+                                                    Admin RDS
+                                                @break
+
+                                                @case('kader_poskesdes')
+                                                    Kader Poskesdes
+                                                @break
+
+                                                @case('kader_posyandu')
+                                                    Kader Posyandu
+                                                @break
+
+                                                @default
+                                                    Role Tidak Dikenal
+                                            @endswitch
                                         </td>
 
                                         <td>{{ $u->posyandu ? $u->posyandu->name : '-' }}</td>
@@ -171,53 +190,9 @@
                 });
             });
 
-            // SweetAlert untuk notifikasi sukses atau error dari session
-            @if (session()->has('success'))
-                Swal.fire('Success', '{{ session('success') }}', 'success');
-            @elseif (session()->has('error'))
-                Swal.fire('Error', '{{ session('error') }}', 'error');
-            @endif
+
 
 
         });
     </script>
-
-    {{-- Toast Sweatalert2 --}}
-    @if (session('successToast'))
-        <script>
-            const Toast = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.onmouseenter = Swal.stopTimer;
-                    toast.onmouseleave = Swal.resumeTimer;
-                }
-            });
-            Toast.fire({
-                icon: "success",
-                title: "{{ session('successToast') }}"
-            });
-        </script>
-    @elseif (session('errorToast'))
-        <script>
-            const Toast = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.onmouseenter = Swal.stopTimer;
-                    toast.onmouseleave = Swal.resumeTimer;
-                }
-            });
-            Toast.fire({
-                icon: "error",
-                title: "{{ session('errorToast') }}"
-            });
-        </script>
-    @endif
 @endsection
