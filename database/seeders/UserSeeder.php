@@ -12,6 +12,7 @@ class UserSeeder extends Seeder
     {
         DB::table('users')->insert([
             [
+                'id' => 1,
                 'name' => 'Super Admin',
                 'username' => 'superadmin',
                 'password' => Hash::make('superadmin'), // Hashing password
@@ -23,6 +24,7 @@ class UserSeeder extends Seeder
                 'created_by' => 0, // menggunakan ID 0 jika tidak ada pengguna yang ada
                 'updated_by' => null,
             ],
+
         ]);
     }
 }
