@@ -15,10 +15,10 @@ return new class extends Migration
             $table->increments('id');
             $table->string('no_kk', 16);
             $table->string('name_ibu', 50);
-            $table->string('nik_ibu', 16)->unique(); // Membuat nik unik
+            $table->string('nik_ibu', 16)->unique()->nullable(); // Membuat nik unik
             $table->string('name_ayah', 50);
             $table->string('nik_ayah', 16)->unique()->nullable(); // Membuat nik unik
-            $table->string('telp', 13);
+            $table->string('telp', 13)->nullable();
             $table->string('alamat', 50);
             $table->unsignedInteger('rt_id');
             $table->foreign('rt_id')->references('id')->on('rt')->onDelete('cascade');

@@ -141,12 +141,12 @@
 
                                         </td>
                                         <td>{{ $orangtua->name_ibu }}</td>
-                                        <td>{{ $orangtua->nik_ibu }}</td>
-                                        <td>{{ $orangtua->rt->rt }}</td>
-                                        <td>{{ $orangtua->dusun->rw }}</td>
-                                        <td data-sort="{{ $orangtua->dusun->posyandu->id }}">
+                                        <td>{{ $orangtua->nik_ibu ?? 'Belum input NIK' }}</td>
+                                        <td class="text-center">{{ $orangtua->rt->rt }}</td>
+                                        <td class="text-center">{{ $orangtua->dusun->rw }}</td>
+                                        <td class="text-center" data-sort="{{ $orangtua->dusun->posyandu->id }}">
                                             {{ $orangtua->dusun->posyandu->name }}</td>
-                                        <td>{{ $orangtua->telp }}</td>
+                                        <td class="text-center">{{ $orangtua->telp ?? '-' }}</td>
 
 
                                     </tr>
@@ -346,10 +346,10 @@
 
                 $('#kk').text(orangtua.no_kk);
                 $('#name_ibu').text(orangtua.name_ibu);
-                $('#nik_ibu').text(orangtua.nik_ibu);
+                $('#nik_ibu').text(orangtua.nik_ibu ? orangtua.nik_ibu : '-');
                 $('#name_ayah').text(orangtua.name_ayah);
-                $('#nik_ayah').text(orangtua.nik_ayah);
-                $('#telp').text(orangtua.telp);
+                $('#nik_ayah').text(orangtua.nik_ayah ? orangtua.nik_ayah : '-');
+                $('#telp').text(orangtua.telp ? orangtua.telp : '-');
                 $('#alamat').text(orangtua.alamat);
                 $('#rtrw').text(orangtua.rt.rt + " / " + orangtua.dusun.rw);
                 $('#dusun').text(orangtua.dusun.name);

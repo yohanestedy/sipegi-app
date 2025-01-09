@@ -419,10 +419,10 @@
 
                 $('#kk').text(balita.orangtua.no_kk);
                 $('#name_ibu').text(balita.orangtua.name_ibu);
-                $('#nik_ibu').text(balita.orangtua.nik_ibu);
+                $('#nik_ibu').text(balita.orangtua.nik_ibu ? balita.orangtua.nik_ibu : '-');
                 $('#name_ayah').text(balita.orangtua.name_ayah);
-                $('#nik_ayah').text(balita.orangtua.nik_ayah);
-                $('#telp').text(balita.orangtua.telp);
+                $('#nik_ayah').text(balita.orangtua.nik_ayah ? balita.orangtua.nik_ayah : '-');
+                $('#telp').text(balita.orangtua.telp ? balita.orangtua.telp : '-');
                 $('#alamat').text(balita.orangtua.alamat);
                 $('#rtrw').text(balita.orangtua.rt.rt + " / " + balita.orangtua.dusun.rw);
                 $('#dusun').text(balita.orangtua.dusun.name);

@@ -218,7 +218,7 @@
                                                     data-dusun-id="{{ $orangtua->dusun_id }}"
                                                     {{ old('orangtua') == $orangtua->id ? 'selected' : ($balita->orangtua_id == $orangtua->id ? 'selected' : '') }}>
                                                     {{ $orangtua->name_ibu }} -
-                                                    {{ $orangtua->nik_ibu }}</option>
+                                                    {{ $orangtua->nik_ibu ?? 'Belum input NIK' }}</option>
                                             @endforeach
                                         </select>
                                         <div class="invalid-feedback">
