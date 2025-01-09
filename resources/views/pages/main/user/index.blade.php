@@ -75,7 +75,7 @@
 
                                         <td>{{ $u->name }}</td>
                                         <td>{{ $u->username }}</td>
-                                        <td>
+                                        <td data-sort="{{ $u->posyandu_id }}">
                                             @switch($u->role)
                                                 @case('super_admin')
                                                     Super Admin
