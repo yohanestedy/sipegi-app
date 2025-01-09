@@ -58,7 +58,7 @@
                     </div>
                     <div class="table-responsive datatable-minimal">
 
-                        <table class="table table-hover medium-text" id="tableUse">
+                        <table class="table table-hover medium-text" id="tableUser">
                             <thead>
                                 <tr>
                                     <th>Nama</th>
