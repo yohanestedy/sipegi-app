@@ -23,7 +23,7 @@ let tableUser = $("#tableUser").DataTable({
     order: [[1, 'asc']],
     columnDefs: [
 
-        { orderable: false, targets: 4 } // Nonaktifkan sorting di kolom lainnya
+        { orderable: false, targets: 3 } // Nonaktifkan sorting di kolom lainnya
     ],
     dom:
 		"<'row'<'col-3'l><'col-9'f>>" +
