@@ -231,6 +231,27 @@
                                     </div>
                                 </div>
 
+                                {{-- CONVERT KOMA KE TITIK --}}
+                                <script>
+                                    // Fungsi untuk mengganti koma dengan titik
+                                    function convertCommaToDot(inputElement) {
+                                        inputElement.addEventListener('input', function() {
+                                            // Mengganti koma dengan titik
+                                            this.value = this.value.replace(',', '.');
+                                        });
+                                    }
+
+                                    // Ambil elemen input berdasarkan nama
+                                    const beratBadanInput = document.querySelector('input[name="bb"]');
+                                    const tinggiBadanInput = document.querySelector('input[name="tb"]');
+                                    const lingkarKepalaInput = document.querySelector('input[name="lk"]');
+
+                                    // Terapkan fungsi konversi untuk setiap input
+                                    convertCommaToDot(beratBadanInput);
+                                    convertCommaToDot(tinggiBadanInput);
+                                    convertCommaToDot(lingkarKepalaInput);
+                                </script>
+
                                 {{-- Form TB --}}
                                 {{-- <div class="row d-flex">
                                     <div class="col-md-4 mt-3 text-md-end justify-content-end">
