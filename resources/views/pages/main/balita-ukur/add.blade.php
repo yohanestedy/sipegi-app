@@ -231,26 +231,6 @@
                                     </div>
                                 </div>
 
-                                {{-- CONVERT KOMA KE TITIK --}}
-                                <script>
-                                    // Fungsi untuk mengganti koma dengan titik
-                                    function convertCommaToDot(inputElement) {
-                                        inputElement.addEventListener('input', function() {
-                                            // Mengganti koma dengan titik
-                                            this.value = this.value.replace(',', '.');
-                                        });
-                                    }
-
-                                    // Ambil elemen input berdasarkan nama
-                                    const beratBadanInput = document.querySelector('input[name="bb"]');
-                                    const tinggiBadanInput = document.querySelector('input[name="tb"]');
-                                    const lingkarKepalaInput = document.querySelector('input[name="lk"]');
-
-                                    // Terapkan fungsi konversi untuk setiap input
-                                    convertCommaToDot(beratBadanInput);
-                                    convertCommaToDot(tinggiBadanInput);
-                                    convertCommaToDot(lingkarKepalaInput);
-                                </script>
 
                                 {{-- Form TB --}}
                                 {{-- <div class="row d-flex">
@@ -466,6 +446,35 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://npmcdn.com/flatpickr/dist/l10n/id.js"></script>
 
+
+    {{-- CONVERT COMMA TO DOT --}}
+    <script>
+        // Fungsi untuk mengganti koma dengan titik
+        function convertCommaToDot(inputElement) {
+            inputElement.addEventListener('input', function() {
+                // Mengganti koma dengan titik
+                this.value = this.value.replace(',', '.');
+            });
+        }
+
+        // Ambil elemen input berdasarkan nama
+        const beratBadanInput = document.querySelector('input[name="bb"]');
+        const tinggiBadanInput = document.querySelector('input[name="tb"]');
+        const lingkarKepalaInput = document.querySelector('input[name="lk"]');
+
+        // Terapkan fungsi konversi untuk setiap input
+        convertCommaToDot(beratBadanInput);
+        convertCommaToDot(tinggiBadanInput);
+        convertCommaToDot(lingkarKepalaInput);
+
+        // Menangani pengiriman form
+        document.getElementById('formData').addEventListener('submit', function(event) {
+            // Mengonversi nilai input sebelum mengirim
+            beratBadanInput.value = beratBadanInput.value.replace(',', '.');
+            tinggiBadanInput.value = tinggiBadanInput.value.replace(',', '.');
+            lingkarKepalaInput.value = lingkarKepalaInput.value.replace(',', '.');
+        });
+    </script>
 
     <script>
         $('.select2').select2({
