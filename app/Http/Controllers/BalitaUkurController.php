@@ -166,6 +166,22 @@ class BalitaUkurController extends Controller
     // PENGHITUNGAN ZSCORE / STANDARD DEVIATION SCORE
     public function hitung(Request $request, $id = null)
     {
+        // CONVERT COMMA TO DOT
+        // Ambil input berat balita
+        $inputBerat = $request->input('bb');
+        $inputTinggi = $request->input('tb');
+        $inputLK = $request->input('lk');
+
+        // Ganti koma dengan titik jika ada
+        $inputBerat = str_replace(',', '.', $inputBerat);
+        $inputTinggi = str_replace(',', '.', $inputTinggi);
+        $inputLK = str_replace(',', '.', $inputLK);
+
+        // Mengganti nilai input 'bb' di request
+        $request->merge(['bb' => $inputBerat]);
+        $request->merge(['tb' => $inputTinggi]);
+        $request->merge(['lk' => $inputLK]);
+
         $validator = Validator::make($request->all(), [
             'balita_id' => 'required',
             'tgl_ukur' => [
