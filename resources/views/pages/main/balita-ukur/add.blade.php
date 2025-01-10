@@ -448,7 +448,7 @@
 
 
     {{-- CONVERT COMMA TO DOT --}}
-    <script>
+    {{-- <script>
         // Fungsi untuk mengganti koma dengan titik
         function convertCommaToDot(inputElement) {
             inputElement.addEventListener('input', function() {
@@ -474,7 +474,7 @@
             tinggiBadanInput.value = tinggiBadanInput.value.replace(',', '.');
             lingkarKepalaInput.value = lingkarKepalaInput.value.replace(',', '.');
         });
-    </script>
+    </script> --}}
 
     <script>
         $('.select2').select2({
