@@ -219,9 +219,9 @@ class BalitaUkurController extends Controller
             //     $validator->errors()->add('bb', 'BB tidak boleh lebih dari standar atas(' . round($bbUmurLMS->sd4, 2) . ' kg).');
             // }
             // VALIDASI SALAH INPUT TINGGI BADAN
-            if ($tbUmurLMS && $request->tb < $tbUmurLMS->sd4neg) {
-                $validator->errors()->add('tb', 'TB tidak boleh kurang dari standar bawah(' . round($tbUmurLMS->sd4neg, 2) . ' cm).');
-            }
+            // if ($tbUmurLMS && $request->tb < $tbUmurLMS->sd4neg) {
+            //     $validator->errors()->add('tb', 'TB tidak boleh kurang dari standar bawah(' . round($tbUmurLMS->sd4neg, 2) . ' cm).');
+            // }
             if ($tbUmurLMS && $request->tb > $tbUmurLMS->sd4) {
                 $validator->errors()->add('tb', 'TB tidak boleh lebih dari standar atas(' . round($tbUmurLMS->sd4, 2) . ' cm).');
             }
