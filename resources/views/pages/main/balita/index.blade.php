@@ -60,9 +60,9 @@
                         </p>
                     </div>
                     <div class="table-responsive datatable-minimal">
-                        @if (in_array(Auth::user()->role, ['super_admin', 'admin', 'kader_poskesdes']))
-                            <div class="row mb-3">
-                                <div class="col-12 col-md-4">
+                        <div class="row mb-3 align-items-center">
+                            @if (in_array(Auth::user()->role, ['super_admin', 'admin', 'kader_poskesdes']))
+                                <div class="col-6 col-md-4">
                                     <select id="filterPosyandu" class="form-select form-select-sm">
                                         <option value="">Semua Posyandu</option>
                                         @foreach ($posyandus as $posyandu)
@@ -70,8 +70,11 @@
                                         @endforeach
                                     </select>
                                 </div>
+                            @endif
+                            <div class="col-6 col-md-8">
+                                <div class="medium-text">Jumlah Balita: <span id="jumlahDataBalita"></span></div>
                             </div>
-                        @endif
+                        </div>
 
 
                         <table class="table table-hover table-bordered medium-text" id="tableBalita">

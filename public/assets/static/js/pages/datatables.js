@@ -229,8 +229,7 @@ $("#filterPosyandu").on("change", function () {
     tableBalitaNonaktif.column(8).search(selectedValue).draw(); //Tabel Balita Lulus
     tableOrangTua.column(5).search(selectedValue).draw();
 
-    // updateRowCount(tableOrangTua, 'rowCountDisplayPengukuran');
-    // updateRowCount(tablePengukuran, 'rowCountDisplayPengukuran');
+    updateDataCount();
 });
 
 $("#filterBulanPengukuran").on("change", function () {
@@ -282,12 +281,26 @@ $("#searchKeyword").on("keyup", function () {
     tableBalita.search(searchValue).draw(); // Terapkan filter global di tabel
 });
 
-// Fungsi generik untuk menghitung jumlah baris terlihat
-function updateRowCount(table, displayElementId) {
-    let rowCount = table.rows({ filter: "applied" }).count();
-    $(`#${displayElementId}`).text(`Jumlah data yang terlihat: ${rowCount}`);
+// Fungsi untuk menghitung dan menampilkan jumlah data
+function updateDataCount() {
+    let totalBalita = tableBalita.rows().count(); // Total data balita
+    let filteredBalita = tableBalita.rows({ filter: "applied" }).count(); // Data balita terfilter
+
+    let totalOrangTua = tableOrangTua.rows().count(); // Total data orangtua
+    let filteredOrangTua = tableOrangTua.rows({ filter: "applied" }).count(); // Data orangtua terfilter
+
+    // Update tampilan jumlah data
+    // $("#jumlahData").text(`Jumlah Balita : ${filteredBalita} / ${totalBalita}`);
+
+    // Update tampilan jumlah data dengan format tebal
+    $("#jumlahDataBalita").html(`<strong>${filteredBalita}</strong>`);
+    $("#jumlahDataOrangtua").html(`<strong>${filteredOrangTua}</strong>`);
 }
-// updateRowCount(tableOrangTua, 'rowCountDisplayPengukuran');
+
+// Panggil fungsi untuk menghitung jumlah data saat halaman dimuat
+$(document).ready(function () {
+    updateDataCount();
+});
 
 const setTableColor = () => {
     document
