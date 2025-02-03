@@ -1,5 +1,11 @@
 const CACHE_NAME = "offline-v1"; // Ganti versi jika ada perubahan
-const filesToCache = ["/offline.html"];
+const filesToCache = [
+    "/offline.html",
+    "/assets/static/images/logo/sipegi-favicon.svg",
+    "/assets/compiled/css/app.css",
+    "/assets/compiled/css/error.css",
+    "/assets/compiled/png/error-nointernet.png",
+];
 
 // Preload cache saat install
 const preLoad = function () {
