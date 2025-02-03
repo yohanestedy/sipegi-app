@@ -1,5 +1,6 @@
 const CACHE_NAME = "offline-v1"; // Ganti versi jika ada perubahan
 const filesToCache = [
+    "/",
     "/offline.html",
     "/assets/static/images/logo/sipegi-favicon.svg",
     "/assets/compiled/css/app.css",
