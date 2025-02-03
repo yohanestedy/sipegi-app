@@ -229,7 +229,7 @@ $("#filterPosyandu").on("change", function () {
     tableBalitaNonaktif.column(8).search(selectedValue).draw(); //Tabel Balita Lulus
     tableOrangTua.column(5).search(selectedValue).draw();
 
-    updateDataCount();
+    updateDataCount(); //jalankan penghitungan jika filter di tekan
 });
 
 $("#filterBulanPengukuran").on("change", function () {
