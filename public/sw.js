@@ -1,9 +1,5 @@
 const CACHE_NAME = "offline-v1"; // Ganti versi jika ada perubahan
-const filesToCache = [
-    "/",
-    "/offline.html",
-    "/login", // Tambahkan halaman login ke cache
-];
+const filesToCache = ["/", "/offline.html"];
 
 // Preload cache saat install
 const preLoad = function () {
