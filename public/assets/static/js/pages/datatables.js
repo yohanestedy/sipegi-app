@@ -281,7 +281,7 @@ $("#searchKeyword").on("keyup", function () {
     tableBalita.search(searchValue).draw(); // Terapkan filter global di tabel
 });
 
-// Fungsi untuk menghitung dan menampilkan jumlah data
+// Fungsi untuk menghitung dan menampilkan jumlah data (FIX BISA)
 function updateDataCount() {
     let totalBalita = tableBalita.rows().count(); // Total data balita
     let filteredBalita = tableBalita.rows({ filter: "applied" }).count(); // Data balita terfilter
