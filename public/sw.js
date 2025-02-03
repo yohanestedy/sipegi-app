@@ -28,49 +28,51 @@ self.addEventListener("activate", function (event) {
     );
 });
 
-// Menangani permintaan fetch dengan Stale-While-Revalidate
+// Memeriksa respons dari jaringan
+const checkResponse = function (request) {
+    return new Promise(function (fulfill, reject) {
+        fetch(request).then(function (response) {
+            if (response.status !== 404) {
+                fulfill(response);
+            } else {
+                reject();
+            }
+        }, reject);
+    });
+};
+
+// Menambahkan ke cache
+const addToCache = function (request) {
+    return caches.open(CACHE_NAME).then(function (cache) {
+        return fetch(request).then(function (response) {
+            return cache.put(request, response.clone());
+        });
+    });
+};
+
+// Mengembalikan dari cache
+const returnFromCache = function (request) {
+    return caches.open(CACHE_NAME).then(function (cache) {
+        return cache.match(request).then(function (matching) {
+            if (!matching || matching.status === 404) {
+                return cache.match("offline.html");
+            } else {
+                return matching;
+            }
+        });
+    });
+};
+
+// Menangani permintaan fetch
 self.addEventListener("fetch", function (event) {
     event.respondWith(
-        caches
-            .match(event.request)
-            .then(function (cachedResponse) {
-                // Kembalikan data dari cache jika ada
-                if (cachedResponse) {
-                    // Lakukan permintaan ke jaringan untuk memeriksa pembaruan
-                    fetch(event.request).then(function (response) {
-                        // Perbarui cache dengan data baru jika respons berhasil
-                        if (response && response.status === 200) {
-                            caches.open(CACHE_NAME).then(function (cache) {
-                                cache.put(event.request, response.clone());
-                            });
-                        }
-                    });
-                    return cachedResponse; // Kembalikan data dari cache
-                }
-
-                // Jika tidak ada cache, ambil dari jaringan
-                return fetch(event.request).then(function (response) {
-                    // Perbarui cache dengan data baru jika respons berhasil
-                    if (response && response.status === 200) {
-                        return caches.open(CACHE_NAME).then(function (cache) {
-                            cache.put(event.request, response.clone());
-                            return response; // Kembalikan respons dari jaringan
-                        });
-                    }
-                    return response; // Kembalikan respons jika tidak ada cache
-                });
-            })
-            .catch(function () {
-                // Kembalikan halaman offline jika jaringan gagal
-                return caches
-                    .match("/offline.html")
-                    .then(function (offlineResponse) {
-                        // Jika permintaan adalah untuk halaman login dan tidak ada koneksi
-                        if (event.request.url.includes("/login")) {
-                            return caches.match("/login"); // Kembalikan halaman login dari cache
-                        }
-                        return offlineResponse; // Kembalikan halaman offline
-                    });
-            })
+        checkResponse(event.request).catch(function () {
+            return returnFromCache(event.request);
+        })
     );
+
+    // Hanya cache permintaan yang bukan dari http
+    if (!event.request.url.startsWith("http")) {
+        event.waitUntil(addToCache(event.request));
+    }
 });
