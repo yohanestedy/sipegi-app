@@ -68,7 +68,7 @@ let tableBalita = $("#tableBalita").DataTable({
         [10, 25, 50, -1],
         [10, 25, 50, "Semua"],
     ],
-    pageLength: -1,
+    pageLength: 25,
     pagingType: "simple",
     order: [
         [1, "asc"], // Kolom Dusun, urut descending
