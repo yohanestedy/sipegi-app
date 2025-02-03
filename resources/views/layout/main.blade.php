@@ -185,12 +185,12 @@
 
 
     {{-- PWA --}}
-    <script src="{{ asset('/sw.js') }}"></script>
+    <script src="{{ asset('/sw1.js') }}"></script>
     <script>
         if ("serviceWorker" in navigator) {
             // Register a service worker hosted at the root of the
             // site using the default scope.
-            navigator.serviceWorker.register("/sw.js").then(
+            navigator.serviceWorker.register("/sw1.js").then(
                 (registration) => {
                     console.log("Service worker registration succeeded:", registration);
                 },
