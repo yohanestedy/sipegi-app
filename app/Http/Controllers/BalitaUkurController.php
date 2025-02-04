@@ -618,22 +618,33 @@ class BalitaUkurController extends Controller
         }
         $diffInDays = Carbon::parse($tgl_ukur)->diffInDays(Carbon::parse($previous->tgl_ukur));
 
+        // Versi Baru Pengkondisian Status BB Naik
+        return match (true) {
+            $diffInDays > 35 => 'O',
+            ($bb <= $previous->bb && $previous->bb <= $previousKedua->bb) => '2T',
+            ($bb <= $previous->bb) => 'T',
+            default => 'N'
+        };
+
+        // Versi Lama Pengkondisian Status BB Naik
+        // if ($diffInDays > 35) {
+        //     return 'O';
+        // } else if ($bb < $previous->bb && $previous->bb < $previousKedua->bb) {
+        //     return '2T'; // Berat badan tidak naik dua kali berturut turut
+        // } else if ($bb < $previous->bb && $previous->bb == $previousKedua->bb) {
+        //     return '2T'; // Berat badan tidak naik dua kali berturut turut
+        // } else if ($bb == $previous->bb && $previous->bb == $previousKedua->bb) {
+        //     return '2T'; // Berat badan tidak naik dua kali berturut turut
+        // } else if ($bb == $previous->bb && $previous->bb < $previousKedua->bb) {
+        //     return '2T'; // Berat badan tidak naik dua kali berturut turut
+        // } else if ($bb == $previous->bb) {
+        //     return 'T'; // Berat badan tidak naik
+        // } else if ($bb < $previous->bb) {
+        //     return 'T'; // Berat badan tidak naik
+        // } else {
+        //     return 'N'; // Berat badan naik
+        // }
 
 
-
-
-        if ($diffInDays > 35) {
-            return 'O';
-        } else if ($bb < $previous->bb && $previous->bb < $previousKedua->bb) {
-            return '2T'; // Berat badan turun dua kali berturut-turut
-        } else if ($bb == $previous->bb && $previous->bb == $previousKedua->bb) {
-            return '2T'; // Berat badan turun dua kali berturut-turut
-        } else if ($bb == $previous->bb) {
-            return 'T'; // Berat badan sama dengan bulan lalu
-        } else if ($bb < $previous->bb) {
-            return 'T'; // Berat badan turun sekali
-        } else {
-            return 'N'; // Berat badan naik
-        }
     }
 }
