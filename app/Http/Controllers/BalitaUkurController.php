@@ -626,6 +626,8 @@ class BalitaUkurController extends Controller
             return 'O';
         } else if ($bb < $previous->bb && $previous->bb < $previousKedua->bb) {
             return '2T'; // Berat badan turun dua kali berturut-turut
+        } else if ($bb == $previous->bb && $previous->bb == $previousKedua->bb) {
+            return '2T'; // Berat badan turun dua kali berturut-turut
         } else if ($bb == $previous->bb) {
             return 'T'; // Berat badan sama dengan bulan lalu
         } else if ($bb < $previous->bb) {
