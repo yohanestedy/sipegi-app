@@ -50,13 +50,11 @@ class BalitaUkurTableExport implements FromCollection, WithHeadings, WithStyles,
             return $item->balita->name; // Urutkan berdasarkan nama balita
         });
 
-        // Menambahkan nomor urut pada setiap item
-        $balitaQuery->each(function ($item, $index) {
-            // Menambahkan properti nomor urut pada setiap item
-            $item->nomor_urut = $index + 1; // Mulai dari 1
-        });
-
-        return $balitaQuery;
+        // // Menambahkan nomor urut pada setiap item
+        // $balitaQuery->each(function ($item, $index) {
+        //     // Menambahkan properti nomor urut pada setiap item
+        //     $item->nomor_urut = $index + 1; // Mulai dari 1
+        // });
 
         return $balitaQuery;
     }
@@ -130,15 +128,15 @@ class BalitaUkurTableExport implements FromCollection, WithHeadings, WithStyles,
         return 'A1';
     }
 
+    private $index = 0; // Inisialisasi index
     public function map($balitaUkur): array
     {
-        static $index = 1;
 
-
+        $this->index++; // Tambahkan 1 setiap pemanggilan map()
 
         return [
 
-            $balitaUkur->nomor_urut,
+            $this->index,
             $balitaUkur->balita->name,
             " " . $balitaUkur->balita->nik,
             $balitaUkur->balita->gender,
