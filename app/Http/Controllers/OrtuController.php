@@ -105,7 +105,7 @@ class OrtuController extends Controller
             'desa.required' => 'Desa harus dipilih',
             'dusun.required' => 'Dusun harus dipilih',
             'rt.required' => 'RT harus dipilih',
-            'alamat.required' => 'Alamat lengkap harus diisi',
+            'alamat.required' => 'Alamat harus diisi',
         ]);
 
 
@@ -186,7 +186,7 @@ class OrtuController extends Controller
             'desa.required' => 'Desa harus dipilih',
             'dusun.required' => 'Dusun harus dipilih',
             'rt.required' => 'RT harus dipilih',
-            'alamat.required' => 'Alamat lengkap harus diisi',
+            'alamat.required' => 'Alamat harus diisi',
         ]);
 
         if ($validator->fails()) {

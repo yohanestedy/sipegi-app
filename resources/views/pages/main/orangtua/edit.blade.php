@@ -311,10 +311,10 @@
                                 </div> --}}
 
 
-                                {{-- Form Alamat Lengkap --}}
+                                {{-- Form Alamat --}}
                                 <div class="row d-flex mb-3 ">
                                     <div class="col-md-4 mt-2 text-md-end justify-content-end">
-                                        <label>Alamat Lengkap</label>
+                                        <label>Alamat</label>
                                     </div>
                                     <div class="col-md-5 form-group mt-2">
                                         <textarea name="alamat" class="form-control @error('alamat') is-invalid @enderror" id="exampleFormControlTextarea1"
