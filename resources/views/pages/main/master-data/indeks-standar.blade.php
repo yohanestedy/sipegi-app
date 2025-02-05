@@ -52,7 +52,7 @@
 
                     <div class="mb-2">
                         <p class="d-block d-xl-none"
-                            style="font-size: 0.85rem; color: #9d9e9f; font-weight: 500; margin-top: 8px; font-style: italic; text-align: left;">
+                            style="font-size: 0.8rem; color: #a3a3a3; font-weight: 500; margin-top: 8px; font-style: italic; text-align: left;">
                             *Geser ke <i class="fa-solid fa-arrow-right-long"></i> untuk melihat data
                         </p>
                     </div>
