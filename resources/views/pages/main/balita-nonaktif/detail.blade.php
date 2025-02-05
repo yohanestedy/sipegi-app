@@ -178,7 +178,8 @@
                     <div class="mb-2">
                         <p class="d-block d-xl-none"
                             style="font-size: 0.85rem; color: #9d9e9f; font-weight: 500; margin-top: 8px; font-style: italic; text-align: left;">
-                            *Geser ke samping untuk melihat data
+                            *Klik tombol <i class="fa-solid fa-magnifying-glass"></i> atau geser ke <i
+                                class="fa-solid fa-arrow-right-long"></i> untuk melihat data
                         </p>
                     </div>
                     <div class="table-responsive datatable-minimal">
