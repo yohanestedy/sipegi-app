@@ -228,7 +228,7 @@
                                                 data-ukur='@json($balitaUkur)' data-bs-toggle="tooltip"
                                                 data-bs-placement="top" data-bs-original-title="Lihat Detail"
                                                 style="border-radius: 8px; padding: .2rem .35rem; color:white;">
-                                                <i class="fa-solid fa-eye"></i>
+                                                <i class="fa-solid fa-magnifying-glass"></i>
                                             </button>
                                             @if ($balitaUkur->umur_ukur !== '0 Bulan')
                                                 <div class="btn-group">
