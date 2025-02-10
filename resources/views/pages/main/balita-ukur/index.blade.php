@@ -98,7 +98,7 @@
 
 
                         {{-- FILTER --}}
-                        <div class="row mb-3">
+                        <div class="row mb-3 align-items-center">
                             @if (in_array(Auth::user()->role, ['super_admin', 'admin', 'kader_poskesdes']))
                                 <div class="col-6 col-md-3">
                                     <select id="filterPosyandu" class="form-select">
@@ -109,10 +109,14 @@
                                     </select>
                                 </div>
                             @endif
-                            <div class="col-6 col-md-3 mb-3">
+                            <div class="col-6 col-md-3">
 
                                 <input id="filterBulanPengukuran" name="periode" type="text" class="form-control periode"
                                     placeholder="--Pilih Bulan dan Tahun--" />
+                            </div>
+                            <div class="col-6 col-md-3 mt-2">
+                                <div class="medium-text">Jumlah Pengukuran: <span id="jumlahDataPengukuran"></span>
+                                </div>
                             </div>
                         </div>
 
@@ -530,6 +534,8 @@
             altInput: true,
             disableMobile: "true",
             disableMobile: "true",
+            defaultDate: "today",
+
             plugins: [
                 new monthSelectPlugin({
 
@@ -537,8 +543,17 @@
                     dateFormat: "m.y",
                     altFormat: "F Y",
 
+
                 }),
             ],
+            onChange: function(selectedDates, dateStr, instance) {
+                performSearch();
+                updateDataCount(); // Panggil fungsi pencarian saat tanggal dipilih
+            },
+            onReady: function(selectedDates, dateStr, instance) {
+                performSearch();
+                updateDataCount(); // me
+            }
         });
     </script>
 

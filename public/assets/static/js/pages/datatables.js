@@ -232,8 +232,56 @@ $("#filterPosyandu").on("change", function () {
     updateDataCount(); //jalankan penghitungan jika filter di tekan
 });
 
-$("#filterBulanPengukuran").on("change", function () {
-    let selectedValue = $(this).val();
+// $("#filterBulanPengukuran").on("change", function () {
+//     let selectedValue = $(this).val();
+
+//     if (!selectedValue) {
+//         // Jika value kosong (reset)
+//         // Reset pencarian dan tampilkan semua data
+//         tablePengukuran.column(3).search("").draw();
+//         return;
+//     }
+
+//     let [month, year] = selectedValue.split(".");
+//     year = `20${year}`;
+
+//     // Daftar bulan dalam Bahasa Indonesia untuk konversi
+//     const bulanIndo = {
+//         "01": "Januari",
+//         "02": "Februari",
+//         "03": "Maret",
+//         "04": "April",
+//         "05": "Mei",
+//         "06": "Juni",
+//         "07": "Juli",
+//         "08": "Agustus",
+//         "09": "September",
+//         10: "Oktober",
+//         11: "November",
+//         12: "Desember",
+//     };
+
+//     // Mengonversi nama bulan menjadi angka bulan
+//     let monthName = bulanIndo[month]; // Mendapatkan nama bulan (Januari, Februari, ...)
+
+//     let formattedDate = `${monthName} ${year}`; // Format menjadi "Bulan Tahun"
+
+//     console.log(formattedDate); // Debug untuk melihat hasil yang diformat
+
+//     // Filter berdasarkan bulan yang diformat
+//     tablePengukuran
+//         .column(3)
+//         .search(formattedDate) // Pencocokan berdasarkan nama bulan dan tahun
+//         .draw(); // Refresh tabel
+// });
+
+// Pencarian real-time berdasarkan input teks
+
+// FILTER BULAN DI HALAMAN
+
+function performSearch() {
+    let selectedValue = $("#filterBulanPengukuran").val();
+    console.log("Selected Value:", selectedValue);
 
     if (!selectedValue) {
         // Jika value kosong (reset)
@@ -273,8 +321,11 @@ $("#filterBulanPengukuran").on("change", function () {
         .column(3)
         .search(formattedDate) // Pencocokan berdasarkan nama bulan dan tahun
         .draw(); // Refresh tabel
-});
-// Pencarian real-time berdasarkan input teks
+}
+
+// Tetapkan event listener untuk perubahan dropdown
+// $("#filterBulanPengukuran").on("change", performSearch);
+
 $("#searchKeyword").on("keyup", function () {
     let searchValue = $(this).val(); // Ambil nilai input teks
     tablePengukuran.search(searchValue).draw(); // Terapkan filter global di tabel
@@ -288,6 +339,9 @@ function updateDataCount() {
 
     let totalOrangTua = tableOrangTua.rows().count(); // Total data orangtua
     let filteredOrangTua = tableOrangTua.rows({ filter: "applied" }).count(); // Data orangtua terfilter
+    let filteredPengukuran = tablePengukuran
+        .rows({ filter: "applied" })
+        .count(); // Data orangtua terfilter
 
     // Update tampilan jumlah data
     // $("#jumlahData").text(`Jumlah Balita : ${filteredBalita} / ${totalBalita}`);
@@ -295,6 +349,7 @@ function updateDataCount() {
     // Update tampilan jumlah data dengan format tebal
     $("#jumlahDataBalita").html(`<strong>${filteredBalita}</strong>`);
     $("#jumlahDataOrangtua").html(`<strong>${filteredOrangTua}</strong>`);
+    $("#jumlahDataPengukuran").html(`<strong>${filteredPengukuran}</strong>`);
 }
 
 // Panggil fungsi untuk menghitung jumlah data saat halaman dimuat
