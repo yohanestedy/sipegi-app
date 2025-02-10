@@ -595,6 +595,49 @@ class BalitaUkurController extends Controller
         return (($X / $M) ** $L - 1) / ($L * $S);
     }
 
+    // Function KOREKSI JIKA Z-SCORE lebih besar dari 3 dan lebih kecl dari -3
+    public function hitungSD3Pos($L, $M, $S)
+    {
+        if ($L == 0) {
+            return null; // Hindari error pembagian oleh nol
+        }
+
+        $sd3pos = $M * pow((1 + ($L * $S * 3)), (1 / $L));
+
+        return round($sd3pos, 2); // Bulatkan ke 2 angka di belakang koma
+    }
+    public function hitungSD2Pos($L, $M, $S)
+    {
+        if ($L == 0) {
+            return null; // Hindari error pembagian oleh nol
+        }
+
+        $sd2pos = $M * pow((1 + ($L * $S * 2)), (1 / $L));
+
+        return round($sd2pos, 2); // Bulatkan ke 2 angka di belakang koma
+    }
+
+    public function hitungSD3Neg($L, $M, $S)
+    {
+        if ($L == 0) {
+            return null; // Hindari error pembagian oleh nol
+        }
+
+        $sd3neg = $M * pow((1 + ($L * $S * (-3))), (1 / $L));
+
+        return round($sd3neg, 2); // Bulatkan ke 2 angka di belakang koma
+    }
+    public function hitungSD2Neg($L, $M, $S)
+    {
+        if ($L == 0) {
+            return null; // Hindari error pembagian oleh nol
+        }
+
+        $sd2neg = $M * pow((1 + ($L * $S * (-2))), (1 / $L));
+
+        return round($sd2neg, 2); // Bulatkan ke 2 angka di belakang koma
+    }
+
     // Status BB Naik(N)/Turun(T)/Lewat Sekali pengukuran
     public function statusBBNaik($balita_id, $tgl_ukur, $bb)
     {
