@@ -271,7 +271,7 @@
 
                                         <td data-order="{{ $balitaUkur->tgl_ukur }}" style="text-align: center">
                                             {{ $balitaUkur->tgl_ukur_display }}</td>
-                                        <td style="text-align: center">
+                                        <td data-sort="{{ $balitaUkur->balita->umur_hari }}" style="text-align: center">
                                             {{ $balitaUkur->umur_ukur }}</td>
                                         <td style="text-align: center">{{ $balitaUkur->bb }}</td>
                                         <td style="text-align: center">{{ $balitaUkur->tb }}</td>
