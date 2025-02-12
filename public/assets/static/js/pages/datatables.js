@@ -126,14 +126,14 @@ let tablePengukuran = $("#tableDaftarBalitaDiukur").DataTable({
         [10, 25, 50, -1],
         [10, 25, 50, "Semua"],
     ],
-    pageLength: -1,
+    pageLength: 25,
     order: [
         [3, "desc"], // Kolom Tgl Ukur urut descending
     ],
     columnDefs: [
         {
             orderable: false,
-            targets: [0, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+            targets: [0, 5, 6, 7, 8, 10, 12, 14, 16, 18],
         }, // Nonaktifkan sorting di kolom lainnya
     ],
 
@@ -329,15 +329,25 @@ function performSearch() {
 $("#searchKeyword").on("keyup", function () {
     let searchValue = $(this).val(); // Ambil nilai input teks
     tablePengukuran.search(searchValue).draw(); // Terapkan filter global di tabel
-    tableBalita.search(searchValue).draw(); // Terapkan filter global di tabel
+    tableBalita.search(searchValue).draw();
+});
+
+tableBalita.on("search.dt", function () {
+    updateDataCount();
+});
+tableOrangTua.on("search.dt", function () {
+    updateDataCount();
+});
+tablePengukuran.on("search.dt", function () {
+    updateDataCount();
 });
 
 // Fungsi untuk menghitung dan menampilkan jumlah data (FIX BISA)
 function updateDataCount() {
     let totalBalita = tableBalita.rows().count(); // Total data balita
-    let filteredBalita = tableBalita.rows({ filter: "applied" }).count(); // Data balita terfilter
-
     let totalOrangTua = tableOrangTua.rows().count(); // Total data orangtua
+
+    let filteredBalita = tableBalita.rows({ filter: "applied" }).count(); // Data balita terfilter
     let filteredOrangTua = tableOrangTua.rows({ filter: "applied" }).count(); // Data orangtua terfilter
     let filteredPengukuran = tablePengukuran
         .rows({ filter: "applied" })
