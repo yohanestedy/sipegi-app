@@ -324,6 +324,12 @@ class BalitaUkurController extends Controller
         $zScoreLK_U = $this->hitungZScore($lingkarKepala, $lkLMS->L, $lkLMS->M, $lkLMS->S);
 
 
+        // KOREKSI NILAI Z-SCORE
+        $zScoreIMT_U = $this->hitungZscoreKoreksi($zScoreIMT_U, $IMT, $imtLMS->L, $imtLMS->M, $imtLMS->S);
+        $zScoreBB_U = $this->hitungZScoreKoreksi($zScoreBB_U, $beratBadan, $bbUmurLMS->L, $bbUmurLMS->M, $bbUmurLMS->S);
+        $zScoreBB_TB = $this->hitungZScoreKoreksi($zScoreBB_TB, $beratBadan, $bbtbLMS->L, $bbtbLMS->M, $bbtbLMS->S);
+
+
 
 
         // STATUS GIZI BB/U
@@ -590,52 +596,52 @@ class BalitaUkurController extends Controller
     }
 
     // FUNGSI RUMUS HITUNG ZSCORE
-    private function hitungZScore($X, $L, $M, $S)
+    private function hitungZScore($y, $L, $M, $S)
     {
-        return (($X / $M) ** $L - 1) / ($L * $S);
+        return (($y / $M) ** $L - 1) / ($L * $S);
     }
+
 
     // Function KOREKSI JIKA Z-SCORE lebih besar dari 3 dan lebih kecl dari -3
-    public function hitungSD3Pos($L, $M, $S)
+
+    private function hitungZscoreKoreksi($z_ind, $y, $L, $M, $S)
     {
-        if ($L == 0) {
-            return null; // Hindari error pembagian oleh nol
+        // Condition 1: Menggunakan nilai ABSOLUT z_ind
+        if (abs($z_ind) <= 3) {
+            return $z_ind;
+        }
+        // atau rentang -3 to 3
+        // if ($z_ind <= 3 && $z_ind >= -3) {
+        //     return $z_ind;
+        // }
+
+        // Condition 2: kalo z_ind lebih dari 3
+        if ($z_ind > 3) {
+            $sd3pos = $M * pow((1 + ($L * $S * 3)), (1 / $L));
+            $sd3pos = round($sd3pos, 2);
+
+            $sd2pos = $M * pow((1 + ($L * $S * 2)), (1 / $L));
+            $sd2pos = round($sd2pos, 2);
+
+            $sd23pos = $sd3pos - $sd2pos;
+            return 3 + (($y - $sd3pos) / $sd23pos);
         }
 
-        $sd3pos = $M * pow((1 + ($L * $S * 3)), (1 / $L));
+        // Condition 3: kalo z_ind kurang dari -3
+        if ($z_ind < -3) {
 
-        return round($sd3pos, 2); // Bulatkan ke 2 angka di belakang koma
-    }
-    public function hitungSD2Pos($L, $M, $S)
-    {
-        if ($L == 0) {
-            return null; // Hindari error pembagian oleh nol
+            $sd3neg = $M * pow((1 + ($L * $S * (-3))), (1 / $L));
+            $sd3neg = round($sd3neg, 2);
+
+            $sd2neg = $M * pow((1 + ($L * $S * (-2))), (1 / $L));
+            $sd2neg = round($sd2neg, 2);
+
+            $sd23neg = $sd2neg - $sd3neg;
+            return -3 + (($y - $sd3neg) / $sd23neg);
         }
 
-        $sd2pos = $M * pow((1 + ($L * $S * 2)), (1 / $L));
-
-        return round($sd2pos, 2); // Bulatkan ke 2 angka di belakang koma
-    }
-
-    public function hitungSD3Neg($L, $M, $S)
-    {
-        if ($L == 0) {
-            return null; // Hindari error pembagian oleh nol
-        }
-
-        $sd3neg = $M * pow((1 + ($L * $S * (-3))), (1 / $L));
-
-        return round($sd3neg, 2); // Bulatkan ke 2 angka di belakang koma
-    }
-    public function hitungSD2Neg($L, $M, $S)
-    {
-        if ($L == 0) {
-            return null; // Hindari error pembagian oleh nol
-        }
-
-        $sd2neg = $M * pow((1 + ($L * $S * (-2))), (1 / $L));
-
-        return round($sd2neg, 2); // Bulatkan ke 2 angka di belakang koma
+        // Should not reach here, but return original z_ind as a fallback
+        return $z_ind;
     }
 
     // Status BB Naik(N)/Turun(T)/Lewat Sekali pengukuran
