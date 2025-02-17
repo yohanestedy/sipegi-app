@@ -618,10 +618,10 @@ class BalitaUkurController extends Controller
         // Condition 2: kalo z_ind lebih dari 3
         if ($z_ind > 3) {
             $sd3pos = $M * pow((1 + ($L * $S * 3)), (1 / $L));
-            $sd3pos = round($sd3pos, 2);
+            // $sd3pos = round($sd3pos, 2);
 
             $sd2pos = $M * pow((1 + ($L * $S * 2)), (1 / $L));
-            $sd2pos = round($sd2pos, 2);
+            // $sd2pos = round($sd2pos, 2);
 
             $sd23pos = $sd3pos - $sd2pos;
             return 3 + (($y - $sd3pos) / $sd23pos);
@@ -631,10 +631,10 @@ class BalitaUkurController extends Controller
         if ($z_ind < -3) {
 
             $sd3neg = $M * pow((1 + ($L * $S * (-3))), (1 / $L));
-            $sd3neg = round($sd3neg, 2);
+            // $sd3neg = round($sd3neg, 2);
 
             $sd2neg = $M * pow((1 + ($L * $S * (-2))), (1 / $L));
-            $sd2neg = round($sd2neg, 2);
+            // $sd2neg = round($sd2neg, 2);
 
             $sd23neg = $sd2neg - $sd3neg;
             return -3 + (($y - $sd3neg) / $sd23neg);
