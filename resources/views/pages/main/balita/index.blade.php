@@ -165,8 +165,9 @@
                                                 class="badge">
                                                 {{ $balita->gender_display }}</div>
                                         </td>
-                                        <td>{{ $balita->tgl_lahir_display }}</td>
-                                        <td data-sort="{{ $balita->umur_hari }}">{{ $balita->umur_display }}</td>
+                                        <td style="text-align: right">{{ $balita->tgl_lahir_display }}</td>
+                                        <td data-sort="{{ $balita->umur_hari }}" style="text-align: right">
+                                            {{ $balita->umur_display }}</td>
                                         <td>{{ $balita->orangtua->name_ibu }}</td>
                                         <td data-sort="{{ $balita->posyandu_id }}" style="text-align: center">
                                             {{ $balita->posyandu->name }}</td>

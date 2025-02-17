@@ -262,7 +262,7 @@
 
                                         {{-- <td style="text-align: center">{{ $balitaUkur->balita->name }}</td> --}}
 
-                                        <td style="text-align: center">{{ $balitaUkur->balita->name }}</td>
+                                        <td style="text-align: left">{{ $balitaUkur->balita->name }}</td>
                                         <td style="text-align: center">
                                             <div style="font-weight: 600; {{ $balitaUkur->balita->gender_display == 'Perempuan' ? 'background-color: #fcd8ff; color:#855f82' : 'background-color: #d2eeff; color: #526483' }} "
                                                 class="badge">
@@ -271,7 +271,7 @@
 
                                         <td data-order="{{ $balitaUkur->tgl_ukur }}" style="text-align: center">
                                             {{ $balitaUkur->tgl_ukur_display }}</td>
-                                        <td data-sort="{{ $balitaUkur->balita->umur_hari }}" style="text-align: center">
+                                        <td data-sort="{{ $balitaUkur->balita->umur_hari }}" style="text-align: right">
                                             {{ $balitaUkur->umur_ukur }}</td>
                                         <td style="text-align: center">{{ $balitaUkur->bb }}</td>
                                         <td style="text-align: center">{{ $balitaUkur->tb }}</td>
