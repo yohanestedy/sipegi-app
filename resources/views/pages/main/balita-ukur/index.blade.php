@@ -280,6 +280,8 @@
                                         <td style="text-align: center">{{ $balitaUkur->status_bb_n }}</td>
 
                                         {{-- ZSCORE SECTION --}}
+
+                                        {{-- BB/U --}}
                                         <td style="text-align: center">
                                             <span class="badge {{ warnaBadge($balitaUkur->zscore_bb_u) }}">
                                                 {{ $balitaUkur->status_bb_u }}
@@ -287,18 +289,29 @@
                                         </td>
                                         <td style="text-align: center">{{ $balitaUkur->zscore_bb_u }}</td>
 
+                                        {{-- TB/U --}}
                                         <td style="text-align: center">
                                             <span class="badge {{ warnaBadge($balitaUkur->zscore_tb_u) }}">
                                                 {{ $balitaUkur->status_tb_u }}
                                             </span>
                                         </td>
                                         <td style="text-align: center">{{ $balitaUkur->zscore_tb_u }}</td>
+
+                                        {{-- BB/TB --}}
                                         <td style="text-align: center">
-                                            <span class="badge {{ warnaBadge($balitaUkur->zscore_bb_tb) }}">
-                                                {{ $balitaUkur->status_bb_tb }}
-                                            </span>
+                                            @if ($balitaUkur->status_bb_tb)
+                                                <span class="badge {{ warnaBadge($balitaUkur->zscore_bb_tb) }}">
+                                                    {{ $balitaUkur->status_bb_tb }}
+                                                </span>
+                                            @else
+                                                -
+                                            @endif
                                         </td>
-                                        <td style="text-align: center">{{ $balitaUkur->zscore_bb_tb }}</td>
+                                        <td style="text-align: center">
+                                            {{ $balitaUkur->zscore_bb_tb ? $balitaUkur->zscore_bb_tb : '-' }}</td>
+
+
+                                        {{-- IMT/U --}}
                                         <td style="text-align: center">
                                             <span class="badge {{ warnaBadge($balitaUkur->zscore_imt_u) }}">
                                                 {{ $balitaUkur->status_imt_u }}
@@ -306,12 +319,15 @@
                                         </td>
                                         <td style="text-align: center">{{ $balitaUkur->zscore_imt_u }}</td>
 
-                                        {{-- LINGKAR KEPALA --}}
+                                        {{-- LK/U --}}
                                         <td style="text-align: center">
-                                            <span
-                                                class="{{ $balitaUkur->status_lk_u ? 'badge ' . warnaBadge($balitaUkur->zscore_lk_u) : '' }}">
-                                                {{ $balitaUkur->status_lk_u ? $balitaUkur->status_lk_u : '-' }}
-                                            </span>
+                                            @if ($balitaUkur->status_lk_u)
+                                                <span class="badge {{ warnaBadge($balitaUkur->zscore_lk_u) }}">
+                                                    {{ $balitaUkur->status_lk_u }}
+                                                </span>
+                                            @else
+                                                -
+                                            @endif
                                         </td>
                                         <td style="text-align: center">
                                             {{ $balitaUkur->zscore_lk_u ? $balitaUkur->zscore_lk_u : '-' }}</td>
@@ -639,15 +655,19 @@
                 $('#status_bb_u').text(ukur.status_bb_u).attr('class', 'badge ' + warnaBadge(ukur
                     .zscore_bb_u));
                 $('#zscore_bb_u').text(ukur.zscore_bb_u);
+
                 $('#status_tb_u').text(ukur.status_tb_u).attr('class', 'badge ' + warnaBadge(ukur
                     .zscore_tb_u));
                 $('#zscore_tb_u').text(ukur.zscore_tb_u);
-                $('#status_bb_tb').text(ukur.status_bb_tb).attr('class', 'badge ' + warnaBadge(ukur
-                    .zscore_bb_tb));
-                $('#zscore_bb_tb').text(ukur.zscore_bb_tb);
+
+                $('#status_bb_tb').text(ukur.status_bb_tb ? ukur.status_bb_tb : '-').attr('class', ukur
+                    .status_bb_tb ? 'badge ' + warnaBadge(ukur.zscore_bb_tb) : '');
+                $('#zscore_bb_tb').text(ukur.zscore_bb_tb ? ukur.zscore_bb_tb : '-');
+
                 $('#status_imt_u').text(ukur.status_imt_u).attr('class', 'badge ' + warnaBadge(ukur
                     .zscore_imt_u));
                 $('#zscore_imt_u').text(ukur.zscore_imt_u);
+
                 $('#status_lk_u').text(ukur.status_lk_u ? ukur.status_lk_u : '-').attr('class', ukur
                     .status_lk_u ? 'badge ' + warnaBadge(ukur.zscore_lk_u) : '');
                 $('#zscore_lk_u').text(ukur.zscore_lk_u ? ukur.zscore_lk_u : '-');

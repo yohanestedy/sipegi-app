@@ -610,22 +610,35 @@
                         document.getElementById('lk').innerText = data.lk ? data.lk + " cm" : "-";
                         document.getElementById('status_bb_naik').innerText = data.status_bb_naik;
                         document.getElementById('cara_ukur').innerText = data.cara_ukur;
+
+                        // BB/U
                         document.getElementById('zscore_bb_u').innerText = data.zscore_bb_u;
                         document.getElementById('status_bb_u').innerText = data.status_bb_u;
                         document.getElementById('status_bb_u').className = 'badge ' + warnaBadge(data
                             .zscore_bb_u);
+
+                        // TB/U
                         document.getElementById('zscore_tb_u').innerText = data.zscore_tb_u;
                         document.getElementById('status_tb_u').innerText = data.status_tb_u;
                         document.getElementById('status_tb_u').className = 'badge ' + warnaBadge(data
                             .zscore_tb_u);
-                        document.getElementById('zscore_bb_tb').innerText = data.zscore_bb_tb;
-                        document.getElementById('status_bb_tb').innerText = data.status_bb_tb;
-                        document.getElementById('status_bb_tb').className = 'badge ' + warnaBadge(data
-                            .zscore_bb_tb);
+
+                        // BB/TB
+                        document.getElementById('status_bb_tb').innerText = data.status_bb_tb ? data
+                            .status_bb_tb : '-';
+                        document.getElementById('status_bb_tb').className = data.status_bb_tb ? 'badge ' +
+                            warnaBadge(data.zscore_bb_tb) : '';
+
+                        document.getElementById('zscore_bb_tb').innerText = data.zscore_bb_tb ? data
+                            .zscore_bb_tb : '-';
+
+                        // IMT/U
                         document.getElementById('zscore_imt_u').innerText = data.zscore_imt_u;
                         document.getElementById('status_imt_u').innerText = data.status_imt_u;
                         document.getElementById('status_imt_u').className = 'badge ' + warnaBadge(data
                             .zscore_imt_u);
+
+                        // LK/U
                         document.getElementById('zscore_lk_u').innerText = data.zscore_lk_u;
                         document.getElementById('status_lk_u').innerText = data.status_lk_u;
                         document.getElementById('status_lk_u').className = 'badge ' + warnaBadge(data

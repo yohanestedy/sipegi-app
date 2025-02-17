@@ -166,17 +166,36 @@ class BalitaController extends Controller
             $tinggiBadan = $request->tb_lahir;
             $IMT = $this->hitungIMT($beratBadan, $tinggiBadan);
 
-            // Ambil NILAI LMS
+
+            // AMBIL NILAI LMS EXPANDED
             $bbUmurLMS = $this->ambilLmsExpanded('BB_U', $umurHari, $gender);
             $tbUmurLMS = $this->ambilLmsExpanded('TB_U', $umurHari, $gender);
-            $bbtbLMS = $this->ambilLmsExpanded('BB_PB', $tinggiBadan, $gender);
             $imtLMS = $this->ambilLmsExpanded('IMT_U', $umurHari, $gender);
+
+            if ($tinggiBadan >= 45 && $tinggiBadan <= 120) {
+                $bbtbLMS = $this->ambilLmsExpanded('BB_PB', $tinggiBadan, $gender);
+            } else {
+                $bbtbLMS = null;
+            }
 
             // HITUNG ZSCORE SETIAP KATEGORI
             $zScoreBB_U = $this->hitungZScore($beratBadan, $bbUmurLMS->L, $bbUmurLMS->M, $bbUmurLMS->S);
             $zScoreTB_U = $this->hitungZScore($tinggiBadan, $tbUmurLMS->L, $tbUmurLMS->M, $tbUmurLMS->S);
-            $zScoreBB_TB = $this->hitungZScore($beratBadan, $bbtbLMS->L, $bbtbLMS->M, $bbtbLMS->S);
             $zScoreIMT_U = $this->hitungZScore($IMT, $imtLMS->L, $imtLMS->M, $imtLMS->S);
+
+            if ($bbtbLMS !== null) {
+                $zScoreBB_TB = $this->hitungZScore($beratBadan, $bbtbLMS->L, $bbtbLMS->M, $bbtbLMS->S);
+            } else {
+                $zScoreBB_TB = null;
+            }
+
+            // KOREKSI NILAI Z-SCORE
+            $zScoreIMT_U = $this->hitungZscoreKoreksi($zScoreIMT_U, $IMT, $imtLMS->L, $imtLMS->M, $imtLMS->S);
+            $zScoreBB_U = $this->hitungZScoreKoreksi($zScoreBB_U, $beratBadan, $bbUmurLMS->L, $bbUmurLMS->M, $bbUmurLMS->S);
+
+            if ($zScoreBB_TB !== null) {
+                $zScoreBB_TB = $this->hitungZScoreKoreksi($zScoreBB_TB, $beratBadan, $bbtbLMS->L, $bbtbLMS->M, $bbtbLMS->S);
+            }
 
             // STATUS GIZI BB/U
             if ($zScoreBB_U < -3) {
@@ -201,7 +220,9 @@ class BalitaController extends Controller
             }
 
             // STATUS GIZI (BB/PB atau BB/TB)
-            if ($zScoreBB_TB < -3) {
+            if ($zScoreBB_TB == null) {
+                $statusGiziBB_TB = null;
+            } elseif ($zScoreBB_TB < -3) {
                 $statusGiziBB_TB = "Gizi buruk";
             } elseif ($zScoreBB_TB > -3 && $zScoreBB_TB < -2) {
                 $statusGiziBB_TB = "Gizi kurang";
@@ -242,7 +263,7 @@ class BalitaController extends Controller
                 "status_tb_u" => $statusGiziTB_U,
                 "zscore_tb_u" => round($zScoreTB_U, 2),
                 "status_bb_tb" => $statusGiziBB_TB,
-                "zscore_bb_tb" => round($zScoreBB_TB, 2),
+                "zscore_bb_tb" => $zScoreBB_TB !== null ? round($zScoreBB_TB, 2) : null,
                 "status_imt_u" => $statusGiziIMT_U,
                 "zscore_imt_u" => round($zScoreIMT_U, 2),
                 "created_by" => Auth::id(),
@@ -396,17 +417,35 @@ class BalitaController extends Controller
             $tinggiBadan = $request->tb_lahir;
             $IMT = $this->hitungIMT($beratBadan, $tinggiBadan);
 
-            // Ambil NILAI LMS
+            // AMBIL NILAI LMS EXPANDED
             $bbUmurLMS = $this->ambilLmsExpanded('BB_U', $umurHari, $gender);
             $tbUmurLMS = $this->ambilLmsExpanded('TB_U', $umurHari, $gender);
-            $bbtbLMS = $this->ambilLmsExpanded('BB_PB', $tinggiBadan, $gender);
             $imtLMS = $this->ambilLmsExpanded('IMT_U', $umurHari, $gender);
+
+            if ($tinggiBadan >= 45 && $tinggiBadan <= 120) {
+                $bbtbLMS = $this->ambilLmsExpanded('BB_PB', $tinggiBadan, $gender);
+            } else {
+                $bbtbLMS = null;
+            }
 
             // HITUNG ZSCORE SETIAP KATEGORI
             $zScoreBB_U = $this->hitungZScore($beratBadan, $bbUmurLMS->L, $bbUmurLMS->M, $bbUmurLMS->S);
             $zScoreTB_U = $this->hitungZScore($tinggiBadan, $tbUmurLMS->L, $tbUmurLMS->M, $tbUmurLMS->S);
-            $zScoreBB_TB = $this->hitungZScore($beratBadan, $bbtbLMS->L, $bbtbLMS->M, $bbtbLMS->S);
             $zScoreIMT_U = $this->hitungZScore($IMT, $imtLMS->L, $imtLMS->M, $imtLMS->S);
+
+            if ($bbtbLMS !== null) {
+                $zScoreBB_TB = $this->hitungZScore($beratBadan, $bbtbLMS->L, $bbtbLMS->M, $bbtbLMS->S);
+            } else {
+                $zScoreBB_TB = null;
+            }
+
+            // KOREKSI NILAI Z-SCORE
+            $zScoreIMT_U = $this->hitungZscoreKoreksi($zScoreIMT_U, $IMT, $imtLMS->L, $imtLMS->M, $imtLMS->S);
+            $zScoreBB_U = $this->hitungZScoreKoreksi($zScoreBB_U, $beratBadan, $bbUmurLMS->L, $bbUmurLMS->M, $bbUmurLMS->S);
+
+            if ($zScoreBB_TB !== null) {
+                $zScoreBB_TB = $this->hitungZScoreKoreksi($zScoreBB_TB, $beratBadan, $bbtbLMS->L, $bbtbLMS->M, $bbtbLMS->S);
+            }
 
             // STATUS GIZI BB/U
             if ($zScoreBB_U < -3) {
@@ -431,7 +470,9 @@ class BalitaController extends Controller
             }
 
             // STATUS GIZI (BB/PB atau BB/TB)
-            if ($zScoreBB_TB < -3) {
+            if ($zScoreBB_TB == null) {
+                $statusGiziBB_TB = null;
+            } elseif ($zScoreBB_TB < -3) {
                 $statusGiziBB_TB = "Gizi buruk";
             } elseif ($zScoreBB_TB > -3 && $zScoreBB_TB < -2) {
                 $statusGiziBB_TB = "Gizi kurang";
@@ -473,7 +514,7 @@ class BalitaController extends Controller
                 "status_tb_u" => $statusGiziTB_U,
                 "zscore_tb_u" => round($zScoreTB_U, 2),
                 "status_bb_tb" => $statusGiziBB_TB,
-                "zscore_bb_tb" => round($zScoreBB_TB, 2),
+                "zscore_bb_tb" => $zScoreBB_TB !== null ? round($zScoreBB_TB, 2) : null,
                 "status_imt_u" => $statusGiziIMT_U,
                 "zscore_imt_u" => round($zScoreIMT_U, 2),
                 "updated_by" => Auth::id(),
@@ -589,5 +630,47 @@ class BalitaController extends Controller
     private function hitungZScore($X, $L, $M, $S)
     {
         return (($X / $M) ** $L - 1) / ($L * $S);
+    }
+
+    // Function KOREKSI JIKA Z-SCORE lebih besar dari 3 dan lebih kecl dari -3
+
+    private function hitungZscoreKoreksi($z_ind, $y, $L, $M, $S)
+    {
+        // Condition 1: Menggunakan nilai ABSOLUT z_ind
+        if (abs($z_ind) <= 3) {
+            return $z_ind;
+        }
+        // atau rentang -3 to 3
+        // if ($z_ind <= 3 && $z_ind >= -3) {
+        //     return $z_ind;
+        // }
+
+        // Condition 2: kalo z_ind lebih dari 3
+        if ($z_ind > 3) {
+            $sd3pos = $M * pow((1 + ($L * $S * 3)), (1 / $L));
+            // $sd3pos = round($sd3pos, 2);
+
+            $sd2pos = $M * pow((1 + ($L * $S * 2)), (1 / $L));
+            // $sd2pos = round($sd2pos, 2);
+
+            $sd23pos = $sd3pos - $sd2pos;
+            return 3 + (($y - $sd3pos) / $sd23pos);
+        }
+
+        // Condition 3: kalo z_ind kurang dari -3
+        if ($z_ind < -3) {
+
+            $sd3neg = $M * pow((1 + ($L * $S * (-3))), (1 / $L));
+            // $sd3neg = round($sd3neg, 2);
+
+            $sd2neg = $M * pow((1 + ($L * $S * (-2))), (1 / $L));
+            // $sd2neg = round($sd2neg, 2);
+
+            $sd23neg = $sd2neg - $sd3neg;
+            return -3 + (($y - $sd3neg) / $sd23neg);
+        }
+
+        // Should not reach here, but return original z_ind as a fallback
+        return $z_ind;
     }
 }

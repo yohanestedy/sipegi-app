@@ -305,29 +305,42 @@ class BalitaUkurController extends Controller
         //     $imtLMS = $this->ambilLms('IMT_U_T', $umurBulan, $gender);
         // }
 
+
         // AMBIL NILAI LMS EXPANDED
         $bbUmurLMS = $this->ambilLmsExpanded('BB_U', $umurHari, $gender);
         $tbUmurLMS = $this->ambilLmsExpanded('TB_U', $umurHari, $gender);
         $imtLMS = $this->ambilLmsExpanded('IMT_U', $umurHari, $gender);
         $lkLMS = $this->ambilLmsExpanded('LK_U', $umurHari, $gender);
-        if ($umurHari <= 730) {
-            $bbtbLMS = $this->ambilLmsExpanded('BB_PB', $tinggiBadan, $gender);
-        } elseif ($umurHari >= 731 && $umurHari <= 1856) {
-            $bbtbLMS = $this->ambilLmsExpanded('BB_TB', $tinggiBadan, $gender);
+
+        if ($tinggiBadan >= 45 && $tinggiBadan <= 120) {
+            if ($umurHari <= 730) {
+                $bbtbLMS = $this->ambilLmsExpanded('BB_PB', $tinggiBadan, $gender);
+            } elseif ($umurHari >= 731 && $umurHari <= 1856) {
+                $bbtbLMS = $this->ambilLmsExpanded('BB_TB', $tinggiBadan, $gender);
+            }
+        } else {
+            $bbtbLMS = null;
         }
 
         // HITUNG ZSCORE SETIAP KATEGORI
         $zScoreBB_U = $this->hitungZScore($beratBadan, $bbUmurLMS->L, $bbUmurLMS->M, $bbUmurLMS->S);
         $zScoreTB_U = $this->hitungZScore($tinggiBadan, $tbUmurLMS->L, $tbUmurLMS->M, $tbUmurLMS->S);
-        $zScoreBB_TB = $this->hitungZScore($beratBadan, $bbtbLMS->L, $bbtbLMS->M, $bbtbLMS->S);
         $zScoreIMT_U = $this->hitungZScore($IMT, $imtLMS->L, $imtLMS->M, $imtLMS->S);
         $zScoreLK_U = $this->hitungZScore($lingkarKepala, $lkLMS->L, $lkLMS->M, $lkLMS->S);
 
+        if ($bbtbLMS !== null) {
+            $zScoreBB_TB = $this->hitungZScore($beratBadan, $bbtbLMS->L, $bbtbLMS->M, $bbtbLMS->S);
+        } else {
+            $zScoreBB_TB = null;
+        }
 
         // KOREKSI NILAI Z-SCORE
         $zScoreIMT_U = $this->hitungZscoreKoreksi($zScoreIMT_U, $IMT, $imtLMS->L, $imtLMS->M, $imtLMS->S);
         $zScoreBB_U = $this->hitungZScoreKoreksi($zScoreBB_U, $beratBadan, $bbUmurLMS->L, $bbUmurLMS->M, $bbUmurLMS->S);
-        $zScoreBB_TB = $this->hitungZScoreKoreksi($zScoreBB_TB, $beratBadan, $bbtbLMS->L, $bbtbLMS->M, $bbtbLMS->S);
+
+        if ($zScoreBB_TB !== null) {
+            $zScoreBB_TB = $this->hitungZScoreKoreksi($zScoreBB_TB, $beratBadan, $bbtbLMS->L, $bbtbLMS->M, $bbtbLMS->S);
+        }
 
 
 
@@ -355,7 +368,9 @@ class BalitaUkurController extends Controller
         }
 
         // STATUS GIZI (BB/PB atau BB/TB)
-        if ($zScoreBB_TB < -3) {
+        if ($zScoreBB_TB == null) {
+            $statusGiziBB_TB = null;
+        } elseif ($zScoreBB_TB < -3) {
             $statusGiziBB_TB = "Gizi buruk";
         } elseif ($zScoreBB_TB > -3 && $zScoreBB_TB < -2) {
             $statusGiziBB_TB = "Gizi kurang";
@@ -416,7 +431,7 @@ class BalitaUkurController extends Controller
             'status_bb_u' => $statusGiziBB_U,
             'zscore_tb_u' => round($zScoreTB_U, 2),
             'status_tb_u' => $statusGiziTB_U,
-            'zscore_bb_tb' => round($zScoreBB_TB, 2),
+            'zscore_bb_tb' => $zScoreBB_TB !== null ? round($zScoreBB_TB, 2) : null,
             'status_bb_tb' => $statusGiziBB_TB,
             'zscore_imt_u' => round($zScoreIMT_U, 2),
             'status_imt_u' => $statusGiziIMT_U,
