@@ -1,19 +1,20 @@
 <?php
 
+use App\Models\Dusun;
 use App\Models\Posyandu;
+use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Request;
 use App\Exports\BalitaUkurTableExport;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OrtuController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BalitaController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BalitaUkurController;
 use App\Http\Controllers\MasterDataController;
 use App\Http\Controllers\BalitaNonaktifController;
-use App\Models\Dusun;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,9 +32,11 @@ Route::post('/login/store', [AuthController::class, 'storeLogin'])->name('login.
 
 // Semua route di bawah ini akan dilindungi oleh middleware 'auth'
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/', function () {
-        return view('pages.main.index');
-    })->name('home');
+    // Route::get('/', function () {
+    //     return view('pages.main.index');
+    // })->name('home');
+
+    Route::get('/', [DashboardController::class, 'index'])->name('home');
 
     Route::group(['middleware' => 'super_admin'], function () {
         // USER
