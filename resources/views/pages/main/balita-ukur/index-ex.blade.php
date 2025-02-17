@@ -405,12 +405,7 @@
                 });
             });
 
-            // SweetAlert untuk notifikasi sukses atau error dari session
-            @if (session()->has('success'))
-                Swal.fire('Success', '{{ session('success') }}', 'success');
-            @elseif (session()->has('error'))
-                Swal.fire('Error', '{{ session('error') }}', 'error');
-            @endif
+
 
 
         });
