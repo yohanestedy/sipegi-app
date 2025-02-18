@@ -6,13 +6,14 @@ use Carbon\Carbon;
 use App\Models\Balita;
 use App\Models\Posyandu;
 use App\Models\BalitaUkur;
-use App\Models\BalitaNonaktif;
 use Illuminate\Http\Request;
+use App\Models\BalitaNonaktif;
 use Illuminate\Validation\Rule;
 use Monolog\Handler\NullHandler;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Models\StandarPertumbuhanAnak;
+use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use App\Models\StandarPertumbuhanAnakExpanded;
@@ -260,6 +261,8 @@ class BalitaUkurController extends Controller
         // Ambil Umur HARI Balita berdasarkan tanggal ukur
         $umurHari = $this->hitungUmurHari($balita->tgl_lahir, $request->tgl_ukur);
 
+
+
         // Umur Pas Pengukuran
         $umurUkurDisplay = $this->hitungUmurDisplay($balita->tgl_lahir, $request->tgl_ukur);
 
@@ -413,6 +416,11 @@ class BalitaUkurController extends Controller
             $statusGiziLK_U = null;
         }
 
+        // Debugbar::info([
+        //     'Umur Hari' => $umurHari,
+        //     'Tanggal Lahir' => $balita->tgl_lahir,
+        //     'Tanggal Ukur' => $request->tgl_ukur,
+        // ]);
 
         return response()->json([
 

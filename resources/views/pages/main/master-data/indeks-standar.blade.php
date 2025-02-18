@@ -32,7 +32,8 @@
             <div class="row">
                 <div class="col-12 col-md-12 order-md-1 order-last">
                     <h3>Indeks Standar Antropometri Anak</h3>
-                    <p class="text-subtitle text-muted">Standar Antropometri Anak didasarkan pada parameter berat badan,
+                    <p class="text-subtitle medium-text text-muted">Standar Antropometri Anak didasarkan pada parameter
+                        berat badan,
                         panjang/tinggi badan, dan lingkar kepala yang terdiri atas 5 (lima) indeks, meliputi:</p>
                 </div>
 

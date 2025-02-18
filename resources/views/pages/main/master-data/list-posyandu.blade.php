@@ -32,7 +32,7 @@
             <div class="row">
                 <div class="col-12 col-md-6 order-md-1 order-last">
                     <h3>Daftar Posyandu</h3>
-                    <p class="text-subtitle text-muted">Halaman daftar posyandu.</p>
+                    <p class="text-subtitle medium-text text-muted">Halaman daftar posyandu.</p>
                 </div>
 
             </div>
