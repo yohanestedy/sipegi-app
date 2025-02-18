@@ -113,13 +113,13 @@
         .stat-card {
             background-color: #fff;
             /* Warna putih */
-            border: 1px solid #ddd;
+            /* border: 1px solid #ddd; */
             /* Border tipis */
             border-radius: 15px;
             transition: all 0.3s ease;
             overflow: hidden;
             position: relative;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
 
         .stat-card-link {
@@ -210,7 +210,9 @@
     <nav aria-label="breadcrumb" class="breadcrumb-header">
         <ol class="breadcrumb mb-0">
             <li class="breadcrumb-item">
-                <a href="#">Dashboard</a>
+                <span class="badge bg-info">
+                    {{ $namaPosyandu ? 'Posyandu ' . $namaPosyandu->name : 'Semua Posyandu' }} <i
+                        class="fa-solid fa-badge-check"></i></span>
             </li>
             {{-- <li class="breadcrumb-item active" aria-current="page">
                 Data Pengukuran Balita
@@ -252,78 +254,6 @@
                 </div>
             </div>
         </div> --}}
-
-        {{-- <div class="row g-4">
-            <!-- Mahasiswa -->
-            <div class="col-xxl-3 col-md-6">
-                <div class="card">
-                    <a href="{{ route('balita.index') }}" class="stat-card-link text-decoration-none">
-                        <div class="stat-card bg-light">
-                            <div class="card-icon-wrapper bg-gradient-primary">
-                                <i class="fas fa-graduation-cap card-icon"></i>
-                            </div>
-                            <div class="card-content">
-                                <div class="stat-title">Total Balita</div>
-                                <div class="stat-number">0</div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Dosen -->
-            <div class="col-xxl-3 col-md-6">
-                <div class="card">
-                    <a href="#" class="stat-card-link text-decoration-none">
-                        <div class="stat-card bg-light">
-                            <div class="card-icon-wrapper bg-gradient-danger">
-                                <i class="fas fa-newspaper card-icon"></i>
-                            </div>
-                            <div class="card-content">
-                                <div class="stat-title">Dosen</div>
-                                <div class="stat-number">45</div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Reports -->
-            <div class="col-xxl-3 col-md-6">
-                <div class="card">
-                    <a href="#" class="stat-card-link text-decoration-none">
-                        <div class="stat-card bg-light">
-                            <div class="card-icon-wrapper bg-gradient-warning">
-                                <i class="fas fa-file-contract card-icon"></i>
-                            </div>
-                            <div class="card-content">
-                                <div class="stat-title">Laporan</div>
-                                <div class="stat-number">1,201</div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Pasca Sarjana -->
-            <div class="col-xxl-3 col-md-6">
-                <div class="card">
-                    <a href="#" class="stat-card-link text-decoration-none">
-                        <div class="stat-card bg-light">
-                            <div class="card-icon-wrapper bg-gradient-success">
-                                <i class="fas fa-users card-icon"></i>
-                            </div>
-                            <div class="card-content">
-                                <div class="stat-title">Pasca Sarjana</div>
-                                <div class="stat-number">47</div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div> --}}
-
-
 
         <div class="row g-4">
             <div class="col-xxl-4 col-md-6">
