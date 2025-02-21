@@ -256,10 +256,53 @@
         </div> --}}
 
         <div class="row g-4">
+
+
+            <div class="col-xxl-4 col-md-6">
+                <div class="stat-card">
+                    <a href="{{ route('gizi-bermasalah.stunting') }}" class="stat-card-link text-decoration-none">
+                        <div class="card-icon-wrapper bg-gradient-danger">
+                            <i class="fa-solid fa-light-emergency-on card-icon"></i>
+                        </div>
+                        <div class="card-content">
+                            <div class="stat-title">Balita Stunting</div>
+                            <div class="stat-number">{{ $totalStunting }}</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xxl-4 col-md-6">
+                <div class="stat-card">
+                    <a href="{{ route('gizi-bermasalah.bgm') }}" class="stat-card-link text-decoration-none">
+                        <div class="card-icon-wrapper bg-gradient-danger">
+                            <i class="fa-solid fa-light-emergency-on card-icon"></i>
+                        </div>
+                        <div class="card-content">
+                            <div class="stat-title">Balita BGM</div>
+                            <div class="stat-number">{{ $totalBGM }}</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-xxl-4 col-md-6">
+                <div class="stat-card">
+                    <a href="{{ route('gizi-bermasalah.duaT') }}" class="stat-card-link text-decoration-none">
+                        <div class="card-icon-wrapper bg-gradient-danger">
+                            <i class="fa-solid fa-light-emergency-on card-icon"></i>
+                        </div>
+                        <div class="card-content">
+                            <div class="stat-title">Balita 2T</div>
+                            <div class="stat-number">{{ $total2T }}</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
             <div class="col-xxl-4 col-md-6">
                 <div class="stat-card">
                     <a href="{{ route('balitaukur.index') }}" class="stat-card-link text-decoration-none">
-                        <div class="card-icon-wrapper bg-gradient-warning">
+                        <div class="card-icon-wrapper bg-gradient-success">
                             <i class="fa-solid fa-weight-scale card-icon"></i>
                         </div>
                         <div class="card-content">
@@ -286,7 +329,7 @@
             <div class="col-xxl-4 col-md-6">
                 <div class="stat-card">
                     <a href="{{ route('orangtua.index') }}" class="stat-card-link text-decoration-none">
-                        <div class="card-icon-wrapper bg-gradient-danger">
+                        <div class="card-icon-wrapper bg-gradient-warning">
                             <i class="fa-solid fa-person-breastfeeding card-icon"></i>
                         </div>
                         <div class="card-content">
@@ -298,20 +341,6 @@
             </div>
 
 
-
-            {{-- <div class="col-xxl-3 col-md-6">
-                <div class="stat-card">
-                    <a href="#" class="stat-card-link text-decoration-none">
-                        <div class="card-icon-wrapper bg-gradient-success">
-                            <i class="fas fa-users card-icon"></i>
-                        </div>
-                        <div class="card-content">
-                            <div class="stat-title">Pasca Sarjana</div>
-                            <div class="stat-number">47</div>
-                        </div>
-                    </a>
-                </div>
-            </div> --}}
         </div>
 
         <br>

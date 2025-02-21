@@ -15,6 +15,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BalitaUkurController;
 use App\Http\Controllers\MasterDataController;
 use App\Http\Controllers\BalitaNonaktifController;
+use App\Http\Controllers\GiziBermasalahController;
 
 /*
 |--------------------------------------------------------------------------
@@ -111,6 +112,12 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/list-posyandu', [MasterDataController::class, 'listPosyandu'])->name('masterdata.listposyandu');
         Route::get('/standar-pertumbuhan-anak', [MasterDatacontroller::class, 'standarPertumbuhanAnak'])->name('masterdata.spa');
         Route::get('/indeks-standar-antropometri-anak', [MasterDatacontroller::class, 'indeksStandar'])->name('masterdata.indeks-standar');
+    });
+    Route::prefix('gizi-bermasalah')->group(function () {
+        // POSYANDU
+        Route::get('/stunting', [GiziBermasalahController::class, 'stunting'])->name('gizi-bermasalah.stunting');
+        Route::get('/bgm', [GiziBermasalahController::class, 'bgm'])->name('gizi-bermasalah.bgm');
+        Route::get('/2T', [GiziBermasalahController::class, 'duaT'])->name('gizi-bermasalah.duaT');
     });
 
 

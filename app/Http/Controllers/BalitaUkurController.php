@@ -54,10 +54,53 @@ class BalitaUkurController extends Controller
             $balitaUkur->status_bb_n = $this->statusBBNaik($balitaUkur->balita_id, $balitaUkur->tgl_ukur, $balitaUkur->bb);
         });
 
+        // $balitaUkurs->each(function ($balitaUkur) {
+        //     $statusBbN = $balitaUkur->status_bb_n; // Ini akan memanggil accessor
+        // });
+
 
 
         return view('pages.main.balita-ukur.index', compact('balitaUkurs', 'posyandus'));
     }
+
+    // public function index()
+    // {
+    //     $user = auth()->user();
+    //     $userPosyanduId = $user->posyandu_id; // Posyandu ID user
+    //     $query = BalitaUkur::query();
+
+    //     // Filter berdasarkan posyandu user (jika ada)
+    //     if ($userPosyanduId !== null) {
+    //         $query->whereHas('balita', function ($query) use ($userPosyanduId) {
+    //             $query->where('posyandu_id', $userPosyanduId);
+    //         });
+    //     }
+
+    //     // Ambil pengukuran terbaru setiap balita
+    //     $query->whereIn('id', function ($subquery) {
+    //         $subquery->selectRaw('id')
+    //             ->from('balita_ukur as bu1')
+    //             ->whereRaw('tgl_ukur = (SELECT MAX(tgl_ukur) FROM balita_ukur WHERE balita_id = bu1.balita_id)');
+    //     });
+
+    //     // Filter hanya yang zscore_tb_u < -2
+
+
+    //     // Load data posyandu
+    //     $posyandus = Posyandu::all();
+
+    //     // Ambil data balita ukur dengan relasi
+    //     $balitaUkurs = $query->with('balita.posyandu')->where('zscore_tb_u', '<', -2)->get();
+
+
+    //     // Tambahkan status_bb_n ke setiap record BalitaUkur
+    //     $balitaUkurs->each(function ($balitaUkur) {
+    //         $balitaUkur->status_bb_n = $this->statusBBNaik($balitaUkur->balita_id, $balitaUkur->tgl_ukur, $balitaUkur->bb);
+    //     });
+
+    //     return view('pages.main.balita-ukur.index', compact('balitaUkurs', 'posyandus'));
+    // }
+
 
     //
     public function detail($id)
@@ -81,10 +124,12 @@ class BalitaUkurController extends Controller
 
 
         // $balitaUkurs = BalitaUkur::where('balita_id', $id)->orderBy('tgl_ukur', 'desc')->get();
+
         // Tambahkan status_bb_n ke setiap record BalitaUkur
-        $balitaUkurs->each(function ($balitaUkur) {
-            $balitaUkur->status_bb_n = $this->statusBBNaik($balitaUkur->balita_id, $balitaUkur->tgl_ukur, $balitaUkur->bb);
-        });
+        // $balitaUkurs->each(function ($balitaUkur) {
+        //     $balitaUkur->status_bb_n = $this->statusBBNaik($balitaUkur->balita_id, $balitaUkur->tgl_ukur, $balitaUkur->bb);
+        // });
+
         // return $balita;
 
 

@@ -42,28 +42,7 @@
                     </a>
                 </li>
 
-                {{-- Master Data --}}
-                <li class="sidebar-item {{ Route::is('masterdata.*') ? 'active' : '' }}  has-sub">
-                    <a href="#" class="sidebar-link">
-                        <i class="fa-duotone fa-solid fa-folders fa-lg"></i>
-                        <span>Master Data</span>
-                    </a>
 
-                    <ul class="submenu">
-                        <li class="submenu-item {{ Route::is('masterdata.listposyandu') ? 'active' : '' }} ">
-                            <a href="{{ route('masterdata.listposyandu') }}" class="submenu-link">Daftar Posyandu</a>
-                        </li>
-
-                        <li class="submenu-item {{ Route::is('masterdata.spa') ? 'active' : '' }}">
-                            <a href="{{ route('masterdata.spa') }}" class="submenu-link">Standar Pertumbuhan Anak</a>
-                        </li>
-
-                        <li class="submenu-item {{ Route::is('masterdata.indeks-standar') ? 'active' : '' }}">
-                            <a href="{{ route('masterdata.indeks-standar') }}" class="submenu-link">Indeks Standar
-                                Antropometri Anak</a>
-                        </li>
-                    </ul>
-                </li>
 
                 {{-- Pengukuran --}}
                 <li
@@ -72,6 +51,34 @@
                         <i class="fa-duotone fa-regular fa-weight-scale fa-lg"></i>
                         <span>Pengukuran</span>
                     </a>
+                </li>
+
+                {{-- Status Gizi --}}
+                <li class="sidebar-item {{ Route::is('gizi-bermasalah.*') ? 'active' : '' }}  has-sub">
+                    <a href="#" class="sidebar-link">
+                        <i class="fa-duotone fa-solid fa-person-circle-exclamation fa-lg"></i>
+                        <span>Gizi Bermasalah</span>
+                    </a>
+
+                    <ul class="submenu">
+                        <li class="submenu-item {{ Route::is('gizi-bermasalah.stunting') ? 'active' : '' }}">
+                            <a href="{{ route('gizi-bermasalah.stunting') }}" class="submenu-link">Stunting / Pendek</a>
+                        </li>
+                        <li class="submenu-item {{ Route::is('gizi-bermasalah.bgm') ? 'active' : '' }}">
+                            <a href="{{ route('gizi-bermasalah.bgm') }}" class="submenu-link">BGM</a>
+                        </li>
+                        <li class="submenu-item {{ Route::is('gizi-bermasalah.duaT') ? 'active' : '' }}">
+                            <a href="{{ route('gizi-bermasalah.duaT') }}" class="submenu-link">2T</a>
+                        </li>
+                        {{-- <li class="submenu-item {{ Route::is('balitanonaktif.index-pindahkeluar') ? 'active' : '' }}">
+                            <a href="{{ route('balitanonaktif.index-pindahkeluar') }}" class="submenu-link">BGM</a>
+                        </li>
+                        <li class="submenu-item {{ Route::is('balitanonaktif.index-meninggal') ? 'active' : '' }}">
+                            <a href="{{ route('balitanonaktif.index-meninggal') }}" class="submenu-link">2T</a>
+                        </li> --}}
+
+
+                    </ul>
                 </li>
                 {{-- Orangtua --}}
                 <li class="sidebar-item {{ Route::is('orangtua.*') ? 'active' : '' }}">
@@ -111,6 +118,40 @@
                     </ul>
                 </li>
 
+
+
+                {{-- Laporan --}}
+                <li class="sidebar-item {{ Route::is('laporan.*') ? 'active' : '' }}">
+                    <a href="{{ route('laporan.index') }}" class="sidebar-link">
+                        {{-- <i class="fa-duotone fa-solid fa-users"></i> --}}
+                        <i class="fa-duotone fa-solid fa-file-circle-check fa-lg"></i>
+                        <span>Laporan</span>
+                    </a>
+                </li>
+
+                {{-- Master Data --}}
+                <li class="sidebar-item {{ Route::is('masterdata.*') ? 'active' : '' }}  has-sub">
+                    <a href="#" class="sidebar-link">
+                        <i class="fa-duotone fa-solid fa-folders fa-lg"></i>
+                        <span>Info</span>
+                    </a>
+
+                    <ul class="submenu">
+                        <li class="submenu-item {{ Route::is('masterdata.listposyandu') ? 'active' : '' }} ">
+                            <a href="{{ route('masterdata.listposyandu') }}" class="submenu-link">Daftar Posyandu</a>
+                        </li>
+
+                        <li class="submenu-item {{ Route::is('masterdata.spa') ? 'active' : '' }}">
+                            <a href="{{ route('masterdata.spa') }}" class="submenu-link">Standar Pertumbuhan Anak</a>
+                        </li>
+
+                        <li class="submenu-item {{ Route::is('masterdata.indeks-standar') ? 'active' : '' }}">
+                            <a href="{{ route('masterdata.indeks-standar') }}" class="submenu-link">Indeks Standar
+                                Antropometri Anak</a>
+                        </li>
+                    </ul>
+                </li>
+
                 {{-- User Management --}}
                 @if (Auth::user()->id == 1)
                     <li class="sidebar-item {{ Route::is('user.*') ? 'active' : '' }}">
@@ -121,15 +162,6 @@
                         </a>
                     </li>
                 @endif
-
-                {{-- Laporan --}}
-                <li class="sidebar-item {{ Route::is('laporan.*') ? 'active' : '' }}">
-                    <a href="{{ route('laporan.index') }}" class="sidebar-link">
-                        {{-- <i class="fa-duotone fa-solid fa-users"></i> --}}
-                        <i class="fa-duotone fa-solid fa-file-circle-check fa-lg"></i>
-                        <span>Laporan</span>
-                    </a>
-                </li>
 
                 {{-- Info --}}
                 {{-- <li class="sidebar-item">
