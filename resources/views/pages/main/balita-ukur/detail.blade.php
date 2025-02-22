@@ -187,9 +187,9 @@
                         <table class="table table-hover table-bordered medium-text text-center" id="tableBalitaUkur">
                             <thead>
                                 <tr>
-                                    <th rowspan="2" style="text-align: center;">Tindakan</th>
-                                    <th rowspan="2" style="text-align: center;">Tgl Ukur</th>
-                                    <th rowspan="2" style="text-align: center;">Umur Ukur</th>
+                                    <th rowspan="2" style="text-align: center;">Tombol</th>
+                                    <th rowspan="2" style="text-align: center;">Tanggal Pengukuran</th>
+                                    <th rowspan="2" style="text-align: center;">Umur Pengukuran</th>
                                     <th rowspan="2" style="text-align: center;">BB (kg)</th>
                                     <th rowspan="2" style="text-align: center;">TB (cm)</th>
                                     <th rowspan="2" style="text-align: center;">LK (cm)</th>
@@ -300,9 +300,9 @@
 
 
                                         </td>
-                                        <td data-order="{{ $balitaUkur->tgl_ukur }}" style="text-align: center">
+                                        <td data-order="{{ $balitaUkur->tgl_ukur }}" style="text-align: right">
                                             {{ $balitaUkur->tgl_ukur_display }}</td>
-                                        <td style="text-align: center">
+                                        <td style="text-align: right">
                                             {{ $balitaUkur->umur_ukur }}
                                             {{ $balitaUkur->tgl_ukur == $balita->tgl_lahir ? ' / Lahir' : '' }}</td>
                                         <td style="text-align: center">{{ $balitaUkur->bb }}</td>
