@@ -308,7 +308,7 @@
                                             @endif
                                         </td>
                                         <td style="text-align: center">
-                                            {{ $balitaUkur->zscore_bb_tb ? $balitaUkur->zscore_bb_tb : '-' }}</td>
+                                            {{ $balitaUkur->zscore_bb_tb !== null ? $balitaUkur->zscore_bb_tb : '-' }}</td>
 
 
                                         {{-- IMT/U --}}
@@ -330,7 +330,7 @@
                                             @endif
                                         </td>
                                         <td style="text-align: center">
-                                            {{ $balitaUkur->zscore_lk_u ? $balitaUkur->zscore_lk_u : '-' }}</td>
+                                            {{ $balitaUkur->zscore_lk_u !== null ? $balitaUkur->zscore_lk_u : '-' }}</td>
 
                                         {{-- END ZSCORE SECTION --}}
 
@@ -666,7 +666,7 @@
 
                 $('#status_bb_tb').text(ukur.status_bb_tb ? ukur.status_bb_tb : '-').attr('class', ukur
                     .status_bb_tb ? 'badge ' + warnaBadge(ukur.zscore_bb_tb) : '');
-                $('#zscore_bb_tb').text(ukur.zscore_bb_tb ? ukur.zscore_bb_tb : '-');
+                $('#zscore_bb_tb').text(ukur.zscore_bb_tb !== null ? ukur.zscore_bb_tb : '-');
 
                 $('#status_imt_u').text(ukur.status_imt_u).attr('class', 'badge ' + warnaBadge(ukur
                     .zscore_imt_u));
@@ -674,7 +674,7 @@
 
                 $('#status_lk_u').text(ukur.status_lk_u ? ukur.status_lk_u : '-').attr('class', ukur
                     .status_lk_u ? 'badge ' + warnaBadge(ukur.zscore_lk_u) : '');
-                $('#zscore_lk_u').text(ukur.zscore_lk_u ? ukur.zscore_lk_u : '-');
+                $('#zscore_lk_u').text(ukur.zscore_lk_u !== null ? ukur.zscore_lk_u : '-');
 
                 // Tampilkan modal
                 $('#zscoreModal').modal('show');
