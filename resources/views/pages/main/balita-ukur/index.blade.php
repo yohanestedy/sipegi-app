@@ -426,6 +426,9 @@
                                     <label class="medium-text">Cara Pengukuran :</label><br>
                                     <p class="badge bg-light-secondary form-control-static fw-normal" id="cara_ukur">
                                     </p><br>
+                                    {{-- <label class="medium-text">Orangtua :</label><br>
+                                    <p class="badge bg-light-secondary form-control-static fw-bold" id="orangtua">
+                                    </p><br> --}}
 
                                 </div>
                                 <div class="col-5 col-md-6">
@@ -650,6 +653,7 @@
                 $('#lk').text(ukur.lk ? ukur.lk + " cm" : '-');
                 $('#status_bb_naik').text(ukur.status_bb_n);
                 $('#posyandu').text(ukur.balita.posyandu.name);
+                // $('#orangtua').text(ukur.balita.orangtua.name_ibu);
 
                 // Perbaharui status gizi dan z-score
                 $('#status_bb_u').text(ukur.status_bb_u).attr('class', 'badge ' + warnaBadge(ukur

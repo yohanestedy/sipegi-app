@@ -108,7 +108,7 @@ class BalitaUkurController extends Controller
 
         $user = auth()->user();
         // Mengecek apakah balita ada atau tidak
-        $query = Balita::with('posyandu');
+        $query = Balita::with('posyandu', 'orangtua');
         $balitaUkurs = BalitaUkur::where('balita_id', $id)->orderBy('tgl_ukur', 'desc')->get();
 
 
@@ -126,9 +126,9 @@ class BalitaUkurController extends Controller
         // $balitaUkurs = BalitaUkur::where('balita_id', $id)->orderBy('tgl_ukur', 'desc')->get();
 
         // Tambahkan status_bb_n ke setiap record BalitaUkur
-        // $balitaUkurs->each(function ($balitaUkur) {
-        //     $balitaUkur->status_bb_n = $this->statusBBNaik($balitaUkur->balita_id, $balitaUkur->tgl_ukur, $balitaUkur->bb);
-        // });
+        $balitaUkurs->each(function ($balitaUkur) {
+            $balitaUkur->status_bb_n = $this->statusBBNaik($balitaUkur->balita_id, $balitaUkur->tgl_ukur, $balitaUkur->bb);
+        });
 
         // return $balita;
 
