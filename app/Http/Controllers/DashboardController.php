@@ -8,6 +8,7 @@ use App\Models\Orangtua;
 use App\Models\Posyandu;
 use App\Models\BalitaUkur;
 use Illuminate\Http\Request;
+use Barryvdh\Debugbar\Facades\Debugbar;
 
 class DashboardController extends Controller
 {
@@ -126,6 +127,11 @@ class DashboardController extends Controller
 
         // Hitung total data utama
         $totalBalitas = $balitaQuery->count();
+        $totalLaki = (clone $balitaQuery)->where('gender', 'L')->count();
+        $totalPerempuan = (clone $balitaQuery)->where('gender', 'P')->count();
+
+
+
         $totalOrangtuas = $orangtuaQuery->count();
         $totalPengukuran = (clone $balitaUkurQuery)->whereBetween('tgl_ukur', [$startOfMonth, $endOfMonth])->count();
         $namaPosyandu = $userPosyanduId ? Posyandu::find($userPosyanduId) : null;
@@ -149,6 +155,8 @@ class DashboardController extends Controller
 
         return view('pages.main.index', compact(
             'totalBalitas',
+            'totalLaki',
+            'totalPerempuan',
             'totalOrangtuas',
             'totalPengukuran',
             'totalStunting',

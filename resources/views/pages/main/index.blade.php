@@ -254,65 +254,79 @@
                 </div>
             </div>
         </div> --}}
+        <div class="row">
+            <div class="col-12 col-lg-9 mb-4">
+                <div class="row g-4">
 
-        <div class="row g-4">
 
+                    <div class="col-xxl-4 col-md-6">
+                        <div class="stat-card">
+                            <a href="{{ route('gizi-bermasalah.stunting') }}" class="stat-card-link text-decoration-none">
+                                <div class="card-icon-wrapper bg-gradient-danger">
+                                    <i class="fa-solid fa-light-emergency-on card-icon"></i>
+                                </div>
+                                <div class="card-content">
+                                    <div class="stat-title">Balita Stunting</div>
+                                    <div class="stat-number">{{ $totalStunting }}</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-xxl-4 col-md-6">
+                        <div class="stat-card">
+                            <a href="{{ route('gizi-bermasalah.bgm') }}" class="stat-card-link text-decoration-none">
+                                <div class="card-icon-wrapper bg-gradient-danger">
+                                    <i class="fa-solid fa-light-emergency-on card-icon"></i>
+                                </div>
+                                <div class="card-content">
+                                    <div class="stat-title">Balita BGM</div>
+                                    <div class="stat-number">{{ $totalBGM }}</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
 
-            <div class="col-xxl-4 col-md-6">
-                <div class="stat-card">
-                    <a href="{{ route('gizi-bermasalah.stunting') }}" class="stat-card-link text-decoration-none">
-                        <div class="card-icon-wrapper bg-gradient-danger">
-                            <i class="fa-solid fa-light-emergency-on card-icon"></i>
+                    <div class="col-xxl-4 col-md-6">
+                        <div class="stat-card">
+                            <a href="{{ route('gizi-bermasalah.duaT') }}" class="stat-card-link text-decoration-none">
+                                <div class="card-icon-wrapper bg-gradient-danger">
+                                    <i class="fa-solid fa-light-emergency-on card-icon"></i>
+                                </div>
+                                <div class="card-content">
+                                    <div class="stat-title">Balita 2T</div>
+                                    <div class="stat-number">{{ $total2T }}</div>
+                                </div>
+                            </a>
                         </div>
-                        <div class="card-content">
-                            <div class="stat-title">Balita Stunting</div>
-                            <div class="stat-number">{{ $totalStunting }}</div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-xxl-4 col-md-6">
-                <div class="stat-card">
-                    <a href="{{ route('gizi-bermasalah.bgm') }}" class="stat-card-link text-decoration-none">
-                        <div class="card-icon-wrapper bg-gradient-danger">
-                            <i class="fa-solid fa-light-emergency-on card-icon"></i>
-                        </div>
-                        <div class="card-content">
-                            <div class="stat-title">Balita BGM</div>
-                            <div class="stat-number">{{ $totalBGM }}</div>
-                        </div>
-                    </a>
-                </div>
-            </div>
+                    </div>
 
-            <div class="col-xxl-4 col-md-6">
-                <div class="stat-card">
-                    <a href="{{ route('gizi-bermasalah.duaT') }}" class="stat-card-link text-decoration-none">
-                        <div class="card-icon-wrapper bg-gradient-danger">
-                            <i class="fa-solid fa-light-emergency-on card-icon"></i>
+                    <div class="col-xxl-8 col-md-6">
+                        <div class="stat-card">
+                            <a href="{{ route('balitaukur.index') }}" class="stat-card-link text-decoration-none">
+                                <div class="card-icon-wrapper bg-gradient-success">
+                                    <i class="fa-solid fa-weight-scale card-icon"></i>
+                                </div>
+                                <div class="card-content">
+                                    <div class="stat-title">Pengukuran Bulan Ini</div>
+                                    <div class="stat-number">{{ $totalPengukuran }}</div>
+                                </div>
+                            </a>
                         </div>
-                        <div class="card-content">
-                            <div class="stat-title">Balita 2T</div>
-                            <div class="stat-number">{{ $total2T }}</div>
+                    </div>
+                    <div class="col-xxl-4 col-md-6">
+                        <div class="stat-card">
+                            <a href="{{ route('orangtua.index') }}" class="stat-card-link text-decoration-none">
+                                <div class="card-icon-wrapper bg-gradient-warning">
+                                    <i class="fa-solid fa-person-breastfeeding card-icon"></i>
+                                </div>
+                                <div class="card-content">
+                                    <div class="stat-title">Total Orangtua</div>
+                                    <div class="stat-number">{{ $totalOrangtuas }}</div>
+                                </div>
+                            </a>
                         </div>
-                    </a>
-                </div>
-            </div>
-
-            <div class="col-xxl-4 col-md-6">
-                <div class="stat-card">
-                    <a href="{{ route('balitaukur.index') }}" class="stat-card-link text-decoration-none">
-                        <div class="card-icon-wrapper bg-gradient-success">
-                            <i class="fa-solid fa-weight-scale card-icon"></i>
-                        </div>
-                        <div class="card-content">
-                            <div class="stat-title">Pengukuran Bulan Ini</div>
-                            <div class="stat-number">{{ $totalPengukuran }}</div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-xxl-4 col-md-6">
+                    </div>
+                    {{-- <div class="col-xxl-4 col-md-6">
                 <div class="stat-card">
                     <a href="{{ route('balita.index') }}" class="stat-card-link text-decoration-none">
                         <div class="card-icon-wrapper bg-gradient-primary">
@@ -324,24 +338,53 @@
                         </div>
                     </a>
                 </div>
-            </div>
+            </div> --}}
 
-            <div class="col-xxl-4 col-md-6">
-                <div class="stat-card">
-                    <a href="{{ route('orangtua.index') }}" class="stat-card-link text-decoration-none">
-                        <div class="card-icon-wrapper bg-gradient-warning">
-                            <i class="fa-solid fa-person-breastfeeding card-icon"></i>
-                        </div>
-                        <div class="card-content">
-                            <div class="stat-title">Total Orangtua</div>
-                            <div class="stat-number">{{ $totalOrangtuas }}</div>
-                        </div>
-                    </a>
+
+
+
+
+
+
                 </div>
             </div>
-
-
+            <div class="col-12 col-lg-3 mb-4">
+                <div class="row g-4">
+                    <div class="col-xxl-12 col-md-12">
+                        <div class="stat-card">
+                            <a href="{{ route('balita.index') }}" class="stat-card-link text-decoration-none">
+                                <div class="card-icon-wrapper bg-gradient-primary">
+                                    <i class="fas fa-children card-icon"></i>
+                                </div>
+                                <div class="card-content">
+                                    <div class="stat-title">Total Balita</div>
+                                    <div class="stat-number">{{ $totalBalitas }}</div>
+                                </div>
+                            </a>
+                            <!-- Tambahkan Chart -->
+                            <div style="padding: 15px;">
+                                <canvas id="genderChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    {{-- <div class="col-xxl-12 col-md-12">
+                        <div class="stat-card">
+                            <a href="{{ route('orangtua.index') }}" class="stat-card-link text-decoration-none">
+                                <div class="card-icon-wrapper bg-gradient-warning">
+                                    <i class="fa-solid fa-person-breastfeeding card-icon"></i>
+                                </div>
+                                <div class="card-content">
+                                    <div class="stat-title">Total Orangtua</div>
+                                    <div class="stat-number">{{ $totalOrangtuas }}</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div> --}}
+                </div>
+            </div>
         </div>
+
+
 
         <br>
         <br>
@@ -352,4 +395,48 @@
 @section('jsLibraries')
     <script src="assets/extensions/apexcharts/apexcharts.min.js"></script>
     <script src="assets/static/js/pages/dashboard.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script> <!-- Tambahkan Plugin -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var ctx = document.getElementById("genderChart").getContext("2d");
+
+            var genderChart = new Chart(ctx, {
+                type: "doughnut",
+                data: {
+                    labels: ["Laki-laki", "Perempuan"],
+                    datasets: [{
+                        data: [{{ $totalLaki }},
+                            {{ $totalPerempuan }}
+                        ], // Ambil dari controller
+                        backgroundColor: ["#3DA5FF", "#FE74BB"], // Warna untuk L dan P
+                        // hoverBackgroundColor: ["#2C8EC0", "#d64f95"]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: "bottom",
+                        },
+                        datalabels: { // Tambahkan Data Labels
+                            color: "#fff",
+                            anchor: "center",
+                            align: "center",
+                            font: {
+                                weight: "bold",
+                                size: 18
+                            },
+                            formatter: (value, ctx) => {
+                                return value; // Menampilkan jumlah langsung
+                            }
+                        }
+                    }
+                },
+                plugins: [ChartDataLabels] // Aktifkan plugin
+            });
+        });
+    </script>
 @endsection
