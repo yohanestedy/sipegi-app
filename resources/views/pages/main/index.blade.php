@@ -203,6 +203,22 @@
         .bg-gradient-success {
             background: linear-gradient(45deg, #1cc88a, #13855c);
         }
+
+        #pengukuranChart {
+            width: 100% !important;
+            height: auto !important;
+            /* Biar proporsional */
+            max-height: 400px;
+            /* Default untuk tampilan besar */
+        }
+
+        @media (max-width: 768px) {
+            #pengukuranChart {
+                height: 300px !important;
+
+                /* Saat di layar kecil (mobile) */
+            }
+        }
     </style>
 @endsection
 
@@ -300,7 +316,7 @@
                         </div>
                     </div>
 
-                    <div class="col-xxl-8 col-md-6">
+                    <div class="col-xxl-12 col-md-12">
                         <div class="stat-card">
                             <a href="{{ route('balitaukur.index') }}" class="stat-card-link text-decoration-none">
                                 <div class="card-icon-wrapper bg-gradient-success">
@@ -311,21 +327,22 @@
                                     <div class="stat-number">{{ $totalPengukuran }}</div>
                                 </div>
                             </a>
+
+
+                            <div class="p-3 pt-0">
+                                <canvas id="pengukuranChart"></canvas>
+                            </div>
                         </div>
+
+                        <!-- Chart -->
+                        {{-- <div class="card mt-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Distribusi Pengukuran Bulan Ini</h5>
+                                <canvas id="pengukuranChart" height="150"></canvas>
+                            </div>
+                        </div> --}}
                     </div>
-                    <div class="col-xxl-4 col-md-6">
-                        <div class="stat-card">
-                            <a href="{{ route('orangtua.index') }}" class="stat-card-link text-decoration-none">
-                                <div class="card-icon-wrapper bg-gradient-warning">
-                                    <i class="fa-solid fa-person-breastfeeding card-icon"></i>
-                                </div>
-                                <div class="card-content">
-                                    <div class="stat-title">Total Orangtua</div>
-                                    <div class="stat-number">{{ $totalOrangtuas }}</div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
+
                     {{-- <div class="col-xxl-4 col-md-6">
                 <div class="stat-card">
                     <a href="{{ route('balita.index') }}" class="stat-card-link text-decoration-none">
@@ -367,7 +384,7 @@
                             </div>
                         </div>
                     </div>
-                    {{-- <div class="col-xxl-12 col-md-12">
+                    <div class="col-xl-12 col-md-12">
                         <div class="stat-card">
                             <a href="{{ route('orangtua.index') }}" class="stat-card-link text-decoration-none">
                                 <div class="card-icon-wrapper bg-gradient-warning">
@@ -379,7 +396,7 @@
                                 </div>
                             </a>
                         </div>
-                    </div> --}}
+                    </div>
                 </div>
             </div>
         </div>
@@ -431,6 +448,67 @@
                             },
                             formatter: (value, ctx) => {
                                 return value; // Menampilkan jumlah langsung
+                            }
+                        }
+                    }
+                },
+                plugins: [ChartDataLabels] // Aktifkan plugin
+            });
+        });
+
+
+        document.addEventListener("DOMContentLoaded", function() {
+            var ctx = document.getElementById("pengukuranChart").getContext("2d");
+
+            var chartData = {!! json_encode($chartData) !!};
+
+            var labels = chartData.map(item => item.posyandu);
+            var dataLaki = chartData.map(item => item.laki);
+            var dataPerempuan = chartData.map(item => item.perempuan);
+
+            var pengukuranChart = new Chart(ctx, {
+                type: "bar",
+                data: {
+                    labels: labels,
+                    datasets: [{
+                            label: "Laki-laki",
+                            data: dataLaki,
+                            backgroundColor: "#3DA5FF"
+                        },
+                        {
+                            label: "Perempuan",
+                            data: dataPerempuan,
+                            backgroundColor: "#FE74BB"
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: "Posyandu"
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: "Jumlah Balita"
+                            },
+                            beginAtZero: true,
+                            max: 20 // Batas maksimal Y-axis agar tidak terlalu tinggi
+                        }
+                    },
+                    plugins: {
+                        datalabels: {
+                            anchor: "end", // Posisi angka di atas batang
+                            align: "top",
+                            color: "#2C3F51",
+                            font: {
+                                weight: "bold",
+                                size: 12
                             }
                         }
                     }

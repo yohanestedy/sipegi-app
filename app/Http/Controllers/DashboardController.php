@@ -118,23 +118,46 @@ class DashboardController extends Controller
         $orangtuaQuery = Orangtua::query();
 
         if ($userPosyanduId !== null) {
+
             $balitaQuery->where('posyandu_id', $userPosyanduId);
+
             $balitaUkurQuery->whereHas('balita', function ($query) use ($userPosyanduId) {
                 $query->where('posyandu_id', $userPosyanduId);
             });
+
             $orangtuaQuery->where('dusun_id', $userPosyanduId);
         }
 
-        // Hitung total data utama
+
         $totalBalitas = $balitaQuery->count();
         $totalLaki = (clone $balitaQuery)->where('gender', 'L')->count();
         $totalPerempuan = (clone $balitaQuery)->where('gender', 'P')->count();
 
-
+        $namaPosyandu = $userPosyanduId ? Posyandu::find($userPosyanduId) : null;
 
         $totalOrangtuas = $orangtuaQuery->count();
         $totalPengukuran = (clone $balitaUkurQuery)->whereBetween('tgl_ukur', [$startOfMonth, $endOfMonth])->count();
-        $namaPosyandu = $userPosyanduId ? Posyandu::find($userPosyanduId) : null;
+        // Ambil data jumlah pengukuran per posyandu dan gender
+        $pengukuranPerPosyandu = (clone $balitaUkurQuery)
+            ->whereBetween('tgl_ukur', [$startOfMonth, $endOfMonth])
+            ->with('balita.posyandu')
+            ->get()
+            ->sortBy('balita.posyandu.id') // Urutkan berdasarkan ID Posyandu
+            ->groupBy(['balita.posyandu.name', 'balita.gender']);
+
+
+
+        // Format data untuk Chart.js
+        $chartData = [];
+        foreach ($pengukuranPerPosyandu as $posyandu => $genders) {
+            $chartData[] = [
+                'posyandu' => $posyandu,
+                'laki' => $genders['L']->count() ?? 0,
+                'perempuan' => $genders['P']->count() ?? 0,
+            ];
+        }
+
+
 
         // Query untuk mendapatkan pengukuran terbaru setiap balita
         $latestMeasurements = (clone $balitaUkurQuery)->whereIn('id', function ($subquery) {
@@ -162,7 +185,8 @@ class DashboardController extends Controller
             'totalStunting',
             'totalBGM',
             'total2T',
-            'namaPosyandu'
+            'namaPosyandu',
+            'chartData'
         ));
     }
 
