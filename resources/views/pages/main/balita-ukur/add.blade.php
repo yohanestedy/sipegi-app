@@ -632,7 +632,7 @@
                         document.getElementById('status_bb_tb').className = data.status_bb_tb ? 'badge ' +
                             warnaBadge(data.zscore_bb_tb) : '';
 
-                        document.getElementById('zscore_bb_tb').innerText = data.zscore_bb_tb ? data
+                        document.getElementById('zscore_bb_tb').innerText = data.zscore_bb_tb !== null ? data
                             .zscore_bb_tb : '-';
 
                         // IMT/U
@@ -700,17 +700,17 @@
 
         // Fungsi untuk mengembalikan class badge berdasarkan zscore
         function warnaBadge(nilaiZscore) {
-            if (nilaiZscore >= 3) {
+            if (nilaiZscore > 3) {
                 return 'bg-light-danger1';
-            } else if (nilaiZscore <= -3) {
+            } else if (nilaiZscore < -3) {
                 return 'bg-light-danger1';
-            } else if (nilaiZscore >= 2) {
+            } else if (nilaiZscore > 2) {
                 return 'bg-light-danger';
-            } else if (nilaiZscore <= -2) {
+            } else if (nilaiZscore < -2) {
                 return 'bg-light-danger';
-            } else if (nilaiZscore >= 1) {
+            } else if (nilaiZscore > 1) {
                 return 'bg-light-warning';
-            } else if (nilaiZscore <= -1) {
+            } else if (nilaiZscore < -1) {
                 return 'bg-light-warning';
             } else if (nilaiZscore >= 0) {
                 return 'bg-light-success';

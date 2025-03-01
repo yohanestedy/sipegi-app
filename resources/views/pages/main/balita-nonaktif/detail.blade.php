@@ -481,17 +481,37 @@
     @php
         function warnaBadge($nilaiZscore)
         {
-            if ($nilaiZscore >= 3) {
+            // if ($nilaiZscore >= 3) {
+            //     return 'bg-light-danger1';
+            // } elseif ($nilaiZscore <= -3) {
+            //     return 'bg-light-danger1';
+            // } elseif ($nilaiZscore >= 2) {
+            //     return 'bg-light-danger';
+            // } elseif ($nilaiZscore <= -2) {
+            //     return 'bg-light-danger';
+            // } elseif ($nilaiZscore >= 1) {
+            //     return 'bg-light-warning';
+            // } elseif ($nilaiZscore <= -1) {
+            //     return 'bg-light-warning';
+            // } elseif ($nilaiZscore >= 0) {
+            //     return 'bg-light-success';
+            // } elseif ($nilaiZscore <= 0) {
+            //     return 'bg-light-success';
+            // } else {
+            //     return 'bg-secondary';
+            // }
+
+            if ($nilaiZscore > 3) {
                 return 'bg-light-danger1';
-            } elseif ($nilaiZscore <= -3) {
+            } elseif ($nilaiZscore < -3) {
                 return 'bg-light-danger1';
-            } elseif ($nilaiZscore >= 2) {
+            } elseif ($nilaiZscore > 2) {
                 return 'bg-light-danger';
-            } elseif ($nilaiZscore <= -2) {
+            } elseif ($nilaiZscore < -2) {
                 return 'bg-light-danger';
-            } elseif ($nilaiZscore >= 1) {
+            } elseif ($nilaiZscore > 1) {
                 return 'bg-light-warning';
-            } elseif ($nilaiZscore <= -1) {
+            } elseif ($nilaiZscore < -1) {
                 return 'bg-light-warning';
             } elseif ($nilaiZscore >= 0) {
                 return 'bg-light-success';
@@ -611,17 +631,17 @@
 
         // Fungsi untuk mengembalikan class badge berdasarkan zscore
         function warnaBadge(nilaiZscore) {
-            if (nilaiZscore >= 3) {
+            if (nilaiZscore > 3) {
                 return 'bg-light-danger1';
-            } else if (nilaiZscore <= -3) {
+            } else if (nilaiZscore < -3) {
                 return 'bg-light-danger1';
-            } else if (nilaiZscore >= 2) {
+            } else if (nilaiZscore > 2) {
                 return 'bg-light-danger';
-            } else if (nilaiZscore <= -2) {
+            } else if (nilaiZscore < -2) {
                 return 'bg-light-danger';
-            } else if (nilaiZscore >= 1) {
+            } else if (nilaiZscore > 1) {
                 return 'bg-light-warning';
-            } else if (nilaiZscore <= -1) {
+            } else if (nilaiZscore < -1) {
                 return 'bg-light-warning';
             } else if (nilaiZscore >= 0) {
                 return 'bg-light-success';
