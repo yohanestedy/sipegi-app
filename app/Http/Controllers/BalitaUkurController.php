@@ -390,15 +390,21 @@ class BalitaUkurController extends Controller
             $zScoreBB_TB = $this->hitungZScoreKoreksi($zScoreBB_TB, $beratBadan, $bbtbLMS->L, $bbtbLMS->M, $bbtbLMS->S);
         }
 
+        $zScoreBB_U = round($zScoreBB_U, 2);
+        $zScoreTB_U = round($zScoreTB_U, 2);
+        $zScoreBB_TB = round($zScoreBB_TB, 2);
+        $zScoreIMT_U = round($zScoreIMT_U, 2);
+        $zScoreLK_U = round($zScoreLK_U, 2);
+
 
 
 
         // STATUS GIZI BB/U
         if ($zScoreBB_U < -3) {
             $statusGiziBB_U = "Berat badan sangat kurang";
-        } elseif ($zScoreBB_U > -3 && $zScoreBB_U < -2) {
+        } elseif ($zScoreBB_U >= -3 && $zScoreBB_U < -2) {
             $statusGiziBB_U = "Berat badan kurang";
-        } elseif ($zScoreBB_U > -2 && $zScoreBB_U < 1) {
+        } elseif ($zScoreBB_U >= -2 && $zScoreBB_U <= 1) {
             $statusGiziBB_U = "Berat badan normal";
         } elseif ($zScoreBB_U > 1) {
             $statusGiziBB_U = "Resiko berat badan lebih";
@@ -407,26 +413,26 @@ class BalitaUkurController extends Controller
         // STATUS GIZI PB/U atau TB/U
         if ($zScoreTB_U < -3) {
             $statusGiziTB_U = "Sangat pendek";
-        } elseif ($zScoreTB_U > -3 && $zScoreTB_U < -2) {
+        } elseif ($zScoreTB_U >= -3 && $zScoreTB_U < -2) {
             $statusGiziTB_U = "Pendek";
-        } elseif ($zScoreTB_U > -2 && $zScoreTB_U < 3) {
+        } elseif ($zScoreTB_U >= -2 && $zScoreTB_U <= 3) {
             $statusGiziTB_U = "Normal";
         } elseif ($zScoreTB_U > 3) {
             $statusGiziTB_U = "Tinggi";
         }
 
         // STATUS GIZI (BB/PB atau BB/TB)
-        if ($zScoreBB_TB == null) {
+        if ($zScoreBB_TB === null) {
             $statusGiziBB_TB = null;
         } elseif ($zScoreBB_TB < -3) {
             $statusGiziBB_TB = "Gizi buruk";
-        } elseif ($zScoreBB_TB > -3 && $zScoreBB_TB < -2) {
+        } elseif ($zScoreBB_TB >= -3 && $zScoreBB_TB < -2) {
             $statusGiziBB_TB = "Gizi kurang";
-        } elseif ($zScoreBB_TB > -2 && $zScoreBB_TB < 1) {
+        } elseif ($zScoreBB_TB >= -2 && $zScoreBB_TB <= 1) {
             $statusGiziBB_TB = "Gizi baik";
-        } elseif ($zScoreBB_TB > 1 && $zScoreBB_TB < 2) {
+        } elseif ($zScoreBB_TB > 1 && $zScoreBB_TB <= 2) {
             $statusGiziBB_TB = "Beresiko gizi lebih";
-        } elseif ($zScoreBB_TB > 2 && $zScoreBB_TB < 3) {
+        } elseif ($zScoreBB_TB > 2 && $zScoreBB_TB <= 3) {
             $statusGiziBB_TB = "Gizi lebih";
         } elseif ($zScoreBB_TB > 3) {
             $statusGiziBB_TB = "Obesitas";
@@ -435,13 +441,13 @@ class BalitaUkurController extends Controller
         // STATUS GIZI IMT/U
         if ($zScoreIMT_U < -3) {
             $statusGiziIMT_U = "Gizi buruk";
-        } elseif ($zScoreIMT_U > -3 && $zScoreIMT_U < -2) {
+        } elseif ($zScoreIMT_U >= -3 && $zScoreIMT_U < -2) {
             $statusGiziIMT_U = "Gizi kurang";
-        } elseif ($zScoreIMT_U > -2 && $zScoreIMT_U < 1) {
+        } elseif ($zScoreIMT_U >= -2 && $zScoreIMT_U <= 1) {
             $statusGiziIMT_U = "Gizi baik";
-        } elseif ($zScoreIMT_U > 1 && $zScoreIMT_U < 2) {
+        } elseif ($zScoreIMT_U > 1 && $zScoreIMT_U <= 2) {
             $statusGiziIMT_U = "Beresiko gizi lebih";
-        } elseif ($zScoreIMT_U > 2 && $zScoreIMT_U < 3) {
+        } elseif ($zScoreIMT_U > 2 && $zScoreIMT_U <= 3) {
             $statusGiziIMT_U = "Gizi lebih";
         } elseif ($zScoreIMT_U > 3) {
             $statusGiziIMT_U = "Obesitas";
@@ -450,7 +456,7 @@ class BalitaUkurController extends Controller
         // STATUS GIZI LK/U
         if ($zScoreLK_U < -2) {
             $statusGiziLK_U = "Mikrosefali";
-        } elseif ($zScoreLK_U > -2 && $zScoreLK_U < 2) {
+        } elseif ($zScoreLK_U >= -2 && $zScoreLK_U <= 2) {
             $statusGiziLK_U = "Normal";
         } elseif ($zScoreLK_U > 2) {
             $statusGiziLK_U = "Makrosefali";
@@ -462,9 +468,12 @@ class BalitaUkurController extends Controller
         }
 
         // Debugbar::info([
-        //     'Umur Hari' => $umurHari,
-        //     'Tanggal Lahir' => $balita->tgl_lahir,
-        //     'Tanggal Ukur' => $request->tgl_ukur,
+        //     'zScoreBB_U ' => round($zScoreBB_U, 2),
+        //     'zScoreTB_U' => round($zScoreTB_U, 2),
+        //     'zScoreBB_TB' => round($zScoreBB_TB, 2),
+        //     'StatusBB_TB' => $statusGiziBB_TB,
+        //     'zScoreIMT_U' => round($zScoreIMT_U, 2),
+        //     'zScoreLK_U' => round($zScoreLK_U, 2),
         // ]);
 
         return response()->json([
