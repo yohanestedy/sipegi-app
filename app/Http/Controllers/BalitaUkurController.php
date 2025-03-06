@@ -234,14 +234,20 @@ class BalitaUkurController extends Controller
             'lk.required' => 'Isi lingkar kepala balita',
             'cara_ukur.required' => 'Pilih metode pengukuran balita',
         ]);
-        if ($validator->fails()) {
-            return response()->json([
-                'errors' => $validator->errors()
-            ], 422); // Mengirimkan response error dengan kode status 422
-        }
+
+        // if ($validator->fails()) {
+        //     return response()->json([
+        //         'errors' => $validator->errors()
+        //     ], 422); // Mengirimkan response error dengan kode status 422
+        // }
 
         // Validasi tambahan untuk cek tinggi badan tidak boleh lebih kecil dari data sebelumnya
         $validator->after(function ($validator) use ($request) {
+
+            if ($request->tgl_ukur == null) {
+                return 0;
+            }
+
             $previousMeasurement = BalitaUkur::where('balita_id', $request->balita_id)
                 ->where('tgl_ukur', '<', $request->tgl_ukur)
                 ->orderBy('tgl_ukur', 'desc')
