@@ -20,10 +20,10 @@ class OrtuController extends Controller
     {
         $user = auth()->user();
         if ($user->posyandu_id !== null) {
-            $orangtua = Orangtua::where('dusun_id', $user->posyandu_id)->with(['dusun.posyandu', 'rt', 'balita', 'balitaNonaktif'])->get();
+            $orangtua = Orangtua::where('dusun_id', $user->posyandu_id)->with(['dusun.posyandu', 'rt', 'balita', 'balitaNonaktif'])->orderBy('name_ibu', 'asc')->get();
         } else {
 
-            $orangtua = Orangtua::with(['dusun.posyandu', 'rt', 'balita', 'balitaNonaktif'])->get();
+            $orangtua = Orangtua::with(['dusun.posyandu', 'rt', 'balita', 'balitaNonaktif'])->orderBy('name_ibu', 'asc')->get();
         }
         $posyandus = Posyandu::all();
         return view('pages.main.orangtua.index', compact('orangtua', 'posyandus'));

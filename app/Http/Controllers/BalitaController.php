@@ -26,9 +26,9 @@ class BalitaController extends Controller
     {
         $user = auth()->user();
         if ($user->posyandu_id !== null) {
-            $balita = Balita::with(['posyandu', 'orangtua.dusun', 'orangtua.rt'])->where('posyandu_id', $user->posyandu_id)->get();
+            $balita = Balita::with(['posyandu', 'orangtua.dusun', 'orangtua.rt'])->where('posyandu_id', $user->posyandu_id)->orderBy('name', 'asc')->get();
         } else {
-            $balita = Balita::with(['posyandu', 'orangtua.dusun', 'orangtua.rt'])->get();
+            $balita = Balita::with(['posyandu', 'orangtua.dusun', 'orangtua.rt'])->orderBy('name', 'asc')->get();
         }
 
         $posyandus = Posyandu::all();
