@@ -724,6 +724,7 @@
         // Fungsi untuk mengirim data simpan ke controller
         document.getElementById('saveBtn').addEventListener('click', function() {
 
+            const jumlahBalita = @json($balitas).length;
 
             // Nonaktifkan tombol selama proses penyimpanan
             this.disabled = true;
@@ -753,8 +754,9 @@
                 status_tb_u: hasilPengukuran.status_tb_u,
                 status_bb_tb: hasilPengukuran.status_bb_tb,
                 status_imt_u: hasilPengukuran.status_imt_u,
-                status_lk_u: hasilPengukuran.status_lk_u
+                status_lk_u: hasilPengukuran.status_lk_u,
             };
+
 
 
 
@@ -797,10 +799,16 @@
 
                         // Setelah efek toast, lanjutkan dengan redirect
                         setTimeout(() => {
-                            const balitaId = hasilPengukuran.balita_id;
-                            // window.location.href = `{{ route('balitaukur.detail', ':id') }}`.replace(
-                            //     ':id', balitaId);
-                            window.location.href = `{{ route('balitaukur.index') }}`;
+
+                            if (jumlahBalita == 1) {
+                                const balitaId = hasilPengukuran.balita_id;
+                                window.location.href = `{{ route('balitaukur.detail', ':id') }}`
+                                    .replace(
+                                        ':id', balitaId);
+                            } else {
+                                window.location.href = `{{ route('balitaukur.index') }}`;
+                            }
+
                         }, 2300);
 
                     } else {
