@@ -132,6 +132,8 @@ class BalitaUkurTableExport implements FromCollection, WithHeadings, WithStyles,
     public function map($balitaUkur): array
     {
 
+
+
         $this->index++; // Tambahkan 1 setiap pemanggilan map()
 
         return [
@@ -146,7 +148,8 @@ class BalitaUkurTableExport implements FromCollection, WithHeadings, WithStyles,
             $balitaUkur->tb,
             $balitaUkur->lk ?? '-',
             $balitaUkur->cara_ukur,
-            $balitaUkur->status_bb_naik,
+            // $balitaUkur->status_bb_naik,
+            $this->statusBBNaik($balitaUkur->balita_id, $balitaUkur->tgl_ukur, $balitaUkur->bb),
             $balitaUkur->status_bb_u,
             $balitaUkur->zscore_bb_u,
             $balitaUkur->status_tb_u,
@@ -251,5 +254,57 @@ class BalitaUkurTableExport implements FromCollection, WithHeadings, WithStyles,
     public function title(): string
     {
         return $this->posyandu_name; // Nama Posyandu menjadi judul sheet
+    }
+
+    public function statusBBNaik($balita_id, $tgl_ukur, $bb)
+    {
+
+        // Ambil semua data sebelumnya untuk balita yang sama
+        $allPrevious = BalitaUkur::where('balita_id', $balita_id)
+            ->where('tgl_ukur', '<', $tgl_ukur)
+            ->orderBy('tgl_ukur', 'desc')
+            ->get();
+
+
+        // Ambil data pertama dan kedua dari collection
+        $previous = $allPrevious->first(); // Data pertama
+        $previousKedua = $allPrevious->skip(1)->first(); // Data kedua
+
+        // Jika tidak ada data sebelumnya
+        if (!$previous) {
+            return 'L';
+        } else if (!$previousKedua) {
+            return 'B';
+        }
+        $diffInDays = Carbon::parse($tgl_ukur)->diffInDays(Carbon::parse($previous->tgl_ukur));
+
+        // Versi Baru Pengkondisian Status BB Naik
+        return match (true) {
+            $diffInDays > 35 => 'O',
+            ($bb <= $previous->bb && $previous->bb <= $previousKedua->bb) => '2T',
+            ($bb <= $previous->bb) => 'T',
+            default => 'N'
+        };
+
+        // Versi Lama Pengkondisian Status BB Naik
+        // if ($diffInDays > 35) {
+        //     return 'O';
+        // } else if ($bb < $previous->bb && $previous->bb < $previousKedua->bb) {
+        //     return '2T'; // Berat badan tidak naik dua kali berturut turut
+        // } else if ($bb < $previous->bb && $previous->bb == $previousKedua->bb) {
+        //     return '2T'; // Berat badan tidak naik dua kali berturut turut
+        // } else if ($bb == $previous->bb && $previous->bb == $previousKedua->bb) {
+        //     return '2T'; // Berat badan tidak naik dua kali berturut turut
+        // } else if ($bb == $previous->bb && $previous->bb < $previousKedua->bb) {
+        //     return '2T'; // Berat badan tidak naik dua kali berturut turut
+        // } else if ($bb == $previous->bb) {
+        //     return 'T'; // Berat badan tidak naik
+        // } else if ($bb < $previous->bb) {
+        //     return 'T'; // Berat badan tidak naik
+        // } else {
+        //     return 'N'; // Berat badan naik
+        // }
+
+
     }
 }
