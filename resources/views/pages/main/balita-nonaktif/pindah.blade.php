@@ -203,7 +203,8 @@
 
 
                                         </td>
-                                        <td>{{ $balita->tgl_nonaktif_angka }}</td>
+                                        <td data-order="{{ $balita->tgl_nonaktif }}">{{ $balita->tgl_nonaktif_angka }}
+                                        </td>
                                         <td>{{ $balita->name }}</td>
                                         <td style="text-align: center">{{ $balita->nik == null ? '-' : $balita->nik }}
                                         </td>
