@@ -591,6 +591,8 @@ class BalitaController extends Controller
                     "zscore_bb_tb" => $balitaUkur->zscore_bb_tb,
                     "status_imt_u" => $balitaUkur->status_imt_u,
                     "zscore_imt_u" => $balitaUkur->zscore_imt_u,
+                    "status_lk_u" => $balitaUkur->status_lk_u,
+                    "zscore_lk_u" => $balitaUkur->zscore_lk_u,
                     "created_by" => $balitaUkur->created_by,
                     "updated_by" => $balitaUkur->updated_by,
                     "created_at" => $balitaUkur->created_at,
