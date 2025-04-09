@@ -12,6 +12,7 @@ use App\Exports\BalitaUkurTableExport;
 use App\Exports\BalitaMultiSheetExport;
 use Barryvdh\Debugbar\Facades\Debugbar;
 use App\Exports\BalitaUkurMultiSheetExport;
+use App\Exports\GiziBermasalahTableExport;
 
 class LaporanController extends Controller
 {
@@ -84,6 +85,38 @@ class LaporanController extends Controller
         }
     }
 
+    public function exportBalitaGiziBermasalah(Request $request)
+    {
+        $request->validate([
+            'statusMasalah' => 'required',
+        ], [
+            'statusMasalah.required' => 'Pilih Jenis Gizi yang Bermasalah.',
+        ]);
+
+
+        $user = auth()->user();
+        $userPosyanduId = $user->posyandu_id;
+        $statusMasalah = $request->statusMasalah;
+
+
+        if ($userPosyanduId !== null) {
+            // Jika satu posyandu dipilih
+            $posyandu = Posyandu::find($userPosyanduId);
+            $posyanduName = $posyandu->name;
+            $fileName = 'Daftar_Balita_' . $statusMasalah . '_Posyandu_' . $posyanduName . '.xlsx';
+        } else {
+            $posyanduName = "Semua Posyandu";
+            $fileName = 'Daftar_Balita_' . $statusMasalah . '_Semua Posyandu' . '.xlsx';
+        }
+
+        return Excel::download(
+            new GiziBermasalahTableExport(
+                $statusMasalah,
+                $posyanduName,
+            ),
+            $fileName
+        );
+    }
 
     public function exportBiodataBalita(Request $request)
     {

@@ -141,6 +141,7 @@ Route::group(['middleware' => 'auth'], function () {
         // POSYANDU
         Route::get('/', [LaporanController::class, 'index'])->name('laporan.index');
         Route::get('/export/pengukuran-balita', [LaporanController::class, 'exportPengukuran'])->name('laporan.export-pengukuranbalita');
+        Route::get('/export/balita-bermasalah', [LaporanController::class, 'exportBalitaGiziBermasalah'])->name('laporan.export-balitagizibermasalah');
         Route::get('/export/biodata-balita', [LaporanController::class, 'exportBiodataBalita'])->name('laporan.export-biodatabalita');
     });
 

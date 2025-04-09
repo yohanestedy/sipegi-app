@@ -4,9 +4,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" />
     <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <!-- CDN untuk monthSelectPlugin -->
     <link href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/plugins/monthSelect/style.css" rel="stylesheet">
 @endsection
 
@@ -16,152 +14,155 @@
             <li class="breadcrumb-item">
                 <a href="{{ route('laporan.index') }}">Laporan</a>
             </li>
-            {{-- <li class="breadcrumb-item active" aria-current="page">
-                Data Pengukuran Balita
-            </li> --}}
         </ol>
     </nav>
 @endsection
 
 @section('mainContent')
-    <div class="page-heading">
-        <div class="page-title">
-            <div class="row">
-                <div class="col-12 col-md-6 order-md-1 order-last">
-                    <h3>Laporan</h3>
-                    <p class="text-subtitle text-muted">halaman laporan untuk mengekspor data.</p>
-                </div>
+    <div class="page-heading mb-4">
+        <h3>Laporan</h3>
+        <p class="text-muted">Halaman laporan untuk mengekspor data.</p>
+    </div>
 
+    <div class="page-content">
+        {{-- EXPORT PENGUKURAN --}}
+        <div class="card shadow-sm mb-4">
+            <div class="card-header">
+                <h4 class="card-title">Ekspor Daftar Pengukuran Balita</h4>
+            </div>
+            <div class="card-body">
+                <form method="GET" action="{{ route('laporan.export-pengukuranbalita') }}" class="form form-horizontal">
+                    <div class="row g-3">
+                        <div class="col-md-5">
+                            <select name="posyandu_id" class="form-select @error('posyandu_id') is-invalid @enderror"
+                                data-placeholder="Pilih Posyandu">
+                                <option selected disabled value="">--Pilih Posyandu--</option>
+                                @if (in_array(Auth::user()->role, ['super_admin', 'admin', 'kader_poskesdes']))
+                                    <option value="0" {{ old('posyandu_id') == '0' ? 'selected' : '' }}>Semua Posyandu
+                                    </option>
+                                @endif
+                                @foreach ($posyandus as $posyandu)
+                                    <option value="{{ $posyandu->id }}"
+                                        {{ old('posyandu_id') == $posyandu->id ? 'selected' : '' }}>
+                                        {{ $posyandu->name }} / {{ $posyandu->dusun->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('posyandu_id')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="col-md-5">
+                            <input id="periode" name="periode" type="text"
+                                class="form-control @error('periode') is-invalid @enderror" value="{{ old('periode') }}"
+                                placeholder="--Pilih Bulan dan Tahun--" />
+                            @error('periode')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-success w-100">
+                                <i class="fa-solid fa-arrow-down-to-line"></i> Download
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
-        <section class="section">
 
-            {{-- BALITA UKUR EXPORT --}}
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title">Ekspor Hasil Pengukuran Balita</h4>
-                </div>
-                <div class="card-body">
-
-                    <form method="GET" action="{{ route('laporan.export-pengukuranbalita') }}"
-                        class="form form-horizontal">
-                        <div class="row">
-                            <div class="col-12 col-md-5 mb-3">
-                                <select name="posyandu_id" id="posyandu"
-                                    class="form-select @error('posyandu_id') is-invalid @enderror"
-                                    data-placeholder="Pilih Posyandu">
-                                    <option selected disabled value="">--Pilih Posyandu--</option>
-                                    @if (in_array(Auth::user()->role, ['super_admin', 'admin', 'kader_poskesdes']))
-                                        <option value="0" {{ old('posyandu_id') == '0' ? 'selected' : '' }}>Semua
-                                            Posyandu</option>
-                                    @endif
-                                    @foreach ($posyandus as $posyandu)
-                                        <option value="{{ $posyandu->id }}"
-                                            {{ old('posyandu_id') == $posyandu->id ? 'selected' : '' }}>
-                                            {{ $posyandu->name }} /
-                                            {{ $posyandu->dusun->name }}</option>
-                                    @endforeach
-                                </select>
-                                <div class="invalid-feedback">
-                                    @error('posyandu_id')
-                                        {{ $message }}
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-5 mb-3">
-
-                                <input id="periode" name="periode" type="text"
-                                    class="form-control @error('periode') is-invalid @enderror" value="{{ old('periode') }}"
-                                    placeholder="--Pilih Bulan dan Tahun--" />
-                                <div class="invalid-feedback">
-                                    @error('periode')
-                                        {{ $message }}
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-2 mb-3">
-                                <button type="submit" class="btn btn-success w-100"><i class="fa-solid fa-file-excel"></i>
-                                    Ekspor Excel</button>
-                            </div>
-                        </div>
-                    </form>
-
-
-
-                </div>
+        {{-- EXPORT GIZI BERMASALAH --}}
+        <div class="card shadow-sm mb-4">
+            <div class="card-header">
+                <h4 class="card-title">Ekspor Balita Gizi Bermasalah</h4>
             </div>
-
-            {{-- BALITA EXPORT --}}
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title">Ekspor Biodata Balita</h4>
-                </div>
-                <div class="card-body">
-
-                    <form method="GET" action="{{ route('laporan.export-biodatabalita') }}" class="form form-horizontal">
-                        <div class="row">
-                            <div class="col-12 col-md-5 mb-3">
-                                <select name="posyandu_id_satu" id="posyandu"
-                                    class="form-select @error('posyandu_id_satu') is-invalid @enderror"
-                                    data-placeholder="Pilih Posyandu">
-                                    <option selected disabled value="">--Pilih Posyandu--</option>
-                                    @if (in_array(Auth::user()->role, ['super_admin', 'admin', 'kader_poskesdes']))
-                                        <option value="0" {{ old('posyandu_id_satu') == '0' ? 'selected' : '' }}>Semua
-                                            Posyandu</option>
-                                    @endif
-                                    @foreach ($posyandus as $posyandu)
-                                        <option value="{{ $posyandu->id }}"
-                                            {{ old('posyandu_id_satu') == $posyandu->id ? 'selected' : '' }}>
-                                            {{ $posyandu->name }} /
-                                            {{ $posyandu->dusun->name }}</option>
-                                    @endforeach
-                                </select>
-                                <div class="invalid-feedback">
-                                    @error('posyandu_id_satu')
-                                        {{ $message }}
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="col-12 col-md-2 mb-3">
-                                <button type="submit" class="btn btn-success w-100"><i class="fa-solid fa-file-export"></i>
-                                    Download Excel</button>
-                            </div>
+            <div class="card-body">
+                <form method="GET" action="{{ route('laporan.export-balitagizibermasalah') }}"
+                    class="form form-horizontal">
+                    <div class="row g-3">
+                        <div class="col-md-5">
+                            <select name="statusMasalah" class="form-select @error('statusMasalah') is-invalid @enderror">
+                                <option selected disabled value="">--Pilih Status Gizi Bermasalah--</option>
+                                <option value="STUNTING">STUNTING</option>
+                                <option value="BGM">BGM</option>
+                                <option value="2T">2T</option>
+                            </select>
+                            @error('statusMasalah')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
-                    </form>
-
-
-
-                </div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-success w-100">
+                                <i class="fa-solid fa-arrow-down-to-line"></i> Download
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
-        </section>
-    @endsection
-    @section('jsLibraries')
-        <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.full.min.js"></script>
+        </div>
 
-        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-        <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/plugins/monthSelect/index.js"></script>
-        <script src="https://npmcdn.com/flatpickr/dist/l10n/id.js"></script>
-        <script>
-            flatpickr("#periode", {
-                "locale": "id",
-                altInput: true,
-                disableMobile: "true",
-                plugins: [
-                    new monthSelectPlugin({
+        {{-- EXPORT BIODATA BALITA --}}
+        <div class="card shadow-sm mb-4">
+            <div class="card-header">
+                <h4 class="card-title">Ekspor Biodata Balita</h4>
+            </div>
+            <div class="card-body">
+                <form method="GET" action="{{ route('laporan.export-biodatabalita') }}" class="form form-horizontal">
+                    <div class="row g-3">
+                        <div class="col-md-5">
+                            <select name="posyandu_id_satu"
+                                class="form-select @error('posyandu_id_satu') is-invalid @enderror"
+                                data-placeholder="Pilih Posyandu">
+                                <option selected disabled value="">--Pilih Posyandu--</option>
+                                @if (in_array(Auth::user()->role, ['super_admin', 'admin', 'kader_poskesdes']))
+                                    <option value="0" {{ old('posyandu_id_satu') == '0' ? 'selected' : '' }}>Semua
+                                        Posyandu</option>
+                                @endif
+                                @foreach ($posyandus as $posyandu)
+                                    <option value="{{ $posyandu->id }}"
+                                        {{ old('posyandu_id_satu') == $posyandu->id ? 'selected' : '' }}>
+                                        {{ $posyandu->name }} / {{ $posyandu->dusun->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('posyandu_id_satu')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-success w-100">
+                                <i class="fa-solid fa-arrow-down-to-line"></i> Download
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+@endsection
 
-                        shorthand: true,
-                        dateFormat: "m.y",
-                        altFormat: "F Y",
+@section('jsLibraries')
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/plugins/monthSelect/index.js"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/id.js"></script>
+    <script>
+        flatpickr("#periode", {
+            "locale": "id",
+            altInput: true,
+            disableMobile: "true",
+            plugins: [
+                new monthSelectPlugin({
+                    shorthand: true,
+                    dateFormat: "m.y",
+                    altFormat: "F Y",
+                }),
+            ],
+        });
 
-                    }),
-                ],
-            });
-
-            $('.select2').select2({
-                theme: "bootstrap-5",
-                width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
-                placeholder: $(this).data('placeholder'),
-            });
-        </script>
-    @endsection
+        $('.select2').select2({
+            theme: "bootstrap-5",
+            width: '100%',
+            placeholder: $(this).data('placeholder'),
+        });
+    </script>
+@endsection

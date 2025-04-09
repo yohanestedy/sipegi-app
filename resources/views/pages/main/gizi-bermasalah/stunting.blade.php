@@ -103,11 +103,16 @@
                                     </select>
                                 </div>
                             @endif
+
+                            {{-- TOMBOL DOWNLOAD --}}
                             {{-- <div class="col-6 col-md-3">
 
-                                <input id="filterBulanPengukuran" name="periode" type="text" class="form-control periode"
-                                    placeholder="--Pilih Bulan dan Tahun--" />
+                                <button type="button" class="btn btn-success"
+                                    onclick="window.location.href='{{ route('laporan.export-balitagizibermasalah') }}?statusMasalah=STUNTING'">
+                                    <i class="fa-solid fa-file-export"></i> Download Data
+                                </button>
                             </div> --}}
+
                             {{-- <div class="col-6 col-md-3 mt-2">
                                 <div class="medium-text">Jumlah : <span id="jumlahDataPengukuran"></span>
                                 </div>
