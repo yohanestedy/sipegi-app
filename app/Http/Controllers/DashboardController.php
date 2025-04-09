@@ -148,12 +148,11 @@ class DashboardController extends Controller
 
 
         // Format data untuk Chart.js
-        $chartData = [];
         foreach ($pengukuranPerPosyandu as $posyandu => $genders) {
             $chartData[] = [
                 'posyandu' => $posyandu,
-                'laki' => $genders['L']->count() ?? 0,
-                'perempuan' => $genders['P']->count() ?? 0,
+                'laki' => ($genders['L'] ?? collect())->count(),
+                'perempuan' => ($genders['P'] ?? collect())->count(),
             ];
         }
 
