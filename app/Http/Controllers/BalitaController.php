@@ -87,7 +87,8 @@ class BalitaController extends Controller
             'posyandu' => 'required',
             'family_order' => 'required',
             'bb_lahir' => 'required',
-            'tb_lahir' => 'required',
+            // 'tb_lahir' => 'required',
+            'tb_lahir' => ['required', 'regex:/^\d+([.,]\d{1})?$/'],
             'status' => 'required',
         ], [
             'name.required' => 'Isi Nama balita',
@@ -103,6 +104,7 @@ class BalitaController extends Controller
             'family_order.required' => 'Isi kolom anak ke berapa',
             'bb_lahir.required' => 'Isi berat badan saat lahir',
             'tb_lahir.required' => 'Isi panjang badan saat Lahir',
+            'tb_lahir.regex' => 'Maksimal 1 angka di belakang koma',
             'status.required' => 'Pilih Jenis Pendaftaran',
         ]);
 
@@ -342,7 +344,8 @@ class BalitaController extends Controller
             'posyandu' => 'required',
             'family_order' => 'required',
             'bb_lahir' => 'required',
-            'tb_lahir' => 'required',
+            // 'tb_lahir' => 'required',
+            'tb_lahir' => ['required', 'regex:/^\d+([.,]\d{1})?$/'],
             'status' => 'required',
         ], [
             'name.required' => 'Nama balita harus di isi',
@@ -358,6 +361,7 @@ class BalitaController extends Controller
             'family_order.required' => 'Kolom anak ke berapa harus di isi',
             'bb_lahir.required' => 'Berat Badan saat lahir harus di isi',
             'tb_lahir.required' => 'Panjang Badan saat Lahir harus di isi',
+            'tb_lahir.regex' => 'Maksimal 1 angka di belakang koma',
             'status.required' => 'Pilih Jenis Pendaftaran',
         ]);
 
