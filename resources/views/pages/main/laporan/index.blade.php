@@ -52,10 +52,13 @@
                                     data-placeholder="Pilih Posyandu">
                                     <option selected disabled value="">--Pilih Posyandu--</option>
                                     @if (in_array(Auth::user()->role, ['super_admin', 'admin', 'kader_poskesdes']))
-                                        <option value="0">Semua Posyandu</option>
+                                        <option value="0" {{ old('posyandu_id') == '0' ? 'selected' : '' }}>Semua
+                                            Posyandu</option>
                                     @endif
                                     @foreach ($posyandus as $posyandu)
-                                        <option value="{{ $posyandu->id }}">{{ $posyandu->name }} /
+                                        <option value="{{ $posyandu->id }}"
+                                            {{ old('posyandu_id') == $posyandu->id ? 'selected' : '' }}>
+                                            {{ $posyandu->name }} /
                                             {{ $posyandu->dusun->name }}</option>
                                     @endforeach
                                 </select>
@@ -68,7 +71,7 @@
                             <div class="col-12 col-md-5 mb-3">
 
                                 <input id="periode" name="periode" type="text"
-                                    class="form-control @error('periode') is-invalid @enderror"
+                                    class="form-control @error('periode') is-invalid @enderror" value="{{ old('periode') }}"
                                     placeholder="--Pilih Bulan dan Tahun--" />
                                 <div class="invalid-feedback">
                                     @error('periode')
@@ -89,27 +92,35 @@
             </div>
 
             {{-- BALITA EXPORT --}}
-            {{-- <div class="card">
+            <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Ekspor Data Balita</h4>
+                    <h4 class="card-title">Ekspor Biodata Balita</h4>
                 </div>
                 <div class="card-body">
 
-                    <form method="GET" action="{{ route('laporan.export-pengukuranbalita') }}"
-                        class="form form-horizontal">
+                    <form method="GET" action="{{ route('laporan.export-biodatabalita') }}" class="form form-horizontal">
                         <div class="row">
                             <div class="col-12 col-md-5 mb-3">
-                                <select name="posyandu_id" id="posyandu" class="form-select "
-                                    data-placeholder="Pilih Posyandu" required>
+                                <select name="posyandu_id_satu" id="posyandu"
+                                    class="form-select @error('posyandu_id_satu') is-invalid @enderror"
+                                    data-placeholder="Pilih Posyandu">
                                     <option selected disabled value="">--Pilih Posyandu--</option>
-                                    <option value="">Semua Posyandu</option>
-                                    <option value="1">Melati / Sumber Mulyo</option>
-                                    <option value="2">Nusa Indah / Sidodadi</option>
-                                    <option value="3">Kenanga / Sukorejo</option>
-                                    <option value="4">Mawar / Sumber Rahayu</option>
-                                    <option value="5">Dahlia / Sidorejo</option>
-                                    <option value="6">Anggrek / Suko Makmur</option>
+                                    @if (in_array(Auth::user()->role, ['super_admin', 'admin', 'kader_poskesdes']))
+                                        <option value="0" {{ old('posyandu_id_satu') == '0' ? 'selected' : '' }}>Semua
+                                            Posyandu</option>
+                                    @endif
+                                    @foreach ($posyandus as $posyandu)
+                                        <option value="{{ $posyandu->id }}"
+                                            {{ old('posyandu_id_satu') == $posyandu->id ? 'selected' : '' }}>
+                                            {{ $posyandu->name }} /
+                                            {{ $posyandu->dusun->name }}</option>
+                                    @endforeach
                                 </select>
+                                <div class="invalid-feedback">
+                                    @error('posyandu_id_satu')
+                                        {{ $message }}
+                                    @enderror
+                                </div>
                             </div>
 
                             <div class="col-12 col-md-2 mb-3">
@@ -122,7 +133,7 @@
 
 
                 </div>
-            </div> --}}
+            </div>
         </section>
     @endsection
     @section('jsLibraries')

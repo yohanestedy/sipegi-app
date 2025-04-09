@@ -6,8 +6,10 @@ use App\Models\Dusun;
 
 use App\Models\Posyandu;
 use Illuminate\Http\Request;
+use App\Exports\BalitaTableExport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\BalitaUkurTableExport;
+use App\Exports\BalitaMultiSheetExport;
 use Barryvdh\Debugbar\Facades\Debugbar;
 use App\Exports\BalitaUkurMultiSheetExport;
 
@@ -79,6 +81,55 @@ class LaporanController extends Controller
             // );
 
             return Excel::download(new BalitaUkurMultiSheetExport($periode, $posyandus), $fileName);
+        }
+    }
+
+
+    public function exportBiodataBalita(Request $request)
+    {
+        $request->validate([
+            'posyandu_id_satu' => 'required',
+        ], [
+            'posyandu_id_satu.required' => 'Pilih posyandu untuk di ekspor.',
+        ]);
+
+
+
+        if ($request->posyandu_id_satu) {
+            // Jika satu posyandu dipilih
+            $posyandu = Posyandu::find($request->posyandu_id_satu);
+            $dusun = Dusun::find($request->posyandu_id_satu);
+
+            $fileName = 'Biodata_Balita_Posyandu_' . $posyandu->name . '.xlsx';
+
+            return Excel::download(
+                new BalitaTableExport(
+                    $request->posyandu_id_satu,
+                    $posyandu->name,
+                    $dusun->name
+                ),
+                $fileName
+            );
+        } else {
+            // Jika semua posyandu dipilih
+            $posyandus = Posyandu::with('dusun')->get();
+
+            $fileName = 'Biodata_Balita_Semua_Posyandu_' . '.xlsx';
+            $fileNamePDF = 'Biodata_Balita_Semua_Posyandu_' . '.pdf';
+
+            // return Excel::download(new BalitaUkurMultiSheetExport($periode, $posyandus), $fileNamePDF, \Maatwebsite\Excel\Excel::MPDF);
+
+            // Menentukan format PDF dengan MPDF dan orientasi Landscape
+            // return Excel::download(
+            //     new BalitaUkurMultiSheetExport($periode, $posyandus),
+            //     $fileNamePDF,
+            //     \Maatwebsite\Excel\Excel::MPDF,
+            //     [
+            //         'orientation' => 'L', // Menetapkan orientasi Landscape
+            //     ]
+            // );
+
+            return Excel::download(new BalitaMultiSheetExport($posyandus), $fileName);
         }
     }
 }
