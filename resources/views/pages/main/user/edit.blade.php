@@ -63,6 +63,16 @@
                                         <label>Role</label>
                                     </div>
                                     <div class="col-md-9 form-group mb-3">
+                                        @if ($user->role == 'super_admin')
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input @error('role') is-invalid @enderror"
+                                                    type="radio" name="role" id="inlineRadio" value="super_admin"
+                                                    {{ old('role') == 'super_admin' ? 'checked' : ($user->role == 'super_admin' ? 'checked' : '') }}>
+                                                <label class="form-check-label" for="inlineRadio"
+                                                    style="font-weight: normal">Super Admin</label>
+                                            </div>
+                                        @endif
+
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input @error('role') is-invalid @enderror"
                                                 type="radio" name="role" id="inlineRadio1" value="admin"
@@ -167,9 +177,10 @@
         });
     </script>
 
-    <script>
+    {{-- <script>
         // Menangani perubahan pada input radio
         document.addEventListener('DOMContentLoaded', function() {
+            const radioSuperAdmin = document.getElementById('inlineRadio');
             const radioRDS = document.getElementById('inlineRadio1');
             const radioPosyandu = document.getElementById('inlineRadio2');
             const radioPoskesdes = document.getElementById('inlineRadio3'); // Tambahkan ini
@@ -178,7 +189,11 @@
 
             // Fungsi untuk menonaktifkan atau mengaktifkan select Posyandu
             function handleRoleChange() {
-                if (radioRDS.checked || radioPoskesdes.checked) { // Tambahkan kondisi untuk radioPoskesdes
+                if (
+                    radioRDS.checked ||
+                    radioPoskesdes.checked ||
+                    radioSuperAdmin.checked
+                ) {
                     // Reset dropdown menggunakan jQuery dan trigger 'change' event
                     $('#posyanduSelect').val(null).trigger('change');
 
@@ -192,6 +207,7 @@
             }
 
             // Event listener ketika input radio berubah
+            radioSuperAdmin.addEventListener('change', handleRoleChange);
             radioRDS.addEventListener('change', handleRoleChange);
             radioPosyandu.addEventListener('change', handleRoleChange);
             radioPoskesdes.addEventListener('change', handleRoleChange); // Tambahkan ini
@@ -202,6 +218,49 @@
             });
 
             // Jalankan saat halaman pertama kali dimuat
+            handleRoleChange();
+        });
+    </script> --}}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const radioSuperAdmin = document.getElementById('inlineRadio'); // super_admin
+            const radioRDS = document.getElementById('inlineRadio1'); // admin RDS
+            const radioPosyandu = document.getElementById('inlineRadio2'); // kader posyandu
+            const radioPoskesdes = document.getElementById('inlineRadio3'); // kader poskesdes
+            const posyanduSelect = document.getElementById('posyanduSelect');
+            const hiddenPosyandu = document.getElementById('posyanduHidden');
+
+            function handleRoleChange() {
+                const isRDS = radioRDS && radioRDS.checked;
+                const isPoskesdes = radioPoskesdes && radioPoskesdes.checked;
+                const isSuperAdmin = radioSuperAdmin && radioSuperAdmin.checked;
+                const isPosyandu = radioPosyandu && radioPosyandu.checked;
+
+                if (isRDS || isPoskesdes || isSuperAdmin) {
+                    $('#posyanduSelect').val(null).trigger('change');
+                    if (posyanduSelect) posyanduSelect.disabled = true;
+                    if (hiddenPosyandu) hiddenPosyandu.value = null;
+                } else if (isPosyandu) {
+                    if (posyanduSelect) posyanduSelect.disabled = false;
+                    if (hiddenPosyandu) hiddenPosyandu.value = posyanduSelect.value;
+                }
+            }
+
+            // Pasang event listener hanya jika elemen-nya ada
+            if (radioSuperAdmin) radioSuperAdmin.addEventListener('change', handleRoleChange);
+            if (radioRDS) radioRDS.addEventListener('change', handleRoleChange);
+            if (radioPosyandu) radioPosyandu.addEventListener('change', handleRoleChange);
+            if (radioPoskesdes) radioPoskesdes.addEventListener('change', handleRoleChange);
+
+            // Saat posyandu select berubah
+            if (posyanduSelect) {
+                posyanduSelect.addEventListener('change', function() {
+                    if (hiddenPosyandu) hiddenPosyandu.value = posyanduSelect.value;
+                });
+            }
+
+            // Jalankan sekali saat halaman load
             handleRoleChange();
         });
     </script>
