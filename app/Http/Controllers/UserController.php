@@ -90,7 +90,7 @@ class UserController extends Controller
             'name' => ['required', 'min:3', 'regex:/^[a-zA-Z\s]+$/'], // Hanya huruf dan spasi diizinkan
             'role' => 'required',
             'posyandu' => [
-                'required_if:role,admin', // hanya diperlukan jika role adalah admin
+                'required_if:role,kader_posyandu', // hanya diperlukan jika role adalah admin
             ],
             'username' => [
                 'required',
