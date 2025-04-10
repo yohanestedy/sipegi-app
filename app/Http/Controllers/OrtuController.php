@@ -66,7 +66,8 @@ class OrtuController extends Controller
         ]);
         // return $request;
         $validator = Validator::make($request->all(), [
-            'no_kk' => ['required', 'numeric', 'digits:16'], // Memastikan hanya angka dengan panjang tepat 16
+            // 'no_kk' => ['required', 'numeric', 'digits:16'], // Memastikan hanya angka dengan panjang tepat 16
+            'no_kk' => ['nullable', 'numeric', 'digits:16', Rule::unique('orangtua', 'no_kk')],   // Memastikan hanya angka dengan panjang tepat 16
             'nik_ibu' => ['nullable', 'numeric', 'digits:16', Rule::unique('orangtua', 'nik_ibu')],   // Memastikan hanya angka dengan panjang tepat 16
             'name_ibu' => ['required', 'regex:/^[a-zA-Z\s\.]+$/'],
             'nik_ayah' => ['nullable', 'numeric', 'digits:16', Rule::unique('orangtua', 'nik_ayah')],   // Memastikan hanya angka dengan panjang tepat 16
