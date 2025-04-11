@@ -46,7 +46,7 @@
 
                 {{-- Pengukuran --}}
                 <li
-                    class="sidebar-item {{ Route::is('balitaukur.index') ? 'active' : (Route::is('balitaukur.detail') && $balita->umur_hari < 1856 ? 'active' : '') }}">
+                    class="sidebar-item {{ Route::is('balitaukur.*') ? 'active' : (Route::is('balitaukur.detail') && $balita->umur_hari < 1856 ? 'active' : '') }}">
                     <a href="{{ route('balitaukur.index') }}" class="sidebar-link">
                         <i class="fa-duotone fa-regular fa-weight-scale fa-lg"></i>
                         <span>Pengukuran</span>
