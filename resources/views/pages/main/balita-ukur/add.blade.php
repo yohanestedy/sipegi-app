@@ -160,7 +160,7 @@
                                 {{-- Form BB --}}
                                 <div class="row d-flex">
                                     <div class="col-md-4 mt-3 text-md-end justify-content-end">
-                                        <label>Berat Badan</label>
+                                        <label>Berat Badan (BB)</label>
                                     </div>
                                     <div class="col-12 col-md-5 form-group mt-2">
                                         <div class="row d-flex">
@@ -185,7 +185,7 @@
                                 {{-- Form TB --}}
                                 <div class="row mb-2 d-flex">
                                     <div class="col-md-4 mt-3 text-md-end justify-content-end">
-                                        <label>Tinggi Badan</label>
+                                        <label>Tinggi Badan (TB)</label>
                                     </div>
                                     <div class="col-12 col-md-5 form-group mt-2">
                                         <div class="row d-flex">
@@ -209,7 +209,7 @@
                                 {{-- Form Lingkar Kepala --}}
                                 <div class="row mb-2 d-flex">
                                     <div class="col-md-4 mt-3 text-md-end justify-content-end">
-                                        <label>Lingkar Kepala</label>
+                                        <label>Lingkar Kepala (LK)</label>
                                     </div>
                                     <div class="col-12 col-md-5 form-group mt-2">
                                         <div class="row d-flex">
