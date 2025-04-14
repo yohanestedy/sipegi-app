@@ -222,9 +222,9 @@ class BalitaUkurController extends Controller
                 })->ignore($id),
             ],
             // 'bb' => 'required|numeric',
-            'bb' => ['required', 'numeric', 'regex:/^\d+([.,]\d{1,2})?$/'],
-            'tb' => ['required', 'numeric', 'regex:/^\d+([.,]\d{1})?$/'],
-            'lk' => ['required', 'numeric', 'regex:/^\d+([.,]\d{1,2})?$/'],
+            'bb' => ['required', 'numeric', 'min:0', 'max:50', 'regex:/^\d+([.,]\d{1,2})?$/'],
+            'tb' => ['required', 'numeric', 'min:0', 'max:120', 'regex:/^\d+([.,]\d{1})?$/'],
+            'lk' => ['required', 'numeric', 'min:0', 'max:60', 'regex:/^\d+([.,]\d{1,2})?$/'],
             'cara_ukur' => 'required',
         ], [
             'balita_id.required' => 'Pilih balita untuk diukur',
@@ -232,10 +232,16 @@ class BalitaUkurController extends Controller
             'tgl_ukur.unique' => 'Balita sudah diukur di tanggal ini',
             'bb.required' => 'Isi berat badan balita',
             'bb.regex' => 'Maksimal 2 angka di belakang koma',
+            'bb.min' => 'BB terlalu kecil, periksa kembali input.',
+            'bb.max' => 'BB terlalu besar, periksa kembali input.',
             'tb.required' => 'Isi tinggi badan balita',
             'tb.regex' => 'Maksimal 1 angka di belakang koma',
+            'tb.min' => 'TB terlalu rendah, periksa kembali input.',
+            'tb.max' => 'TB terlalu tinggi, periksa kembali input.',
             'lk.required' => 'Isi lingkar kepala balita',
             'lk.regex' => 'Maksimal 2 angka di belakang koma',
+            'lk.min' => 'LK terlalu kecil, periksa kembali input.',
+            'lk.max' => 'LK terlalu besar, periksa kembali input.',
             'cara_ukur.required' => 'Pilih metode pengukuran balita',
         ]);
 
@@ -265,21 +271,40 @@ class BalitaUkurController extends Controller
             $umurHari = $this->hitungUmurHari($balita->tgl_lahir, $request->tgl_ukur);
             $bbUmurLMS = $this->ambilLmsExpanded('BB_U', $umurHari, $balita->gender);
             $tbUmurLMS = $this->ambilLmsExpanded('TB_U', $umurHari, $balita->gender);
+            $lkUmurLMS = $this->ambilLmsExpanded('LK_U', $umurHari, $balita->gender);
+
+            $batasAtasBB = $bbUmurLMS->sd4 + 6;
+            $batasAtasTB = $tbUmurLMS->sd4 + 10;
+            $batasAtasLK = $lkUmurLMS->sd4 + 2;
 
 
             // // VALIDASI SALAH INPUT BERAT BADAN
             // if ($bbUmurLMS && $request->bb < $bbUmurLMS->sd4neg) {
             //     $validator->errors()->add('bb', 'BB tidak boleh kurang dari standar bawah(' . round($bbUmurLMS->sd4neg, 2) . ' kg).');
             // }
+
             // if ($bbUmurLMS && $request->bb > $bbUmurLMS->sd4) {
             //     $validator->errors()->add('bb', 'BB tidak boleh lebih dari standar atas(' . round($bbUmurLMS->sd4, 2) . ' kg).');
             // }
+
+            if ($bbUmurLMS && $request->bb > $batasAtasBB) {
+                $validator->errors()->add('bb', 'Nilai BB terlalu besar, periksa kembali input');
+            }
+
             // VALIDASI SALAH INPUT TINGGI BADAN
             // if ($tbUmurLMS && $request->tb < $tbUmurLMS->sd4neg) {
             //     $validator->errors()->add('tb', 'TB tidak boleh kurang dari standar bawah(' . round($tbUmurLMS->sd4neg, 2) . ' cm).');
             // }
-            if ($tbUmurLMS && $request->tb > $tbUmurLMS->sd4) {
-                $validator->errors()->add('tb', 'TB tidak boleh lebih dari standar atas(' . round($tbUmurLMS->sd4, 2) . ' cm).');
+
+            // if ($tbUmurLMS && $request->tb > $tbUmurLMS->sd4) {
+            //     $validator->errors()->add('tb', 'TB tidak boleh lebih dari standar atas(' . round($tbUmurLMS->sd4, 2) . ' cm).');
+            // }
+
+            if ($tbUmurLMS && $request->tb > $batasAtasTB) {
+                $validator->errors()->add('tb', 'Nilai TB terlalu tinggi, periksa kembali input');
+            }
+            if ($lkUmurLMS && $request->lk > $batasAtasLK) {
+                $validator->errors()->add('lk', 'Nilai LK terlalu besar, periksa kembali input');
             }
 
             // VALIDASI TB DAN LK KURANG DARI PENGUKURAN SEBELUMNYA
@@ -477,14 +502,29 @@ class BalitaUkurController extends Controller
             $statusGiziLK_U = null;
         }
 
-        // Debugbar::info([
-        //     'zScoreBB_U ' => round($zScoreBB_U, 2),
-        //     'zScoreTB_U' => round($zScoreTB_U, 2),
-        //     'zScoreBB_TB' => round($zScoreBB_TB, 2),
-        //     'StatusBB_TB' => $statusGiziBB_TB,
-        //     'zScoreIMT_U' => round($zScoreIMT_U, 2),
-        //     'zScoreLK_U' => round($zScoreLK_U, 2),
-        // ]);
+        $testZscoreBB_U = $this->hitungZScore($beratBadan, $bbUmurLMS->L, $bbUmurLMS->M, $bbUmurLMS->S);
+        $testZscoreKoreksiBB_U = $this->hitungZScoreKoreksi($zScoreBB_U, $beratBadan, $bbUmurLMS->L, $bbUmurLMS->M, $bbUmurLMS->S);
+
+        Debugbar::info([
+            'Umur dalam hari' => $umurHari,
+            'Gender' => $gender,
+            'BB' => $request->bb,
+            'TB' => $tinggiBadan,
+            'LK' => $lingkarKepala,
+            'IMT' => round($IMT, 2),
+            'LMS_BB_U' => $bbUmurLMS->getAttributes(),
+            // 'ZSCORE_BB_U' => round($testZscoreBB_U, 2),
+            // 'ZSCORE_Koreksi_BB_U' => round($testZscoreKoreksiBB_U, 2),
+            'ZSCORE_BB_TB' => $zScoreBB_TB,
+            'ZSCORE_BB_U' => $testZscoreBB_U,
+            'ZSCORE_Koreksi_BB_U' => $testZscoreKoreksiBB_U,
+            // 'zScoreBB_U ' => round($zScoreBB_U, 2),
+            // 'zScoreTB_U' => round($zScoreTB_U, 2),
+            // 'zScoreBB_TB' => round($zScoreBB_TB, 2),
+            // 'StatusBB_TB' => $statusGiziBB_TB,
+            // 'zScoreIMT_U' => round($zScoreIMT_U, 2),
+            // 'zScoreLK_U' => round($zScoreLK_U, 2),
+        ]);
 
         return response()->json([
 
