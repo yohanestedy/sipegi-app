@@ -203,21 +203,25 @@
                                                             href="{{ route('balitaukur.detail', ['id' => $balitaUkur->balita_id]) }}"><i
                                                                 class="fa-regular fa-list-check me-1"></i>
                                                             Riwayat Pengukuran</a>
-                                                        <a class="dropdown-item ps-3"
-                                                            href="{{ route('balitaukur.edit', ['id' => $balitaUkur->id]) }}"><i
-                                                                class="fa-regular fa-pen-to-square me-1"></i>
-                                                            Ubah Pengukuran</a>
+
+                                                        @if (in_array(Auth::user()->role, ['super_admin', 'kader_posyandu']))
+                                                            <a class="dropdown-item ps-3"
+                                                                href="{{ route('balitaukur.edit', ['id' => $balitaUkur->id]) }}"><i
+                                                                    class="fa-regular fa-pen-to-square me-1"></i>
+                                                                Ubah Pengukuran</a>
 
 
-                                                        <form id="deleteForm"
-                                                            action="{{ route('balitaukur.delete', ['id' => $balitaUkur->id]) }}"
-                                                            method="POST" style="display: inline">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                        </form>
+                                                            <form id="deleteForm"
+                                                                action="{{ route('balitaukur.delete', ['id' => $balitaUkur->id]) }}"
+                                                                method="POST" style="display: inline">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                            </form>
 
-                                                        <a href="#" class="dropdown-item swal-delete ps-3"><i
-                                                                class="fa-solid fa-trash me-1"></i> Hapus Pengukuran</a>
+                                                            <a href="#" class="dropdown-item swal-delete ps-3"><i
+                                                                    class="fa-solid fa-trash me-1"></i> Hapus
+                                                                Pengukuran</a>
+                                                        @endif
                                                     </div>
 
                                                 </div>

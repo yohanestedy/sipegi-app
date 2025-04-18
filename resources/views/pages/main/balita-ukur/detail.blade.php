@@ -160,14 +160,14 @@
                         Daftar Hasil Pengukuran
                     </h5>
 
-                    @if ($balita->umur_hari <= 1856)
-                        <a href="{{ route('balitaukur.add', ['id' => $balita->id]) }}"
-                            class="btn btn-primary rounded-pill">
-                            <i class="fa-solid fa-plus"></i> Tambah Pengukuran
-                        </a>
+                    @if (in_array(Auth::user()->role, ['super_admin', 'kader_posyandu']))
+                        @if ($balita->umur_hari <= 1856)
+                            <a href="{{ route('balitaukur.add', ['id' => $balita->id]) }}"
+                                class="btn btn-primary rounded-pill">
+                                <i class="fa-solid fa-plus"></i> Tambah Pengukuran
+                            </a>
+                        @endif
                     @endif
-
-
 
                 </div>
 
@@ -242,40 +242,47 @@
                                                 <i class="fa-solid fa-magnifying-glass"></i>
                                             </button>
                                             @if ($balitaUkur->umur_ukur !== '0 Bulan')
-                                                <div class="btn-group">
-                                                    <div class="dropdown">
-                                                        <button class="btn btn-primary btn-sm show"
-                                                            style="border-radius: 8px; padding: .2rem .35rem;"
-                                                            type="button" id="dropdownMenuButtonIcon"
-                                                            data-bs-toggle="dropdown" aria-haspopup="true"
-                                                            aria-expanded="true">
-                                                            <i class="fa-solid fa-ellipsis-vertical"></i>
-                                                        </button>
+                                                @if (in_array(Auth::user()->role, ['super_admin', 'kader_posyandu']))
+                                                    <div class="btn-group">
+                                                        <div class="dropdown">
+                                                            <button class="btn btn-primary btn-sm show"
+                                                                style="border-radius: 8px; padding: .2rem .35rem;"
+                                                                type="button" id="dropdownMenuButtonIcon"
+                                                                data-bs-toggle="dropdown" aria-haspopup="true"
+                                                                aria-expanded="true">
+                                                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                                                            </button>
 
-                                                        <div class="dropdown-menu dropdown-menu-dark"
-                                                            aria-labelledby="dropdownMenuButtonIcon"
-                                                            style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(0px, 40px, 0px);"
-                                                            data-popper-placement="bottom-start">
+                                                            <div class="dropdown-menu dropdown-menu-dark"
+                                                                aria-labelledby="dropdownMenuButtonIcon"
+                                                                style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(0px, 40px, 0px);"
+                                                                data-popper-placement="bottom-start">
 
-                                                            <a class="dropdown-item ps-3"
-                                                                href="{{ route('balitaukur.edit', ['id' => $balitaUkur->id]) }}"><i
-                                                                    class="fa-regular fa-pen-to-square me-1"></i>
-                                                                Ubah Pengukuran</a>
 
-                                                            <form id="deleteForm"
-                                                                action="{{ route('balitaukur.delete', ['id' => $balitaUkur->id]) }}"
-                                                                method="POST" style="display: inline">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                            </form>
 
-                                                            <a href="#" class="dropdown-item swal-delete ps-3"><i
-                                                                    class="fa-solid fa-trash me-1"></i> Hapus
-                                                                Pengukuran</a>
+                                                                <a class="dropdown-item ps-3"
+                                                                    href="{{ route('balitaukur.edit', ['id' => $balitaUkur->id]) }}"><i
+                                                                        class="fa-regular fa-pen-to-square me-1"></i>
+                                                                    Ubah Pengukuran</a>
+
+                                                                <form id="deleteForm"
+                                                                    action="{{ route('balitaukur.delete', ['id' => $balitaUkur->id]) }}"
+                                                                    method="POST" style="display: inline">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                </form>
+
+                                                                <a href="#"
+                                                                    class="dropdown-item swal-delete ps-3"><i
+                                                                        class="fa-solid fa-trash me-1"></i> Hapus
+                                                                    Pengukuran</a>
+
+
+                                                            </div>
+
                                                         </div>
-
                                                     </div>
-                                                </div>
+                                                @endif
                                             @endif
 
 
