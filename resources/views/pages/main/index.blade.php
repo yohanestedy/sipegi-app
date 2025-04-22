@@ -204,6 +204,10 @@
             background: linear-gradient(45deg, #1cc88a, #13855c);
         }
 
+        .bg-gradient-grey {
+            background: linear-gradient(45deg, #868686, #686868);
+        }
+
         #pengukuranChart {
             width: 100% !important;
             height: auto !important;
@@ -275,7 +279,9 @@
                 <div class="row g-4">
 
 
-                    <div class="col-xxl-4 col-md-6">
+                    {{-- CARD ASLI --}}
+
+                    {{-- <div class="col-xxl-4 col-md-6">
                         <div class="stat-card">
                             <a href="{{ route('gizi-bermasalah.stunting') }}" class="stat-card-link text-decoration-none">
                                 <div class="card-icon-wrapper bg-gradient-danger">
@@ -287,16 +293,39 @@
                                 </div>
                             </a>
                         </div>
+                    </div> --}}
+
+                    <div class="col-xxl-4 col-md-6">
+                        <div class="stat-card">
+                            <a href="{{ route('gizi-bermasalah.stunting') }}" class="stat-card-link text-decoration-none">
+                                <div class="card-icon-wrapper bg-gradient-danger">
+                                    <i class="fa-solid fa-light-emergency-on card-icon"></i>
+                                </div>
+                                <div class="card-content pb-2">
+                                    <div class="stat-title">Balita Stunting</div>
+                                    <div class="stat-number">{{ $totalStunting }}</div>
+                                    <div class="stat-subtext text-muted mt-1" style="font-size: 0.75rem;">
+                                        <i class="fa-solid fa-chart-line me-1 text-danger"></i><span
+                                            style="font-style: italic;">Prevalensi = {{ $prevalensiStunting }}%</span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
                     </div>
+
                     <div class="col-xxl-4 col-md-6">
                         <div class="stat-card">
                             <a href="{{ route('gizi-bermasalah.bgm') }}" class="stat-card-link text-decoration-none">
                                 <div class="card-icon-wrapper bg-gradient-danger">
                                     <i class="fa-solid fa-light-emergency-on card-icon"></i>
                                 </div>
-                                <div class="card-content">
+                                <div class="card-content pb-2">
                                     <div class="stat-title">Balita BGM</div>
                                     <div class="stat-number">{{ $totalBGM }}</div>
+                                    <div class="stat-subtext text-muted mt-1" style="font-size: 0.75rem;">
+                                        <i class="fa-solid fa-chart-line me-1 text-danger"></i><span
+                                            style="font-style: italic;">Prevalensi = {{ $prevalensiBGM }}%</span>
+                                    </div>
                                 </div>
                             </a>
                         </div>
@@ -308,9 +337,13 @@
                                 <div class="card-icon-wrapper bg-gradient-danger">
                                     <i class="fa-solid fa-light-emergency-on card-icon"></i>
                                 </div>
-                                <div class="card-content">
+                                <div class="card-content pb-2">
                                     <div class="stat-title">Balita 2T</div>
                                     <div class="stat-number">{{ $total2T }}</div>
+                                    <div class="stat-subtext text-muted mt-1" style="font-size: 0.75rem;">
+                                        <i class="fa-solid fa-chart-line me-1 text-danger"></i><span
+                                            style="font-style: italic;">Prevalensi = {{ $prevalensi2T }}%</span>
+                                    </div>
                                 </div>
                             </a>
                         </div>
@@ -388,6 +421,19 @@
                     </div>
                     <div class="col-xl-12 col-md-12">
                         <div class="stat-card">
+                            <a href="#" class="stat-card-link text-decoration-none">
+                                <div class="card-icon-wrapper bg-gradient-grey">
+                                    <i class="fas fa-children card-icon"></i>
+                                </div>
+                                <div class="card-content">
+                                    <div class="stat-title">Total Balita Nonaktif</div>
+                                    <div class="stat-number">{{ $totalBalitaNonaktif }}</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-xl-12 col-md-12">
+                        <div class="stat-card">
                             <a href="{{ route('orangtua.index') }}" class="stat-card-link text-decoration-none">
                                 <div class="card-icon-wrapper bg-gradient-warning">
                                     <i class="fa-solid fa-person-breastfeeding card-icon"></i>
@@ -399,6 +445,7 @@
                             </a>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>

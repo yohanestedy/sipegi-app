@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Balita;
+use App\Models\BalitaNonaktif;
 use App\Models\Orangtua;
 use App\Models\Posyandu;
 use App\Models\BalitaUkur;
@@ -114,12 +115,14 @@ class DashboardController extends Controller
 
         // Inisialisasi query berdasarkan akses user
         $balitaQuery = Balita::query();
+        $balitaNonaktifQuery = BalitaNonaktif::query();
         $balitaUkurQuery = BalitaUkur::query();
         $orangtuaQuery = Orangtua::query();
 
         if ($userPosyanduId !== null) {
 
             $balitaQuery->where('posyandu_id', $userPosyanduId);
+            $balitaNonaktifQuery->where('posyandu_id', $userPosyanduId);
 
             $balitaUkurQuery->whereHas('balita', function ($query) use ($userPosyanduId) {
                 $query->where('posyandu_id', $userPosyanduId);
@@ -130,6 +133,7 @@ class DashboardController extends Controller
 
 
         $totalBalitas = $balitaQuery->count();
+        $totalBalitaNonaktif = $balitaNonaktifQuery->count();
         $totalLaki = (clone $balitaQuery)->where('gender', 'L')->count();
         $totalPerempuan = (clone $balitaQuery)->where('gender', 'P')->count();
 
@@ -185,8 +189,15 @@ class DashboardController extends Controller
             return $balitaUkur->status_bb_n === '2T';
         })->count();
 
+        // HITUNG PREVALENSI
+        $prevalensiStunting = $totalBalitas > 0 ? round(($totalStunting / $totalBalitas) * 100, 2) : 0;
+        $prevalensiBGM = $totalBalitas > 0 ? round(($totalBGM / $totalBalitas) * 100, 2) : 0;
+        $prevalensi2T = $totalBalitas > 0 ? round(($total2T / $totalBalitas) * 100, 2) : 0;
+
+
         return view('pages.main.index', compact(
             'totalBalitas',
+            'totalBalitaNonaktif',
             'totalLaki',
             'totalPerempuan',
             'totalOrangtuas',
@@ -195,7 +206,10 @@ class DashboardController extends Controller
             'totalBGM',
             'total2T',
             'namaPosyandu',
-            'chartData'
+            'chartData',
+            'prevalensiStunting',
+            'prevalensiBGM',
+            'prevalensi2T',
         ));
     }
 
