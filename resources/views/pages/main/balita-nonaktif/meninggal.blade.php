@@ -100,6 +100,9 @@
                     <h5 class="card-title mb-0">
                         Daftar Nama Balita Meninggal
                     </h5>
+                    <h2>
+                        <span class="badge bg-light-danger" id="jumlahDataBalitaNonaktif"></span>
+                    </h2>
                     {{-- <a href="{{ route('balita.add') }}" class="btn btn-primary">
                         <i class="fa-solid fa-plus"></i> Tambah
                     </a> --}}

@@ -335,6 +335,9 @@ $("#searchKeyword").on("keyup", function () {
 tableBalita.on("search.dt", function () {
     updateDataCount();
 });
+tableBalitaNonaktif.on("search.dt", function () {
+    updateDataCount();
+});
 tableOrangTua.on("search.dt", function () {
     updateDataCount();
 });
@@ -348,6 +351,9 @@ function updateDataCount() {
     let totalOrangTua = tableOrangTua.rows().count(); // Total data orangtua
 
     let filteredBalita = tableBalita.rows({ filter: "applied" }).count(); // Data balita terfilter
+    let filteredBalitaNonaktif = tableBalitaNonaktif
+        .rows({ filter: "applied" })
+        .count(); // Data balita terfilter
     let filteredOrangTua = tableOrangTua.rows({ filter: "applied" }).count(); // Data orangtua terfilter
     let filteredPengukuran = tablePengukuran
         .rows({ filter: "applied" })
@@ -358,6 +364,9 @@ function updateDataCount() {
 
     // Update tampilan jumlah data dengan format tebal
     $("#jumlahDataBalita").html(`<strong>${filteredBalita}</strong>`);
+    $("#jumlahDataBalitaNonaktif").html(
+        `<strong>${filteredBalitaNonaktif}</strong>`
+    );
     $("#jumlahDataOrangtua").html(`<strong>${filteredOrangTua}</strong>`);
     $("#jumlahDataPengukuran").html(`<strong>${filteredPengukuran}</strong>`);
 }
