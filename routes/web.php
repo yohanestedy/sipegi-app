@@ -39,7 +39,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/', [DashboardController::class, 'index'])->name('home');
 
-    Route::group(['middleware' => 'super_admin'], function () {
+    Route::group(['middleware' => 'super_admin',], function () {
         // USER
         Route::prefix('user')->group(function () {
 
@@ -58,6 +58,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::delete('/delete/{id}', [UserController::class, 'delete'])->name('user.delete');
         });
     });
+
 
 
 
@@ -126,15 +127,18 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/', [BalitaUkurController::class, 'index'])->name('balitaukur.index');
         Route::get('/detail/{id}', [BalitaUkurController::class, 'detail'])->name('balitaukur.detail');
 
-        Route::get('/add/{id?}', [BalitaUkurController::class, 'add'])->name('balitaukur.add');
+        Route::group(['middleware' => 'admin_kader'], function () {
+            // USER
+            Route::get('/add/{id?}', [BalitaUkurController::class, 'add'])->name('balitaukur.add');
 
-        Route::get('/edit/{id?}', [BalitaUkurController::class, 'edit'])->name('balitaukur.edit');
-        Route::put('/update-zscore/{id}', [BalitaUkurController::class, 'updateZScore'])->name('balitaukur.updateZScore');
+            Route::get('/edit/{id?}', [BalitaUkurController::class, 'edit'])->name('balitaukur.edit');
+            Route::put('/update-zscore/{id}', [BalitaUkurController::class, 'updateZScore'])->name('balitaukur.updateZScore');
 
-        Route::delete('/delete/{id}', [BalitaUkurController::class, 'delete'])->name('balitaukur.delete');
+            Route::delete('/delete/{id}', [BalitaUkurController::class, 'delete'])->name('balitaukur.delete');
 
-        Route::post('/hitung/{id?}', [BalitaUkurController::class, 'hitung'])->name('balitaukur.hitung');
-        Route::post('/simpan-zscore', [BalitaUkurController::class, 'simpanZScore'])->name('balitaukur.simpanZScore');
+            Route::post('/hitung/{id?}', [BalitaUkurController::class, 'hitung'])->name('balitaukur.hitung');
+            Route::post('/simpan-zscore', [BalitaUkurController::class, 'simpanZScore'])->name('balitaukur.simpanZScore');
+        });
     });
 
     Route::prefix('laporan')->group(function () {
