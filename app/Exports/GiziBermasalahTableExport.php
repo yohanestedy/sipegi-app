@@ -18,33 +18,65 @@ class GiziBermasalahTableExport implements FromCollection, WithHeadings, WithSty
 {
     protected $statusMasalah;
     protected $posyanduName;
+    protected $periode;
+    protected $includePrevious;
+    protected float $prevalensi = 0;
+    protected int $totalDiukur = 0;
+    protected int $totalMasalah = 0;
 
 
-    public function __construct($statusMasalah, $posyanduName)
+
+    public function __construct($statusMasalah, $posyanduName, $periode, $includePrevious)
     {
         $this->statusMasalah = $statusMasalah;
         $this->posyanduName = $posyanduName;
+        $this->periode = $periode;
+        $this->includePrevious = $includePrevious;
     }
 
     public function collection()
     {
+
+        [$month, $year] = explode('.', $this->periode);
+        $year = '20' . $year;
+
         $user = auth()->user();
-        $userPosyanduId = $user->posyandu_id; // Posyandu ID user
+        $userPosyanduId = $user->posyandu_id;
         $query = BalitaUkur::query();
 
-        // Filter berdasarkan posyandu user (jika ada)
+
+
         if ($userPosyanduId !== null) {
             $query->whereHas('balita', function ($query) use ($userPosyanduId) {
                 $query->where('posyandu_id', $userPosyanduId);
             });
         }
 
+        // VERSI 1
+
+        if (!$this->includePrevious) {
+            $query->whereMonth('tgl_ukur', $month)
+                ->whereYear('tgl_ukur', $year);
+            $query->orderBy('tgl_ukur', 'desc');
+        } else {
+
+            $query->whereIn('id', function ($subquery) use ($month, $year) {
+                $subquery->selectRaw('MAX(id)')
+                    ->from('balita_ukur')
+                    ->whereRaw('DATE_FORMAT(tgl_ukur, "%Y-%m") <= ?', [sprintf('%04d-%02d', $year, $month)])
+                    ->groupBy('balita_id');
+            });
+            $query->orderBy('tgl_ukur', 'desc');
+        }
+
+
         // Ambil pengukuran terbaru setiap balita
-        $query->whereIn('id', function ($subquery) {
-            $subquery->selectRaw('id')
-                ->from('balita_ukur as bu1')
-                ->whereRaw('tgl_ukur = (SELECT MAX(tgl_ukur) FROM balita_ukur WHERE balita_id = bu1.balita_id)');
-        });
+        // $query->whereIn('id', function ($subquery) {
+        //     $subquery->selectRaw('id')
+        //         ->from('balita_ukur as bu1')
+        //         ->whereRaw('tgl_ukur = (SELECT MAX(tgl_ukur) FROM balita_ukur WHERE balita_id = bu1.balita_id)');
+        // });
+
 
 
         // PERCABANGAN JENIS GIZI BERMASALAH
@@ -69,16 +101,17 @@ class GiziBermasalahTableExport implements FromCollection, WithHeadings, WithSty
         }
 
 
-
-
-
         // // Menambahkan nomor urut pada setiap item
         // $balitaQuery->each(function ($item, $index) {
         //     // Menambahkan properti nomor urut pada setiap item
         //     $item->nomor_urut = $index + 1; // Mulai dari 1
         // });
 
+
+
+
         $balitaQuery = $balitaUkurs;
+
         return $balitaQuery;
     }
 
@@ -86,10 +119,34 @@ class GiziBermasalahTableExport implements FromCollection, WithHeadings, WithSty
     {
         $tanggal = Carbon::now()->format('d-m-Y');
 
+        [$bulan, $tahun] = explode('.', $this->periode);
+        $tahun = '20' . $tahun;
+
+        $user = auth()->user();
+        $userPosyanduId = $user->posyandu_id;
+
+
+        if ($userPosyanduId !== null) {
+            $judul = "Posyandu {$this->posyanduName}";
+        } else {
+            $judul = "{$this->posyanduName}";
+        }
+
+
+
+        $this->calculatePrevalensi();  // Perhitungan prevalensi sebelum dipakai
+
+        // Pastikan nilai prevalensi sudah dihitung sebelumnya
+        if (!$this->includePrevious) {
+            // Menampilkan prevalensi yang sudah dihitung
+            // $judul .= " | Prevalensi {$this->statusMasalah} : {$this->prevalensi}%";
+            $judul .= " | Prevalensi: {$this->prevalensi}% ({$this->totalMasalah} Kasus dari {$this->totalDiukur} Pengukuran)";
+        }
+
         return [
-            ["DAFTAR BALITA {$this->statusMasalah} DESA SELOREJO"],
-            ["Posyandu {$this->posyanduName}"],
-            ["Per Tanggal {$tanggal} "],
+            ["DAFTAR BALITA {$this->statusMasalah} DESA SELOREJO | PERIODE BULAN {$bulan} - {$tahun}"],
+            [$judul],
+            ["Data di Download pada Tanggal {$tanggal} "],
             [],
             [
                 'No',
@@ -224,8 +281,8 @@ class GiziBermasalahTableExport implements FromCollection, WithHeadings, WithSty
 
         // Style for title
         $sheet->getStyle('A1')->getFont()->setBold(true)->setSize(14);
-        $sheet->getStyle('A2')->getFont()->setItalic(true)->setSize(12);
-        $sheet->getStyle('A3')->getFont()->setSize(12);
+        $sheet->getStyle('A2')->getFont()->setBold(true)->setItalic(true)->setSize(13);
+        $sheet->getStyle('A3')->getFont()->setItalic(true)->setSize(12);
 
         $lastRow = $sheet->getHighestRow();
 
@@ -327,5 +384,88 @@ class GiziBermasalahTableExport implements FromCollection, WithHeadings, WithSty
         // }
 
 
+    }
+
+    private function filterStatusGizi($data)
+    {
+        if ($this->statusMasalah == "STUNTING") {
+            return $data->filter(function ($item) {
+                return $item->zscore_tb_u < -2;
+            });
+        }
+
+        if ($this->statusMasalah == "BGM") {
+            return $data->filter(function ($item) {
+                return $item->zscore_bb_u < -2;
+            });
+        }
+
+        if ($this->statusMasalah == "2T") {
+            $data->each(function ($balitaUkur) {
+                $balitaUkur->status_bb_n = $this->statusBBNaik(
+                    $balitaUkur->balita_id,
+                    $balitaUkur->tgl_ukur,
+                    $balitaUkur->bb
+                );
+            });
+
+            return $data->filter(function ($item) {
+                return $item->status_bb_n === '2T';
+            });
+        }
+
+        return collect();
+    }
+
+    protected function calculatePrevalensi()
+    {
+        // Pastikan perhitungan prevalensi dilakukan di sini jika perlu
+        [$month, $year] = explode('.', $this->periode);
+        $year = '20' . $year;
+
+        $user = auth()->user();
+        $userPosyanduId = $user->posyandu_id;
+
+        $query = BalitaUkur::query();
+
+        if ($userPosyanduId !== null) {
+            $query->whereHas('balita', function ($query) use ($userPosyanduId) {
+                $query->where('posyandu_id', $userPosyanduId);
+            });
+        }
+
+        if (!$this->includePrevious) {
+            $query->whereMonth('tgl_ukur', $month)
+                ->whereYear('tgl_ukur', $year);
+        } else {
+            $query->whereIn('id', function ($subquery) use ($month, $year) {
+                $subquery->selectRaw('MAX(id)')
+                    ->from('balita_ukur')
+                    ->whereRaw('DATE_FORMAT(tgl_ukur, "%Y-%m") <= ?', [sprintf('%04d-%02d', $year, $month)])
+                    ->groupBy('balita_id');
+            });
+        }
+
+        $totalDiukur = (clone $query)->count(); // Total balita terukur
+
+        if ($this->statusMasalah == "STUNTING") {
+            $balitaUkurs = $query->where('zscore_tb_u', '<', -2)->get();
+        } else if ($this->statusMasalah == "BGM") {
+            $balitaUkurs = $query->where('zscore_bb_u', '<', -2)->get();
+        } else if ($this->statusMasalah == "2T") {
+            $balitaUkur = $query->get();
+            $balitaUkur->each(function ($balitaUkur) {
+                $balitaUkur->status_bb_n = $this->statusBBNaik($balitaUkur->balita_id, $balitaUkur->tgl_ukur, $balitaUkur->bb);
+            });
+
+            $balitaUkurs = $balitaUkur->filter(function ($item) {
+                return $item->status_bb_n === '2T';
+            });
+        }
+
+        $totalMasalah = $balitaUkurs->count();
+        $this->totalMasalah = $totalMasalah;
+        $this->totalDiukur = $totalDiukur;
+        $this->prevalensi = $totalDiukur > 0 ? round(($totalMasalah / $totalDiukur) * 100, 2) : 0;
     }
 }

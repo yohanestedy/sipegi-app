@@ -301,13 +301,13 @@
                                 <div class="card-icon-wrapper bg-gradient-danger">
                                     <i class="fa-solid fa-light-emergency-on card-icon"></i>
                                 </div>
-                                <div class="card-content pb-2">
+                                <div class="card-content">
                                     <div class="stat-title">Balita Stunting</div>
                                     <div class="stat-number">{{ $totalStunting }}</div>
-                                    <div class="stat-subtext text-muted mt-1" style="font-size: 0.75rem;">
+                                    {{-- <div class="stat-subtext text-muted mt-1" style="font-size: 0.75rem;">
                                         <i class="fa-solid fa-chart-line me-1 text-danger"></i><span
                                             style="font-style: italic;">Prevalensi = {{ $prevalensiStunting }}%</span>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </a>
                         </div>
@@ -319,13 +319,13 @@
                                 <div class="card-icon-wrapper bg-gradient-danger">
                                     <i class="fa-solid fa-light-emergency-on card-icon"></i>
                                 </div>
-                                <div class="card-content pb-2">
+                                <div class="card-content">
                                     <div class="stat-title">Balita BGM</div>
                                     <div class="stat-number">{{ $totalBGM }}</div>
-                                    <div class="stat-subtext text-muted mt-1" style="font-size: 0.75rem;">
+                                    {{-- <div class="stat-subtext text-muted mt-1" style="font-size: 0.75rem;">
                                         <i class="fa-solid fa-chart-line me-1 text-danger"></i><span
                                             style="font-style: italic;">Prevalensi = {{ $prevalensiBGM }}%</span>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </a>
                         </div>
@@ -337,13 +337,13 @@
                                 <div class="card-icon-wrapper bg-gradient-danger">
                                     <i class="fa-solid fa-light-emergency-on card-icon"></i>
                                 </div>
-                                <div class="card-content pb-2">
+                                <div class="card-content">
                                     <div class="stat-title">Balita 2T</div>
                                     <div class="stat-number">{{ $total2T }}</div>
-                                    <div class="stat-subtext text-muted mt-1" style="font-size: 0.75rem;">
+                                    {{-- <div class="stat-subtext text-muted mt-1" style="font-size: 0.75rem;">
                                         <i class="fa-solid fa-chart-line me-1 text-danger"></i><span
                                             style="font-style: italic;">Prevalensi = {{ $prevalensi2T }}%</span>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </a>
                         </div>

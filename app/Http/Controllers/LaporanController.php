@@ -89,30 +89,41 @@ class LaporanController extends Controller
     {
         $request->validate([
             'statusMasalah' => 'required',
+            'periodeMasalah' => 'required',
         ], [
             'statusMasalah.required' => 'Pilih Jenis Gizi yang Bermasalah.',
+            'periodeMasalah.required' => 'Pilih bulan dan tahun.',
         ]);
 
 
         $user = auth()->user();
         $userPosyanduId = $user->posyandu_id;
+
         $statusMasalah = $request->statusMasalah;
 
+        $periode = $request->periodeMasalah;
+
+        $includePrevious = $request->include_previous;
+
+        [$bulan, $tahun] = explode('.', $periode);
+        $tahun = '20' . $tahun; // Format 4 digit untuk tahun
 
         if ($userPosyanduId !== null) {
             // Jika satu posyandu dipilih
             $posyandu = Posyandu::find($userPosyanduId);
             $posyanduName = $posyandu->name;
-            $fileName = 'Daftar_Balita_' . $statusMasalah . '_Posyandu_' . $posyanduName . '.xlsx';
+            $fileName = 'Daftar Balita ' . $statusMasalah . '_Posyandu ' . $posyanduName . '_' . $bulan . '-' . $tahun . '.xlsx';
         } else {
             $posyanduName = "Semua Posyandu";
-            $fileName = 'Daftar_Balita_' . $statusMasalah . '_Semua Posyandu' . '.xlsx';
+            $fileName = 'Daftar Balita ' . $statusMasalah . '_Semua Posyandu' . '_' . $bulan . '-' . $tahun . '.xlsx';
         }
 
         return Excel::download(
             new GiziBermasalahTableExport(
                 $statusMasalah,
                 $posyanduName,
+                $periode,
+                $includePrevious,
             ),
             $fileName
         );

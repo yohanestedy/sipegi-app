@@ -55,7 +55,7 @@
                         <div class="col-md-5">
                             <input id="periode" name="periode" type="text"
                                 class="form-control @error('periode') is-invalid @enderror" value="{{ old('periode') }}"
-                                placeholder="--Pilih Bulan dan Tahun--" />
+                                placeholder="--Periode Bulan--" />
                             @error('periode')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -79,7 +79,7 @@
                 <form method="GET" action="{{ route('laporan.export-balitagizibermasalah') }}"
                     class="form form-horizontal">
                     <div class="row g-3">
-                        <div class="col-md-5">
+                        <div class="col-md-3">
                             <select name="statusMasalah" class="form-select @error('statusMasalah') is-invalid @enderror">
                                 <option selected disabled value="">--Pilih Status Gizi Bermasalah--</option>
                                 <option value="STUNTING">STUNTING</option>
@@ -89,6 +89,25 @@
                             @error('statusMasalah')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
+                        </div>
+                        <div class="col-md-2">
+                            <input id="periode" name="periodeMasalah" type="text"
+                                class="form-control @error('periodeMasalah') is-invalid @enderror"
+                                value="{{ old('periodeMasalah') }}" placeholder="--Periode Bulan--" />
+                            @error('periodeMasalah')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="col-12 col-md-5 mb-3">
+
+                            <div class="form-check mt-2">
+                                <div class="checkbox">
+                                    <input type="checkbox" id="iaggree" name="include_previous" value="1"
+                                        class="form-check-input">
+                                    <label for="iaggree">Sertakan balita yang belum diukur pada bulan terpilih, tapi
+                                        terakhir tercatat gizi bermasalah.</label>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-md-2">
                             <button type="submit" class="btn btn-success w-100">
