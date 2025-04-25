@@ -85,6 +85,8 @@ class GiziBermasalahTableExport implements FromCollection, WithHeadings, WithSty
             $balitaUkurs = $query->with('balita.posyandu')->where('zscore_tb_u', '<', -2)->get();
         } else if ($this->statusMasalah == "BGM") {
             $balitaUkurs = $query->with('balita.posyandu')->where('zscore_bb_u', '<', -2)->get();
+        } else if ($this->statusMasalah == "GIZI KURANG") {
+            $balitaUkurs = $query->with('balita.posyandu')->where('zscore_bb_tb', '<', -2)->get();
         } else if ($this->statusMasalah == "2T") {
 
             // Ambil data balita ukur dengan relasi
@@ -452,6 +454,8 @@ class GiziBermasalahTableExport implements FromCollection, WithHeadings, WithSty
             $balitaUkurs = $query->where('zscore_tb_u', '<', -2)->get();
         } else if ($this->statusMasalah == "BGM") {
             $balitaUkurs = $query->where('zscore_bb_u', '<', -2)->get();
+        } else if ($this->statusMasalah == "GIZI KURANG") {
+            $balitaUkurs = $query->with('balita.posyandu')->where('zscore_bb_tb', '<', -2)->get();
         } else if ($this->statusMasalah == "2T") {
             $balitaUkur = $query->get();
             $balitaUkur->each(function ($balitaUkur) {

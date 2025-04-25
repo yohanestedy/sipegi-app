@@ -81,10 +81,11 @@
                     <div class="row g-3">
                         <div class="col-md-3">
                             <select name="statusMasalah" class="form-select @error('statusMasalah') is-invalid @enderror">
-                                <option selected disabled value="">--Pilih Status Gizi Bermasalah--</option>
-                                <option value="STUNTING">STUNTING</option>
-                                <option value="BGM">BGM</option>
-                                <option value="2T">2T</option>
+                                <option selected disabled value="">--Pilih Kategori Gizi Bermasalah--</option>
+                                <option value="STUNTING">Stunting(Pendek)</option>
+                                <option value="BGM">BGM (BB Kurang / Sangat Kurang)</option>
+                                <option value="GIZI KURANG">Gizi Kurang / Gizi Buruk</option>
+                                <option value="2T">2T(BB Tidak Naik 2 Kali)</option>
                             </select>
                             @error('statusMasalah')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -104,7 +105,7 @@
                                 <div class="checkbox">
                                     <input type="checkbox" id="iaggree" name="include_previous" value="1"
                                         class="form-check-input">
-                                    <label for="iaggree">Sertakan balita yang belum diukur pada bulan terpilih, tapi
+                                    <label for="iaggree">Sertakan balita yang belum diukur pada bulan terpilih, namun
                                         terakhir tercatat gizi bermasalah.</label>
                                 </div>
                             </div>
