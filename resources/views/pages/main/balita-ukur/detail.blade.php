@@ -67,7 +67,16 @@
 
                 {{-- BIODATA --}}
                 <div class="card-body pb-0 medium-text">
+                    <div class="row">
+                        <div class="pe-0 col-3 col-md-2 d-flex justify-content-between">
+                            <span>Kode</span>
+                            <span>:</span>
+                        </div>
+                        <div class="col-8 col-md-8">
+                            <p class="mb-1">{{ $balita->kode_unik }}</p>
+                        </div>
 
+                    </div>
                     <div class="row">
                         <div class="pe-0 col-3 col-md-2 d-flex justify-content-between">
                             <span>NIK</span>
@@ -100,7 +109,7 @@
                     </div>
                     <div class="row">
                         <div class="pe-0 col-3 col-md-2 d-flex justify-content-between">
-                            <span>JK</span>
+                            <span>Gender</span>
                             <span>:</span>
                         </div>
                         <div class="col-8 col-md-8">
