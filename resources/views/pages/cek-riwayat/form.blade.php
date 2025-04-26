@@ -50,7 +50,7 @@
                     <div class="form-group mb-3">
                         <label for="kode_balita" class="form-label">NIK atau Kode Balita</label>
                         <input type="text" name="kode_balita" id="kode_balita"
-                            class="form-control @error('kode_balita') is-invalid @enderror"
+                            class="form-control @if (session('error')) is-invalid @endif @error('kode_balita') is-invalid @enderror"
                             placeholder="Masukkan NIK atau Kode Balita" value="{{ old('kode_balita') }}">
                         @error('kode_balita')
                             <div class="invalid-feedback">{{ $message }}</div>

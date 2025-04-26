@@ -53,7 +53,7 @@ class CekRiwayatController extends Controller
         $balita = $balitaQuery->first();
 
         if (!$balita) {
-            return redirect()->route('riwayat.form')->with('error', 'Data balita tidak ditemukan. Cek kembali Kode Balita dan Tanggal Lahir');
+            return redirect()->route('riwayat.form')->with('error', 'Oops, Gagal! Mohon periksa kembali NIK/Kode Balita dan Tanggal Lahir')->withInput();
         }
 
         $balitaUkurs = BalitaUkur::where('balita_id', $balita->id)
