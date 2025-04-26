@@ -17,35 +17,43 @@ class CekRiwayatController extends Controller
     public function cek(Request $request)
     {
         $request->validate([
-            'nik' => 'required|digits:16',
+            'kode_balita' => 'required',
             'tgl_lahir' => 'required|date',
         ], [
-            'nik.required' => 'Masukan NIK Balita',
-            'nik.digits' => 'NIK harus berisi tepat 16 digit angka',
+            'kode_balita.required' => 'Masukan NIK atau Kode Balita',
             'tgl_lahir.required' => 'Masukan Tanggal Lahir Balita',
         ]);
 
-
         return redirect()->route('riwayat.show', [
-            'nik' => $request->nik,
+            'kode_balita' => $request->kode_balita,
             'tgl_lahir' => $request->tgl_lahir,
         ]);
     }
 
+
     public function show(Request $request)
     {
         $request->validate([
-            'nik' => 'required|digits:16',
+            'kode_balita' => 'required',
             'tgl_lahir' => 'required|date',
         ]);
 
-        $balita = Balita::with('posyandu', 'orangtua')
-            ->where('nik', $request->nik)
-            ->where('tgl_lahir', $request->tgl_lahir)
-            ->first();
+        $kodeBalita = $request->kode_balita;
+
+        $balitaQuery = Balita::with('posyandu', 'orangtua')
+            ->where('tgl_lahir', $request->tgl_lahir);
+
+        // Cek apakah kode_balita itu NIK (16 digit angka) atau kode_unik (B0001, B0023, dst)
+        if (is_numeric($kodeBalita) && strlen($kodeBalita) === 16) {
+            $balitaQuery->where('nik', $kodeBalita);
+        } else {
+            $balitaQuery->where('kode_unik', $kodeBalita);
+        }
+
+        $balita = $balitaQuery->first();
 
         if (!$balita) {
-            return redirect()->route('riwayat.form')->with('error', 'Data balita tidak ditemukan. Cek kembali NIK dan Tanggal Lahir');
+            return redirect()->route('riwayat.form')->with('error', 'Data balita tidak ditemukan. Cek kembali Kode Balita dan Tanggal Lahir');
         }
 
         $balitaUkurs = BalitaUkur::where('balita_id', $balita->id)
@@ -57,6 +65,7 @@ class CekRiwayatController extends Controller
 
         return view('pages.cek-riwayat.riwayat', compact('balita', 'balitaUkurs'));
     }
+
 
 
 

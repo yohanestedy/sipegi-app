@@ -41,25 +41,25 @@
                 <div class="text-center mb-4">
                     <img src="{{ asset('assets/static/images/logo/sipegi-logo.svg') }}" width="150" class="mb-4">
                     <h5 class="fw-bold">Cek Riwayat Gizi Balita</h5>
-                    <small class="text-muted mb-0">Masukkan NIK dan Tanggal Lahir Balita</small>
+                    <small class="text-muted mb-0" style="font-size: 0.75em;"><i>Jika belum memiliki NIK, tanyakan Kode
+                            Balita ke Kader Posyandu / RDS.</i></small>
                 </div>
 
                 <form action="{{ route('riwayat.cek') }}" method="POST">
                     @csrf
                     <div class="form-group mb-3">
-                        <label for="nik" class="form-label">NIK Balita</label>
-                        <small class="text-muted"><i>Pastikan NIK 16 Digit</i></small>
-                        <input type="number" name="nik" id="nik"
-                            class="form-control @if (session('error')) is-invalid @endif @error('nik') is-invalid @enderror"
-                            placeholder="Masukkan NIK Balita" value="{{ old('nik') }}">
-                        @error('nik')
+                        <label for="kode_balita" class="form-label">NIK atau Kode Balita</label>
+                        <input type="text" name="kode_balita" id="kode_balita"
+                            class="form-control @error('kode_balita') is-invalid @enderror"
+                            placeholder="Masukkan NIK atau Kode Balita" value="{{ old('kode_balita') }}">
+                        @error('kode_balita')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
 
                     <div class="form-group mb-4">
                         <label for="tgl_lahir" class="form-label">Tanggal Lahir</label>
-                        <small class="text-muted"><i></i></small>
+                        <small class="text-muted"><i>(Pilih tanggal)</i></small>
                         <input type="date" name="tgl_lahir" id="tgl_lahir"
                             class="form-control @if (session('error')) is-invalid @endif @error('tgl_lahir') is-invalid @enderror"
                             value="{{ old('tgl_lahir') }}">
