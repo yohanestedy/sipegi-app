@@ -13,6 +13,7 @@ use App\Http\Controllers\BalitaController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BalitaUkurController;
+use App\Http\Controllers\CekRiwayatController;
 use App\Http\Controllers\MasterDataController;
 use App\Http\Controllers\BalitaNonaktifController;
 use App\Http\Controllers\GiziBermasalahController;
@@ -30,6 +31,15 @@ use App\Http\Controllers\GiziBermasalahController;
 
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login/store', [AuthController::class, 'storeLogin'])->name('login.store');
+
+Route::get('/cek-riwayat', [CekRiwayatController::class, 'form'])->name('riwayat.form');
+Route::post('/cek-riwayat/store', [CekRiwayatController::class, 'cek'])->name('riwayat.cek');
+Route::get('/cek-riwayat/show', [CekRiwayatController::class, 'show'])->name('riwayat.show');
+Route::get('/cek-riwayat/keluar', function () {
+    session()->forget(['balita', 'balitaUkurs']); // atau flush semua jika perlu
+    return redirect()->route('riwayat.form')->with('successToast', 'Anda telah keluar dari halaman riwayat');
+})->name('riwayat.keluar');
+
 
 // Semua route di bawah ini akan dilindungi oleh middleware 'auth'
 Route::group(['middleware' => 'auth'], function () {

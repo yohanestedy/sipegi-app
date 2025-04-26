@@ -10,6 +10,33 @@
     {{-- <link rel="stylesheet" crossorigin href="{{ asset('/assets/compiled/css/app-dark.css') }}"> --}}
     <link rel="stylesheet" crossorigin href="{{ asset('/assets/compiled/css/auth.css') }}">
     <link rel="stylesheet" href="{{ asset('/assets/fontawesome/css/all.css') }}">
+
+    <style>
+        .secondary-link {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            color: #6c757d;
+            /* Warna teks seperti secondary */
+            border: 1.5px solid #6c757d;
+            /* Border seperti secondary */
+            border-radius: 0.45rem;
+            text-decoration: none;
+            transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, color 0.15s ease-in-out;
+        }
+
+        .secondary-link:hover {
+            color: #F2F7FF;
+            border-color: #415BB7;
+            background-color: #415BB7;
+            /* Efek hover sederhana */
+        }
+
+        .arrow-icon {
+            margin-left: 0.5rem;
+        }
+    </style>
 </head>
 
 <body>
@@ -24,8 +51,8 @@
                     </div>
 
                     {{-- <h1 class="auth-title">Masuk</h1> --}}
-                    <p style="text-align: center;" class="auth-subtitle mb-2">Sipegi adalah aplikasi untuk menilai gizi
-                        balita di Desa Selorejo</p>
+                    <p style="text-align: center;" class="auth-subtitle mb-2">Sipegi adalah Aplikasi Penilaian Status
+                        Gizi Anak 0 - 59 Bulan di Desa Selorejo</p>
 
 
 
@@ -69,9 +96,15 @@
                             </label>
                         </div>
                         <button id="submitBtn"
-                            class="btn btn-primary btn-block btn-lg shadow-lg mt-5 submitBtn">Masuk</button>
+                            class="btn btn-primary btn-block btn-lg shadow-lg mt-4 submitBtn">Masuk</button>
 
                     </form>
+
+                    <div class="text-center mt-5">
+                        <a href="{{ route('riwayat.form') }}" class="secondary-link">
+                            Cek Gizi Anak Mandiri <i class="fa-solid fa-arrow-right arrow-icon"></i>
+                        </a>
+                    </div>
 
                 </div>
             </div>
