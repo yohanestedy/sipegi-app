@@ -36,19 +36,19 @@
 
 <body>
     <div id="auth">
-        <div class="col-lg-5 col-md-6 col-sm-10">
+        <div class="col-lg-4 col-md-6 col-sm-10">
             <div class="card shadow p-4 border-0">
                 <div class="text-center mb-4">
-                    <img src="{{ asset('assets/static/images/logo/sipegi-logo.svg') }}" width="150" class="mb-2">
+                    <img src="{{ asset('assets/static/images/logo/sipegi-logo.svg') }}" width="150" class="mb-4">
                     <h5 class="fw-bold">Cek Riwayat Gizi Balita</h5>
-                    <p class="text-muted mb-0">Masukkan NIK dan Tanggal Lahir Balita</p>
+                    {{-- <p class="text-muted mb-0">Masukkan NIK dan Tanggal Lahir Balita</p> --}}
                 </div>
 
                 <form action="{{ route('riwayat.cek') }}" method="POST">
                     @csrf
                     <div class="form-group mb-3">
                         <label for="nik" class="form-label">NIK Balita</label>
-
+                        <small class="text-muted"><i>Pastikan NIK 16 Digit</i></small>
                         <input type="number" name="nik" id="nik"
                             class="form-control @if (session('error')) is-invalid @endif @error('nik') is-invalid @enderror"
                             placeholder="Masukkan NIK balita" value="{{ old('nik') }}">
@@ -59,7 +59,7 @@
 
                     <div class="form-group mb-4">
                         <label for="tgl_lahir" class="form-label">Tanggal Lahir</label>
-                        <small class="text-muted"><i>contoh: 08/05/2023</i></small>
+                        <small class="text-muted"><i></i></small>
                         <input type="date" name="tgl_lahir" id="tgl_lahir"
                             class="form-control @if (session('error')) is-invalid @endif @error('tgl_lahir') is-invalid @enderror"
                             value="{{ old('tgl_lahir') }}">
