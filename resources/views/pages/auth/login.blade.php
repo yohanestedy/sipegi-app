@@ -102,7 +102,7 @@
 
                     <div class="text-center mt-5">
                         <a href="{{ route('riwayat.form') }}" class="secondary-link">
-                            Cek Gizi Anak Mandiri <i class="fa-solid fa-arrow-right arrow-icon"></i>
+                            Cek Riwayat Gizi Anak<i class="fa-solid fa-arrow-right arrow-icon"></i>
                         </a>
                     </div>
 
