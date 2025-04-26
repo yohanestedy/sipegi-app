@@ -155,6 +155,9 @@ class BalitaController extends Controller
 
 
             ]);
+            $newBalita->update([
+                'kode_unik' => 'B' . str_pad($newBalita->id, 4, '0', STR_PAD_LEFT)
+            ]);
 
             // HITUNG Z-SCORE BAYI BARU LAHIR
 
@@ -252,6 +255,7 @@ class BalitaController extends Controller
             } elseif ($zScoreIMT_U > 3) {
                 $statusGiziIMT_U = "Obesitas";
             }
+
 
             $zscore = BalitaUkur::create([
                 "balita_id" => $newBalita->id,

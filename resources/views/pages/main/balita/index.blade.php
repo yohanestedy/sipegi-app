@@ -89,6 +89,7 @@
                                     <th style="text-align: center;">Umur Saat Ini</th>
                                     <th style="text-align: center;">Nama Ibu</th>
                                     <th style="text-align: center;">Posyandu</th>
+                                    <th style="text-align: center;">Kode Balita</th>
 
                                 </tr>
                             </thead>
@@ -171,6 +172,8 @@
                                         <td>{{ $balita->orangtua->name_ibu }}</td>
                                         <td data-sort="{{ $balita->posyandu_id }}" style="text-align: center">
                                             {{ $balita->posyandu->name }}</td>
+                                        <td style="text-align: center">
+                                            {{ $balita->kode_unik }}</td>
 
 
                                     </tr>
@@ -205,7 +208,10 @@
                             <div class="row">
                                 <div class="col-7 col-md-6 pe-0">
 
-
+                                    <label class="medium-text">Kode Balita :</label><br>
+                                    <p class="text-start badge bg-light-secondary form-control-static fw-bold text-wrap"
+                                        id="kode_balita">
+                                    </p><br>
                                     <label class="medium-text">Nama Balita :</label><br>
                                     <p class="text-start badge bg-light-secondary form-control-static fw-bold text-wrap"
                                         id="balita_name">
@@ -407,6 +413,7 @@
                 const balita = $(this).data('balita');
 
                 // Isi modal dengan data dari objek balita dan ukur
+                $('#kode_balita').text(balita.kode_unik);
                 $('#balita_name').text(balita.name);
                 $('#nik_balita').text(balita.nik ? balita.nik : '-');
                 $('#gender').text(balita.gender_display);
