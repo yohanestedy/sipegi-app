@@ -36,12 +36,12 @@
 
 <body>
     <div id="auth">
-        <div class="col-lg-4 col-md-6 col-sm-10">
+        <div class="col-lg-4 col-md-6 col-sm-11">
             <div class="card shadow p-4 border-0">
                 <div class="text-center mb-4">
                     <img src="{{ asset('assets/static/images/logo/sipegi-logo.svg') }}" width="150" class="mb-4">
                     <h5 class="fw-bold">Cek Riwayat Gizi Balita</h5>
-                    {{-- <p class="text-muted mb-0">Masukkan NIK dan Tanggal Lahir Balita</p> --}}
+                    <small class="text-muted mb-0">Masukkan NIK dan Tanggal Lahir Balita</small>
                 </div>
 
                 <form action="{{ route('riwayat.cek') }}" method="POST">
@@ -51,7 +51,7 @@
                         <small class="text-muted"><i>Pastikan NIK 16 Digit</i></small>
                         <input type="number" name="nik" id="nik"
                             class="form-control @if (session('error')) is-invalid @endif @error('nik') is-invalid @enderror"
-                            placeholder="Masukkan NIK balita" value="{{ old('nik') }}">
+                            placeholder="Masukkan NIK Balita" value="{{ old('nik') }}">
                         @error('nik')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
