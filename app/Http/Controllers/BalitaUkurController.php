@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Models\BalitaNonaktif;
 use Illuminate\Validation\Rule;
 use Monolog\Handler\NullHandler;
+use App\Models\BalitaUkurNonaktif;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Models\StandarPertumbuhanAnak;
@@ -20,8 +21,60 @@ use App\Models\StandarPertumbuhanAnakExpanded;
 
 class BalitaUkurController extends Controller
 {
-
     public function index()
+    {
+        $user = auth()->user();
+        $userPosyanduId = $user->posyandu_id;
+
+        // Ambil pengukuran balita aktif
+        $aktifQuery = BalitaUkur::with('balita.posyandu')
+            ->whereNot('umur_ukur', '0 Bulan');
+
+        if ($userPosyanduId !== null) {
+            $aktifQuery->whereHas('balita', function ($q) use ($userPosyanduId) {
+                $q->where('posyandu_id', $userPosyanduId);
+            });
+        }
+
+        $balitaUkursAktif = $aktifQuery->get();
+
+        // Ambil pengukuran balita nonaktif
+        $nonaktifQuery = BalitaUkurNonaktif::with('balitaNonaktif.posyandu')
+            ->whereNot('umur_ukur', '0 Bulan');
+
+        if ($userPosyanduId !== null) {
+            $nonaktifQuery->whereHas('balitaNonaktif', function ($q) use ($userPosyanduId) {
+                $q->where('posyandu_id', $userPosyanduId);
+            });
+        }
+
+        $balitaUkursNonaktif = $nonaktifQuery->get();
+
+        // Tambahkan flag untuk menandai mana yang nonaktif (bisa dipakai untuk logic read-only di view)
+        $balitaUkursAktif->each(function ($item) {
+            $item->is_nonaktif = false;
+            $item->status_bb_n = $this->statusBBNaik($item->balita_id, $item->tgl_ukur, $item->bb);
+        });
+
+        $balitaUkursNonaktif->each(function ($item) {
+            $item->is_nonaktif = true;
+            $item->status_bb_n = $this->statusBBNaikNonaktif($item->balita_nonaktif_id, $item->tgl_ukur, $item->bb);
+        });
+
+        // Gabungkan data
+        $balitaUkursGabungan = $balitaUkursAktif->concat($balitaUkursNonaktif)->sortByDesc('tgl_ukur');
+
+        $posyandus = Posyandu::all();
+        // return $balitaUkursGabungan;
+
+        return view('pages.main.balita-ukur.index', [
+            'balitaUkurs' => $balitaUkursGabungan,
+            'posyandus' => $posyandus,
+        ]);
+    }
+
+
+    public function index1()
     {
         $user = auth()->user();
         $userPosyanduId = auth()->user()->posyandu_id; // Posyandu ID user
@@ -777,6 +830,58 @@ class BalitaUkurController extends Controller
 
         // Ambil semua data sebelumnya untuk balita yang sama
         $allPrevious = BalitaUkur::where('balita_id', $balita_id)
+            ->where('tgl_ukur', '<', $tgl_ukur)
+            ->orderBy('tgl_ukur', 'desc')
+            ->get();
+
+
+        // Ambil data pertama dan kedua dari collection
+        $previous = $allPrevious->first(); // Data pertama
+        $previousKedua = $allPrevious->skip(1)->first(); // Data kedua
+
+        // Jika tidak ada data sebelumnya
+        if (!$previous) {
+            return 'L';
+        } else if (!$previousKedua) {
+            return 'B';
+        }
+        $diffInDays = Carbon::parse($tgl_ukur)->diffInDays(Carbon::parse($previous->tgl_ukur));
+
+        // Versi Baru Pengkondisian Status BB Naik
+        return match (true) {
+            $diffInDays > 35 => 'O',
+            ($bb <= $previous->bb && $previous->bb <= $previousKedua->bb) => '2T',
+            ($bb <= $previous->bb) => 'T',
+            default => 'N'
+        };
+
+        // Versi Lama Pengkondisian Status BB Naik
+        // if ($diffInDays > 35) {
+        //     return 'O';
+        // } else if ($bb < $previous->bb && $previous->bb < $previousKedua->bb) {
+        //     return '2T'; // Berat badan tidak naik dua kali berturut turut
+        // } else if ($bb < $previous->bb && $previous->bb == $previousKedua->bb) {
+        //     return '2T'; // Berat badan tidak naik dua kali berturut turut
+        // } else if ($bb == $previous->bb && $previous->bb == $previousKedua->bb) {
+        //     return '2T'; // Berat badan tidak naik dua kali berturut turut
+        // } else if ($bb == $previous->bb && $previous->bb < $previousKedua->bb) {
+        //     return '2T'; // Berat badan tidak naik dua kali berturut turut
+        // } else if ($bb == $previous->bb) {
+        //     return 'T'; // Berat badan tidak naik
+        // } else if ($bb < $previous->bb) {
+        //     return 'T'; // Berat badan tidak naik
+        // } else {
+        //     return 'N'; // Berat badan naik
+        // }
+
+
+    }
+
+    public function statusBBNaikNonaktif($balita_nonaktif_id, $tgl_ukur, $bb)
+    {
+
+        // Ambil semua data sebelumnya untuk balita yang sama
+        $allPrevious = BalitaUkurNonaktif::where('balita_nonaktif_id', $balita_nonaktif_id)
             ->where('tgl_ukur', '<', $tgl_ukur)
             ->orderBy('tgl_ukur', 'desc')
             ->get();

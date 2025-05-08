@@ -478,7 +478,7 @@
     </div>
 
     {{-- Fungsi Badge Status Gizi --}}
-    @php
+    {{-- @php
         function warnaBadge($nilaiZscore)
         {
             // if ($nilaiZscore >= 3) {
@@ -522,7 +522,7 @@
             }
         }
 
-    @endphp
+    @endphp --}}
 @endsection
 
 @section('jsLibraries')

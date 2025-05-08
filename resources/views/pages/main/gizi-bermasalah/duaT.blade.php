@@ -362,7 +362,7 @@
 
 
         {{-- Fungsi Badge Status Gizi --}}
-        @php
+        {{-- @php
             function warnaBadge($nilaiZscore)
             {
                 if ($nilaiZscore > 3) {
@@ -386,7 +386,7 @@
                 }
             }
 
-        @endphp
+        @endphp --}}
 
     </div>
     {{-- MODAL HASIL PENGUKURAN --}}

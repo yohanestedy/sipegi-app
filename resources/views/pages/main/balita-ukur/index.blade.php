@@ -207,29 +207,40 @@
                                                         aria-labelledby="dropdownMenuButtonIcon"
                                                         style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(0px, 40px, 0px);"
                                                         data-popper-placement="bottom-start">
-                                                        <a class="dropdown-item ps-3"
-                                                            href="{{ route('balitaukur.detail', ['id' => $balitaUkur->balita_id]) }}"><i
-                                                                class="fa-regular fa-list-check me-1"></i>
-                                                            Riwayat Pengukuran</a>
-
-                                                        @if (in_array(Auth::user()->role, ['super_admin', 'kader_posyandu']))
+                                                        @if (!$balitaUkur->is_nonaktif)
                                                             <a class="dropdown-item ps-3"
-                                                                href="{{ route('balitaukur.edit', ['id' => $balitaUkur->id]) }}"><i
-                                                                    class="fa-regular fa-pen-to-square me-1"></i>
-                                                                Ubah Pengukuran</a>
-
-                                                            <form id="deleteForm"
-                                                                action="{{ route('balitaukur.delete', ['id' => $balitaUkur->id]) }}"
-                                                                method="POST" style="display: inline">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                            </form>
-
-                                                            <a href="#" class="dropdown-item swal-delete ps-3"><i
-                                                                    class="fa-solid fa-trash me-1"></i> Hapus
-                                                                Pengukuran</a>
+                                                                href="{{ route('balitaukur.detail', ['id' => $balitaUkur->balita_id]) }}"><i
+                                                                    class="fa-regular fa-list-check me-1"></i>
+                                                                Riwayat Pengukuran</a>
+                                                        @else
+                                                            <a class="dropdown-item ps-3"
+                                                                href="{{ route('balitanonaktif.detail', ['id' => $balitaUkur->balita_nonaktif_id]) }}"><i
+                                                                    class="fa-regular fa-list-check me-1"></i>
+                                                                Riwayat Pengukuran</a>
                                                         @endif
 
+
+
+                                                        @if (!$balitaUkur->is_nonaktif)
+                                                            @if (in_array(Auth::user()->role, ['super_admin', 'kader_posyandu']))
+                                                                <a class="dropdown-item ps-3"
+                                                                    href="{{ route('balitaukur.edit', ['id' => $balitaUkur->id]) }}"><i
+                                                                        class="fa-regular fa-pen-to-square me-1"></i>
+                                                                    Ubah Pengukuran</a>
+
+                                                                <form id="deleteForm"
+                                                                    action="{{ route('balitaukur.delete', ['id' => $balitaUkur->id]) }}"
+                                                                    method="POST" style="display: inline">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                </form>
+
+                                                                <a href="#"
+                                                                    class="dropdown-item swal-delete ps-3"><i
+                                                                        class="fa-solid fa-trash me-1"></i> Hapus
+                                                                    Pengukuran</a>
+                                                            @endif
+                                                        @endif
 
                                                     </div>
 
@@ -270,17 +281,40 @@
 
                                         {{-- <td style="text-align: center">{{ $balitaUkur->balita->name }}</td> --}}
 
-                                        <td style="text-align: left">{{ $balitaUkur->balita->name }}</td>
-                                        <td style="text-align: center">
-                                            <div style="font-weight: 600; {{ $balitaUkur->balita->gender_display == 'Perempuan' ? 'background-color: #fcd8ff; color:#855f82' : 'background-color: #d2eeff; color: #526483' }} "
-                                                class="badge">
-                                                {{ $balitaUkur->balita->gender_display }}</div>
-                                        </td>
+
+                                        @if (!$balitaUkur->is_nonaktif)
+                                            <td style="text-align: left">{{ $balitaUkur->balita->name }}</td>
+                                            <td style="text-align: center">
+                                                <div style="font-weight: 600; {{ $balitaUkur->balita->gender_display == 'Perempuan' ? 'background-color: #fcd8ff; color:#855f82' : 'background-color: #d2eeff; color: #526483' }} "
+                                                    class="badge">
+                                                    {{ $balitaUkur->balita->gender_display }}</div>
+                                            </td>
+                                        @else
+                                            <td style="text-align: left">{{ $balitaUkur->balitaNonaktif->name }}</td>
+                                            <td style="text-align: center">
+                                                <div style="font-weight: 600; {{ $balitaUkur->balitaNonaktif->gender_display == 'Perempuan' ? 'background-color: #fcd8ff; color:#855f82' : 'background-color: #d2eeff; color: #526483' }} "
+                                                    class="badge">
+                                                    {{ $balitaUkur->balitaNonaktif->gender_display }}</div>
+                                            </td>
+                                        @endif
+
+
 
                                         <td data-order="{{ $balitaUkur->tgl_ukur }}" style="text-align: center">
                                             {{ $balitaUkur->tgl_ukur_display }}</td>
-                                        <td data-sort="{{ $balitaUkur->balita->umur_hari }}" style="text-align: right">
-                                            {{ $balitaUkur->umur_ukur }}</td>
+
+
+
+                                        @if (!$balitaUkur->is_nonaktif)
+                                            <td data-sort="{{ $balitaUkur->balita->umur_hari }}"
+                                                style="text-align: right">
+                                                {{ $balitaUkur->umur_ukur }}</td>
+                                        @else
+                                            <td data-sort="{{ $balitaUkur->balitaNonaktif->umur_hari }}"
+                                                style="text-align: right">
+                                                {{ $balitaUkur->umur_ukur }}</td>
+                                        @endif
+
                                         <td style="text-align: center">{{ $balitaUkur->bb }}</td>
                                         <td style="text-align: center">{{ $balitaUkur->tb }}</td>
                                         <td style="text-align: center">{{ $balitaUkur->lk ? $balitaUkur->lk : '-' }}</td>
@@ -343,8 +377,15 @@
                                         {{-- END ZSCORE SECTION --}}
 
 
-                                        <td style="text-align: center">{{ $balitaUkur->balita->posyandu->name }}</td>
-                                        <td style="text-align: center">{{ $balitaUkur->balita->bpjs }}</td>
+
+                                        @if (!$balitaUkur->is_nonaktif)
+                                            <td style="text-align: center">{{ $balitaUkur->balita->posyandu->name }}</td>
+                                            <td style="text-align: center">{{ $balitaUkur->balita->bpjs }}</td>
+                                        @else
+                                            <td style="text-align: center">
+                                                {{ $balitaUkur->balitaNonaktif->posyandu->name }}</td>
+                                            <td style="text-align: center">{{ $balitaUkur->balitaNonaktif->bpjs }}</td>
+                                        @endif
 
 
 
@@ -366,7 +407,7 @@
 
 
         {{-- Fungsi Badge Status Gizi --}}
-        @php
+        {{-- @php
             function warnaBadge($nilaiZscore)
             {
                 if ($nilaiZscore > 3) {
@@ -390,7 +431,7 @@
                 }
             }
 
-        @endphp
+        @endphp --}}
 
     </div>
     {{-- MODAL HASIL PENGUKURAN --}}
@@ -650,39 +691,78 @@
                 // Langsung parse objek data dari atribut
                 const ukur = $(this).data('ukur');
 
-                // Isi modal dengan data dari objek balita dan ukur
-                $('#balita_name').text(ukur.balita.name);
-                $('#gender').text(ukur.balita.gender_display);
-                $('#tgl_ukur1').text(ukur.tgl_ukur_display);
-                $('#umur_ukur').text(ukur.umur_ukur);
-                $('#cara_ukur').text(ukur.cara_ukur);
-                $('#bb').text(ukur.bb + " kg");
-                $('#tb').text(ukur.tb + " cm");
-                $('#lk').text(ukur.lk ? ukur.lk + " cm" : '-');
-                $('#status_bb_naik').text(ukur.status_bb_n);
-                $('#posyandu').text(ukur.balita.posyandu.name);
-                // $('#orangtua').text(ukur.balita.orangtua.name_ibu);
 
-                // Perbaharui status gizi dan z-score
-                $('#status_bb_u').text(ukur.status_bb_u).attr('class', 'badge ' + warnaBadge(ukur
-                    .zscore_bb_u));
-                $('#zscore_bb_u').text(ukur.zscore_bb_u);
+                if (!ukur.is_nonaktif) {
+                    // Isi modal dengan data dari objek balita dan ukur
+                    $('#balita_name').text(ukur.balita.name);
+                    $('#gender').text(ukur.balita.gender_display);
+                    $('#tgl_ukur1').text(ukur.tgl_ukur_display);
+                    $('#umur_ukur').text(ukur.umur_ukur);
+                    $('#cara_ukur').text(ukur.cara_ukur);
+                    $('#bb').text(ukur.bb + " kg");
+                    $('#tb').text(ukur.tb + " cm");
+                    $('#lk').text(ukur.lk ? ukur.lk + " cm" : '-');
+                    $('#status_bb_naik').text(ukur.status_bb_n);
+                    $('#posyandu').text(ukur.balita.posyandu.name);
+                    // $('#orangtua').text(ukur.balita.orangtua.name_ibu);
 
-                $('#status_tb_u').text(ukur.status_tb_u).attr('class', 'badge ' + warnaBadge(ukur
-                    .zscore_tb_u));
-                $('#zscore_tb_u').text(ukur.zscore_tb_u);
+                    // Perbaharui status gizi dan z-score
+                    $('#status_bb_u').text(ukur.status_bb_u).attr('class', 'badge ' + warnaBadge(ukur
+                        .zscore_bb_u));
+                    $('#zscore_bb_u').text(ukur.zscore_bb_u);
 
-                $('#status_bb_tb').text(ukur.status_bb_tb ? ukur.status_bb_tb : '-').attr('class', ukur
-                    .status_bb_tb ? 'badge ' + warnaBadge(ukur.zscore_bb_tb) : '');
-                $('#zscore_bb_tb').text(ukur.zscore_bb_tb !== null ? ukur.zscore_bb_tb : '-');
+                    $('#status_tb_u').text(ukur.status_tb_u).attr('class', 'badge ' + warnaBadge(ukur
+                        .zscore_tb_u));
+                    $('#zscore_tb_u').text(ukur.zscore_tb_u);
 
-                $('#status_imt_u').text(ukur.status_imt_u).attr('class', 'badge ' + warnaBadge(ukur
-                    .zscore_imt_u));
-                $('#zscore_imt_u').text(ukur.zscore_imt_u);
+                    $('#status_bb_tb').text(ukur.status_bb_tb ? ukur.status_bb_tb : '-').attr('class', ukur
+                        .status_bb_tb ? 'badge ' + warnaBadge(ukur.zscore_bb_tb) : '');
+                    $('#zscore_bb_tb').text(ukur.zscore_bb_tb !== null ? ukur.zscore_bb_tb : '-');
 
-                $('#status_lk_u').text(ukur.status_lk_u ? ukur.status_lk_u : '-').attr('class', ukur
-                    .status_lk_u ? 'badge ' + warnaBadge(ukur.zscore_lk_u) : '');
-                $('#zscore_lk_u').text(ukur.zscore_lk_u !== null ? ukur.zscore_lk_u : '-');
+                    $('#status_imt_u').text(ukur.status_imt_u).attr('class', 'badge ' + warnaBadge(ukur
+                        .zscore_imt_u));
+                    $('#zscore_imt_u').text(ukur.zscore_imt_u);
+
+                    $('#status_lk_u').text(ukur.status_lk_u ? ukur.status_lk_u : '-').attr('class', ukur
+                        .status_lk_u ? 'badge ' + warnaBadge(ukur.zscore_lk_u) : '');
+                    $('#zscore_lk_u').text(ukur.zscore_lk_u !== null ? ukur.zscore_lk_u : '-');
+                } else {
+                    // Isi modal dengan data dari objek balita dan ukur
+                    $('#balita_name').text(ukur.balita_nonaktif.name);
+                    $('#gender').text(ukur.balita_nonaktif.gender_display);
+                    $('#tgl_ukur1').text(ukur.tgl_ukur_display);
+                    $('#umur_ukur').text(ukur.umur_ukur);
+                    $('#cara_ukur').text(ukur.cara_ukur);
+                    $('#bb').text(ukur.bb + " kg");
+                    $('#tb').text(ukur.tb + " cm");
+                    $('#lk').text(ukur.lk ? ukur.lk + " cm" : '-');
+                    $('#status_bb_naik').text(ukur.status_bb_n);
+                    $('#posyandu').text(ukur.balita_nonaktif.posyandu.name);
+                    // $('#orangtua').text(ukur.balita.orangtua.name_ibu);
+
+                    // Perbaharui status gizi dan z-score
+                    $('#status_bb_u').text(ukur.status_bb_u).attr('class', 'badge ' + warnaBadge(ukur
+                        .zscore_bb_u));
+                    $('#zscore_bb_u').text(ukur.zscore_bb_u);
+
+                    $('#status_tb_u').text(ukur.status_tb_u).attr('class', 'badge ' + warnaBadge(ukur
+                        .zscore_tb_u));
+                    $('#zscore_tb_u').text(ukur.zscore_tb_u);
+
+                    $('#status_bb_tb').text(ukur.status_bb_tb ? ukur.status_bb_tb : '-').attr('class', ukur
+                        .status_bb_tb ? 'badge ' + warnaBadge(ukur.zscore_bb_tb) : '');
+                    $('#zscore_bb_tb').text(ukur.zscore_bb_tb !== null ? ukur.zscore_bb_tb : '-');
+
+                    $('#status_imt_u').text(ukur.status_imt_u).attr('class', 'badge ' + warnaBadge(ukur
+                        .zscore_imt_u));
+                    $('#zscore_imt_u').text(ukur.zscore_imt_u);
+
+                    $('#status_lk_u').text(ukur.status_lk_u ? ukur.status_lk_u : '-').attr('class', ukur
+                        .status_lk_u ? 'badge ' + warnaBadge(ukur.zscore_lk_u) : '');
+                    $('#zscore_lk_u').text(ukur.zscore_lk_u !== null ? ukur.zscore_lk_u : '-');
+                }
+
+
 
                 // Tampilkan modal
                 $('#zscoreModal').modal('show');
