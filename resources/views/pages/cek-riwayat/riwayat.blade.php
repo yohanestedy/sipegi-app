@@ -480,33 +480,6 @@
             </div>
         </div>
     </div>
-
-    {{-- Fungsi Badge Status Gizi --}}
-    @php
-        function warnaBadge($nilaiZscore)
-        {
-            if ($nilaiZscore > 3) {
-                return 'bg-light-danger1';
-            } elseif ($nilaiZscore < -3) {
-                return 'bg-light-danger1';
-            } elseif ($nilaiZscore > 2) {
-                return 'bg-light-danger';
-            } elseif ($nilaiZscore < -2) {
-                return 'bg-light-danger';
-            } elseif ($nilaiZscore > 1) {
-                return 'bg-light-warning';
-            } elseif ($nilaiZscore < -1) {
-                return 'bg-light-warning';
-            } elseif ($nilaiZscore >= 0) {
-                return 'bg-light-success';
-            } elseif ($nilaiZscore <= 0) {
-                return 'bg-light-success';
-            } else {
-                return 'bg-secondary';
-            }
-        }
-
-    @endphp
 @endsection
 
 @section('jsLibraries')
