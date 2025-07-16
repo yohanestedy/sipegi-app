@@ -29,9 +29,15 @@ Sipegi adalah aplikasi berbasis web yang dirancang untuk mendukung **penilaian s
 
 Coba langsung aplikasinya di:
 
-**🌐 URL**: [https://dev.sipegi.app](https://dev.sipegi.app)  
-**👤 Username**: `demo52`  
-**🔐 Password**: `demo52`
+**🌐 URL**: [https://dev.sipegi.app](https://dev.sipegi.app)
+
+**Super Admin
+**Username**: `superadmin`  
+**🔐 Password\*\*: `adminsuper`
+
+**Kader Posyandu
+**Username**: `melati`  
+**🔐 Password\*\*: `melati123`
 
 > Login sebagai **Kader Posyandu** untuk mencoba fitur pengukuran.
 
