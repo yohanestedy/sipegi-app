@@ -31,15 +31,37 @@ Coba langsung aplikasinya di:
 
 **🌐 URL**: [https://dev.sipegi.app](https://dev.sipegi.app)
 
-**Super Admin
+**Super Admin**
 **Username**: `superadmin`  
-**🔐 Password\*\*: `adminsuper`
+**Password**: `adminsuper`
 
-**Kader Posyandu
+**Kader Posyandu**
 **Username**: `melati`  
-**🔐 Password\*\*: `melati123`
+**Password**: `melati123`
 
-> Login sebagai **Kader Posyandu** untuk mencoba fitur pengukuran.
+---
+
+## ⚠️ Alur Penggunaan Singkat
+
+Sebelum melakukan pengukuran, ikuti urutan berikut:
+
+1. **Input Data Orang Tua**
+2. **Input Data Balita** (terhubung ke orang tua)
+3. **Lakukan Pengukuran** (tinggi/berat badan)
+
+👉 **Urutannya:** Orang Tua → Balita → Pengukuran  
+💡 _Jika data orang tua dan balita sudah tersedia, Anda bisa langsung melakukan pengukuran._
+
+## 🧑‍🏫 Cara Cepat Menggunakan Aplikasi
+
+1. **Login ke Akun Demo**
+2. **Tambah Orang Tua** melalui menu _Data Orang Tua_  
+   _(Lewati jika data sudah ada)_
+3. **Tambah Balita** di menu _Data Balita_  
+   _(Lewati jika data sudah ada)_
+4. **Masukkan Pengukuran** di menu _Pengukuran Gizi_
+5. **Lihat Hasil & Grafik**
+6. **Cetak Laporan** jika dibutuhkan
 
 ---
 
