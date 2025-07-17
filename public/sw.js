@@ -1,31 +1,28 @@
-const CACHE_NAME = "offline-v1"; // Ganti versi jika ada perubahan
+const CACHE_NAME = "offline-v1";
 const filesToCache = [
     "/offline.html",
+    "/404.html", // pastikan file ini ada dan di-cache
     "/assets/static/images/logo/sipegi-favicon.svg",
     "/assets/compiled/css/app.css",
     "/assets/compiled/css/error.css",
     "/assets/compiled/png/error-nointernet.png",
 ];
 
-// Preload cache saat install
-const preLoad = function () {
-    return caches.open(CACHE_NAME).then(function (cache) {
-        return cache.addAll(filesToCache);
-    });
-};
-
 self.addEventListener("install", function (event) {
-    event.waitUntil(preLoad());
+    event.waitUntil(
+        caches.open(CACHE_NAME).then(function (cache) {
+            return cache.addAll(filesToCache);
+        })
+    );
 });
 
-// Menghapus cache lama saat update
 self.addEventListener("activate", function (event) {
     const cacheWhitelist = [CACHE_NAME];
     event.waitUntil(
         caches.keys().then(function (cacheNames) {
             return Promise.all(
                 cacheNames.map(function (cacheName) {
-                    if (cacheWhitelist.indexOf(cacheName) === -1) {
+                    if (!cacheWhitelist.includes(cacheName)) {
                         return caches.delete(cacheName);
                     }
                 })
@@ -34,51 +31,35 @@ self.addEventListener("activate", function (event) {
     );
 });
 
-// Memeriksa respons dari jaringan
-const checkResponse = function (request) {
-    return new Promise(function (fulfill, reject) {
-        fetch(request).then(function (response) {
-            if (response.status !== 404) {
-                fulfill(response);
-            } else {
-                reject();
-            }
-        }, reject);
-    });
-};
-
-// Menambahkan ke cache
-const addToCache = function (request) {
-    return caches.open(CACHE_NAME).then(function (cache) {
-        return fetch(request).then(function (response) {
-            return cache.put(request, response.clone());
-        });
-    });
-};
-
-// Mengembalikan dari cache
-const returnFromCache = function (request) {
-    return caches.open(CACHE_NAME).then(function (cache) {
-        return cache.match(request).then(function (matching) {
-            if (!matching || matching.status === 404) {
-                return cache.match("offline.html");
-            } else {
-                return matching;
-            }
-        });
-    });
-};
-
-// Menangani permintaan fetch
+// Tangani fetch
 self.addEventListener("fetch", function (event) {
     event.respondWith(
-        checkResponse(event.request).catch(function () {
-            return returnFromCache(event.request);
-        })
+        fetch(event.request)
+            .then(function (response) {
+                // Kalau 404, arahkan ke 404.html
+                if (response.status === 404) {
+                    return caches.match("/404.html");
+                }
+                return response;
+            })
+            .catch(function () {
+                // Kalau offline, arahkan ke offline.html
+                return caches.match("/offline.html");
+            })
     );
 
-    // Hanya cache permintaan yang bukan dari http
-    if (!event.request.url.startsWith("http")) {
-        event.waitUntil(addToCache(event.request));
+    // Simpan ke cache jika permintaan valid
+    if (event.request.url.startsWith("http")) {
+        event.waitUntil(
+            caches.open(CACHE_NAME).then(function (cache) {
+                return fetch(event.request)
+                    .then((response) => {
+                        if (response && response.status === 200) {
+                            return cache.put(event.request, response.clone());
+                        }
+                    })
+                    .catch(() => {});
+            })
+        );
     }
 });
