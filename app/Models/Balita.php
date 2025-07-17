@@ -27,6 +27,16 @@ class Balita extends Model
         return $this->belongsTo(Posyandu::class);
     }
 
+    public function scopeAktif($query)
+    {
+        return $query->where('is_active', true);
+    }
+
+    public function scopeNonaktif($query)
+    {
+        return $query->where('is_active', false);
+    }
+
     protected $appends = ['umur_hari', 'umur_bulan', 'umur_display', 'tgl_lahir_display', 'gender_display'];
 
     public function getUmurHariAttribute()
@@ -102,6 +112,11 @@ class Balita extends Model
     public function getTglLahirAngkaAttribute()
     {
         return Carbon::parse($this->tgl_lahir)->format('d-m-Y');
+    }
+
+    public function getTglNonaktifAngkaAttribute()
+    {
+        return Carbon::parse($this->tgl_nonaktif)->format('d-m-Y');
     }
 
     // Mengembalikan gender dalam format yang diinginkan

@@ -207,21 +207,21 @@
                                                         aria-labelledby="dropdownMenuButtonIcon"
                                                         style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(0px, 40px, 0px);"
                                                         data-popper-placement="bottom-start">
-                                                        @if (!$balitaUkur->is_nonaktif)
+                                                        @if ($balitaUkur->balita->is_active)
                                                             <a class="dropdown-item ps-3"
                                                                 href="{{ route('balitaukur.detail', ['id' => $balitaUkur->balita_id]) }}"><i
                                                                     class="fa-regular fa-list-check me-1"></i>
                                                                 Riwayat Pengukuran</a>
                                                         @else
                                                             <a class="dropdown-item ps-3"
-                                                                href="{{ route('balitanonaktif.detail', ['id' => $balitaUkur->balita_nonaktif_id]) }}"><i
+                                                                href="{{ route('balitanonaktif.detail', ['id' => $balitaUkur->balita_id]) }}"><i
                                                                     class="fa-regular fa-list-check me-1"></i>
                                                                 Riwayat Pengukuran</a>
                                                         @endif
 
 
 
-                                                        @if (!$balitaUkur->is_nonaktif)
+                                                        @if ($balitaUkur->balita->is_active)
                                                             @if (in_array(Auth::user()->role, ['super_admin', 'kader_posyandu']))
                                                                 <a class="dropdown-item ps-3"
                                                                     href="{{ route('balitaukur.edit', ['id' => $balitaUkur->id]) }}"><i

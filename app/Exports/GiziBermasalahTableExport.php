@@ -449,6 +449,9 @@ class GiziBermasalahTableExport implements FromCollection, WithHeadings, WithSty
         }
 
         $totalDiukur = (clone $query)->count(); // Total balita terukur
+        $totalDiukur -= 1;
+
+
 
         if ($this->statusMasalah == "STUNTING") {
             $balitaUkurs = $query->where('zscore_tb_u', '<', -2)->get();
@@ -471,5 +474,9 @@ class GiziBermasalahTableExport implements FromCollection, WithHeadings, WithSty
         $this->totalMasalah = $totalMasalah;
         $this->totalDiukur = $totalDiukur;
         $this->prevalensi = $totalDiukur > 0 ? round(($totalMasalah / $totalDiukur) * 100, 2) : 0;
+
+        Debugbar::info([
+            'total pengukuran' => $totalDiukur,
+        ]);
     }
 }

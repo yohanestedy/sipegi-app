@@ -3,6 +3,8 @@
 use App\Models\Dusun;
 use App\Models\Posyandu;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Route;
 use App\Exports\BalitaUkurTableExport;
@@ -28,6 +30,89 @@ use App\Http\Controllers\GiziBermasalahController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::get('/migrasi-nonaktif', function () {
+    try {
+        DB::beginTransaction(); // Mulai transaksi database
+
+        $nonaktifBalitas = DB::table('balita_nonaktif')->get();
+        $jumlahDipindah = 0;
+
+        foreach ($nonaktifBalitas as $balita) {
+            // Cek apakah data sudah ada di tabel balita berdasarkan NIK
+            $existing = DB::table('balita')->where('id', $balita->id)->first();
+
+            if (!$existing) {
+                DB::table('balita')->insert([
+                    'is_active'     => false,
+                    'id' => $balita->id,
+                    'name' => $balita->name,
+                    'nik' => $balita->nik,
+                    'tgl_lahir' => $balita->tgl_lahir,
+                    'gender' => $balita->gender,
+                    'bpjs' => $balita->bpjs,
+                    'orangtua_id' => $balita->orangtua_id,
+                    'posyandu_id' => $balita->posyandu_id,
+                    'family_order' => $balita->family_order,
+                    'bb_lahir' => $balita->bb_lahir,
+                    'tb_lahir' => $balita->tb_lahir,
+                    'status' => $balita->status,
+                    'tgl_aktif' => \Carbon\Carbon::parse($balita->created_at)->toDateString(),
+                    'tgl_nonaktif' => $balita->tgl_nonaktif,
+                    'created_at' => $balita->created_at,
+                    'updated_at' => $balita->updated_at,
+                    'created_by' => $balita->created_by,
+                    'updated_by' => $balita->updated_by,
+                    'kode_unik' => 'B' . str_pad($balita->id, 4, '0', STR_PAD_LEFT),
+                ]);
+                $jumlahDipindah++;
+
+                $balitaUkurNonaktifRecords = DB::table('balita_ukur_nonaktif')
+                    ->where('balita_nonaktif_id', $balita->id)
+                    ->get();
+
+                foreach ($balitaUkurNonaktifRecords as $balitaUkur) {
+                    DB::table('balita_ukur')->insert([
+                        "id" => $balitaUkur->id,
+                        "balita_id" => $balitaUkur->balita_nonaktif_id,
+                        "tgl_ukur" => $balitaUkur->tgl_ukur,
+                        "umur_ukur" => $balitaUkur->umur_ukur,
+                        "bb" => $balitaUkur->bb,
+                        "tb" => $balitaUkur->tb,
+                        "lk" => $balitaUkur->lk,
+                        "cara_ukur" => $balitaUkur->cara_ukur,
+                        "status_bb_u" => $balitaUkur->status_bb_u,
+                        "zscore_bb_u" => $balitaUkur->zscore_bb_u,
+                        "status_tb_u" => $balitaUkur->status_tb_u,
+                        "zscore_tb_u" => $balitaUkur->zscore_tb_u,
+                        "status_bb_tb" => $balitaUkur->status_bb_tb,
+                        "zscore_bb_tb" => $balitaUkur->zscore_bb_tb,
+                        "status_imt_u" => $balitaUkur->status_imt_u,
+                        "zscore_imt_u" => $balitaUkur->zscore_imt_u,
+                        "status_lk_u" => $balitaUkur->status_lk_u,
+                        "zscore_lk_u" => $balitaUkur->zscore_lk_u,
+                        "created_by" => $balitaUkur->created_by,
+                        "updated_by" => $balitaUkur->updated_by,
+                        "created_at" => $balitaUkur->created_at,
+                        "updated_at" => $balitaUkur->updated_at,
+                    ]);
+                }
+            }
+        }
+
+        DB::commit(); // Simpan semua perubahan
+
+        return "✅ Migrasi selesai. Total data dipindahkan: $jumlahDipindah";
+    } catch (\Exception $e) {
+        DB::rollBack(); // Batalkan semua perubahan jika terjadi error
+        Log::error("Gagal migrasi balita_nonaktif: " . $e->getMessage());
+
+        return response()->json([
+            'status' => 'error',
+            'message' => '❌ Terjadi kesalahan saat migrasi: ' . $e->getMessage()
+        ], 500);
+    }
+});
 
 
 

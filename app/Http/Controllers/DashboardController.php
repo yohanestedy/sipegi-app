@@ -114,8 +114,8 @@ class DashboardController extends Controller
         $endOfMonth = $now->copy()->endOfMonth();
 
         // Inisialisasi query berdasarkan akses user
-        $balitaQuery = Balita::query();
-        $balitaNonaktifQuery = BalitaNonaktif::query();
+        $balitaQuery = Balita::aktif()->get();
+        $balitaNonaktifQuery = Balita::nonaktif()->get();
         $balitaUkurQuery = BalitaUkur::query();
         $orangtuaQuery = Orangtua::query();
 
@@ -180,11 +180,11 @@ class DashboardController extends Controller
         });
 
         // Filter berdasarkan kategori z-score
-        $totalStunting = (clone $latestMeasurements)->where('zscore_tb_u', '<', -2)->count();
-        $totalBGM = (clone $latestMeasurements)->where('zscore_bb_u', '<', -2)->count();
+        $totalStunting = (clone $latestMeasurements)->whereHas('balita', fn($q) => $q->where('is_active', true))->where('zscore_tb_u', '<', -2)->count();
+        $totalBGM = (clone $latestMeasurements)->whereHas('balita', fn($q) => $q->where('is_active', true))->where('zscore_bb_u', '<', -2)->count();
 
         // Hitung total 2T
-        $total2T = $latestMeasurements->get()->filter(function ($balitaUkur) {
+        $total2T = $latestMeasurements->whereHas('balita', fn($q) => $q->where('is_active', true))->get()->filter(function ($balitaUkur) {
             $balitaUkur->status_bb_n = $this->statusBBNaik($balitaUkur->balita_id, $balitaUkur->tgl_ukur, $balitaUkur->bb);
             return $balitaUkur->status_bb_n === '2T';
         })->count();

@@ -16,12 +16,12 @@ class Kernel extends ConsoleKernel
 
         // PINDAHKAN BALITA LULUS
         // $schedule->call(function () {
-        //     app()->call('App\Http\Controllers\BalitaController@pindahkanBalitaLulus');
+        //     app()->call('App\Http\Controllers\BalitaNonaktifController@pindahkanBalitaLulus');
         // })->everyMinute();
 
         // Menjalankan pindahkanBalitaLulus setiap hari pukul 00:00 tengah malam
         $schedule->call(function () {
-            app()->call('App\Http\Controllers\BalitaController@pindahkanBalitaLulus');
+            app()->call('App\Http\Controllers\BalitaNonaktifController@pindahkanBalitaLulus');
         })->dailyAt('00:00');
     }
 

@@ -17,7 +17,7 @@ class BalitaNonaktifController extends Controller
     public function balitaLulus()
     {
         $user = auth()->user();
-        $query = BalitaNonaktif::with(['posyandu', 'orangtua.dusun', 'orangtua.rt']);
+        $query = Balita::nonaktif()->with(['posyandu', 'orangtua.dusun', 'orangtua.rt']);
         if ($user->posyandu_id !== null) {
             $query->where('posyandu_id', $user->posyandu_id);
         }
@@ -29,12 +29,32 @@ class BalitaNonaktifController extends Controller
         return view('pages.main.balita-nonaktif.lulus', compact('balitas', 'posyandus'));
     }
 
+    // PINDAHKAN BALITA YANG BERUMUR 5 TAHUN KE ATAS/UMUR 1856 HARI KE ATAS
+    public function pindahkanBalitaLulus()
+    {
+        // Ambil data balita yang sudah berumur lebih dari 1856 hari
+        $balitas = Balita::aktif()->whereRaw('DATEDIFF(CURDATE(), tgl_lahir) > 1825')->get();
+
+        foreach ($balitas as $balita) {
+            // Pindahkan data ke tabel balita_lulus
+            Balita::find($balita->id)->update([
+                'is_active' => false,
+                'status' => "Lulus",
+                'tgl_nonaktif' => Carbon::now()->format('Y-m-d'),
+                'updated_by' => Auth::id(),
+                'updated_at' => Carbon::now(),
+            ]);
+        }
+
+        return response()->json(['message' => 'Data balita yang lulus berhasil dipindahkan!']);
+    }
+
     // VIEW BALITA PINDAH KELUAR
     public function indexPindahKeluar()
     {
         $user = auth()->user();
-        $query = Balita::with('posyandu'); // Untuk Formulir Balita Pindah Keluar
-        $queryNonaktif = BalitaNonaktif::with(['posyandu', 'orangtua.dusun', 'orangtua.rt']);
+        $query = Balita::aktif()->with('posyandu'); // Untuk Formulir Balita Pindah Keluar
+        $queryNonaktif = Balita::nonaktif()->with(['posyandu', 'orangtua.dusun', 'orangtua.rt']);
 
         if ($user->posyandu_id !== null) {
             $query->where('posyandu_id', $user->posyandu_id);
@@ -63,61 +83,15 @@ class BalitaNonaktifController extends Controller
             'balita_id.required' => 'Anda harus memilih balita.',
         ]);
 
-
-        $balita = Balita::find($request->balita_id);
         // Pindahkan data ke tabel balita_nonaktif
-        BalitaNonaktif::create([
-            'id' => $balita->id,
-            'name' => $balita->name,
-            'nik' => $balita->nik,
-            'tgl_lahir' => $balita->tgl_lahir,
-            'gender' => $balita->gender,
-            'bpjs' => $balita->bpjs,
-            'orangtua_id' => $balita->orangtua_id,
-            'posyandu_id' => $balita->posyandu_id,
-            'family_order' => $balita->family_order,
-            'bb_lahir' => $balita->bb_lahir,
-            'tb_lahir' => $balita->tb_lahir,
+        Balita::find($request->balita_id)->update([
+            'is_active' => false,
             'status' => "Pindah Keluar",
             'tgl_nonaktif' => Carbon::now()->format('Y-m-d'),
-            'created_by' => Auth::id(),
+            'updated_by' => Auth::id(),
+            'updated_at' => Carbon::now(),
         ]);
 
-        $balitaUkurRecords = BalitaUkur::where('balita_id', $balita->id)->get();
-
-
-        // Update setiap data balita_ukur yang terkait
-        foreach ($balitaUkurRecords as $balitaUkur) {
-
-
-            // $balitaUkur->update(["balita_id" => null, "balita_lulus_id" => $balita->id]);
-            BalitaUkurNonaktif::create([
-                "id" => $balitaUkur->id,
-                "balita_nonaktif_id" => $balitaUkur->balita_id,
-                "tgl_ukur" => $balitaUkur->tgl_ukur,
-                "umur_ukur" => $balitaUkur->umur_ukur,
-                "bb" => $balitaUkur->bb,
-                "tb" => $balitaUkur->tb,
-                "cara_ukur" => $balitaUkur->cara_ukur,
-                "status_bb_u" => $balitaUkur->status_bb_u,
-                "zscore_bb_u" => $balitaUkur->zscore_bb_u,
-                "status_tb_u" => $balitaUkur->status_tb_u,
-                "zscore_tb_u" => $balitaUkur->zscore_tb_u,
-                "status_bb_tb" => $balitaUkur->status_bb_tb,
-                "zscore_bb_tb" => $balitaUkur->zscore_bb_tb,
-                "status_imt_u" => $balitaUkur->status_imt_u,
-                "zscore_imt_u" => $balitaUkur->zscore_imt_u,
-                "status_lk_u" => $balitaUkur->status_lk_u,
-                "zscore_lk_u" => $balitaUkur->zscore_lk_u,
-                "created_by" => $balitaUkur->created_by,
-                "updated_by" => $balitaUkur->updated_by,
-                "created_at" => $balitaUkur->created_at,
-                "updated_at" => $balitaUkur->updated_at,
-
-            ]);
-        }
-
-        $balita->delete();
 
         return redirect()->route('balitanonaktif.index-pindahkeluar')->with('success', 'Balita berhasil dinonaktifkan(Pindah Keluar).');
     }
@@ -126,8 +100,8 @@ class BalitaNonaktifController extends Controller
     public function indexMeninggal()
     {
         $user = auth()->user();
-        $query = Balita::with('posyandu'); // Untuk Formulir Balita Meninggal
-        $queryNonaktif = BalitaNonaktif::with(['posyandu', 'orangtua.dusun', 'orangtua.rt']);
+        $query = Balita::aktif()->with('posyandu'); // Untuk Formulir Balita Meninggal
+        $queryNonaktif = Balita::nonaktif()->with(['posyandu', 'orangtua.dusun', 'orangtua.rt']);
 
         if ($user->posyandu_id !== null) {
             $query->where('posyandu_id', $user->posyandu_id);
@@ -155,61 +129,16 @@ class BalitaNonaktifController extends Controller
             'balita_id.required' => 'Anda harus memilih balita.',
         ]);
 
-
-        $balita = Balita::find($request->balita_id);
         // Pindahkan data ke tabel balita_nonaktif
-        BalitaNonaktif::create([
-            'id' => $balita->id,
-            'name' => $balita->name,
-            'nik' => $balita->nik,
-            'tgl_lahir' => $balita->tgl_lahir,
-            'gender' => $balita->gender,
-            'bpjs' => $balita->bpjs,
-            'orangtua_id' => $balita->orangtua_id,
-            'posyandu_id' => $balita->posyandu_id,
-            'family_order' => $balita->family_order,
-            'bb_lahir' => $balita->bb_lahir,
-            'tb_lahir' => $balita->tb_lahir,
+        Balita::find($request->balita_id)->update([
+            'is_active' => false,
             'status' => "Meninggal",
             'tgl_nonaktif' => Carbon::now()->format('Y-m-d'),
-            'created_by' => Auth::id(),
+            'updated_by' => Auth::id(),
+            'updated_at' => Carbon::now(),
         ]);
 
-        $balitaUkurRecords = BalitaUkur::where('balita_id', $balita->id)->get();
 
-
-        // Update setiap data balita_ukur yang terkait
-        foreach ($balitaUkurRecords as $balitaUkur) {
-
-
-            // $balitaUkur->update(["balita_id" => null, "balita_lulus_id" => $balita->id]);
-            BalitaUkurNonaktif::create([
-                "id" => $balitaUkur->id,
-                "balita_nonaktif_id" => $balitaUkur->balita_id,
-                "tgl_ukur" => $balitaUkur->tgl_ukur,
-                "umur_ukur" => $balitaUkur->umur_ukur,
-                "bb" => $balitaUkur->bb,
-                "tb" => $balitaUkur->tb,
-                "cara_ukur" => $balitaUkur->cara_ukur,
-                "status_bb_u" => $balitaUkur->status_bb_u,
-                "zscore_bb_u" => $balitaUkur->zscore_bb_u,
-                "status_tb_u" => $balitaUkur->status_tb_u,
-                "zscore_tb_u" => $balitaUkur->zscore_tb_u,
-                "status_bb_tb" => $balitaUkur->status_bb_tb,
-                "zscore_bb_tb" => $balitaUkur->zscore_bb_tb,
-                "status_imt_u" => $balitaUkur->status_imt_u,
-                "zscore_imt_u" => $balitaUkur->zscore_imt_u,
-                "status_lk_u" => $balitaUkur->status_lk_u,
-                "zscore_lk_u" => $balitaUkur->zscore_lk_u,
-                "created_by" => $balitaUkur->created_by,
-                "updated_by" => $balitaUkur->updated_by,
-                "created_at" => $balitaUkur->created_at,
-                "updated_at" => $balitaUkur->updated_at,
-
-            ]);
-        }
-
-        $balita->delete();
 
         return redirect()->route('balitanonaktif.index-meninggal')->with('success', 'Balita berhasil dinonaktifkan(Meninggal).');
     }
@@ -222,8 +151,8 @@ class BalitaNonaktifController extends Controller
         $user = auth()->user();
         // Mengecek apakah balita ada atau tidak
 
-        $query = BalitaNonaktif::with('posyandu');
-        $balitaUkurs = BalitaUkurNonaktif::where('balita_nonaktif_id', $id)->orderBy('tgl_ukur', 'desc')->get();
+        $query = Balita::nonaktif()->with('posyandu');
+        $balitaUkurs = BalitaUkur::where('balita_id', $id)->orderBy('tgl_ukur', 'desc')->get();
 
 
         if ($user->posyandu_id !== null) {

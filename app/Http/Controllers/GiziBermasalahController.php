@@ -37,7 +37,9 @@ class GiziBermasalahController extends Controller
         $posyandus = Posyandu::all();
 
         // Ambil data balita ukur dengan relasi
-        $balitaUkurs = $query->with('balita.posyandu')->where('zscore_tb_u', '<', -2)->get();
+        $balitaUkurs = $query->with('balita.posyandu')
+            ->whereHas('balita', fn($q) => $q->where('is_active', true))
+            ->where('zscore_tb_u', '<', -2)->get();
 
 
         // Tambahkan status_bb_n ke setiap record BalitaUkur
@@ -75,7 +77,9 @@ class GiziBermasalahController extends Controller
         $posyandus = Posyandu::all();
 
         // Ambil data balita ukur dengan relasi
-        $balitaUkurs = $query->with('balita.posyandu')->where('zscore_bb_u', '<', -2)->get();
+        $balitaUkurs = $query->with('balita.posyandu')
+            ->whereHas('balita', fn($q) => $q->where('is_active', true))
+            ->where('zscore_bb_u', '<', -2)->get();
 
 
         // Tambahkan status_bb_n ke setiap record BalitaUkur
@@ -112,7 +116,7 @@ class GiziBermasalahController extends Controller
         $posyandus = Posyandu::all();
 
         // Ambil data balita ukur dengan relasi
-        $balitaUkur = $query->with('balita.posyandu')->get();
+        $balitaUkur = $query->with('balita.posyandu')->whereHas('balita', fn($q) => $q->where('is_active', true))->get();
 
 
 

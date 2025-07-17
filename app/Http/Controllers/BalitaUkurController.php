@@ -21,60 +21,60 @@ use App\Models\StandarPertumbuhanAnakExpanded;
 
 class BalitaUkurController extends Controller
 {
+    // public function index()
+    // {
+    //     $user = auth()->user();
+    //     $userPosyanduId = $user->posyandu_id;
+
+    //     // Ambil pengukuran balita aktif
+    //     $aktifQuery = BalitaUkur::with('balita.posyandu')
+    //         ->whereNot('umur_ukur', '0 Bulan');
+
+    //     if ($userPosyanduId !== null) {
+    //         $aktifQuery->whereHas('balita', function ($q) use ($userPosyanduId) {
+    //             $q->where('posyandu_id', $userPosyanduId);
+    //         });
+    //     }
+
+    //     $balitaUkursAktif = $aktifQuery->get();
+
+    //     // Ambil pengukuran balita nonaktif
+    //     $nonaktifQuery = BalitaUkurNonaktif::with('balitaNonaktif.posyandu')
+    //         ->whereNot('umur_ukur', '0 Bulan');
+
+    //     if ($userPosyanduId !== null) {
+    //         $nonaktifQuery->whereHas('balitaNonaktif', function ($q) use ($userPosyanduId) {
+    //             $q->where('posyandu_id', $userPosyanduId);
+    //         });
+    //     }
+
+    //     $balitaUkursNonaktif = $nonaktifQuery->get();
+
+    //     // Tambahkan flag untuk menandai mana yang nonaktif (bisa dipakai untuk logic read-only di view)
+    //     $balitaUkursAktif->each(function ($item) {
+    //         $item->is_nonaktif = false;
+    //         $item->status_bb_n = $this->statusBBNaik($item->balita_id, $item->tgl_ukur, $item->bb);
+    //     });
+
+    //     $balitaUkursNonaktif->each(function ($item) {
+    //         $item->is_nonaktif = true;
+    //         $item->status_bb_n = $this->statusBBNaikNonaktif($item->balita_nonaktif_id, $item->tgl_ukur, $item->bb);
+    //     });
+
+    //     // Gabungkan data
+    //     $balitaUkursGabungan = $balitaUkursAktif->concat($balitaUkursNonaktif)->sortByDesc('tgl_ukur');
+
+    //     $posyandus = Posyandu::all();
+    //     // return $balitaUkursGabungan;
+
+    //     return view('pages.main.balita-ukur.index', [
+    //         'balitaUkurs' => $balitaUkursGabungan,
+    //         'posyandus' => $posyandus,
+    //     ]);
+    // }
+
+
     public function index()
-    {
-        $user = auth()->user();
-        $userPosyanduId = $user->posyandu_id;
-
-        // Ambil pengukuran balita aktif
-        $aktifQuery = BalitaUkur::with('balita.posyandu')
-            ->whereNot('umur_ukur', '0 Bulan');
-
-        if ($userPosyanduId !== null) {
-            $aktifQuery->whereHas('balita', function ($q) use ($userPosyanduId) {
-                $q->where('posyandu_id', $userPosyanduId);
-            });
-        }
-
-        $balitaUkursAktif = $aktifQuery->get();
-
-        // Ambil pengukuran balita nonaktif
-        $nonaktifQuery = BalitaUkurNonaktif::with('balitaNonaktif.posyandu')
-            ->whereNot('umur_ukur', '0 Bulan');
-
-        if ($userPosyanduId !== null) {
-            $nonaktifQuery->whereHas('balitaNonaktif', function ($q) use ($userPosyanduId) {
-                $q->where('posyandu_id', $userPosyanduId);
-            });
-        }
-
-        $balitaUkursNonaktif = $nonaktifQuery->get();
-
-        // Tambahkan flag untuk menandai mana yang nonaktif (bisa dipakai untuk logic read-only di view)
-        $balitaUkursAktif->each(function ($item) {
-            $item->is_nonaktif = false;
-            $item->status_bb_n = $this->statusBBNaik($item->balita_id, $item->tgl_ukur, $item->bb);
-        });
-
-        $balitaUkursNonaktif->each(function ($item) {
-            $item->is_nonaktif = true;
-            $item->status_bb_n = $this->statusBBNaikNonaktif($item->balita_nonaktif_id, $item->tgl_ukur, $item->bb);
-        });
-
-        // Gabungkan data
-        $balitaUkursGabungan = $balitaUkursAktif->concat($balitaUkursNonaktif)->sortByDesc('tgl_ukur');
-
-        $posyandus = Posyandu::all();
-        // return $balitaUkursGabungan;
-
-        return view('pages.main.balita-ukur.index', [
-            'balitaUkurs' => $balitaUkursGabungan,
-            'posyandus' => $posyandus,
-        ]);
-    }
-
-
-    public function index1()
     {
         $user = auth()->user();
         $userPosyanduId = auth()->user()->posyandu_id; // Posyandu ID user
@@ -213,7 +213,7 @@ class BalitaUkurController extends Controller
     public function add($id = null)
     {
         $user = auth()->user();
-        $query = Balita::with('posyandu');
+        $query = Balita::aktif()->with('posyandu');
 
         if ($user->posyandu_id !== null) {
             $query->where('posyandu_id', $user->posyandu_id);
@@ -235,7 +235,7 @@ class BalitaUkurController extends Controller
     public function edit($id)
     {
         $user = auth()->user();
-        $queryBalita = Balita::with('posyandu');
+        $queryBalita = Balita::aktif()->with('posyandu');
         $queryUkur = BalitaUkur::query();
 
         if ($user->posyandu_id !== null) {
