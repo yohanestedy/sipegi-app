@@ -113,13 +113,20 @@ class DashboardController extends Controller
         $startOfMonth = $now->copy()->startOfMonth();
         $endOfMonth = $now->copy()->endOfMonth();
 
+
         // Inisialisasi query berdasarkan akses user
-        $balitaQuery = Balita::aktif()->get();
-        $balitaNonaktifQuery = Balita::nonaktif()->get();
+        $balitaQuery = Balita::query();
+        $balitaQuery->aktif();
+
+        $balitaNonaktifQuery = Balita::query();
+        $balitaNonaktifQuery->nonaktif();
+
         $balitaUkurQuery = BalitaUkur::query();
         $orangtuaQuery = Orangtua::query();
 
+
         if ($userPosyanduId !== null) {
+
 
             $balitaQuery->where('posyandu_id', $userPosyanduId);
             $balitaNonaktifQuery->where('posyandu_id', $userPosyanduId);
@@ -133,6 +140,10 @@ class DashboardController extends Controller
 
 
         $totalBalitas = $balitaQuery->count();
+
+        // Debugbar::info($totalBalitas);
+
+
         $totalBalitaNonaktif = $balitaNonaktifQuery->count();
         $totalLaki = (clone $balitaQuery)->where('gender', 'L')->count();
         $totalPerempuan = (clone $balitaQuery)->where('gender', 'P')->count();
