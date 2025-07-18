@@ -32,7 +32,7 @@ class BalitaTableExport implements FromCollection, WithHeadings, WithStyles, Wit
 
 
 
-        $balitaQuery = Balita::with(['orangtua.dusun', 'orangtua.rt'])->where('posyandu_id', $this->posyandu_id)->orderBy('name', 'asc')->get();
+        $balitaQuery = Balita::aktif()->with(['orangtua.dusun', 'orangtua.rt'])->where('posyandu_id', $this->posyandu_id)->orderBy('name', 'asc')->get();
 
         // // Menambahkan nomor urut pada setiap item
         // $balitaQuery->each(function ($item, $index) {
