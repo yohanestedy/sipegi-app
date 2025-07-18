@@ -68,21 +68,20 @@
             <div class="card">
 
 
-                <div class="pb-1 card-header d-flex justify-content-between align-items-center">
-                    <h5 class="card-title mb-0">
+                <div class="pb-3 card-header d-flex justify-content-between align-items-center">
+                    {{-- <h5 class="card-title mb-0">
                         Daftar Balita Diukur
-                    </h5>
+                    </h5> --}}
 
                     @if (in_array(Auth::user()->role, ['super_admin', 'kader_posyandu']))
-                        <a href="{{ route('balitaukur.add') }}" class="btn btn-primary rounded-pill">
+                        <a href="{{ route('balitaukur.add') }}" class="btn btn-primary">
                             <i class="fa-solid fa-plus"></i> Tambah Pengukuran
                         </a>
                     @endif
 
-
-
-
-
+                    <h2 class="mb-0 d-flex align-items-center">
+                        <span class="badge bg-light-primary" id="jumlahDataPengukuran"></span>
+                    </h2>
 
                 </div>
 
@@ -117,10 +116,10 @@
                                 <input id="filterBulanPengukuran" name="periode" type="text" class="form-control periode"
                                     placeholder="--Pilih Bulan dan Tahun--" />
                             </div>
-                            <div class="col-6 col-md-3 mt-2">
+                            {{-- <div class="col-6 col-md-3 mt-2">
                                 <div class="medium-text">Jumlah Pengukuran: <span id="jumlahDataPengukuran"></span>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
 
                         {{-- TABEL --}}

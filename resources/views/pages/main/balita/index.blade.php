@@ -29,12 +29,12 @@
 @endsection
 
 @section('mainContent')
-    <div class="page-heading">
+    <div class="page-heading medium-text">
         <div class="page-title">
             <div class="row">
                 <div class="col-12 col-md-6 order-md-1 order-last">
-                    <h3>Balita</h3>
-                    <p class="text-subtitle text-muted">Halaman daftar nama-nama balita aktif.</p>
+                    <h3>Daftar Balita</h3>
+                    <p class="text-subtitle text-muted">Menampilkan daftar balita yang masih aktif di posyandu.</p>
                 </div>
 
             </div>
@@ -44,12 +44,15 @@
 
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5 class="card-title mb-0">
+                    {{-- <h5 class="card-title mb-0">
                         Daftar Balita
-                    </h5>
+                    </h5> --}}
                     <a href="{{ route('balita.add') }}" class="btn btn-primary">
-                        <i class="fa-solid fa-plus"></i> Tambah
+                        <i class="fa-solid fa-plus"></i> Tambah Data
                     </a>
+                    <h2 class="mb-0 d-flex align-items-center">
+                        <span class="badge bg-light-primary" id="jumlahDataBalita"></span>
+                    </h2>
                 </div>
                 <div class="card-body">
 
@@ -72,9 +75,9 @@
                                     </select>
                                 </div>
                             @endif
-                            <div class="col-6 col-md-8">
+                            {{-- <div class="col-6 col-md-8">
                                 <div class="medium-text">Jumlah Balita: <span id="jumlahDataBalita"></span></div>
-                            </div>
+                            </div> --}}
                         </div>
 
 
