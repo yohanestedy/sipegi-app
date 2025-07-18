@@ -57,7 +57,18 @@ class GiziBermasalahTableExport implements FromCollection, WithHeadings, WithSty
         if (!$this->includePrevious) {
             $query->whereMonth('tgl_ukur', $month)
                 ->whereYear('tgl_ukur', $year);
-            $query->orderBy('tgl_ukur', 'desc');
+
+            // $query->orderBy('tgl_ukur', 'desc');
+
+            // Urutkan Data Berdasarkan Prioritas
+            if ($this->statusMasalah == "STUNTING") {
+                $query->orderBy('zscore_bb_u', 'asc');
+            } else if ($this->statusMasalah == "BGM") {
+                $query->orderBy('tgl_ukur', 'desc');
+            } else if ($this->statusMasalah == "GIZI KURANG") {
+                $query->orderBy('tgl_ukur', 'desc');
+            } else if ($this->statusMasalah == "2T") {
+            }
         } else {
 
             $query->whereIn('id', function ($subquery) use ($month, $year) {
@@ -68,6 +79,8 @@ class GiziBermasalahTableExport implements FromCollection, WithHeadings, WithSty
             });
             $query->orderBy('tgl_ukur', 'desc');
         }
+
+        $query->whereNot('umur_ukur', '0 Bulan');
 
 
         // Ambil pengukuran terbaru setiap balita
@@ -430,6 +443,7 @@ class GiziBermasalahTableExport implements FromCollection, WithHeadings, WithSty
 
         $query = BalitaUkur::query();
 
+
         if ($userPosyanduId !== null) {
             $query->whereHas('balita', function ($query) use ($userPosyanduId) {
                 $query->where('posyandu_id', $userPosyanduId);
@@ -438,7 +452,8 @@ class GiziBermasalahTableExport implements FromCollection, WithHeadings, WithSty
 
         if (!$this->includePrevious) {
             $query->whereMonth('tgl_ukur', $month)
-                ->whereYear('tgl_ukur', $year);
+                ->whereYear('tgl_ukur', $year)
+                ->whereNot('umur_ukur', '0 Bulan');
         } else {
             $query->whereIn('id', function ($subquery) use ($month, $year) {
                 $subquery->selectRaw('MAX(id)')
@@ -448,8 +463,10 @@ class GiziBermasalahTableExport implements FromCollection, WithHeadings, WithSty
             });
         }
 
-        $totalDiukur = (clone $query)->count(); // Total balita terukur
-        $totalDiukur -= 1;
+        $totalDiukur = (clone $query)->count();
+        // $totalDiukur = $queryTotalDiukur->count(); // Total balita terukur
+
+
 
 
 
