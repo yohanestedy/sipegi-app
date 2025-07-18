@@ -41,7 +41,7 @@ class BalitaNonaktifController extends Controller
                 'is_active' => false,
                 'status' => "Lulus",
                 'tgl_nonaktif' => Carbon::now()->format('Y-m-d'),
-                'updated_by' => Auth::id(),
+                'updated_by' => 1,
                 'updated_at' => Carbon::now(),
             ]);
         }
