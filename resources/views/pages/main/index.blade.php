@@ -551,14 +551,18 @@
                         method: 'POST',
                         data: $(this).serialize(), // ambil semua input form
                         success: function(response) {
-                            $('#loadingPrevalensi').addClass('d-none');
 
-                            // Tampilkan hasil
-                            $('#jumlahKasus').text(response.jumlah_kasus);
-                            $('#jumlahPengukuran').text(response.jumlah_pengukuran);
-                            $('#prevalensiPersen').text(response.prevalensi + '%');
+                            setTimeout(function() {
+                                $('#loadingPrevalensi').addClass('d-none');
 
-                            $('#hasilPrevalensi').removeClass('d-none');
+                                // Tampilkan hasil
+                                $('#jumlahKasus').text(response.jumlah_kasus);
+                                $('#jumlahPengukuran').text(response.jumlah_pengukuran);
+                                $('#prevalensiPersen').text(response.prevalensi + '%');
+
+                                $('#hasilPrevalensi').removeClass('d-none');
+
+                            }, 400);
                         },
                         error: function(xhr) {
                             $('#loadingPrevalensi').addClass('d-none');
