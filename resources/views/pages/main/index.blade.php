@@ -368,8 +368,6 @@
                                     <div class="stat-number">{{ $totalPengukuran }}</div>
                                 </div>
                             </a>
-
-
                             <div class="p-3 pt-0">
                                 <canvas id="pengukuranChart"></canvas>
                             </div>
@@ -395,19 +393,26 @@
                                     <div class="row g-3 align-items-end">
                                         <div class="col-md-4">
                                             <label for="jenisGizi" class="form-label">Jenis Gizi</label>
-                                            <select class="form-select" id="jenisGizi" name="jenisGizi" required>
+                                            <select class="form-select @error('jenisGizi') is-invalid @enderror"
+                                                id="jenisGizi" name="jenisGizi">
                                                 <option value="" disabled selected>Pilih Jenis Gizi</option>
                                                 <option value="bgm">BB Kurang/Sangat Kurang (BB/U)</option>
                                                 <option value="stunting">Stunting/Pendek (TB/U)</option>
                                                 <option value="gizi_buruk">Gizi Kurang/Buruk (BB/TB)</option>
                                                 <!-- Tambahkan opsi lainnya sesuai kebutuhan -->
                                             </select>
+                                            @error('jenisGizi')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                         <div class="col-md-4">
                                             <label for="dateRange" class="form-label">Rentang Tanggal</label>
                                             <input type="text" id="dateRange" name="dateRange"
-                                                class="form-control flatpickr-range" placeholder="Pilih rentang tanggal"
-                                                autocomplete="off" required>
+                                                class="form-control flatpickr-range @error('dateRange') is-invalid @enderror"
+                                                placeholder="Pilih rentang tanggal" autocomplete="off">
+                                            @error('dateRange')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                         <div class="col-md-4 d-flex gap-2">
                                             <button type="submit" class="btn btn-primary w-100">
@@ -530,6 +535,7 @@
 
         {{-- Cek Prevalensi --}}
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
         <script>
             $(document).ready(function() {
                 $('#formPrevalensi').on('submit', function(e) {
@@ -556,7 +562,7 @@
                         },
                         error: function(xhr) {
                             $('#loadingPrevalensi').addClass('d-none');
-                            alert('Terjadi kesalahan. Silakan cek input dan coba lagi.');
+                            alert('Terjadi kesalahan. Silakan cek form dan coba lagi.');
                         }
                     });
                 });
@@ -566,6 +572,7 @@
                 });
             });
         </script>
+
 
 
 
@@ -698,6 +705,7 @@
             altInput: true,
             altInputClass: 'form-control',
             altFormat: "j F Y",
+            minDate: "2024-09-01",
             maxDate: "today",
             disableMobile: "true",
 

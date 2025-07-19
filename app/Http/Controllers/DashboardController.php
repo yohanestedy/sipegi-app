@@ -226,6 +226,12 @@ class DashboardController extends Controller
 
     public function cekPrevalensi(Request $request)
     {
+
+        $request->validate([
+            'jenisGizi' => 'required',
+            'dateRange' => 'required',
+        ]);
+
         $user = auth()->user();
         $userPosyanduId = $user->posyandu_id; // Posyandu ID user
         [$startDate, $endDate] = explode(' - ', $request->dateRange);
