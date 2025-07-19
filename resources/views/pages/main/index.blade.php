@@ -359,11 +359,11 @@
 
                     <div class="col-xxl-12 col-md-12">
                         <div class="stat-card">
-                            <a href="{{ route('balitaukur.index') }}" class="stat-card-link text-decoration-none">
+                            <a href="{{ route('balitaukur.index') }}" class="stat-card text-decoration-none">
                                 <div class="card-icon-wrapper bg-gradient-success">
                                     <i class="fa-solid fa-weight-scale card-icon"></i>
                                 </div>
-                                <div class="card-content">
+                                <div class="ms-1 card-content">
                                     <div class="stat-title">Pengukuran Bulan Ini</div>
                                     <div class="stat-number">{{ $totalPengukuran }}</div>
                                 </div>
@@ -533,49 +533,7 @@
 
 
 
-        {{-- Cek Prevalensi --}}
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-        <script>
-            $(document).ready(function() {
-                $('#formPrevalensi').on('submit', function(e) {
-                    e.preventDefault();
-
-                    // Tampilkan loading, sembunyikan hasil
-                    $('#loadingPrevalensi').removeClass('d-none');
-                    $('#hasilPrevalensi').addClass('d-none');
-
-                    // Kirim data
-                    $.ajax({
-                        url: $(this).attr('action'),
-                        method: 'POST',
-                        data: $(this).serialize(), // ambil semua input form
-                        success: function(response) {
-
-                            setTimeout(function() {
-                                $('#loadingPrevalensi').addClass('d-none');
-
-                                // Tampilkan hasil
-                                $('#jumlahKasus').text(response.jumlah_kasus);
-                                $('#jumlahPengukuran').text(response.jumlah_pengukuran);
-                                $('#prevalensiPersen').text(response.prevalensi + '%');
-
-                                $('#hasilPrevalensi').removeClass('d-none');
-
-                            }, 400);
-                        },
-                        error: function(xhr) {
-                            $('#loadingPrevalensi').addClass('d-none');
-                            alert('Terjadi kesalahan. Silakan cek form dan coba lagi.');
-                        }
-                    });
-                });
-
-                $('#resetPrevalensi').on('click', function() {
-                    $('#hasilPrevalensi').addClass('d-none');
-                });
-            });
-        </script>
 
 
 
@@ -598,7 +556,55 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script> <!-- Tambahkan Plugin -->
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    {{-- Cek Prevalensi --}}
     <script>
+        $(document).ready(function() {
+            $('#formPrevalensi').on('submit', function(e) {
+                e.preventDefault();
+
+                // Tampilkan loading, sembunyikan hasil
+                $('#loadingPrevalensi').removeClass('d-none');
+                $('#hasilPrevalensi').addClass('d-none');
+
+                // Kirim data
+                $.ajax({
+                    url: $(this).attr('action'),
+                    method: 'POST',
+                    data: $(this).serialize(), // ambil semua input form
+                    success: function(response) {
+
+                        setTimeout(function() {
+                            $('#loadingPrevalensi').addClass('d-none');
+
+                            // Tampilkan hasil
+                            $('#jumlahKasus').text(response.jumlah_kasus);
+                            $('#jumlahPengukuran').text(response.jumlah_pengukuran);
+                            $('#prevalensiPersen').text(response.prevalensi + '%');
+
+                            $('#hasilPrevalensi').removeClass('d-none');
+
+                        }, 150);
+                    },
+                    error: function(xhr) {
+                        $('#loadingPrevalensi').addClass('d-none');
+                        alert('Terjadi kesalahan. Silakan cek form dan coba lagi.');
+                    }
+                });
+            });
+
+            $('#resetPrevalensi').on('click', function() {
+                $('#hasilPrevalensi').addClass('d-none');
+            });
+        });
+    </script>
+
+
+    <script>
+        // Chart Balita
         document.addEventListener("DOMContentLoaded", function() {
             var ctx = document.getElementById("genderChart").getContext("2d");
 
@@ -639,7 +645,7 @@
             });
         });
 
-
+        // Chart Pengukuran
         document.addEventListener("DOMContentLoaded", function() {
             var ctx = document.getElementById("pengukuranChart").getContext("2d");
 
@@ -700,6 +706,7 @@
             });
         });
     </script>
+
     <script>
         // CONFIG FLATPICKR
         flatpickr(".flatpickr-range", {
