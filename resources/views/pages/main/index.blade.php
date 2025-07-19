@@ -110,6 +110,9 @@
         }
     </style> --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" />
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
     <style>
         .flatpickr-range {
             background-color: #fff;
@@ -386,19 +389,23 @@
                     <div class="col-xxl-12 col-md-12">
                         <div class="card shadow-sm border-0 mb-1">
                             <div class="card-body">
-                                <h5 class="card-title mb-3">Cek Prevalensi Gizi Bermasalah</h5>
+                                <h5 class="card-title mb-3">Cek Prevalensi</h5>
 
                                 <form id="formPrevalensi" action="{{ route('cekprevalensi') }}" method="POST">
                                     @csrf
                                     <div class="row g-3 align-items-end">
                                         <div class="col-md-4">
-                                            <label for="jenisGizi" class="form-label">Jenis Gizi</label>
-                                            <select class="form-select @error('jenisGizi') is-invalid @enderror"
-                                                id="jenisGizi" name="jenisGizi">
-                                                <option value="" disabled selected>Pilih Jenis Gizi</option>
-                                                <option value="bgm">BB Kurang/Sangat Kurang (BB/U)</option>
-                                                <option value="stunting">Stunting/Pendek (TB/U)</option>
-                                                <option value="gizi_buruk">Gizi Kurang/Buruk (BB/TB)</option>
+                                            <label for="jenisGizi" class="form-label">Status Gizi</label>
+                                            <select class="form-select @error('jenisGizi') is-invalid @enderror select2"
+                                                id="jenisGizi" name="jenisGizi" data-placeholder="Pilih Status Gizi">
+                                                {{-- <option value="" disabled selected>Pilih Jenis Gizi</option> --}}
+                                                <option></option>
+                                                <option value="bgm" title="Berat Badan Kurang atau Sangat Kurang">BB/U -
+                                                    Underweight / BB Kurang</option>
+                                                <option value="stunting" title="Tinggi Badan Pendek atau Sangat Pendek">TB/U
+                                                    - Stunting / Pendek</option>
+                                                <option value="gizi_buruk" title="Gizi Kurang atau Buruk">BB/TB -
+                                                    Wasting / Gizi Kurang</option>
                                                 <!-- Tambahkan opsi lainnya sesuai kebutuhan -->
                                             </select>
                                             @error('jenisGizi')
@@ -409,7 +416,7 @@
                                             <label for="dateRange" class="form-label">Rentang Tanggal</label>
                                             <input type="text" id="dateRange" name="dateRange"
                                                 class="form-control flatpickr-range @error('dateRange') is-invalid @enderror"
-                                                placeholder="Pilih rentang tanggal" autocomplete="off">
+                                                placeholder="Pilih Rentang Tanggal" autocomplete="off">
                                             @error('dateRange')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
@@ -559,6 +566,7 @@
 
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.full.min.js"></script>
 
     {{-- Cek Prevalensi --}}
     <script>
@@ -597,8 +605,15 @@
             });
 
             $('#resetPrevalensi').on('click', function() {
+                $('.select2').val(null).trigger('change');
                 $('#hasilPrevalensi').addClass('d-none');
             });
+        });
+
+        $('.select2').select2({
+            theme: "bootstrap-5",
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
         });
     </script>
 
