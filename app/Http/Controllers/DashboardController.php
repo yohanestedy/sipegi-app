@@ -246,7 +246,7 @@ class DashboardController extends Controller
             $jumlahKasus = $query->where('zscore_tb_u', '<', -2)->count();
         } else if ($request->jenisGizi == "bgm") {
             $jumlahKasus = $query->where('zscore_bb_u', '<', -2)->count();
-        } else if ($request->jenisGizi == "gizi_kurang") {
+        } else if ($request->jenisGizi == "gizi_buruk") {
             $jumlahKasus = $query->where('zscore_bb_tb', '<', -2)->count();
         }
 
