@@ -137,6 +137,7 @@ Route::group(['middleware' => 'auth'], function () {
     // })->name('home');
 
     Route::get('/', [DashboardController::class, 'index'])->name('home');
+    Route::post('/cek-prevalensi', [DashboardController::class, 'cekPrevalensi'])->name('cekprevalensi');
 
     Route::group(['middleware' => 'super_admin',], function () {
         // USER

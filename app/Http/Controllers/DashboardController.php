@@ -224,6 +224,48 @@ class DashboardController extends Controller
         ));
     }
 
+    public function cekPrevalensi(Request $request)
+    {
+        $user = auth()->user();
+        $userPosyanduId = $user->posyandu_id; // Posyandu ID user
+        [$startDate, $endDate] = explode(' - ', $request->dateRange);
+
+        $query = BalitaUkur::query();
+        $query->whereBetween('tgl_ukur', [$startDate, $endDate])
+            ->whereNot('umur_ukur', '0 Bulan');;
+
+        if ($userPosyanduId !== null) {
+            $query->whereHas('balita', function ($query) use ($userPosyanduId) {
+                $query->where('posyandu_id', $userPosyanduId);
+            });
+        }
+
+        $jumlahPengukuran = (clone $query)->count();
+
+        if ($request->jenisGizi == "stunting") {
+            $jumlahKasus = $query->where('zscore_tb_u', '<', -2)->count();
+        } else if ($request->jenisGizi == "bgm") {
+            $jumlahKasus = $query->where('zscore_bb_u', '<', -2)->count();
+        } else if ($request->jenisGizi == "gizi_kurang") {
+            $jumlahKasus = $query->where('zscore_bb_tb', '<', -2)->count();
+        }
+
+        $prevalensi = round(($jumlahKasus / $jumlahPengukuran) * 100, 2);
+
+
+        return response()->json([
+            'status' => 'success',
+            'jenis_gizi' => $request->jenisGizi,
+            'periode' => [
+                'start' => $startDate,
+                'end' => $endDate,
+            ],
+            'jumlah_kasus' => $jumlahKasus,
+            'jumlah_pengukuran' => $jumlahPengukuran,
+            'prevalensi' => $prevalensi,
+        ]);
+    }
+
 
     public function statusBBNaik($balita_id, $tgl_ukur, $bb)
     {

@@ -109,7 +109,13 @@
             background: linear-gradient(45deg, #1cc88a, #13855c);
         }
     </style> --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <style>
+        .flatpickr-range {
+            background-color: #fff;
+            cursor: pointer;
+        }
+
         .stat-card {
             background-color: #fff;
             /* Warna putih */
@@ -349,6 +355,8 @@
                         </div>
                     </div>
 
+
+
                     <div class="col-xxl-12 col-md-12">
                         <div class="stat-card">
                             <a href="{{ route('balitaukur.index') }}" class="stat-card-link text-decoration-none">
@@ -375,6 +383,74 @@
                             </div>
                         </div> --}}
                     </div>
+
+                    {{-- Cek Prevalensi --}}
+                    <div class="col-xxl-12 col-md-12">
+                        <div class="card shadow-sm border-0 mb-1">
+                            <div class="card-body">
+                                <h5 class="card-title mb-3">Cek Prevalensi Gizi Bermasalah</h5>
+
+                                <form id="formPrevalensi" action="{{ route('cekprevalensi') }}" method="POST">
+                                    @csrf
+                                    <div class="row g-3 align-items-end">
+                                        <div class="col-md-4">
+                                            <label for="jenisGizi" class="form-label">Jenis Gizi</label>
+                                            <select class="form-select" id="jenisGizi" name="jenisGizi" required>
+                                                <option value="" disabled selected>Pilih Jenis Gizi</option>
+                                                <option value="bgm">BB Kurang/Sangat Kurang (BB/U)</option>
+                                                <option value="stunting">Stunting/Pendek (TB/U)</option>
+                                                <option value="gizi_buruk">Gizi Kurang/Buruk (BB/TB)</option>
+                                                <!-- Tambahkan opsi lainnya sesuai kebutuhan -->
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="dateRange" class="form-label">Rentang Tanggal</label>
+                                            <input type="text" id="dateRange" name="dateRange"
+                                                class="form-control flatpickr-range" placeholder="Pilih rentang tanggal"
+                                                autocomplete="off" required>
+                                        </div>
+                                        <div class="col-md-4 d-flex gap-2">
+                                            <button type="submit" class="btn btn-primary w-100">
+                                                <i class="fas fa-search me-1"></i> Cek
+                                            </button>
+                                            <button type="reset" class="btn btn-secondary w-100" id="resetPrevalensi">
+                                                <i class="fas fa-undo me-1"></i> Reset
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                                <hr class="my-4">
+
+                                <div id="hasilPrevalensi" class="d-none">
+                                    <h6 class="mb-3">Hasil Cek Prevalensi</h6>
+                                    <div class="row text-center">
+                                        <div class="col-md-4">
+                                            <div class="stat-number" id="jumlahKasus">0</div>
+                                            <div class="stat-title">Jumlah Kasus</div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="stat-number" id="jumlahPengukuran">0</div>
+                                            <div class="stat-title">Jumlah Pengukuran</div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="stat-number text-primary" id="prevalensiPersen">0%</div>
+                                            <div class="stat-title">Prevalensi</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="loadingPrevalensi" class="text-center d-none mt-4">
+                                    <div class="spinner-border text-primary" role="status">
+                                        <span class="visually-hidden">Memuat...</span>
+                                    </div>
+                                    <p class="mt-2 mb-0">Menghitung prevalensi...</p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
 
                     {{-- <div class="col-xxl-4 col-md-6">
                 <div class="stat-card">
@@ -452,6 +528,49 @@
 
 
 
+        {{-- Cek Prevalensi --}}
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('#formPrevalensi').on('submit', function(e) {
+                    e.preventDefault();
+
+                    // Tampilkan loading, sembunyikan hasil
+                    $('#loadingPrevalensi').removeClass('d-none');
+                    $('#hasilPrevalensi').addClass('d-none');
+
+                    // Kirim data
+                    $.ajax({
+                        url: $(this).attr('action'),
+                        method: 'POST',
+                        data: $(this).serialize(), // ambil semua input form
+                        success: function(response) {
+                            $('#loadingPrevalensi').addClass('d-none');
+
+                            // Tampilkan hasil
+                            $('#jumlahKasus').text(response.jumlah_kasus);
+                            $('#jumlahPengukuran').text(response.jumlah_pengukuran);
+                            $('#prevalensiPersen').text(response.prevalensi + '%');
+
+                            $('#hasilPrevalensi').removeClass('d-none');
+                        },
+                        error: function(xhr) {
+                            $('#loadingPrevalensi').addClass('d-none');
+                            alert('Terjadi kesalahan. Silakan cek input dan coba lagi.');
+                        }
+                    });
+                });
+
+                $('#resetPrevalensi').on('click', function() {
+                    $('#hasilPrevalensi').addClass('d-none');
+                });
+            });
+        </script>
+
+
+
+
+
         <br>
         <br>
 
@@ -461,6 +580,10 @@
 @section('jsLibraries')
     <script src="assets/extensions/apexcharts/apexcharts.min.js"></script>
     <script src="assets/static/js/pages/dashboard.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/plugins/monthSelect/index.js"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/id.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script> <!-- Tambahkan Plugin -->
@@ -564,6 +687,22 @@
                 },
                 plugins: [ChartDataLabels] // Aktifkan plugin
             });
+        });
+    </script>
+    <script>
+        // CONFIG FLATPICKR
+        flatpickr(".flatpickr-range", {
+
+            "locale": "id",
+            mode: "range",
+            altInput: true,
+            altInputClass: 'form-control',
+            altFormat: "j F Y",
+            maxDate: "today",
+            disableMobile: "true",
+
+
+
         });
     </script>
 @endsection
