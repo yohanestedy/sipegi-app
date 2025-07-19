@@ -248,6 +248,7 @@ class DashboardController extends Controller
 
         $jumlahPengukuran = (clone $query)->count();
 
+
         if ($request->jenisGizi == "stunting") {
             $jumlahKasus = $query->where('zscore_tb_u', '<', -2)->count();
         } else if ($request->jenisGizi == "bgm") {
@@ -256,7 +257,9 @@ class DashboardController extends Controller
             $jumlahKasus = $query->where('zscore_bb_tb', '<', -2)->count();
         }
 
-        $prevalensi = round(($jumlahKasus / $jumlahPengukuran) * 100, 2);
+
+
+        $prevalensi = $jumlahPengukuran > 0 ? round(($jumlahKasus / $jumlahPengukuran) * 100, 2) : 0;
 
 
         return response()->json([
