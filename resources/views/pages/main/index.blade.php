@@ -432,9 +432,10 @@
                                     </div>
                                 </form>
 
-                                <hr class="my-4">
+
 
                                 <div id="hasilPrevalensi" class="d-none">
+                                    <hr class="my-4">
                                     <h6 class="mb-3">Hasil Cek Prevalensi</h6>
                                     <div class="row text-center">
                                         <div class="col-md-4">

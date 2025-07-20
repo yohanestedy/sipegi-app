@@ -164,20 +164,26 @@
 
                 </div>
 
-                <div class="pb-1 card-header d-flex justify-content-between align-items-center">
+                <div
+                    class="pb-1 card-header d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-2">
                     <h5 class="card-title mb-0">
                         Daftar Hasil Pengukuran
                     </h5>
 
-                    @if (in_array(Auth::user()->role, ['super_admin', 'kader_posyandu']))
-                        @if ($balita->umur_hari <= 1856)
-                            <a href="{{ route('balitaukur.add', ['id' => $balita->id]) }}"
-                                class="btn btn-primary rounded-pill">
-                                <i class="fa-solid fa-plus"></i> Tambah Pengukuran
-                            </a>
-                        @endif
-                    @endif
+                    <div class="d-flex flex-wrap gap-2">
 
+
+                        @if (in_array(Auth::user()->role, ['super_admin', 'kader_posyandu']))
+                            @if ($balita->umur_hari <= 1856)
+                                <a href="{{ route('balitaukur.add', ['id' => $balita->id]) }}" class="btn btn-primary">
+                                    <i class="fa-solid fa-plus"></i> Tambah Pengukuran
+                                </a>
+                            @endif
+                        @endif
+                        <button onclick="scrollToChart()" class="btn btn-info text-white d-none d-md-block">
+                            <i class="fa-solid fa-chart-line"></i> Grafik
+                        </button>
+                    </div>
                 </div>
 
 
@@ -392,9 +398,37 @@
 
 
 
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                @foreach ([
+            'BB_U' => 'Berat Badan menurut Umur (BB/U)',
+            'TB_U' => 'Tinggi/Panjang Badan menurut Umur (TB/U atau PB/U)',
+            'BB_PB' => 'Berat Badan menurut Panjang Badan (BB/PB)',
+            'BB_TB' => 'Berat Badan menurut Tinggi Badan (BB/TB)',
+            'IMT_U' => 'IMT menurut Umur (IMT/U)',
+            'LK_U' => 'Lingkar Kepala menurut Umur (LK/U)',
+        ] as $kategori => $judul)
+                    @if (
+                        ($kategori === 'BB_TB' && !empty($grafikBalita['BB_TB'])) ||
+                            ($kategori === 'BB_PB' && empty($grafikBalita['BB_TB']) && !empty($grafikBalita['BB_PB'])) ||
+                            (!in_array($kategori, ['BB_TB', 'BB_PB']) && !empty($grafikBalita[$kategori])))
+                        <div class="bg-white mt-4 p-4 rounded d-none d-md-block">
+                            <h4 class="text-lg font-semibold mb-2">{{ $judul }}</h4>
+                            <canvas id="chart_{{ $kategori }}"></canvas>
+                        </div>
+                    @endif
+                @endforeach
+            </div>
+
+
+
+
+
+
+
 
 
         </section>
+    </div>
 
 
 
@@ -594,6 +628,310 @@
     <script src="{{ asset('assets/extensions/datatables.net/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/extensions/datatables.net-bs5/js/dataTables.bootstrap5.min.js') }}"></script>
     <script src="{{ asset('assets/static/js/pages/datatables.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    {{-- <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const pedomanLMS = @json($pedomanLMS);
+            const grafikBalita = @json($grafikBalita);
+
+            const warnaSD = {
+                sd3neg: '#56090D',
+                sd2neg: '#C1090B',
+                sd1neg: '#facc15',
+                median: '#22c55e',
+                sd1: '#facc15',
+                sd2: '#C1090B',
+                sd3: '#56090D'
+            };
+
+            const semuaKategori = ['BB_U', 'TB_U', 'IMT_U', 'LK_U', 'BB_TB', 'BB_PB'];
+
+            semuaKategori.forEach(kat => {
+                const pedoman = pedomanLMS[kat];
+                const balita = grafikBalita[kat];
+
+                if (!pedoman || (kat === 'BB_TB' && grafikBalita['BB_TB'].length === 0 && grafikBalita[
+                        'BB_PB'].length === 0)) return;
+                if ((kat === 'BB_PB' && grafikBalita['BB_TB'].length > 0) || (kat === 'BB_TB' &&
+                        grafikBalita['BB_TB'].length === 0)) return;
+
+                const labels = pedoman.map(d => parseFloat(d.umur_atau_tinggi));
+
+                const datasets = Object.entries(warnaSD).map(([key, color]) => {
+                    return {
+                        label: key,
+                        data: pedoman.map(d => parseFloat(d[key])),
+                        borderColor: color,
+                        fill: false,
+                        tension: 0.1,
+                    };
+                });
+
+                datasets.push({
+                    label: 'Balita',
+                    data: balita.map(d => ({
+                        x: d.x,
+                        y: d.y
+                    })),
+                    borderColor: '#000',
+                    backgroundColor: '#000',
+                    borderWidth: 2,
+                    pointRadius: 4,
+                    fill: false,
+                    tension: 0.1,
+                });
+
+                new Chart(document.getElementById('chart_' + kat), {
+                    type: 'line',
+                    data: {
+                        labels,
+                        datasets,
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top'
+                            },
+                            title: {
+                                display: false
+                            },
+                        },
+                        scales: {
+                            x: {
+                                type: 'linear',
+                                title: {
+                                    display: true,
+                                    text: kat.includes('BB_') || kat.includes('IMT') || kat
+                                        .includes('LK') ? 'Umur (hari)' : 'Tinggi (cm)'
+                                }
+                            },
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: 'Nilai'
+                                }
+                            }
+                        }
+                    }
+                });
+            });
+        });
+    </script> --}}
+    <script>
+        function scrollToChart() {
+            const chart = document.getElementById("chart_BB_U");
+            if (chart) {
+                chart.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+            }
+        }
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const pedomanLMS = @json($pedomanLMS);
+            const grafikBalita = @json($grafikBalita);
+
+            const warnaSD = {
+                sd3neg: '#5e0913',
+                sd2neg: '#e41a30',
+                sd1neg: '#facc15',
+                median: '#00843D',
+                sd1: '#facc15',
+                sd2: '#e41a30',
+                sd3: '#5e0913'
+            };
+
+            const semuaKategori = ['BB_U', 'TB_U', 'IMT_U', 'LK_U', 'BB_TB', 'BB_PB'];
+
+            semuaKategori.forEach(kat => {
+                const pedoman = pedomanLMS[kat];
+                const balita = grafikBalita[kat];
+
+                if (!pedoman || (kat === 'BB_TB' && grafikBalita['BB_TB'].length === 0 && grafikBalita[
+                        'BB_PB'].length === 0)) return;
+                if ((kat === 'BB_PB' && grafikBalita['BB_TB'].length > 0) || (kat === 'BB_TB' &&
+                        grafikBalita['BB_TB'].length === 0)) return;
+
+                const labels = pedoman.map(d => parseFloat(d.umur_atau_tinggi));
+
+                const datasets = Object.entries(warnaSD).map(([key, color]) => ({
+                    label: key,
+                    data: pedoman.map(d => parseFloat(d[key])),
+                    borderColor: color,
+                    backgroundColor: 'transparent',
+                    fill: false,
+                    tension: 0.3,
+                    pointRadius: 0,
+                    borderWidth: 1,
+                    order: 1, // tampil di bawah balita
+                    tooltip: {
+                        enabled: false
+                    }
+                }));
+
+                datasets.push({
+                    label: 'Balita',
+                    data: balita.map(d => ({
+                        x: parseFloat(d.x),
+                        y: parseFloat(d.y),
+                        umurText: d.umurText
+                    })),
+                    borderColor: '#000',
+                    backgroundColor: '#000',
+                    borderWidth: 2,
+                    pointRadius: 3,
+                    tension: 0,
+                    fill: false,
+                    order: 0 // tampil paling atas
+                });
+
+                // let xMin = 0;
+                // let xMax = 0;
+
+                // if (balita.length > 0) {
+                //     xMin = Math.min(...balita.map(d => parseFloat(d.x)));
+                //     xMax = Math.max(...balita.map(d => parseFloat(d.x)));
+                // }
+                // const padding = 10;
+                // xMin = xMin - padding;
+                // xMax = xMax + padding;
+
+                let xMin, xMax;
+
+                // Ambil kategori
+                const kategori = kat; // misalnya: "BB_U", "TB_U", dst
+
+                // Ambil umur terakhir (harus dari field umur, bukan x, jika kategori tinggi badan)
+                let umurTerakhir;
+                if (["BB_U", "TB_U", "IMT_U", "LK_U"].includes(kategori)) {
+                    umurTerakhir = parseFloat(balita[balita.length - 1].x);
+                } else {
+                    umurTerakhir = parseFloat(balita[balita.length - 1]
+                        .umur); // pastikan ada field 'umur' di data
+                }
+
+                // Untuk kategori berdasarkan umur
+                if (["BB_U", "TB_U", "IMT_U", "LK_U"].includes(kategori)) {
+                    xMin = 0;
+                    xMax = umurTerakhir <= 730 ? 730 : 1825;
+                }
+
+                // Untuk kategori berdasarkan tinggi badan
+                else if (["BB_TB", "BB_PB"].includes(kategori)) {
+                    if (umurTerakhir <= 730) {
+                        xMin = 45;
+                        xMax = 110;
+                    } else {
+                        xMin = 65;
+                        xMax = 120;
+                    }
+                }
+
+                new Chart(document.getElementById('chart_' + kat), {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: datasets
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: false,
+                            },
+                            title: {
+                                display: true,
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        const x = context.parsed.x;
+                                        const y = context.parsed.y;
+                                        const raw = context.raw;
+                                        const umurText = raw.umurText;
+
+                                        const labelX = (() => {
+                                            if (kat === 'BB_U' || kat === 'IMT_U' ||
+                                                kat === 'LK_U' || kat === 'TB_U') {
+                                                return `Umur: ${umurText}`;
+                                            } else if (kat === 'BB_TB' || kat ===
+                                                'BB_PB') {
+                                                return `Tinggi: ${x} cm`;
+                                            } else {
+                                                return `X: ${x}`;
+                                            }
+                                        })();
+
+                                        const labelY = (() => {
+                                            if (kat === 'BB_U' || kat === 'BB_TB' ||
+                                                kat === 'BB_PB') {
+                                                return `Berat: ${y} kg`;
+                                            } else if (kat === 'TB_U') {
+                                                return `Tinggi: ${y} cm`;
+                                            } else if (kat === 'IMT_U') {
+                                                return `IMT: ${y}`;
+                                            } else if (kat === 'LK_U') {
+                                                return `Lingkar Kepala: ${y} cm`;
+                                            } else {
+                                                return `Y: ${y}`;
+                                            }
+                                        })();
+
+                                        return [labelX, labelY];
+                                    }
+                                },
+
+                            }
+                        },
+                        scales: {
+                            x: {
+                                type: 'linear',
+                                min: xMin,
+                                max: xMax,
+                                title: {
+                                    display: true,
+                                    text: (() => {
+                                        if (kat === 'BB_U' || kat === 'IMT_U' || kat ===
+                                            'LK_U' || kat === 'TB_U') {
+                                            return 'Umur (hari)';
+                                        } else if (kat === 'BB_TB' || kat === 'BB_PB') {
+                                            return 'Tinggi / Panjang Badan (cm)';
+                                        } else {
+                                            return 'Sumbu X';
+                                        }
+                                    })()
+                                }
+                            },
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: (() => {
+                                        if (kat === 'BB_U' || kat === 'BB_TB' || kat ===
+                                            'BB_PB') {
+                                            return 'Berat Badan (kg)';
+                                        } else if (kat === 'TB_U') {
+                                            return 'Tinggi / Panjang Badan (cm)';
+                                        } else if (kat === 'IMT_U') {
+                                            return 'Index Massa Tubuh (IMT)';
+                                        } else if (kat === 'LK_U') {
+                                            return 'Lingkar Kepala (cm)';
+                                        } else {
+                                            return 'Sumbu Y';
+                                        }
+                                    })()
+                                }
+                            }
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+
 
 
 

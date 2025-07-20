@@ -162,7 +162,10 @@ class BalitaUkurController extends Controller
         $user = auth()->user();
         // Mengecek apakah balita ada atau tidak
         $query = Balita::with('posyandu', 'orangtua');
+
         $balitaUkurs = BalitaUkur::where('balita_id', $id)->orderBy('tgl_ukur', 'desc')->get();
+
+        $balitaUkursGrafik = BalitaUkur::where('balita_id', $id)->whereNot('umur_ukur', '0 Bulan')->orderBy('tgl_ukur')->get();
 
 
         if ($user->posyandu_id !== null) {
@@ -183,10 +186,66 @@ class BalitaUkurController extends Controller
             $balitaUkur->status_bb_n = $this->statusBBNaik($balitaUkur->balita_id, $balitaUkur->tgl_ukur, $balitaUkur->bb);
         });
 
-        // return $balita;
+        // Hitung umur hari per pengukuran
+        foreach ($balitaUkursGrafik as $pengukuran) {
+            $pengukuran->umur_hari = $this->hitungUmurHari($balita->tgl_lahir, $pengukuran->tgl_ukur);
+            $pengukuran->imt = $this->hitungIMT($pengukuran->bb, $pengukuran->tb);
+        }
 
 
-        return view('pages.main.balita-ukur.detail', compact('balita', 'balitaUkurs'));
+
+        // Untuk Grafik WHO
+        $pedomanLMS = StandarPertumbuhanAnakExpanded::where('gender', $balita->gender)
+            ->whereIn('kategori', ['BB_U', 'TB_U', 'BB_PB', 'BB_TB', 'IMT_U', 'LK_U'])
+            ->orderBy('kategori')
+            ->orderBy('umur_atau_tinggi')
+            ->get(['kategori', 'gender', 'umur_atau_tinggi', 'sd3neg', 'sd2neg', 'sd1neg', 'median', 'sd1', 'sd2', 'sd3',])
+            ->groupBy('kategori');
+
+
+
+
+        // Mapping data balita untuk grafik sesuai kategori
+        $grafikBalita = [
+            'BB_U'  => [],
+            'TB_U'  => [],
+            'IMT_U' => [],
+            'LK_U'  => [],
+            'BB_PB' => [],
+            'BB_TB' => [],
+        ];
+
+        foreach ($balitaUkursGrafik as $ukur) {
+            $umurHari = $ukur->umur_hari;
+
+            // Umur 0-5 tahun bisa masuk BB_U, TB_U, IMT_U, LK_U
+            $grafikBalita['BB_U'][]  = ['tgl_ukur' => $ukur->tgl_ukur, 'umurText' => $ukur->umur_ukur, 'x' => $umurHari, 'y' => $ukur->bb];
+            $grafikBalita['TB_U'][]  = ['tgl_ukur' => $ukur->tgl_ukur, 'umurText' => $ukur->umur_ukur, 'x' => $umurHari, 'y' => $ukur->tb];
+            $grafikBalita['IMT_U'][] = ['tgl_ukur' => $ukur->tgl_ukur, 'umurText' => $ukur->umur_ukur, 'x' => $umurHari, 'y' => $ukur->imt];
+            $grafikBalita['LK_U'][]  = ['tgl_ukur' => $ukur->tgl_ukur, 'umurText' => $ukur->umur_ukur, 'x' => $umurHari, 'y' => $ukur->lk];
+
+            // Khusus BB_PB vs BB_TB tergantung umur
+            if ($umurHari <= 730) {
+                if ($ukur->tb) {
+                    $grafikBalita['BB_PB'][] = ['tgl_ukur' => $ukur->tgl_ukur, 'umur' => $umurHari, 'x' => $ukur->tb, 'y' => $ukur->bb];
+                }
+            } else {
+                if ($ukur->tb) {
+                    $grafikBalita['BB_TB'][] = ['tgl_ukur' => $ukur->tgl_ukur, 'umur' => $umurHari, 'x' => $ukur->tb, 'y' => $ukur->bb];
+                }
+            }
+        }
+
+        // return $grafikBalita;
+        // Debugbar::info($pedomanLMS);
+
+
+        return view('pages.main.balita-ukur.detail', compact(
+            'balita',
+            'balitaUkurs',
+            'pedomanLMS',
+            'grafikBalita'
+        ));
     }
 
     // HALAMAN INPUT PENGHITUNGAN
