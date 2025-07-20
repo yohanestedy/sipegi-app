@@ -217,21 +217,28 @@ class BalitaUkurController extends Controller
 
         foreach ($balitaUkursGrafik as $ukur) {
             $umurHari = $ukur->umur_hari;
+            $tinggiBadan = $ukur->tb;
+
+            if ($umurHari <= 730 && $ukur->cara_ukur === "Berdiri") {
+                $tinggiBadan += 0.7;
+            } elseif ($umurHari >= 731 && $umurHari <= 1856 && $ukur->cara_ukur === "Berbaring") {
+                $tinggiBadan -= 0.7;
+            }
 
             // Umur 0-5 tahun bisa masuk BB_U, TB_U, IMT_U, LK_U
             $grafikBalita['BB_U'][]  = ['tgl_ukur' => $ukur->tgl_ukur, 'umurText' => $ukur->umur_ukur, 'x' => $umurHari, 'y' => $ukur->bb];
-            $grafikBalita['TB_U'][]  = ['tgl_ukur' => $ukur->tgl_ukur, 'umurText' => $ukur->umur_ukur, 'x' => $umurHari, 'y' => $ukur->tb];
+            $grafikBalita['TB_U'][]  = ['tgl_ukur' => $ukur->tgl_ukur, 'umurText' => $ukur->umur_ukur, 'x' => $umurHari, 'y' => $tinggiBadan];
             $grafikBalita['IMT_U'][] = ['tgl_ukur' => $ukur->tgl_ukur, 'umurText' => $ukur->umur_ukur, 'x' => $umurHari, 'y' => $ukur->imt];
             $grafikBalita['LK_U'][]  = ['tgl_ukur' => $ukur->tgl_ukur, 'umurText' => $ukur->umur_ukur, 'x' => $umurHari, 'y' => $ukur->lk];
 
             // Khusus BB_PB vs BB_TB tergantung umur
             if ($umurHari <= 730) {
-                if ($ukur->tb) {
-                    $grafikBalita['BB_PB'][] = ['tgl_ukur' => $ukur->tgl_ukur, 'umur' => $umurHari, 'x' => $ukur->tb, 'y' => $ukur->bb];
+                if ($tinggiBadan) {
+                    $grafikBalita['BB_PB'][] = ['tgl_ukur' => $ukur->tgl_ukur, 'umur' => $umurHari, 'x' => $tinggiBadan, 'y' => $ukur->bb];
                 }
             } else {
-                if ($ukur->tb) {
-                    $grafikBalita['BB_TB'][] = ['tgl_ukur' => $ukur->tgl_ukur, 'umur' => $umurHari, 'x' => $ukur->tb, 'y' => $ukur->bb];
+                if ($tinggiBadan) {
+                    $grafikBalita['BB_TB'][] = ['tgl_ukur' => $ukur->tgl_ukur, 'umur' => $umurHari, 'x' => $tinggiBadan, 'y' => $ukur->bb];
                 }
             }
         }
