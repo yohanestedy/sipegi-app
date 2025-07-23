@@ -412,7 +412,13 @@
                             ($kategori === 'BB_PB' && empty($grafikBalita['BB_TB']) && !empty($grafikBalita['BB_PB'])) ||
                             (!in_array($kategori, ['BB_TB', 'BB_PB']) && !empty($grafikBalita[$kategori])))
                         <div class="bg-white mt-4 p-4 rounded d-none d-md-block">
-                            <h4 class="text-lg font-semibold mb-2">{{ $judul }}</h4>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <h4 class="text-lg font-semibold mb-0">{{ $judul }}</h4>
+                                <button onclick="downloadChart('{{ $kategori }}')"
+                                    class="btn btn-sm btn-outline-primary">
+                                    <i class="fa-solid fa-download"></i>
+                                </button>
+                            </div>
                             <canvas id="chart_{{ $kategori }}"></canvas>
                         </div>
                     @endif
@@ -730,6 +736,8 @@
         }
     </script>
 
+
+    {{-- GRAFIK --}}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const pedomanLMS = @json($pedomanLMS);
@@ -930,6 +938,17 @@
                 });
             });
         });
+    </script>
+
+    {{-- DOWNLOAD GRAFIK --}}
+    <script>
+        function downloadChart(kategori) {
+            const canvas = document.getElementById(`chart_${kategori}`);
+            const link = document.createElement('a');
+            link.href = canvas.toDataURL('image/png');
+            link.download = `grafik_${kategori}.png`;
+            link.click();
+        }
     </script>
 
 
