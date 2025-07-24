@@ -140,8 +140,17 @@ class OrtuController extends Controller
     // EDIT ORANGTUA
     public function edit($id)
     {
+        $user = auth()->user();
+
+
+
         $dusuns = Dusun::all();
-        $orangtua = Orangtua::find($id);
+        $orangtua = Orangtua::where('id', $id)->first();
+
+        if ($user->posyandu_id !== null && $user->posyandu_id !== $orangtua->dusun_id) {
+            abort(403, 'Anda tidak memiliki akses ke data ini.');
+        }
+
         return view('pages.main.orangtua.edit', compact('orangtua', 'dusuns'));
     }
 

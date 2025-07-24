@@ -321,7 +321,12 @@ class BalitaController extends Controller
             $queryBalita->where('id', $id);
         }
         $balita = $queryBalita->first();
+
         $orangtua = $queryOrtu->get();
+
+        if (!$balita) {
+            abort(403, 'Anda tidak memiliki akses ke data ini.');
+        }
 
         // return $balita;
         return view('pages.main.balita.edit', compact('balita', 'posyandus', 'orangtua'));

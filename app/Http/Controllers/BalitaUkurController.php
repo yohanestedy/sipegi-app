@@ -167,17 +167,17 @@ class BalitaUkurController extends Controller
 
         $balitaUkursGrafik = BalitaUkur::where('balita_id', $id)->whereNot('umur_ukur', '0 Bulan')->orderBy('tgl_ukur')->get();
 
+        $query->where('id', $id);
 
         if ($user->posyandu_id !== null) {
             $query->where('posyandu_id', $user->posyandu_id);
         }
 
-
-        $query->where('id', $id);
-
-
         $balita = $query->first();
 
+        if (!$balita) {
+            abort(403, 'Anda tidak memiliki akses ke data ini.');
+        }
 
         // $balitaUkurs = BalitaUkur::where('balita_id', $id)->orderBy('tgl_ukur', 'desc')->get();
 
