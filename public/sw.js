@@ -1,10 +1,10 @@
 const CACHE_NAME = "offline-v1";
 const filesToCache = [
     "/offline.html",
-    "/404.html", // pastikan file ini ada dan di-cache
+    // "/404.html",
     "/assets/static/images/logo/sipegi-favicon.svg",
-    "/assets/compiled/css/app.css",
-    "/assets/compiled/css/error.css",
+    "/assets/compiled/css/app-pwa.css",
+    "/assets/compiled/css/error-pwa.css",
     "/assets/compiled/png/error-nointernet.png",
 ];
 
