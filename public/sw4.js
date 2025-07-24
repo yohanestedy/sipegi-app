@@ -1,7 +1,9 @@
 const CACHE_NAME = "offline-v2";
 const filesToCache = [
     "/offline.html",
+    // "/404.html",
     "/assets/static/images/logo/sipegi-favicon.svg",
+    // "assets/compiled/svg/error-404.svg",
     "/assets/compiled/css/app-pwa.css",
     "/assets/compiled/css/error-pwa.css",
     "/assets/compiled/png/error-nointernet.png",
@@ -11,7 +13,6 @@ const filesToCache = [
     "/assets/compiled/fonts/nunito-latin-800-normal.woff2",
 ];
 
-// Cache file statis saat install
 self.addEventListener("install", function (event) {
     event.waitUntil(
         caches.open(CACHE_NAME).then(function (cache) {
@@ -20,7 +21,6 @@ self.addEventListener("install", function (event) {
     );
 });
 
-// Hapus cache lama saat activate
 self.addEventListener("activate", function (event) {
     const cacheWhitelist = [CACHE_NAME];
     event.waitUntil(
@@ -36,12 +36,27 @@ self.addEventListener("activate", function (event) {
     );
 });
 
-// Tangani fetch request
+// Tangani fetch
 self.addEventListener("fetch", function (event) {
     event.respondWith(
         fetch(event.request).catch(function () {
-            // Saat offline, tampilkan halaman offline
+            // Kalau offline, tampilkan offline.html
             return caches.match("/offline.html");
         })
     );
+
+    // Simpan ke cache jika permintaan valid
+    if (event.request.url.startsWith("http")) {
+        event.waitUntil(
+            caches.open(CACHE_NAME).then(function (cache) {
+                return fetch(event.request)
+                    .then((response) => {
+                        if (response && response.status === 200) {
+                            return cache.put(event.request, response.clone());
+                        }
+                    })
+                    .catch(() => {});
+            })
+        );
+    }
 });
