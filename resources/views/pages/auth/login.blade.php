@@ -46,13 +46,15 @@
         <div class="row h-100">
             <div class="col-lg-5 col-12">
                 <div id="auth-left">
-                    <div class="auth-logo">
+                    <div class="auth-logo pt-4">
                         <a href="index.html"><img src="{{ asset('assets/static/images/logo/sipegi-logo.svg') }}"></a>
                     </div>
 
+
                     {{-- <h1 class="auth-title">Masuk</h1> --}}
-                    <p style="text-align: center;" class="auth-subtitle mb-2">Sipegi adalah Aplikasi Penilaian Status
-                        Gizi Anak 0 - 59 Bulan di Desa Selorejo</p>
+                    <p style="text-align: center;" class="auth-subtitle mb-3">SiPeGi (Aplikasi Penilaian Gizi) adalah
+                        sistem untuk menilai status gizi anak usia 0 - 59 bulan secara cepat dan akurat berdasarkan
+                        standar WHO & Kementerian Kesehatan Republik Indonesia.</p>
 
 
 
@@ -100,11 +102,28 @@
 
                     </form>
 
-                    <div class="text-center mt-5">
+                    <div class="text-center mt-3">
                         <a href="{{ route('riwayat.form') }}" class="secondary-link">
                             Cek Riwayat Gizi Anak<i class="fa-solid fa-arrow-right arrow-icon"></i>
                         </a>
                     </div>
+
+                    <footer class="medium-text mt-5 pt-5">
+                        <div class="footer clearfix mb-0 text-muted ">
+                            <div class="text-center">
+                                <p class="mb-0 auth-subtitle">{{ date('Y') }} &copy; SiPeGi Selorejo | Developed
+                                    by
+                                    <a href="https://github.com/yohanestedy" target="_blank">Yohanes Tedy</a>
+                                </p>
+
+                            </div>
+                            {{-- <div class="float-end">
+                                <p>
+                                    Created by <a href="#">Yohanes Tedy Kurniawan</a>
+                                </p>
+                            </div> --}}
+                        </div>
+                    </footer>
 
                 </div>
             </div>
