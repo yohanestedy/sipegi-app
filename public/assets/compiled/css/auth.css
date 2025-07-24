@@ -7,14 +7,33 @@ body {
 }
 #auth #auth-right {
     height: 100%;
-    background: url(../png/4853433.png),
-        linear-gradient(90deg, #2d499d, #3f5491);
+    background: url(../jpg/login-photo.jpg);
+    /* linear-gradient(90deg, #102120, #102120); */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
 }
+#auth #auth-right p {
+    position: absolute;
+    bottom: 1rem;
+    right: 3rem;
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.85); /* agar kontras */
+}
+#auth #auth-right p a {
+    color: #ddd;
+    text-decoration: underline;
+}
+
+#auth #auth-right p a:hover {
+    color: white;
+}
+
 #auth #auth-left {
     /* padding: 1rem; */
     padding-top: 4rem;
-    padding-left: 7rem;
-    padding-right: 7rem;
+    padding-left: 3.5rem;
+    padding-right: 3.5rem;
 }
 #auth #auth-left .auth-title {
     font-size: 2rem;

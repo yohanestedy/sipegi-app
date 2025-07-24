@@ -44,7 +44,7 @@
     <div id="auth">
 
         <div class="row h-100">
-            <div class="col-lg-5 col-12">
+            <div class="col-lg-4 col-12">
                 <div id="auth-left">
                     <div class="auth-logo pt-4">
                         <a href="index.html"><img src="{{ asset('assets/static/images/logo/sipegi-logo.svg') }}"></a>
@@ -127,9 +127,12 @@
 
                 </div>
             </div>
-            <div class="col-lg-7 d-none d-lg-block">
+            <div class="col-lg-8 d-none d-lg-block">
                 <div id="auth-right">
-
+                    <p class="fst-italic">Photo by <a
+                            href="https://unsplash.com/@nate_dumlao?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash"
+                            target="_blank">Nathan Dumlao</a>
+                    </p>
                 </div>
             </div>
         </div>
