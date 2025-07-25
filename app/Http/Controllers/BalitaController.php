@@ -133,8 +133,8 @@ class BalitaController extends Controller
             'bb_lahir' => $request->bb_lahir / 1000,
         ]);
 
-        DB::beginTransaction();
         try {
+            DB::beginTransaction();
             // Simpan Balita Baru
             $newBalita = Balita::create([
                 "name" => $request->name,
@@ -399,8 +399,8 @@ class BalitaController extends Controller
         $request->merge([
             'bb_lahir' => $request->bb_lahir / 1000,
         ]);
-        DB::beginTransaction();
         try {
+            DB::beginTransaction();
             Balita::find($id)->update([
                 "name" => $request->name,
                 "nik" => $request->nik,

@@ -8,10 +8,13 @@ use App\Models\Orangtua;
 use App\Models\Posyandu;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use PhpParser\Node\Stmt\TryCatch;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Database\Events\TransactionBeginning;
 
 class OrtuController extends Controller
 {
@@ -115,25 +118,35 @@ class OrtuController extends Controller
             return Redirect::back()->withErrors($validator)->withInput();
         }
 
+        try {
+            DB::beginTransaction();
 
-        Orangtua::create([
-            "no_kk" => $request->no_kk,
-            "nik_ibu" => $request->nik_ibu,
-            "name_ibu" => $request->name_ibu,
-            "nik_ayah" => $request->nik_ayah,
-            "name_ayah" => $request->name_ayah,
-            "telp" => $request->telp,
-            "provinsi" => $request->provinsi,
-            "kabupaten" => $request->kabupaten,
-            "kecamatan" => $request->kecamatan,
-            "desa" => $request->desa,
-            "dusun_id" => $request->dusun,
-            "rt_id" => $request->rt,
-            "alamat" => $request->alamat,
-            "created_by" => Auth::id(),
-        ]);
+            Orangtua::create([
+                "no_kk" => $request->no_kk,
+                "nik_ibu" => $request->nik_ibu,
+                "name_ibu" => $request->name_ibu,
+                "nik_ayah" => $request->nik_ayah,
+                "name_ayah" => $request->name_ayah,
+                "telp" => $request->telp,
+                "provinsi" => $request->provinsi,
+                "kabupaten" => $request->kabupaten,
+                "kecamatan" => $request->kecamatan,
+                "desa" => $request->desa,
+                "dusun_id" => $request->dusun,
+                "rt_id" => $request->rt,
+                "alamat" => $request->alamat,
+                "created_by" => Auth::id(),
+            ]);
 
-        return Redirect::route('orangtua.index')->with('successToast', 'Berhasil menambahkan data orangtua.');
+            DB::commit();
+
+            return Redirect::route('orangtua.index')->with('successToast', 'Berhasil menambahkan data orangtua.');
+        } catch (\Exception $e) {
+
+            DB::rollback();
+
+            return redirect()->back()->withInput()->with('errorToast', 'Gagal menyimpan data orangtua, silahkan coba lagi.');
+        }
     }
 
 
@@ -141,8 +154,6 @@ class OrtuController extends Controller
     public function edit($id)
     {
         $user = auth()->user();
-
-
 
         $dusuns = Dusun::all();
         $orangtua = Orangtua::where('id', $id)->first();
@@ -204,37 +215,46 @@ class OrtuController extends Controller
             // Log::error('Validation failed', $validator->errors()->toArray());
             return Redirect::back()->withErrors($validator)->withInput();
         }
+        try {
+            DB::beginTransaction();
+            Orangtua::find($id)->update([
+                "no_kk" => $request->no_kk,
+                "nik_ibu" => $request->nik_ibu,
+                "name_ibu" => $request->name_ibu,
+                "nik_ayah" => $request->nik_ayah,
+                "name_ayah" => $request->name_ayah,
+                "telp" => $request->telp,
+                "provinsi" => $request->provinsi,
+                "kabupaten" => $request->kabupaten,
+                "kecamatan" => $request->kecamatan,
+                "desa" => $request->desa,
+                "dusun_id" => $request->dusun,
+                "rt_id" => $request->rt,
+                "alamat" => $request->alamat,
+                "updated_by" => Auth::id(),
+            ]);
 
+            Orangtua::find($id)->balita()->update(['posyandu_id' => $request->dusun]);
 
-        Orangtua::find($id)->update([
-            "no_kk" => $request->no_kk,
-            "nik_ibu" => $request->nik_ibu,
-            "name_ibu" => $request->name_ibu,
-            "nik_ayah" => $request->nik_ayah,
-            "name_ayah" => $request->name_ayah,
-            "telp" => $request->telp,
-            "provinsi" => $request->provinsi,
-            "kabupaten" => $request->kabupaten,
-            "kecamatan" => $request->kecamatan,
-            "desa" => $request->desa,
-            "dusun_id" => $request->dusun,
-            "rt_id" => $request->rt,
-            "alamat" => $request->alamat,
-            "updated_by" => Auth::id(),
-        ]);
+            DB::commit();
 
-        Orangtua::find($id)->balita()->update(['posyandu_id' => $request->dusun]);
-
-
-
-        return Redirect::route('orangtua.index')->with('successToast', 'Berhasil memperbaharui data orangtua.');
+            return Redirect::route('orangtua.index')->with('successToast', 'Berhasil memperbaharui data orangtua.');
+        } catch (\Exception $e) {
+            DB::rollback();
+            return redirect()->back()->with('errorToast', 'Gagal memperbaharui data orangtua, silahkan coba lagi.');
+        }
     }
 
     // DELETE ORANGTUA
     public function delete($id)
     {
 
-        Orangtua::find($id)->delete();
-        return Redirect::route('orangtua.index')->with('success', 'Orangtua berhasil dihapus.');
+        try {
+            Orangtua::find($id)->delete();
+
+            return redirect()->route('orangtua.index')->with('success', 'Data orangtua berhasil dihapus.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('errorToast', 'Terjadi kesalahan saat menghapus data.');
+        }
     }
 }
