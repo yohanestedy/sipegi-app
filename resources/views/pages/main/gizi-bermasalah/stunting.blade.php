@@ -56,7 +56,8 @@
             <div class="row">
                 <div class="col-12 col-md-12 order-md-1 order-last">
                     <h3>Balita Stunting / Pendek</h3>
-                    <p class="text-subtitle text-muted">Z-Score TB/U kurang dari -2 SD</p>
+                    <p class="text-subtitle text-muted">Stunting adalah kondisi ketika tinggi badan balita lebih pendek dari
+                        standar usianya (Nilai Z-Score TB/U < -2 SD)</p>
                 </div>
 
             </div>

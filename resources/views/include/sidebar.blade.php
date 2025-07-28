@@ -137,17 +137,18 @@
                     </a>
 
                     <ul class="submenu">
-                        <li class="submenu-item {{ Route::is('masterdata.listposyandu') ? 'active' : '' }} ">
-                            <a href="{{ route('masterdata.listposyandu') }}" class="submenu-link">Daftar Posyandu</a>
+
+                        <li class="submenu-item {{ Route::is('masterdata.indeks-standar') ? 'active' : '' }}">
+                            <a href="{{ route('masterdata.indeks-standar') }}" class="submenu-link">Indeks Standar
+                                Antropometri Anak</a>
                         </li>
 
                         <li class="submenu-item {{ Route::is('masterdata.spa') ? 'active' : '' }}">
                             <a href="{{ route('masterdata.spa') }}" class="submenu-link">Standar Pertumbuhan Anak</a>
                         </li>
 
-                        <li class="submenu-item {{ Route::is('masterdata.indeks-standar') ? 'active' : '' }}">
-                            <a href="{{ route('masterdata.indeks-standar') }}" class="submenu-link">Indeks Standar
-                                Antropometri Anak</a>
+                        <li class="submenu-item {{ Route::is('masterdata.listposyandu') ? 'active' : '' }} ">
+                            <a href="{{ route('masterdata.listposyandu') }}" class="submenu-link">Daftar Posyandu</a>
                         </li>
                     </ul>
                 </li>

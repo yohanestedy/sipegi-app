@@ -56,8 +56,11 @@
             <div class="row">
                 <div class="col-12 col-md-12 order-md-1 order-last">
                     <h3>Pengukuran</h3>
-                    <p class="text-subtitle text-muted">Pastikan data orangtua dan balita sudah di tambahkan sebelum
-                        melakukan pengukuran</p>
+                    <p class="text-subtitle text-muted">Z-Score dihitung sesuai rumus dan parameter <a
+                            href="https://www.who.int/publications/i/item/924154693X" target="_blank">WHO Child Growth
+                            Standards 2006.</a></p>
+                    {{-- <p class="text-subtitle text-muted">Pastikan data orangtua dan balita sudah di tambahkan sebelum
+                        melakukan pengukuran</p> --}}
                 </div>
 
             </div>
