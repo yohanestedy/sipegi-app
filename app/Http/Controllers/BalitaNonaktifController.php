@@ -169,7 +169,7 @@ class BalitaNonaktifController extends Controller
         // $balitaUkurs = BalitaUkur::where('balita_id', $id)->orderBy('tgl_ukur', 'desc')->get();
         // Tambahkan status_bb_n ke setiap record BalitaUkur
         $balitaUkurs->each(function ($balitaUkur) {
-            $balitaUkur->status_bb_n = $this->statusBBNaik($balitaUkur->balita_nonaktif_id, $balitaUkur->tgl_ukur, $balitaUkur->bb);
+            $balitaUkur->status_bb_n = $this->statusBBNaik($balitaUkur->balita_id, $balitaUkur->tgl_ukur, $balitaUkur->bb);
         });
         // return $balita;
 
@@ -188,7 +188,7 @@ class BalitaNonaktifController extends Controller
     {
 
         // Ambil semua data sebelumnya untuk balita yang sama
-        $allPrevious = BalitaUkurNonaktif::where('balita_nonaktif_id', $balita_id)
+        $allPrevious = BalitaUkur::where('balita_id', $balita_id)
             ->where('tgl_ukur', '<', $tgl_ukur)
             ->orderBy('tgl_ukur', 'desc')
             ->get();
